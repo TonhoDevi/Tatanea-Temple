@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compêndio de Raças - D&D 5e Homebrew</title>
-    
+
     <!-- Fontes -->
-    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=MedievalSharp&display=swap" rel="stylesheet">
+
+    <!-- CSS existente -->
     <link rel="stylesheet" href="css/1-variables.css">
     <link rel="stylesheet" href="css/2-base.css">
     <link rel="stylesheet" href="css/3-components.css">
@@ -17,14 +17,16 @@
     <link rel="stylesheet" href="css/6-character.css">
     <link rel="stylesheet" href="css/7-compendium.css">
     <link rel="stylesheet" href="css/8-responsive.css">
+
 </head>
 <body>
-    <!-- Navbar -->
+
+    <!-- =========================================
+         NAVBAR
+    ========================================= -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="index.html" class="navbar-logo">
-                🎲 D&D 5e Homebrew
-            </a>
+            <a href="index.html" class="navbar-logo">🎲 D&D 5e Homebrew</a>
             <ul class="navbar-menu">
                 <li><a href="index.html">Início</a></li>
                 <li><a href="character-sheet.html">Ficha de Personagem</a></li>
@@ -34,68 +36,223 @@
         </div>
     </nav>
 
-    <!-- Header -->
-    <section class="compendio-header">
-        <div class="container">
-            <h1>Compêndio de Raças Homebrew</h1>
-            <p>Explore todas as raças customizadas disponíveis</p>
-        </div>
-    </section>
+    <!-- =========================================
+         HERO
+    ========================================= -->
+    <header class="compendio-hero">
+        <span class="hero-rune-left">⚔</span>
+        <span class="hero-rune-right">🐉</span>
+        <span class="hero-eyebrow">Tomo das Origens</span>
+        <h1>Compêndio de Raças</h1>
+        <div class="hero-divider"><div class="hero-divider-gem"></div></div>
+        <p>Explore as linhagens, culturas e poderes de cada povo do mundo homebrew</p>
+    </header>
 
-    <!-- Filtros -->
-    <section class="filtros-section">
-        <div class="container">
-            <div class="filtros">
-                <input type="text" id="searchRace" placeholder="🔍 Buscar raça..." class="search-input">
-                <select id="filterSize" class="filter-select">
+    <!-- =========================================
+         BARRA DE ESTATÍSTICAS
+    ========================================= -->
+    <div class="stats-bar">
+        <div class="stats-bar-inner">
+            <div class="stat-pill">
+                <span class="stat-pill-icon">📜</span>
+                <span class="stat-pill-num" id="totalRacas">0</span>
+                <span>Raças Totais</span>
+            </div>
+            <div class="stat-pill" style="--c:var(--cat-global)">
+                <span class="stat-pill-icon">🌍</span>
+                <span class="stat-pill-num" id="countGlobal">0</span>
+                <span>Globais</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-pill-icon">🌿</span>
+                <span class="stat-pill-num" id="countTribal">0</span>
+                <span>Tribais</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-pill-icon">✨</span>
+                <span class="stat-pill-num" id="countMistica">0</span>
+                <span>Místicas</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-pill-icon">🌙</span>
+                <span class="stat-pill-num" id="countSobrenatural">0</span>
+                <span>Sobrenaturais</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================
+         PAINEL DE FILTROS
+    ========================================= -->
+    <div class="filtros-panel">
+        <div class="filtros-panel-inner">
+
+            <!-- Abas de categoria -->
+            <div class="category-tabs" role="tablist">
+                <button class="cat-tab active" data-cat="" role="tab">
+                    Todas <span class="cat-count" id="tab-count-all">0</span>
+                </button>
+                <button class="cat-tab" data-cat="global" role="tab">
+                    🌍 Globais <span class="cat-count" id="tab-count-global">0</span>
+                </button>
+                <button class="cat-tab" data-cat="tribal" role="tab">
+                    🌿 Tribais <span class="cat-count" id="tab-count-tribal">0</span>
+                </button>
+                <button class="cat-tab" data-cat="mistica" role="tab">
+                    ✨ Místicas <span class="cat-count" id="tab-count-mistica">0</span>
+                </button>
+                <button class="cat-tab" data-cat="sobrenatural" role="tab">
+                    🌙 Sobrenaturais <span class="cat-count" id="tab-count-sobrenatural">0</span>
+                </button>
+            </div>
+
+            <!-- Controles de filtro -->
+            <div class="filter-controls">
+                <div class="search-wrap">
+                    <span class="search-icon">🔍</span>
+                    <input
+                        type="text"
+                        id="searchRace"
+                        class="search-input-v2"
+                        placeholder="Buscar por nome, habilidade ou traço..."
+                        autocomplete="off"
+                    >
+                </div>
+
+                <select id="filterSize" class="filter-select-v2" title="Filtrar por tamanho">
                     <option value="">Todos os tamanhos</option>
                     <option value="pequeno">Pequeno</option>
                     <option value="medio">Médio</option>
                     <option value="grande">Grande</option>
                 </select>
-            </div>
-        </div>
-    </section>
 
-    <!-- Lista de Raças -->
-    <section class="racas-section">
-        <div class="container">
-            <div class="racas-grid" id="racasGrid">
-                <!-- As raças serão carregadas aqui via JavaScript -->
-            </div>
-        </div>
-    </section>
+                <select id="sortBy" class="filter-select-v2" title="Ordenar por">
+                    <option value="default">Ordem padrão</option>
+                    <option value="az">A → Z</option>
+                    <option value="za">Z → A</option>
+                    <option value="categoria">Por categoria</option>
+                    <option value="tamanho">Por tamanho</option>
+                </select>
 
-    <!-- Modal de Detalhes -->
-    <div class="modal" id="racaModal">
-        <div class="modal-content modal-large">
-            <button class="modal-close" onclick="closeRacaModal()">✕</button>
-            <div id="racaDetails"></div>
+                <!-- Toggle de visualização -->
+                <div class="view-toggle" title="Alternar visualização">
+                    <button class="view-btn active" id="viewGrid" onclick="setView('grid')" title="Grade">⊞</button>
+                    <button class="view-btn" id="viewList" onclick="setView('list')" title="Lista">☰</button>
+                </div>
+            </div>
+
+            <!-- Tags dos filtros ativos -->
+            <div class="active-filters" id="activeFilters"></div>
+
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>© 2025 D&D 5e Homebrew - Sistema criado por TonhoDevi</p>
-            <div class="footer-links">
-                <a href="https://github.com/TonhoDevi/FichaProject" target="_blank">GitHub</a>
-                <a href="index.html">Início</a>
-                <a href="character-sheet.html">Ficha</a>
-                <a href="compendium-races.html">Raças</a>
+    <!-- =========================================
+         CONTADOR DE RESULTADOS
+    ========================================= -->
+    <div class="results-header">
+        <p class="results-count" id="resultsCount">
+            Mostrando <strong>0</strong> raças
+        </p>
+    </div>
+
+    <!-- =========================================
+         GRADE DE RAÇAS
+    ========================================= -->
+    <section class="racas-section-v2">
+        <div class="racas-container">
+            <div class="racas-grid-v2" id="racasGrid">
+                <!-- preenchido pelo JS -->
             </div>
         </div>
+    </section>
+
+    <!-- =========================================
+         MODAL
+    ========================================= -->
+    <div class="modal-overlay" id="racaModal" role="dialog" aria-modal="true">
+        <div class="modal-v2">
+
+            <!-- Botão fechar -->
+            <button class="modal-close-btn" onclick="closeRacaModal()" title="Fechar (ESC)">✕</button>
+
+            <!-- Imagem hero do modal -->
+            <div class="modal-hero" id="modalHero">
+                <img id="modalHeroImg" src="" alt="">
+                <div class="modal-hero-gradient"></div>
+                <div class="modal-hero-info">
+                    <h2 class="modal-hero-name" id="modalHeroName"></h2>
+                    <span class="modal-hero-badge" id="modalHeroBadge"></span>
+                </div>
+            </div>
+
+            <!-- Quick stats -->
+            <div class="modal-quick-stats" id="modalQuickStats">
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Tamanho</span>
+                    <span class="quick-stat-value" id="qsTamanho">—</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Deslocamento</span>
+                    <span class="quick-stat-value" id="qsDeslocamento">—</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Categoria</span>
+                    <span class="quick-stat-value" id="qsCategoria">—</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Habilidades</span>
+                    <span class="quick-stat-value" id="qsHabilidades">—</span>
+                </div>
+            </div>
+
+            <!-- Abas -->
+            <div class="modal-tabs" id="modalTabs">
+                <button class="modal-tab active" data-tab="geral">📖 Visão Geral</button>
+                <button class="modal-tab" data-tab="tracos">🛡 Traços</button>
+                <button class="modal-tab" data-tab="habilidades">⚔ Habilidades</button>
+            </div>
+
+            <!-- Corpo com abas -->
+            <div class="modal-body" id="modalBody">
+                <div class="tab-pane active" id="tab-geral">
+                    <p class="modal-descricao" id="modalDescricao"></p>
+                </div>
+                <div class="tab-pane" id="tab-tracos">
+                    <ul class="tracos-list" id="modalTracos"></ul>
+                </div>
+                <div class="tab-pane" id="tab-habilidades">
+                    <div class="habilidades-list" id="modalHabilidades"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+    <footer class="footer-v2">
+        <p>© 2025 D&D 5e Homebrew — Criado por TonhoDevi</p>
+        <nav class="footer-links-v2">
+            <a href="https://github.com/TonhoDevi/FichaProject" target="_blank">GitHub</a>
+            <a href="index.html">Início</a>
+            <a href="character-sheet.html">Ficha</a>
+            <a href="compendium-races.html">Raças</a>
+        </nav>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
     <script>
-        function toggleNavbar() {
-            const menu = document.querySelector('.navbar-menu');
-            menu.classList.toggle('active');
-        }
+    function toggleNavbar() {
+        document.querySelector('.navbar-menu').classList.toggle('active');
+    }
     </script>
-    <script src="js/compendium/compendium.js"></script>
-    <script src="js/shared/navbar.js"></script>
     <script src="js/compendium/data-races.js"></script>
+    <script src="js/compendium/compendium-races.jsx"></script>
+    <script src="js/shared/navbar.js"></script>
+
 </body>
 </html>

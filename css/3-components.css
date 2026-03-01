@@ -265,6 +265,7 @@ input[type="number"] {
    MENU LATERAL
 ======================================== */
 .menu-toggle {
+    display: none; /* escondido, não utilizado após migração para aba de configurações */
     position: fixed;
     top: 20px;
     right: 20px;
@@ -297,6 +298,7 @@ input[type="number"] {
 }
 
 .side-menu {
+    display: none; /* não utilizado - conteúdo migrou para aba */
     position: fixed;
     top: 0;
     right: -350px;
@@ -369,6 +371,33 @@ input[type="number"] {
     pointer-events: auto;
 }
 
+/* ----------------------------------------
+   MODO ESCURO (padrão simples para aba Configurações)
+----------------------------------------- */
+body.dark-mode {
+    background: #111;
+    color: #eee;
+}
+body.dark-mode .navbar,
+body.dark-mode .footer {
+    background: #222;
+}
+body.dark-mode .sheet-container,
+body.dark-mode .section,
+body.dark-mode .controls {
+    background: #1a1a1a;
+}
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+    background: #333;
+    color: #eee;
+    border-color: #444;
+}
+body.dark-mode .btn {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+}
+
 body > .app-container > .controls {
     display: none;
 }
@@ -412,7 +441,13 @@ body > .app-container > .controls {
 }
 
 .tab-btn.active {
-    background: linear-gradient(135deg, var(--cor25), var(--cor24));
+    background: linear-gradient(
+  135deg,
+  var(--cor25) 0%,
+  var(--cor24) 30%,
+  var(--cor24) 70%,
+  var(--cor25) 100%
+);
     border-bottom: 3px solid var(--cor2);
     color: var(--cor8);
     box-shadow: 0 -3px 10px var(--sombra-crimson);

@@ -1,83 +1,129 @@
 /* ========================================
-   VARIÁVEIS CSS - SISTEMA DE CORES
-   
-   NOMENCLATURA:
-   --cor1 a --cor25: Cores principais
-   --transp-*: Transparências
-   --brilho-*: Efeitos de luz
-   --sombra-*: Sombras
-   --impressao-*: Cores para impressão
+   PALETA GRIMÓRIO — TEMA ALTERNATIVO
+   Arquivo: css/variables-grimorio.css
+
+   Mesmos nomes do sistema original,
+   paleta substituída pelo tema Grimório Sombrio.
+   Para testar: troque o import de 1-variables.css
+   por este arquivo.
+
+   MAPEAMENTO DA PALETA:
+   Vermelho/Crimson original → Dourado/Âmbar
+   Fundo escuro avermelhado  → Pedra/Tinta escura
+   Destaques amarelos        → Ouro antigo / Pergaminho
 ======================================== */
 :root {
-    /* === GRADIENTES E FUNDOS === */
-    --cor1: #000000;        /* Preto puro - gradientes externos */
-    --cor5: #a27209;        /* Marrom escuro - fundo geral */
-    --cor6: #ff0000bb;      /* Vermelho translúcido - placas */
-    --cor13: #ddd6a3;       /* Bege claro - fundo principal */
-    --cor14: #ba9620;       /* Dourado escuro - fundo seções */
-    --cor15: #820b0b;       /* Vermelho escuro - fundo cards */
-    --cor16: #5b0909;       /* Vermelho muito escuro - stat-boxes */
-    --cor17: #880f0f;       /* Vermelho médio - bonus-box */
-    
-    /* === BORDAS === */
-    --cor2: #ebdd18;        /* Amarelo dourado - bordas externas */
-    --cor11: #dbcd15;       /* Amarelo - bordas internas */
-    --cor23: #dcb30d;       /* Amarelo forte - checkboxes */
-    
-    /* === TEXTOS === */
-    --cor3: #dcc70a;        /* Amarelo ouro - destaques principais */
-    --cor4: #5b0606;        /* Vermelho escuro - títulos fixos */
-    --cor8: #fffce1;        /* Bege clarinho - texto geral */
-    --cor10: #baa32d;       /* Dourado médio - textos secundários */
-    --cor18: #c1af0f;       /* Dourado - labels de atributos */
-    --cor19: #efff0a;       /* Amarelo brilhante - bônus de perícia */
-    --cor20: #460101;       /* Vermelho escuríssimo - texto fixo */
-    
-    /* === INPUTS E CAIXAS === */
-    --cor12: #a71414;       /* Vermelho forte - fundo de inputs */
-    --cor21: #270101;       /* Quase preto - fundo de checkboxes */
-    --cor22: #c5a60a;       /* Dourado - fundo proficiência */
-    --cor24: #890000;       /* Vermelho médio - atributo proficiente */
-    --cor25: #380000;       /* Vermelho escuro - atributo proficiente (borda) */
-    
-    /* === EFEITOS === */
-    --cor7: #620f0f;        /* Vermelho - efeito de brilho */
-    --cor9: #070000;        /* Reservado */
-    
-    /* === TRANSPARÊNCIAS === */
-    --transp-escuro: rgba(26, 0, 0, 0.95);
-    --transp-escuro-medio: rgba(26, 0, 0, 0.8);
-    --transp-escuro-leve: rgba(26, 0, 0, 0.6);
-    --transp-marrom: rgba(45, 10, 10, 0.6);
-    --transp-marrom-escuro: rgba(45, 10, 10, 0.9);
-    --transp-vermelho: rgba(139, 0, 0, 0.5);
-    --transp-crimson: rgba(220, 20, 60, 0.3);
-    --transp-preto: rgba(0, 0, 0, 0.6);
-    --transp-preto-total: rgba(0, 0, 0, 0.8);
-    --transp-preto-forte: rgba(0, 0, 0, 0.9);
-    --transp-preto-completo: rgba(0, 0, 0, 0.95);
-    
-    /* === BRILHOS === */
-    --brilho-vermelho-leve: rgba(139, 0, 0, 0.03);
-    --brilho-vermelho-medio: rgba(139, 0, 0, 0.05);
-    --brilho-crimson-leve: rgba(220, 20, 60, 0.02);
-    --brilho-crimson-medio: rgba(220, 20, 60, 0.1);
-    --brilho-crimson-forte: rgba(220, 20, 60, 0.2);
-    --brilho-laranja: rgba(233, 13, 13, 0.5);
-    
-    /* === SOMBRAS === */
-    --sombra-preta: rgba(0, 0, 0, 0.8);
-    --sombra-preta-forte: rgba(0, 0, 0, 0.9);
-    --sombra-preta-leve: rgba(0, 0, 0, 0.5);
-    --sombra-vermelho: rgba(139, 0, 0, 0.3);
-    --sombra-crimson: rgba(220, 20, 60, 0.4);
-    --sombra-crimson-forte: rgba(220, 50, 20, 0.6);
-    --sombra-crimson-intensa: rgba(50, 13, 88, 0.8);
-    --sombra-crimson-total: rgba(139, 6, 6, 0.9);
-    --sombra-laranja: rgba(220, 20, 20, 0.5);
-    
-    /* === IMPRESSÃO === */
-    --impressao-preto: #000;
-    --impressao-branco: white;
-    --impressao-borda: #000;
+
+    /* =============================================
+       GRADIENTES E FUNDOS
+    ============================================= */
+    --cor1:  #0a0805;   /* Tinta profunda   — gradientes externos      */
+    --cor5:  #2a2318;   /* Pedra escura     — fundo geral               */
+    --cor6:  #b87d2ebb; /* Âmbar translúcido— placas / overlay          */
+    --cor13: #e8d9b5;   /* Pergaminho claro — fundo principal            */
+    --cor14: #8b6914;   /* Ouro escuro      — fundo de seções            */
+    --cor15: #3d3222;   /* Pedra média      — fundo de cards             */
+    --cor16: #1e1a10;   /* Pedra profunda   — stat-boxes                 */
+    --cor17: #574832;   /* Pedra clara      — bonus-box / destaques bg   */
+
+    /* =============================================
+       BORDAS
+    ============================================= */
+    --cor2:  #c9a84c;   /* Ouro             — bordas externas            */
+    --cor11: #b87d2e;   /* Âmbar            — bordas internas            */
+    --cor23: #c9a84c;   /* Ouro             — checkboxes / detalhes      */
+
+    /* =============================================
+       TEXTOS
+    ============================================= */
+    --cor3:  #f0c96a;   /* Ouro brilhante   — destaques principais       */
+    --cor4:  #1a1008;   /* Sombra           — títulos sobre fundo claro  */
+    --cor8:  #f5edd6;   /* Pergaminho       — texto geral                */
+    --cor10: #9c8055;   /* Dourado muted    — textos secundários          */
+    --cor18: #c9a84c;   /* Ouro médio       — labels de atributos        */
+    --cor19: #f5de6a;   /* Ouro brilhante+  — bônus / números em destaque*/
+    --cor20: #2c1f0e;   /* Marrom escuro    — texto sobre fundo claro    */
+
+    /* =============================================
+       INPUTS E CAIXAS
+    ============================================= */
+    --cor12: #3d3222;   /* Pedra média      — fundo de inputs            */
+    --cor21: #1a1008;   /* Tinta escura     — fundo de checkboxes        */
+    --cor22: #8b6914;   /* Ouro escuro      — proficiência               */
+    --cor24: #500f07;   /* Pedra clara      — atributo proficiente        */
+    --cor25: #fcd330;   /* Pedra média      — atributo proficiente borda  */
+
+    /* =============================================
+       EFEITOS
+    ============================================= */
+    --cor7:  #6b3a10;   /* Brasa            — efeito de brilho/glow      */
+    --cor9:  #070503;   /* Preto-marrom     — reservado                  */
+
+    /* =============================================
+       CORES DE CATEGORIA (extensão do sistema)
+    ============================================= */
+    --cor-cat-global:       #2e6b4e;  /* Verde floresta   — Globais       */
+    --cor-cat-tribal:       #7a3a14;  /* Siena queimado   — Tribais       */
+    --cor-cat-mistica:      #4a2878;  /* Violeta profundo — Místicas      */
+    --cor-cat-sobrenatural: #8b3048;  /* Carmesim rosado  — Sobrenaturais */
+
+    --cor-cat-global-text:       #5fbd8e;
+    --cor-cat-tribal-text:       #d48040;
+    --cor-cat-mistica-text:      #a070e8;
+    --cor-cat-sobrenatural-text: #e07090;
+
+    /* Fundos translúcidos das badges de categoria */
+    --cor-cat-global-bg:         rgba( 46,107, 78, .15);
+    --cor-cat-tribal-bg:         rgba(122, 58, 20, .15);
+    --cor-cat-mistica-bg:        rgba( 74, 40,120, .15);
+    --cor-cat-sob-bg:            rgba(139, 48, 72, .15);
+
+    /* =============================================
+       TRANSPARÊNCIAS
+       (mapeado: escuro → tinta, marrom → pedra,
+        vermelho → âmbar, crimson → dourado)
+    ============================================= */
+    --transp-escuro:          rgba(10,  8,  5, .95);
+    --transp-escuro-medio:    rgba(10,  8,  5, .80);
+    --transp-escuro-leve:     rgba(10,  8,  5, .60);
+    --transp-marrom:          rgba(42, 35, 24, .60);
+    --transp-marrom-escuro:   rgba(42, 35, 24, .90);
+    --transp-vermelho:        rgba(139,107, 20, .50);  /* âmbar             */
+    --transp-crimson:         rgba(184,125, 46, .30);  /* ouro suave        */
+    --transp-preto:           rgba(0,   0,  0, .60);
+    --transp-preto-total:     rgba(0,   0,  0, .80);
+    --transp-preto-forte:     rgba(0,   0,  0, .90);
+    --transp-preto-completo:  rgba(0,   0,  0, .95);
+
+    /* =============================================
+       BRILHOS
+       (mapeado: vermelho/crimson → tons dourados)
+    ============================================= */
+    --brilho-vermelho-leve:   rgba(201,168, 76, .03);
+    --brilho-vermelho-medio:  rgba(201,168, 76, .05);
+    --brilho-crimson-leve:    rgba(184,125, 46, .02);
+    --brilho-crimson-medio:   rgba(184,125, 46, .10);
+    --brilho-crimson-forte:   rgba(184,125, 46, .20);
+    --brilho-laranja:         rgba(201,168, 76, .50);
+
+    /* =============================================
+       SOMBRAS
+       (mapeado: crimson/vermelho → âmbar/ouro antigo)
+    ============================================= */
+    --sombra-preta:           rgba(  0,  0,  0, .80);
+    --sombra-preta-forte:     rgba(  0,  0,  0, .90);
+    --sombra-preta-leve:      rgba(  0,  0,  0, .50);
+    --sombra-vermelho:        rgba(139,107, 20, .30);  /* âmbar escuro      */
+    --sombra-crimson:         rgba(184,125, 46, .40);  /* ouro médio        */
+    --sombra-crimson-forte:   rgba(201,168, 76, .60);  /* ouro brilhante    */
+    --sombra-crimson-intensa: rgba( 80, 60, 20, .80);  /* ouro profundo     */
+    --sombra-crimson-total:   rgba(139,105,  6, .90);  /* ouro escuro total */
+    --sombra-laranja:         rgba(184,125, 46, .50);
+
+    /* =============================================
+       IMPRESSÃO (mantido igual)
+    ============================================= */
+    --impressao-preto:  #000000;
+    --impressao-branco: #ffffff;
+    --impressao-borda:  #000000;
 }

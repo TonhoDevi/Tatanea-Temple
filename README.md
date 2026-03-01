@@ -241,9 +241,9 @@ Este projeto está sob a licença **MIT**. Veja o arquivo `LICENSE` para mais de
 ## 📸 Screenshots
 
 ### Desktop
-![Desktop View](screenshots/foto1.png)
-![Desktop View](screenshots/foto2.png)
-![Desktop View](screenshots/foto3.png)
+![Desktop View](/assets/screenshots/foto1.png)
+![Desktop View](/assets/screenshots/foto2.png)
+![Desktop View](/assets/screenshots/foto3.png)
 
 
 ---

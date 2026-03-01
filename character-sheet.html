@@ -21,40 +21,40 @@
 <link rel="stylesheet" href="css/6-character.css">
 <link rel="stylesheet" href="css/7-compendium.css">
 <link rel="stylesheet" href="css/8-responsive.css">
+<link rel="stylesheet" href="css/9-dice-roller.css">
 
 </head>
 <body>
     
+    <!-- =========================================
+         NAVBAR
+    ========================================= -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">🎲 D&D 5e Homebrew</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="character-sheet.html" class="active">Ficha de Personagem</a></li>
+                <li><a href="compendium-races.html">Compêndio de Raças</a></li>
+                <li><a href="#" id="openDiceBtn">Dados</a></li>
+            </ul>
+            <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
+        </div>
+    </nav>
     <div class="app-container">
         <div class="header">
             <h1>Ficha de Personagem</h1>
             <p>Dungeons & Dragons 5ª Edição</p>
         </div>
 
-        <!-- Botão para abrir menu -->
-        <button class="menu-toggle" onclick="toggleMenu()" id="menuToggle">
-            ☰ Menu
-        </button>
 
-        <!-- Menu lateral -->
-        <div class="side-menu" id="sideMenu">
-            <button class="menu-close" onclick="toggleMenu()">✕</button>
-            <div class="controls">
-                <button class="btn btn-secondary" onclick="saveCharacter(); toggleMenu()">💾 Salvar</button>
-                <button class="btn btn-danger" onclick="newCharacter()">➕ Nova Ficha</button>
-                <button class="btn btn-primary" onclick="exportCharacterJSON(); toggleMenu()">💾 Baixar Ficha (.json)</button>
-                <button class="btn btn-secondary" onclick="showLoadModal(); toggleMenu()">📂 Carregar</button>
-                <button class="btn btn-secondary" onclick="document.getElementById('importFileInput').click(); toggleMenu()">📂 Carregar Arquivo (.json)</button>
-                <button class="btn btn-primary" onclick="toggleMenu(); window.print() ">🖨️ Imprimir Ficha</button>
-                
-            </div>
-        </div>
+
+
         <input type="file" id="importFileInput" accept=".json" onchange="importCharacterJSON(event)" style="display: none;">
 
 
 
-        <!-- Overlay escuro quando menu aberto -->
-        <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
 
         <div class="save-indicator" id="saveIndicator">✓ Salvo automaticamente</div>
 
@@ -72,6 +72,9 @@
                 </button>
                 <button class="tab-btn" onclick="switchTab('tab4')">
                     📖 Descrição
+                </button>
+                <button class="tab-btn" onclick="switchTab('tab5')">
+                    ⚙️ Configurações
                 </button>
             </div>
         <!-- ABA 1: PRINCIPAL -->
@@ -638,9 +641,46 @@
                 </div>
             </div>
         </div>
-    </div>
+        <!-- ABA 5: CONFIGURAÇÕES/ MODIFICAÇÕES -->
+        <div class="tab-content" id="tab5">
+            <div class="sheet-container">
+                <div class="sheet-grid">
+                    <!-- Coluna A: ações rápidas -->
+                    <div>
+                        <div class="section">
+                            <div class="section-title">Ações Rápidas</div>
+                            <div class="section-content">
+                                <div class="controls" style="flex-direction:column; gap:10px;">
+                                    <button class="btn btn-secondary" onclick="saveCharacter()">💾 Salvar</button>
+                                    <button class="btn btn-danger" onclick="newCharacter()">➕ Nova Ficha</button>
+                                    <button class="btn btn-primary" onclick="exportCharacterJSON()">💾 Baixar Ficha (.json)</button>
+                                    <button class="btn btn-secondary" onclick="showLoadModal()">📂 Carregar</button>
+                                    <button class="btn btn-secondary" onclick="document.getElementById('importFileInput').click()">📂 Carregar Arquivo (.json)</button>
+                                    <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Ficha</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-
+                    <!-- Coluna B: configurações/modificações -->
+                    <div>
+                        <div class="section">
+                            <div class="section-title">Configurações & Modificações</div>
+                            <div class="section-content">
+                                <div class="input-group">
+                                    <label><input type="checkbox" id="toggleDarkMode" onchange="toggleDarkMode()"> Modo Escuro</label>
+                                </div>
+                                <div id="modification-options" style="margin-top:12px;">
+                                    <!-- Espaço para futuras opções: ajustes de fonte, unidades, preferências, etc. -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- fecha .tabs-container -->
+    
     <!-- Modal Carregar -->
     <div class="modal" id="loadModal">
         <div class="modal-content">
@@ -649,7 +689,47 @@
             <button class="btn btn-secondary" onclick="hideLoadModal()" style="width: 100%; margin-top: 15px;">Fechar</button>
         </div>
     </div>
-    <!-- Footer -->
+        </div> <!-- fecha .app-container -->
+
+        <!-- Modal: Dice Roller -->
+        <div class="modal" id="diceModal" aria-hidden="true">
+            <div class="modal-content dice-modal-content">
+                <button class="menu-close" id="closeDiceBtn">✕</button>
+                <h2 class="modal-title">Lançador de Dados</h2>
+                <div class="dice-grid">
+                    <div class="dice-controls">
+                        <label>Quantidade</label>
+                        <div class="qty-spinner">
+                            <button class="qty-btn" id="qtyDown">▾</button>
+                            <span id="diceQty" class="qty-display">1</span>
+                            <button class="qty-btn" id="qtyUp">▴</button>
+                        </div>
+
+                        <label>Tipo</label>
+                        <div class="dice-type-buttons" id="diceType">
+                            <button class="die-btn die-d4" data-sides="4" title="d4">d4</button>
+                            <button class="die-btn die-d6" data-sides="6" title="d6">d6</button>
+                            <button class="die-btn die-d8" data-sides="8" title="d8">d8</button>
+                            <button class="die-btn die-d10" data-sides="10" title="d10">d10</button>
+                            <button class="die-btn die-d12" data-sides="12" title="d12">d12</button>
+                            <button class="die-btn die-d20 active" data-sides="20" title="d20">d20</button>
+                            <button class="die-btn die-d100" data-sides="100" title="d100">d100</button>
+                        </div>
+
+                        <div style="display:flex; gap:8px; margin-top:6px;">
+                            <button class="btn btn-primary" id="rollDiceBtn">🎲 Rolar</button>
+                            <button class="btn btn-secondary" id="clearDiceBtn">Limpar</button>
+                        </div>
+                    </div>
+
+                    <div class="dice-results" id="diceResults">
+                        <div class="results-list" id="resultsList"></div>
+                        <div class="results-sum" id="resultsSum"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>© 2025 D&D 5e Homebrew - Sistema criado por TonhoDevi</p>
@@ -669,5 +749,6 @@
     <script src="js/character/inventory.js"></script>
     <script src="js/character/main.js"></script>
     <script src="js/character/spells.js"></script>
+    <script src="js/shared/dice-roller.js"></script>
 </body>
 </html>

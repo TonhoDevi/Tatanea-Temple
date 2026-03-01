@@ -375,32 +375,7 @@ function newCharacter() {
     }
 }
 
-// ========================================
-// MENU LATERAL
-// ========================================
-function toggleMenu() {
-    const menu = document.getElementById('sideMenu');
-    const overlay = document.getElementById('menuOverlay');
-    const toggle = document.getElementById('menuToggle');
-    
-    menu.classList.toggle('active');
-    overlay.classList.toggle('active');
-    
-    if (menu.classList.contains('active')) {
-        toggle.textContent = '✕ Fechar';
-    } else {
-        toggle.textContent = '☰ Menu';
-    }
-}
 
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const menu = document.getElementById('sideMenu');
-        if (menu.classList.contains('active')) {
-            toggleMenu();
-        }
-    }
-});
 
 // ========================================
 // SISTEMA DE ABAS
@@ -416,6 +391,28 @@ function switchTab(tabId) {
     event.target.classList.add('active');
     document.getElementById(tabId).classList.add('active');
 }
+
+// ========================================
+// CONFIGURAÇÕES / MODIFICAÇÕES
+// ========================================
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    // persistência simples no localStorage
+    if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('dnd_dark_mode', 'true');
+    } else {
+        localStorage.removeItem('dnd_dark_mode');
+    }
+}
+
+// carregar preferência ao iniciar
+window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('dnd_dark_mode') === 'true') {
+        document.body.classList.add('dark-mode');
+        const cb = document.getElementById('toggleDarkMode');
+        if (cb) cb.checked = true;
+    }
+});
 
 // ========================================
 // EXPORTAR/IMPORTAR JSON

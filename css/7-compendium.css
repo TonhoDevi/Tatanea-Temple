@@ -1,194 +1,1160 @@
 /* ========================================
-   PÁGINA DE COMPÊNDIO (compendium-races.html)
-   NÃO USAR EM OUTRAS PÁGINAS
+   COMPÊNDIO DE RAÇAS — ESTILOS
+   Arquivo: css/7-compendium.css
+
+   Zero cores hardcoded.
+   Todas as cores vêm de 1-variables.css
+   (ou variables-grimorio.css para o tema alternativo).
+
+   ÍNDICE:
+   1.  Reset & Body
+   2.  Hero do Compêndio
+   3.  Barra de Estatísticas
+   4.  Painel de Filtros
+   5.  Abas de Categoria
+   6.  Controles de Filtro
+   7.  Tags de Filtros Ativos
+   8.  Contador de Resultados
+   9.  Grid de Raças
+   10. Card de Raça
+   11. Modo Lista
+   12. Modal — Overlay & Container
+   13. Modal — Hero / Quick Stats
+   14. Modal — Abas & Corpo
+   15. Modal — Traços & Habilidades
+   16. Rodapé
+   17. Animações
+   18. Responsivo
 ======================================== */
 
-.compendio-header {
-    background: linear-gradient(135deg, var(--cor5), var(--cor1));
-    padding: 60px 20px;
+/* =============================================
+   1. RESET & BODY
+============================================= */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cor1);
+    background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%,
+            var(--transp-marrom) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    font-family: 'Crimson Text', Georgia, serif;
+    color: var(--cor8);
+}
+
+/* =============================================
+   2. HERO DO COMPÊNDIO
+============================================= */
+.compendio-hero {
+    position: relative;
+    padding: 80px 20px 60px;
     text-align: center;
-    border-bottom: 4px solid var(--cor11);
-}
-
-.compendio-header h1 {
-    font-family: 'Pirata One', cursive;
-    font-size: 3rem;
-    color: var(--cor3);
-    margin-bottom: 15px;
-}
-
-.compendio-header p {
-    color: var(--cor8);
-    font-size: 1.2rem;
-}
-
-.filtros-section {
-    padding: 30px 20px;
-    background: linear-gradient(135deg, var(--cor14));
-}
-
-.filtros {
-    display: flex;
-    gap: 15px;
-    max-width: 800px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-}
-
-.search-input {
-    flex: 1;
-    min-width: 250px;
-    padding: 12px 20px;
-    border: 2px solid var(--cor11);
-    background: var(--cor15);
-    color: var(--cor8);
-    font-size: 1rem;
-}
-
-.filter-select {
-    padding: 12px 20px;
-    border: 2px solid var(--cor11);
-    background: var(--cor15);
-    color: var(--cor8);
-    font-size: 1rem;
-    min-width: 200px;
-}
-
-.racas-section {
-    padding: 60px 20px;
-    background: linear-gradient(135deg, var(--cor13));
-}
-
-.racas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.raca-card {
-    background: linear-gradient(135deg, var(--cor14), var(--cor15));
-    border: 3px solid var(--cor11);
     overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    clip-path: polygon(
-        15px 0,
-        100% 0,
-        100% calc(100% - 15px),
-        calc(100% - 15px) 100%,
-        0 100%,
-        0 15px
-    );
 }
 
-.raca-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px var(--sombra-crimson-forte);
-    border-color: var(--cor3);
-}
-
-.raca-image {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-bottom: 3px solid var(--cor11);
-}
-
-.raca-info {
-    padding: 20px;
-}
-
-.raca-info h3 {
-    font-family: 'Cinzel', serif;
-    font-size: 1.4rem;
-    color: var(--cor3);
-    margin-bottom: 10px;
-}
-
-.raca-size,
-.raca-speed {
-    font-size: 0.9rem;
-    color: var(--cor10);
-    margin-bottom: 5px;
-}
-
-.raca-preview {
-    color: var(--cor8);
-    line-height: 1.6;
-    margin: 15px 0;
-}
-
-.btn-small {
-    padding: 8px 20px;
-    font-size: 0.9rem;
-}
-
-.modal-large {
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal-close {
+.compendio-hero::before {
+    content: '';
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: transparent;
-    border: none;
+    inset: 0;
+    background: radial-gradient(
+        ellipse 60% 80% at 50% 0%,
+        var(--brilho-crimson-medio) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+}
+
+.hero-rune-left,
+.hero-rune-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 6rem;
+    opacity: .04;
     color: var(--cor3);
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 1001;
-    width: 40px;
-    height: 40px;
+    font-family: 'Pirata One', cursive;
+    pointer-events: none;
+    user-select: none;
+}
+.hero-rune-left  { left: 2%; }
+.hero-rune-right { right: 2%; }
+
+.hero-eyebrow {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: .72rem;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--cor3);
+    margin-bottom: 12px;
+    opacity: .8;
+}
+
+.compendio-hero h1 {
+    font-family: 'Pirata One', cursive;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    color: var(--cor19);
+    line-height: 1.1;
+    margin: 0 0 16px;
+    text-shadow:
+        0 0 40px var(--sombra-crimson),
+        0 2px 8px var(--sombra-preta);
+    letter-spacing: .04em;
+}
+
+/* Divisor ornamental */
+.hero-divider {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    gap: 16px;
+    margin: 0 auto 18px;
+    max-width: 420px;
+}
+.hero-divider::before,
+.hero-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+}
+.hero-divider::before {
+    background: linear-gradient(90deg, transparent, var(--cor14));
+}
+.hero-divider::after {
+    background: linear-gradient(90deg, var(--cor14), transparent);
+}
+.hero-divider-gem {
+    width: 8px;
+    height: 8px;
+    background: var(--cor3);
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px var(--cor3);
 }
 
-.modal-close:hover {
-    background: var(--cor6);
-    transform: rotate(90deg);
+.compendio-hero p {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--cor10);
+    margin: 0;
 }
 
-#racaDetails h2 {
-    font-family: 'Pirata One', cursive;
-    font-size: 2.5rem;
-    color: var(--cor3);
-    margin-bottom: 20px;
-    text-align: center;
+/* =============================================
+   3. BARRA DE ESTATÍSTICAS
+============================================= */
+.stats-bar {
+    background: linear-gradient(180deg, var(--cor5) 0%, var(--cor1) 100%);
+    border-top: 1px solid var(--cor11);
+    border-bottom: 1px solid var(--cor11);
+    padding: 14px 20px;
 }
 
-#racaDetails h3 {
+.stats-bar-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--brilho-crimson-medio);
+    border: 1px solid var(--brilho-crimson-forte);
+    border-radius: 30px;
+    padding: 6px 16px;
     font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
+    font-size: .72rem;
+    letter-spacing: .08em;
     color: var(--cor3);
-    margin: 30px 0 15px;
+}
+
+.stat-pill-icon { font-size: 1rem; }
+.stat-pill-num  {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cor19);
+}
+
+/* =============================================
+   4. PAINEL DE FILTROS
+============================================= */
+.filtros-panel {
+    background: var(--cor5);
     border-bottom: 2px solid var(--cor11);
-    padding-bottom: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow:
+        0 4px 24px var(--sombra-preta),
+        0 0 0 0 transparent;
 }
 
-#racaDetails h4 {
+.filtros-panel-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* =============================================
+   5. ABAS DE CATEGORIA
+============================================= */
+.category-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--cor11);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.category-tabs::-webkit-scrollbar { display: none; }
+
+.cat-tab {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 14px 20px;
     font-family: 'Cinzel', serif;
-    font-size: 1.2rem;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cor10);
+    cursor: pointer;
+    position: relative;
+    transition: color .25s ease;
+    white-space: nowrap;
+}
+
+.cat-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--cor3);
+    transform: scaleX(0);
+    transition: transform .25s ease;
+}
+
+.cat-tab:hover       { color: var(--cor8); }
+.cat-tab.active      { color: var(--cor19); }
+.cat-tab.active::after { transform: scaleX(1); }
+
+.cat-count {
+    display: inline-block;
+    background: var(--brilho-crimson-medio);
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: .65rem;
+    margin-left: 5px;
+    color: var(--cor3);
+}
+.cat-tab.active .cat-count {
+    background: var(--brilho-crimson-forte);
+}
+
+/* =============================================
+   6. CONTROLES DE FILTRO
+============================================= */
+.filter-controls {
+    padding: 12px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Campo de busca */
+.search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cor10);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.search-input-v2 {
+    width: 100%;
+    background: var(--brilho-vermelho-leve);
+    border: 1px solid var(--cor11);
+    border-radius: 6px;
+    padding: 9px 12px 9px 36px;
+    color: var(--cor8);
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+.search-input-v2::placeholder { color: var(--cor10); }
+.search-input-v2:focus {
+    border-color: var(--cor14);
+    box-shadow: 0 0 0 3px var(--brilho-crimson-medio);
+}
+
+/* Selects */
+.filter-select-v2 {
+    background-color: var(--brilho-vermelho-leve);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239c8055'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    border: 1px solid var(--cor11);
+    border-radius: 6px;
+    padding: 9px 32px 9px 12px;
+    color: var(--cor8);
+    font-family: 'Cinzel', serif;
+    font-size: .72rem;
+    letter-spacing: .05em;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    transition: border-color .25s ease;
+}
+.filter-select-v2 option { background: var(--cor15); }
+.filter-select-v2:focus  { border-color: var(--cor14); }
+
+/* Toggle de visualização */
+.view-toggle {
+    display: flex;
+    gap: 2px;
+    background: var(--transp-preto);
+    border: 1px solid var(--cor11);
+    border-radius: 6px;
+    padding: 3px;
+    flex-shrink: 0;
+}
+
+.view-btn {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    color: var(--cor10);
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: color .25s ease, background .25s ease;
+}
+.view-btn:hover { color: var(--cor8); }
+.view-btn.active {
+    background: var(--brilho-crimson-forte);
+    color: var(--cor3);
+}
+
+/* =============================================
+   7. TAGS DE FILTROS ATIVOS
+============================================= */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 0 10px;
+}
+.active-filters:empty { display: none; }
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--brilho-crimson-medio);
+    border: 1px solid var(--brilho-crimson-forte);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-family: 'Crimson Text', serif;
+    font-size: .85rem;
+    color: var(--cor3);
+    animation: tagIn .2s ease;
+}
+
+.filter-tag-remove {
+    background: none;
+    border: none;
+    color: var(--cor14);
+    cursor: pointer;
+    font-size: .9rem;
+    padding: 0;
+    line-height: 1;
+    transition: color .25s ease;
+}
+.filter-tag-remove:hover { color: var(--cor19); }
+
+.clear-filters-btn {
+    background: none;
+    border: 1px solid var(--transp-vermelho);
+    border-radius: 20px;
+    padding: 3px 12px;
+    color: var(--cor7);
+    font-family: 'Cinzel', serif;
+    font-size: .65rem;
+    letter-spacing: .08em;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+.clear-filters-btn:hover {
+    background: var(--brilho-vermelho-medio);
+    color: var(--cor19);
+    border-color: var(--cor7);
+}
+
+/* =============================================
+   8. CONTADOR DE RESULTADOS
+============================================= */
+.results-header {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.results-count {
+    font-family: 'Cinzel', serif;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    color: var(--cor10);
+}
+.results-count strong {
+    color: var(--cor3);
+    font-size: .9rem;
+}
+
+.no-results {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--cor10);
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+}
+.no-results-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 16px;
+    opacity: .4;
+}
+
+/* =============================================
+   9. SEÇÃO E GRID DE RAÇAS
+============================================= */
+.racas-section-v2 {
+    padding: 20px 20px 60px;
+}
+
+.racas-container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.racas-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Modo lista */
+.racas-grid-v2.list-view {
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+/* =============================================
+   10. CARD DE RAÇA — MODO GRADE
+============================================= */
+.raca-card-v2 {
+    background: linear-gradient(160deg, var(--cor15) 0%, var(--cor5) 100%);
+    border: 1px solid var(--cor11);
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+    overflow: hidden;
+    position: relative;
+    animation: cardIn .3s ease both;
+}
+
+/* Reflexo dourado sutil */
+.raca-card-v2::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        160deg,
+        var(--brilho-crimson-leve) 0%,
+        transparent 50%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Barra de categoria no topo */
+.raca-card-v2::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 1;
+}
+.raca-card-v2[data-cat="global"]::after       { background: var(--cor-cat-global); }
+.raca-card-v2[data-cat="tribal"]::after       { background: var(--cor-cat-tribal); }
+.raca-card-v2[data-cat="mistica"]::after      { background: var(--cor-cat-mistica); }
+.raca-card-v2[data-cat="sobrenatural"]::after { background: var(--cor-cat-sobrenatural); }
+
+.raca-card-v2:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 40px var(--sombra-preta),
+        0 0 0 1px var(--cor14);
+    border-color: var(--cor14);
+}
+
+/* Imagem */
+.card-image-wrap {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.card-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform .5s ease;
+    filter: sepia(.15) contrast(1.05);
+}
+.raca-card-v2:hover .card-image-wrap img { transform: scale(1.05); }
+
+.card-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        0deg,
+        var(--cor5) 0%,
+        transparent 50%
+    );
+}
+
+/* Badge de categoria */
+.card-cat-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: .6rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    backdrop-filter: blur(6px);
+    z-index: 2;
+}
+
+/* Badges por categoria */
+[data-cat="global"] .card-cat-badge {
+    background: var(--cor-cat-global-bg);
+    border: 1px solid var(--cor-cat-global);
+    color: var(--cor-cat-global-text);
+}
+[data-cat="tribal"] .card-cat-badge {
+    background: var(--cor-cat-tribal-bg);
+    border: 1px solid var(--cor-cat-tribal);
+    color: var(--cor-cat-tribal-text);
+}
+[data-cat="mistica"] .card-cat-badge {
+    background: var(--cor-cat-mistica-bg);
+    border: 1px solid var(--cor-cat-mistica);
+    color: var(--cor-cat-mistica-text);
+}
+[data-cat="sobrenatural"] .card-cat-badge {
+    background: var(--cor-cat-sob-bg);
+    border: 1px solid var(--cor-cat-sobrenatural);
+    color: var(--cor-cat-sobrenatural-text);
+}
+
+/* Corpo do card */
+.card-body {
+    padding: 14px 16px 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--cor19);
+    margin: 0 0 8px;
+    line-height: 1.2;
+    text-shadow: 0 1px 4px var(--sombra-preta);
+}
+
+.card-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
     margin-bottom: 10px;
 }
 
-#racaDetails ul {
+.stat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--transp-preto);
+    border: 1px solid var(--brilho-crimson-medio);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: 'Crimson Text', serif;
+    font-size: .8rem;
+    color: var(--cor10);
+}
+
+.card-desc {
+    font-family: 'Crimson Text', serif;
+    font-size: .9rem;
+    color: var(--cor10);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card-btn {
+    background: none;
+    border: 1px solid var(--brilho-crimson-forte);
+    border-radius: 4px;
+    padding: 5px 14px;
+    color: var(--cor3);
+    font-family: 'Cinzel', serif;
+    font-size: .65rem;
+    letter-spacing: .1em;
+    cursor: pointer;
+    transition: background .25s ease, border-color .25s ease;
+}
+.card-btn:hover {
+    background: var(--brilho-crimson-forte);
+    border-color: var(--cor3);
+}
+
+/* =============================================
+   11. CARD — MODO LISTA
+============================================= */
+.racas-grid-v2.list-view .raca-card-v2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.racas-grid-v2.list-view .card-image-wrap {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    border-radius: 0;
+}
+
+.racas-grid-v2.list-view .card-image-overlay { display: none; }
+.racas-grid-v2.list-view .card-cat-badge {
+    top: 6px;
+    right: 6px;
+    font-size: .55rem;
+}
+
+.racas-grid-v2.list-view .card-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+}
+
+.racas-grid-v2.list-view .card-name {
+    font-size: .95rem;
+    margin-bottom: 4px;
+    flex: 1;
+}
+
+.racas-grid-v2.list-view .card-stats  { margin-bottom: 0; }
+.racas-grid-v2.list-view .card-desc   { display: none; }
+.racas-grid-v2.list-view .card-footer { display: none; }
+
+/* =============================================
+   12. MODAL — OVERLAY & CONTAINER
+============================================= */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--transp-preto-total);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+}
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-v2 {
+    background: linear-gradient(160deg, var(--cor15) 0%, var(--cor1) 100%);
+    border: 1px solid var(--cor11);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 760px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 24px 80px var(--sombra-preta-forte),
+        0 0 0 1px var(--brilho-crimson-medio);
+    transform: translateY(20px) scale(.97);
+    transition: transform .3s cubic-bezier(.34, 1.56, .64, 1);
+}
+.modal-overlay.active .modal-v2 {
+    transform: translateY(0) scale(1);
+}
+
+/* =============================================
+   13. MODAL — HERO, QUICK STATS
+============================================= */
+.modal-hero {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.modal-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: sepia(.2) contrast(1.1);
+}
+
+.modal-hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        0deg,
+        var(--cor1) 0%,
+        var(--transp-preto-leve, rgba(0,0,0,.4)) 60%,
+        transparent 100%
+    );
+}
+
+.modal-hero-info {
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.modal-hero-name {
+    font-family: 'Pirata One', cursive;
+    font-size: 2rem;
+    color: var(--cor19);
+    line-height: 1.1;
+    text-shadow: 0 2px 12px var(--sombra-preta-forte);
+    margin: 0;
+}
+
+.modal-hero-badge {
+    flex-shrink: 0;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    backdrop-filter: blur(8px);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--transp-preto);
+    border: 1px solid var(--brilho-crimson-forte);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    color: var(--cor8);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .25s ease, border-color .25s ease, color .25s ease;
+    z-index: 2;
+}
+.modal-close-btn:hover {
+    background: var(--brilho-crimson-forte);
+    border-color: var(--cor3);
+    color: var(--cor3);
+}
+
+/* Quick stats */
+.modal-quick-stats {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--cor11);
+    flex-shrink: 0;
+}
+
+.quick-stat {
+    flex: 1;
+    min-width: 100px;
+    padding: 10px 16px;
+    text-align: center;
+    border-right: 1px solid var(--cor11);
+}
+.quick-stat:last-child { border-right: none; }
+
+.quick-stat-label {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: .6rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--cor10);
+    margin-bottom: 3px;
+}
+
+.quick-stat-value {
+    display: block;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    color: var(--cor19);
+    font-weight: 600;
+}
+
+/* =============================================
+   14. MODAL — ABAS & CORPO
+============================================= */
+.modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--cor11);
+    flex-shrink: 0;
+    background: var(--transp-preto);
+}
+
+.modal-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 12px;
+    font-family: 'Cinzel', serif;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cor10);
+    cursor: pointer;
+    position: relative;
+    transition: color .25s ease;
+}
+
+.modal-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: var(--cor3);
+    transform: scaleX(0);
+    transition: transform .25s ease;
+}
+
+.modal-tab:hover { color: var(--cor8); }
+.modal-tab.active { color: var(--cor19); }
+.modal-tab.active::after { transform: scaleX(1); }
+
+/* Corpo com scroll */
+.modal-body {
+    overflow-y: auto;
+    flex: 1;
+    padding: 20px;
+}
+.modal-body::-webkit-scrollbar        { width: 6px; }
+.modal-body::-webkit-scrollbar-track  { background: transparent; }
+.modal-body::-webkit-scrollbar-thumb  {
+    background: var(--cor11);
+    border-radius: 3px;
+}
+
+/* Painéis das abas */
+.tab-pane { display: none; animation: fadeIn .2s ease; }
+.tab-pane.active { display: block; }
+
+/* Aba: visão geral */
+.modal-descricao {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    color: var(--cor13);
+    line-height: 1.7;
+    font-style: italic;
+    margin: 0;
+}
+
+/* =============================================
+   15. MODAL — TRAÇOS & HABILIDADES
+============================================= */
+
+/* Divisor ornamental */
+.ornament-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0;
+    color: var(--cor11);
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+}
+.ornament-div::before,
+.ornament-div::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--cor11);
+}
+
+/* Lista de traços */
+.tracos-list {
     list-style: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-#racaDetails ul li {
-    padding: 10px 15px;
-    margin-bottom: 8px;
-    background: rgba(0, 0, 0, 0.3);
-    border-left: 4px solid var(--cor2);
-    color: var(--cor8);
+.traco-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: var(--transp-preto);
+    border: 1px solid var(--brilho-crimson-medio);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Crimson Text', serif;
+    font-size: .98rem;
+    color: var(--cor13);
+    line-height: 1.5;
+    transition: border-color .25s ease;
+}
+.traco-item:hover {
+    border-color: var(--brilho-crimson-forte);
 }
 
-#racaDetails p {
-    color: var(--cor8);
-    line-height: 1.8;
+.traco-bullet {
+    color: var(--cor3);
+    font-size: .7rem;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+/* Lista de habilidades */
+.habilidades-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.habilidade-card {
+    background: var(--transp-preto);
+    border: 1px solid var(--brilho-crimson-medio);
+    border-left: 3px solid var(--cor14);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 16px;
+    transition:
+        border-left-color .25s ease,
+        border-color .25s ease;
+}
+.habilidade-card:hover {
+    border-left-color: var(--cor3);
+    border-color: var(--brilho-crimson-forte);
+}
+
+.hab-nome {
+    font-family: 'Cinzel', serif;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--cor19);
+    margin-bottom: 6px;
+    letter-spacing: .04em;
+}
+
+.hab-desc {
+    font-family: 'Crimson Text', serif;
+    font-size: .95rem;
+    color: var(--cor10);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* =============================================
+   16. RODAPÉ
+============================================= */
+.footer-v2 {
+    background: var(--cor1);
+    border-top: 1px solid var(--cor11);
+    padding: 28px 20px;
+    text-align: center;
+}
+
+.footer-v2 p {
+    font-family: 'Crimson Text', serif;
+    font-size: .9rem;
+    color: var(--cor10);
+    margin: 0 0 12px;
+}
+
+.footer-links-v2 {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links-v2 a {
+    font-family: 'Cinzel', serif;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    color: var(--cor14);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color .25s ease;
+}
+.footer-links-v2 a:hover { color: var(--cor3); }
+
+/* =============================================
+   17. ANIMAÇÕES
+============================================= */
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes tagIn {
+    from { opacity: 0; transform: scale(.85); }
+    to   { opacity: 1; transform: scale(1);   }
+}
+
+/* =============================================
+   18. RESPONSIVO
+============================================= */
+@media (max-width: 900px) {
+    .racas-grid-v2 {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .cat-tab {
+        padding: 12px 14px;
+        font-size: .65rem;
+    }
+
+    .filter-controls {
+        gap: 8px;
+    }
+
+    .search-wrap {
+        min-width: 100%;
+        order: -1;
+    }
+
+    .racas-grid-v2 {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-hero-name {
+        font-size: 1.4rem;
+    }
+
+    .modal-quick-stats {
+        flex-wrap: wrap;
+    }
+
+    .quick-stat {
+        min-width: 50%;
+        border-bottom: 1px solid var(--cor11);
+    }
+
+    .hero-rune-left,
+    .hero-rune-right {
+        display: none;
+    }
+
+    .stats-bar-inner {
+        gap: 10px;
+    }
+
+    .stat-pill {
+        padding: 5px 12px;
+        font-size: .65rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .modal-tabs {
+        font-size: .6rem;
+    }
+
+    .modal-tab {
+        padding: 10px 6px;
+        font-size: .6rem;
+        letter-spacing: .05em;
+    }
+
+    .racas-grid-v2.list-view .card-image-wrap {
+        width: 90px;
+        height: 90px;
+    }
 }
