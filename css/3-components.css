@@ -506,7 +506,7 @@ input[type="number"] {
     height: 50px;
     cursor: pointer;
     background: var(--transp-escuro-medio);
-    border: 3px solid var(--cor9);
+    border: 0px solid var(--cor9);
     position: relative;
     clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
     transition: all 0.3s ease;
@@ -543,7 +543,7 @@ input[type="number"] {
     border-radius: 0px;
     background: var(--cor22);
     clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-    color: var(--cor24);
+    color: var(--cor20);
 }
 
 /* ════════════════════════════════════════════════════════════════════

@@ -125,8 +125,9 @@
     --cosmos-section:       #0a0d28;
     --cosmos-input:         rgba(10, 14, 40, 0.95);
     --cosmos-statbox:       #080b22;
-    --cosmos-bonusbox:      #141848;
-    --cosmos-border-dim:    rgba(96,  85, 160, 0.35);
+    --cosmos-bonusbox:      #1b2160;
+    --cosmos-bonusprof:     #110141;
+    --cosmos-border-dim:    rgba(11, 4, 50, 0.35);
     --cosmos-border:        rgba(144,128, 200, 0.55);
     --cosmos-ornament:      #9080c8;
     --cosmos-silver:        #c8bce8;
@@ -171,13 +172,13 @@
     /* INPUTS E BOXES */
     --cor12: var(--cosmos-input);
     --cor21: var(--cosmos-section);  /* era texto escuro, agora fundo escuro */
-    --cor22: var(--cosmos-bonusbox);
+    --cor22: var(--cosmos-bonusprof);
     --cor24: var(--color-state-proficient-bg);
     --cor25: var(--color-state-proficient-border);
 
     /* EFEITOS */
     --cor7:  var(--color-effect-ember);
-    --cor9:  #030509;
+    --cor9:  #b8c0ff;
 
     /* CATEGORIAS */
     --cor-cat-global:       var(--color-category-global);
