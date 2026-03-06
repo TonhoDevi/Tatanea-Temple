@@ -114,14 +114,12 @@
                         </div>
                     </div>
 
-                    <!-- Vida e Pontos -->
+                    <!-- Combate - DISPLAY -->
                     <div class="section">
-                        <div class="section-title">Vitalidade</div>
+                        <div class="section-title">⚔️ Combate</div>
+                        
+                        <!-- Linha 1: Vida -->
                         <div class="combat-grid" style="grid-template-columns: repeat(3, 1fr);">
-                            <div class="info-display">
-                                <label class="input-label">Vitalidade (Rank)</label>
-                                <div class="display-value" id="display-vitalidade">0</div>
-                            </div>
                             <div class="info-display">
                                 <label class="input-label">Vida Máxima</label>
                                 <div class="display-value" id="display-vidaMaxima">10</div>
@@ -129,6 +127,42 @@
                             <div class="info-display">
                                 <label class="input-label">Vida Atual</label>
                                 <div class="display-value" id="display-vidaAtual">10</div>
+                            </div>
+                            <div class="info-display">
+                                <label class="input-label">Vida Temporária</label>
+                                <div class="display-value" id="display-vidaTemporaria">0</div>
+                            </div>
+                        </div>
+
+                        <!-- Linha 2: Resistências -->
+                        <div class="combat-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 15px;">
+                            <div class="info-display">
+                                <label class="input-label">Resistência Física</label>
+                                <div class="display-value" id="display-resistenciaFisica">0</div>
+                            </div>
+                            <div class="info-display">
+                                <label class="input-label">Resistência Mágica</label>
+                                <div class="display-value" id="display-resistenciaMagica">0</div>
+                            </div>
+                            <div class="info-display">
+                                <label class="input-label">Resistência Mental</label>
+                                <div class="display-value" id="display-resistenciaMental">0</div>
+                            </div>
+                        </div>
+
+                        <!-- Linha 3: Combate -->
+                        <div class="combat-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 15px;">
+                            <div class="info-display">
+                                <label class="input-label">Esquiva</label>
+                                <div class="display-value" id="display-esquiva">0</div>
+                            </div>
+                            <div class="info-display">
+                                <label class="input-label">Iniciativa</label>
+                                <div class="display-value" id="display-iniciativa">0</div>
+                            </div>
+                            <div class="info-display">
+                                <label class="input-label">Estado</label>
+                                <div class="display-value" id="display-estado">Normal</div>
                             </div>
                         </div>
                     </div>
@@ -594,15 +628,12 @@
                         </div>
                     </div>
 
-                    <!-- Vitalidade - EDIÇÃO -->
+                    <!-- Combate - EDIÇÃO -->
                     <div class="section">
-                        <div class="section-title">Vitalidade</div>
+                        <div class="section-title">⚔️ Combate</div>
+                        
+                        <!-- Linha 1: Vida -->
                         <div class="combat-grid" style="grid-template-columns: repeat(3, 1fr);">
-                            <div class="input-group">
-                                <label class="input-label">Vitalidade (Rank)</label>
-                                <input type="number" id="vitalidade" value="0" min="0"
-                                    oninput="mmCalculateAll(); mmAutoSave()">
-                            </div>
                             <div class="input-group">
                                 <label class="input-label">Vida Máxima</label>
                                 <input type="number" id="vidaMaxima" value="10" min="1"
@@ -612,6 +643,55 @@
                                 <label class="input-label">Vida Atual</label>
                                 <input type="number" id="vidaAtual" value="10" min="0"
                                     oninput="mmAutoSave(); mmUpdateDisplays()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Vida Temporária</label>
+                                <input type="number" id="vidaTemporaria" value="0" min="0"
+                                    oninput="mmAutoSave(); mmUpdateDisplays()">
+                            </div>
+                        </div>
+
+                        <!-- Linha 2: Resistências -->
+                        <div class="combat-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 15px;">
+                            <div class="input-group">
+                                <label class="input-label">Resistência Física</label>
+                                <input type="number" id="resistenciaFisica" value="0" min="0"
+                                    oninput="mmAutoSave(); mmUpdateDisplays()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Resistência Mágica</label>
+                                <input type="number" id="resistenciaMagica" value="0" min="0"
+                                    oninput="mmAutoSave(); mmUpdateDisplays()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Resistência Mental</label>
+                                <input type="number" id="resistenciaMental" value="0" min="0"
+                                    oninput="mmAutoSave(); mmUpdateDisplays()">
+                            </div>
+                        </div>
+
+                        <!-- Linha 3: Combate -->
+                        <div class="combat-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 15px;">
+                            <div class="input-group">
+                                <label class="input-label">Esquiva</label>
+                                <input type="number" id="esquiva" value="0" min="0"
+                                    oninput="mmAutoSave(); mmUpdateDisplays()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Iniciativa</label>
+                                <input type="number" id="iniciativa" value="0" min="0"
+                                    oninput="mmAutoSave(); mmUpdateDisplays()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Estado</label>
+                                <select id="estado" oninput="mmAutoSave(); mmUpdateDisplays()">
+                                    <option value="Normal">Normal</option>
+                                    <option value="Enjoado">Enjoado</option>
+                                    <option value="Aterrorizado">Aterrorizado</option>
+                                    <option value="Paralisado">Paralisado</option>
+                                    <option value="Incapacitado">Incapacitado</option>
+                                    <option value="Morto">Morto</option>
+                                </select>
                             </div>
                         </div>
                     </div>
