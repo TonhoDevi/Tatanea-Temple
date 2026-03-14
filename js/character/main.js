@@ -36,7 +36,6 @@ function getCurrentCharacter() {
         deslocVoar: document.getElementById('deslocVoar').value,
         deslocEscalar: document.getElementById('deslocEscalar').value,
         salto: document.getElementById('salto').value,
-        dadosVida: '',
         pvTotais: document.getElementById('pvTotais').value,
         pvAtuais: document.getElementById('pvAtuais').value,
         pvTemp: document.getElementById('pvTemp').value,
@@ -120,7 +119,6 @@ function loadCharacterData(char) {
     document.getElementById('deslocVoar').value = char.deslocVoar || '-';
     document.getElementById('deslocEscalar').value = char.deslocEscalar || '15';
     document.getElementById('salto').value = char.salto || '0';
-    document.getElementById('dadosVida').value = char.dadosVida || '';
     document.getElementById('pvTotais').value = char.pvTotais || 0;
     document.getElementById('pvAtuais').value = char.pvAtuais || 0;
     document.getElementById('pvTemp').value = char.pvTemp || 0;
@@ -486,4 +484,5 @@ renderMagicItems();
 renderSpells();
 renderAttacks();
 renderAbilities();
+renderIndiduals();
 enableAutoBackup();
