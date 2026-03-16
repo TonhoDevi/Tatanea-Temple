@@ -8,7 +8,7 @@
 //     Settings → API → anon public
 // ────────────────────────────────────────────────────────────────
 const SUPABASE_URL  = 'https://mqremvyprwuzqnsmwfqt.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_OThvjoIRCIZsWoiEaEMj9w_dXEo4KvOeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xcmVtdnlwcnd1enFuc213ZnF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NjM3NzcsImV4cCI6MjA4OTIzOTc3N30.KFlQBzw9sZo4GtSyqRK5s2PKXbeahsozaiT1z_mz3qA';   // ← troque aqui
+const SUPABASE_ANON = 'sb_publishable_OThvjoIRCIZsWoiEaEMj9w_dXEo4KvO';   // ← troque aqui
 
 // ── 2. CLIENTE SUPABASE (via CDN, sem npm) ───────────────────────
 //  O CDN é carregado pelo HTML antes deste script.
