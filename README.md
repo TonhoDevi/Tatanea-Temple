@@ -1,6 +1,5 @@
 # 🐉 Tatanea Temple (Templo de Tatânea)
 
-![Tatanea Temple Banner](tatanea_temple_banner_1774924801338.png)
 
 Uma plataforma definitiva para aventureiros! **Tatanea Temple** é um sistema web interativo e de alto desempenho para criação, gerenciamento e salvamento em nuvem de fichas de personagens para Dungeons & Dragons 5ª Edição e Mutantes & Malfeitores 3ª Edição, com foco total em conteúdo **Homebrew**.
 

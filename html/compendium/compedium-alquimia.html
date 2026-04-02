@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compêndio de Alquimia — Tatânea Temple</title>
+
+    <!-- Fontes -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS base do projeto -->
+    <link rel="stylesheet" href="css/1-variables.css">
+    <link rel="stylesheet" href="css/4-navbar.css">
+
+    <!-- CSS exclusivo desta página -->
+    <link rel="stylesheet" href="css/compendium/alquimia.css">
+</head>
+
+<body class="alq-page">
+
+    <!-- =============================================
+     NAVBAR
+============================================= -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">🎲 Tatânea Temple</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="html/compendium/compendium-races.html">Raças</a></li>
+                <li><a href="html/compendium/compendium-classes.html">Classes</a></li>
+                <li><a href="html/compendium/alquimia.html" class="active">Alquimia</a></li>
+            </ul>
+            <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
+        </div>
+    </nav>
+
+    <!-- =============================================
+     HERO
+============================================= -->
+    <header class="alq-hero">
+        <!-- Bolhas decorativas -->
+        <div class="alq-hero-bubble"></div>
+        <div class="alq-hero-bubble"></div>
+        <div class="alq-hero-bubble"></div>
+
+        <span class="alq-hero-eyebrow">Grimório de Destilaria</span>
+        <h1>Compêndio de Alquimia</h1>
+        <div class="alq-hero-divider">
+            <div class="alq-hero-gem"></div>
+        </div>
+        <p>Plantas, essências e segredos da arte de transmutar o mundo em poder líquido</p>
+    </header>
+
+    <!-- =============================================
+     BARRA DE ESTATÍSTICAS
+============================================= -->
+    <div class="alq-stats-bar">
+        <div class="alq-stats-inner">
+            <div class="alq-stat-pill">⚗️ <span class="num" id="statTotal">0</span> Poções Totais</div>
+            <div class="alq-stat-pill" style="border-color:var(--rar-comum);    background:rgba(160,160,160,.08)">⬛
+                <span class="num" style="color:var(--rar-comum)" id="statComum">0</span> Comuns
+            </div>
+            <div class="alq-stat-pill" style="border-color:var(--rar-incomum);  background:rgba(78,203,122,.08)">🟢
+                <span class="num" style="color:var(--rar-incomum)" id="statIncomum">0</span> Incomuns
+            </div>
+            <div class="alq-stat-pill" style="border-color:var(--rar-rara);     background:rgba(74,176,232,.08)">🔵
+                <span class="num" style="color:var(--rar-rara)" id="statRara">0</span> Raras
+            </div>
+            <div class="alq-stat-pill" style="border-color:var(--rar-muito-rara);background:rgba(192,96,240,.08)">🟣
+                <span class="num" style="color:var(--rar-muito-rara)" id="statMuitoRara">0</span> Muito Raras
+            </div>
+            <div class="alq-stat-pill" style="border-color:var(--rar-lendaria); background:rgba(232,160,48,.08)">🟡
+                <span class="num" style="color:var(--rar-lendaria)" id="statLendaria">0</span> Lendárias
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================
+     NAVEGAÇÃO POR ABAS PRINCIPAL
+============================================= -->
+    <div
+        style="background:rgba(6,8,14,.98);border-bottom:2px solid rgba(78,203,122,.18);position:sticky;top:70px;z-index:90;">
+        <div class="alq-nav">
+            <button class="alq-nav-tab active" data-panel="pocoes">
+                <span class="tab-icon">⚗️</span>Poções
+            </button>
+            <button class="alq-nav-tab" data-panel="regras">
+                <span class="tab-icon">📜</span>Regras de Fabricação
+            </button>
+            <button class="alq-nav-tab" data-panel="ferramentas">
+                <span class="tab-icon">🔧</span>Kits &amp; Estações
+            </button>
+            <button class="alq-nav-tab" data-panel="plantas">
+                <span class="tab-icon">🌿</span>Plantas &amp; Essências
+            </button>
+            <button class="alq-nav-tab" data-panel="mistura">
+                <span class="tab-icon">🧪</span>Mistura de Poções
+            </button>
+        </div>
+    </div>
+
+    <!-- =============================================
+     CONTEÚDO
+============================================= -->
+    <div class="alq-content">
+
+        <!-- ──────────────────────────────────────
+         PAINEL: POÇÕES
+    ────────────────────────────────────── -->
+        <div class="alq-panel active" id="panel-pocoes">
+
+            <!-- Filtros -->
+            <div class="alq-filters">
+                <div class="alq-search-wrap">
+                    <span class="alq-search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="alq-search"
+                        placeholder="Buscar por nome, fórmula, efeito ou núcleo..." autocomplete="off">
+                </div>
+                <select id="rarFilter" class="alq-select">
+                    <option value="">Todas as raridades</option>
+                    <option value="Comum">Comum</option>
+                    <option value="Incomum">Incomum</option>
+                    <option value="Rara">Rara</option>
+                    <option value="Muito Rara">Muito Rara</option>
+                    <option value="Lendária">Lendária</option>
+                </select>
+            </div>
+
+            <!-- Filtro por essência -->
+            <div class="alq-ess-filters">
+                <span
+                    style="font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.1em;color:var(--alq-text-dim);text-transform:uppercase;align-self:center;">Filtrar
+                    por Essência:</span>
+                <button class="alq-ess-btn" data-ess="λ" style="--ess-col:var(--ess-agua);"><span
+                        class="ess-sym">λ</span> Água</button>
+                <button class="alq-ess-btn" data-ess="Φ" style="--ess-col:var(--ess-ar);"><span class="ess-sym">Φ</span>
+                    Ar</button>
+                <button class="alq-ess-btn" data-ess="Ω" style="--ess-col:var(--ess-fogo);"><span
+                        class="ess-sym">Ω</span> Fogo</button>
+                <button class="alq-ess-btn" data-ess="Σ" style="--ess-col:var(--ess-terra);"><span
+                        class="ess-sym">Σ</span> Terra</button>
+                <button class="alq-ess-btn" data-ess="ζ" style="--ess-col:var(--ess-pos);"><span
+                        class="ess-sym">ζ</span> Positiva</button>
+                <button class="alq-ess-btn" data-ess="Ψ" style="--ess-col:var(--ess-neg);"><span
+                        class="ess-sym">Ψ</span> Negativa</button>
+            </div>
+
+            <p class="alq-results-count" id="resultsCount"></p>
+
+            <!-- Grid de poções -->
+            <div class="alq-grid" id="potionsGrid">
+                <!-- Preenchido pelo JS -->
+            </div>
+        </div>
+
+        <!-- ──────────────────────────────────────
+         PAINEL: REGRAS DE FABRICAÇÃO
+    ────────────────────────────────────── -->
+        <div class="alq-panel" id="panel-regras">
+
+            <div class="alq-section-title" style="margin-top:28px;">Como Fabricar Poções</div>
+
+            <div class="alq-rules-grid">
+
+                <div class="rules-section">
+                    <div class="rules-section-header">
+                        <span class="rules-section-icon">📦</span>
+                        <div class="rules-section-title">Materiais Necessários</div>
+                    </div>
+                    <div class="rules-section-body">
+                        <p>Para preparar uma poção é necessário um <strong>kit de alquimia</strong> (ou estação
+                            alquímica). Um kit fornece suporte para até <strong>5 usos base</strong> antes de ser gasto.
+                        </p>
+                        <p>Cada poção possui um <strong>Núcleo</strong> — ingrediente especial central — e uma
+                            <strong>combinação de Essências</strong> extraídas de plantas e ervas.
+                        </p>
+                        <p>Se uma poção requer teste de Resistência, o <strong>CD = 8 + bônus de proficiência +
+                                modificador de Inteligência</strong> no momento da criação.</p>
+                    </div>
+                </div>
+
+                <div class="rules-section">
+                    <div class="rules-section-header">
+                        <span class="rules-section-icon">🎲</span>
+                        <div class="rules-section-title">Teste de Fabricação</div>
+                    </div>
+                    <div class="rules-section-body">
+                        <p>Após reunir os materiais, realize um <strong>teste de habilidade com kit de
+                                alquimia</strong>.</p>
+                        <p><strong>CD = 8 + (2 × nº de componentes) + nível de desafio da raridade</strong></p>
+                        <p>O material é <strong>consumido</strong> independente do sucesso ou falha.</p>
+                        <p>Ajudantes com proficiência no kit concedem <strong>+1 por ajudante</strong> ao teste
+                            (limitado pela capacidade da ferramenta).</p>
+                    </div>
+                </div>
+
+                <div class="rules-section">
+                    <div class="rules-section-header">
+                        <span class="rules-section-icon">⏱️</span>
+                        <div class="rules-section-title">Tempo e Validade</div>
+                    </div>
+                    <div class="rules-section-body">
+                        <p>O tempo de fabricação é <strong>1 hora por componente</strong> utilizado na fórmula.</p>
+                        <p>Uma poção bem-sucedida possui validade em <strong>semanas igual ao bônus de
+                                proficiência</strong> do criador. Após esse tempo, a poção se torna inútil.</p>
+                        <p>Poções podem receber <em>Melhorias</em> — basta adicionar essências extras conforme descrito
+                            em cada receita para potencializar o efeito.</p>
+                    </div>
+                </div>
+
+                <div class="rules-section">
+                    <div class="rules-section-header">
+                        <span class="rules-section-icon">🌟</span>
+                        <div class="rules-section-title">Nível de Desafio por Raridade</div>
+                    </div>
+                    <div class="rules-section-body">
+                        <div class="alq-table-wrap">
+                            <table class="alq-table">
+                                <thead>
+                                    <tr>
+                                        <th>Raridade</th>
+                                        <th class="center">Nível de Desafio</th>
+                                        <th class="center">CD Extra</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="rar-chip rar-c">Comum</span></td>
+                                        <td class="center">0</td>
+                                        <td class="center bonus-val">+0</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rar-chip rar-i">Incomum</span></td>
+                                        <td class="center">2</td>
+                                        <td class="center bonus-val">+2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rar-chip rar-r">Rara</span></td>
+                                        <td class="center">4</td>
+                                        <td class="center bonus-val">+4</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rar-chip rar-mr">Muito Rara</span></td>
+                                        <td class="center">6</td>
+                                        <td class="center bonus-val">+6</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rar-chip rar-e">Lendária</span></td>
+                                        <td class="center">10</td>
+                                        <td class="center bonus-val">+10</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rules-section">
+                    <div class="rules-section-header">
+                        <span class="rules-section-icon">🌱</span>
+                        <div class="rules-section-title">Coleta de Plantas</div>
+                    </div>
+                    <div class="rules-section-body">
+                        <p>Para coletar plantas, o personagem faz um teste de <strong>Inteligência (Natureza) CD
+                                15</strong>.</p>
+                        <p>Em caso de sucesso, role um <strong>d20</strong> para determinar a quantidade obtida.</p>
+                        <p>O tempo gasto é de <strong>1 hora por teste</strong>. É possível realizar por dia um número
+                            de testes igual ao <strong>modificador de Inteligência (mínimo 1)</strong>.</p>
+                        <p>Um personagem imune a doenças ou com habilidade relevante tem <strong>vantagem</strong> nessa
+                            rolagem.</p>
+                        <div class="alq-table-wrap" style="margin-top:10px;">
+                            <table class="alq-table">
+                                <thead>
+                                    <tr>
+                                        <th>d20</th>
+                                        <th>Quantidade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1–10</td>
+                                        <td>1 unidade</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11–15</td>
+                                        <td>1d4 unidades</td>
+                                    </tr>
+                                    <tr>
+                                        <td>16–18</td>
+                                        <td>1d6 + 1 unidades</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19</td>
+                                        <td>1d8 + 2 unidades</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>2d6 + 3 unidades</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rules-section">
+                    <div class="rules-section-header">
+                        <span class="rules-section-icon">💰</span>
+                        <div class="rules-section-title">Valor de Mercado das Plantas</div>
+                    </div>
+                    <div class="rules-section-body">
+                        <div class="alq-table-wrap">
+                            <table class="alq-table">
+                                <thead>
+                                    <tr>
+                                        <th>Raridade</th>
+                                        <th class="center">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="rar-chip rar-c">Comum</span></td>
+                                        <td class="center bonus-val">10 PP</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rar-chip rar-i">Incomum</span></td>
+                                        <td class="center bonus-val">30 PP</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rar-chip rar-r">Rara</span></td>
+                                        <td class="center bonus-val">120 PP</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rar-chip rar-mr">Muito Rara</span></td>
+                                        <td class="center bonus-val">600 PP</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Calculadora de CD -->
+            <div class="alq-calc">
+                <div class="alq-calc-header">
+                    🧮 Calculadora de CD de Fabricação
+                </div>
+                <div class="alq-calc-body">
+                    <div class="alq-form-group">
+                        <label>Nº de Componentes</label>
+                        <input type="number" id="calcComps" class="alq-input" min="1" max="20" value="2"
+                            placeholder="2">
+                    </div>
+                    <div class="alq-form-group">
+                        <label>Raridade da Poção</label>
+                        <select id="calcRaridade" class="alq-select" style="width:100%;">
+                            <option value="Comum">Comum (+0)</option>
+                            <option value="Incomum">Incomum (+2)</option>
+                            <option value="Rara">Rara (+4)</option>
+                            <option value="Muito Rara">Muito Rara (+6)</option>
+                            <option value="Lendária">Lendária (+10)</option>
+                        </select>
+                    </div>
+                    <div class="alq-form-group">
+                        <label>Ferramenta Utilizada</label>
+                        <select id="calcFerramenta" class="alq-select" style="width:100%;">
+                            <option value="kit-c">Kit Comum (+0, max 1 pessoa)</option>
+                            <option value="kit-i">Kit Incomum (+2, max 2)</option>
+                            <option value="kit-r">Kit Raro (+4, max 3)</option>
+                            <option value="kit-mr">Kit Muito Raro (+6, max 4)</option>
+                            <option value="kit-e">Kit Épico (+8, max 5)</option>
+                        </select>
+                    </div>
+                    <div class="alq-form-group">
+                        <label>Estação Alquímica</label>
+                        <select id="calcEstacao" class="alq-select" style="width:100%;">
+                            <option value="nenhum">Nenhuma (+0)</option>
+                            <option value="est-c">Estação Comum (+3)</option>
+                            <option value="est-i">Estação Incomum (+6)</option>
+                            <option value="est-r">Estação Rara (+9)</option>
+                            <option value="est-mr">Estação Muito Rara (+12)</option>
+                            <option value="est-e">Estação Épica (+15)</option>
+                        </select>
+                    </div>
+                    <div class="alq-form-group">
+                        <label>Ajudantes (com proficiência)</label>
+                        <input type="number" id="calcAjudantes" class="alq-input" min="0" max="5" value="0">
+                    </div>
+                    <div>
+                        <button id="calcBtn" class="alq-calc-btn">Calcular CD</button>
+                    </div>
+                </div>
+                <div class="alq-calc-result" id="calcResult">
+                    <div class="alq-result-row">
+                        <div class="alq-result-item">
+                            <span class="alq-result-label">CD Total</span>
+                            <span class="alq-result-val" id="crCD">—</span>
+                        </div>
+                        <div class="alq-result-item">
+                            <span class="alq-result-label">Seu Bônus</span>
+                            <span class="alq-result-val" id="crBonus" style="color:var(--alq-green)">—</span>
+                        </div>
+                        <div class="alq-result-item">
+                            <span class="alq-result-label">Tempo</span>
+                            <span class="alq-result-val" id="crTempo" style="color:var(--alq-blue)">—</span>
+                        </div>
+                        <p class="alq-result-note" id="crNote"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ──────────────────────────────────────
+         PAINEL: KITS & ESTAÇÕES
+    ────────────────────────────────────── -->
+        <div class="alq-panel" id="panel-ferramentas">
+
+            <div class="alq-tools-panel">
+                <div class="alq-tools-header">
+                    <h2>Kits e Estações Alquímicas</h2>
+                    <p>A qualidade das suas ferramentas determina seu potencial de criação</p>
+                </div>
+
+                <div class="alq-tools-grid">
+
+                    <!-- KITS -->
+                    <div class="tool-type-section">
+                        <div class="tool-type-header">
+                            <span class="tool-type-icon">⚗️</span>
+                            <div class="tool-type-title">Kit de Alquimia</div>
+                            <div class="tool-type-sub">Portátil · Bônus começa em +0 e aumenta de 2 em 2 · Usos dobram a
+                                partir de 5</div>
+                        </div>
+                        <div class="tool-cards" id="kitCards">
+                            <!-- Preenchido pelo JS -->
+                        </div>
+
+                        <div style="padding:0 16px 16px;">
+                            <div class="rules-section-body">
+                                <div class="alq-table-wrap">
+                                    <table class="alq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Raridade</th>
+                                                <th class="center">Bônus ao Teste</th>
+                                                <th class="center">Total de Usos</th>
+                                                <th class="center">Máx. Pessoas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="rar-chip rar-c">Comum</span></td>
+                                                <td class="center"><span class="bonus-val">+0</span></td>
+                                                <td class="center"><span class="uses-val">5</span></td>
+                                                <td class="center"><span class="workers-val">1</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="rar-chip rar-i">Incomum</span></td>
+                                                <td class="center"><span class="bonus-val">+2</span></td>
+                                                <td class="center"><span class="uses-val">10</span></td>
+                                                <td class="center"><span class="workers-val">2</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="rar-chip rar-r">Raro</span></td>
+                                                <td class="center"><span class="bonus-val">+4</span></td>
+                                                <td class="center"><span class="uses-val">20</span></td>
+                                                <td class="center"><span class="workers-val">3</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="rar-chip rar-mr">Muito Raro</span></td>
+                                                <td class="center"><span class="bonus-val">+6</span></td>
+                                                <td class="center"><span class="uses-val">40</span></td>
+                                                <td class="center"><span class="workers-val">4</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="rar-chip rar-e">Épico</span></td>
+                                                <td class="center"><span class="bonus-val">+8</span></td>
+                                                <td class="center"><span class="uses-val">80</span></td>
+                                                <td class="center"><span class="workers-val">5</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ESTAÇÕES -->
+                    <div class="tool-type-section">
+                        <div class="tool-type-header">
+                            <span class="tool-type-icon">🏭</span>
+                            <div class="tool-type-title">Estação Alquímica</div>
+                            <div class="tool-type-sub">Fixa · Bônus começa em +3 e aumenta de 3 em 3 · Duração 10× maior
+                                · 5× mais pessoas</div>
+                        </div>
+                        <div class="tool-cards" id="estacaoCards">
+                            <!-- Preenchido pelo JS -->
+                        </div>
+
+                        <div style="padding:0 16px 16px;">
+                            <div class="rules-section-body">
+                                <div class="alq-table-wrap">
+                                    <table class="alq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Raridade</th>
+                                                <th class="center">Bônus ao Teste</th>
+                                                <th class="center">Total de Usos</th>
+                                                <th class="center">Máx. Pessoas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="rar-chip rar-c">Comum</span></td>
+                                                <td class="center"><span class="bonus-val">+3</span></td>
+                                                <td class="center"><span class="uses-val">50</span></td>
+                                                <td class="center"><span class="workers-val">5</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="rar-chip rar-i">Incomum</span></td>
+                                                <td class="center"><span class="bonus-val">+6</span></td>
+                                                <td class="center"><span class="uses-val">100</span></td>
+                                                <td class="center"><span class="workers-val">10</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="rar-chip rar-r">Raro</span></td>
+                                                <td class="center"><span class="bonus-val">+9</span></td>
+                                                <td class="center"><span class="uses-val">200</span></td>
+                                                <td class="center"><span class="workers-val">15</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="rar-chip rar-mr">Muito Raro</span></td>
+                                                <td class="center"><span class="bonus-val">+12</span></td>
+                                                <td class="center"><span class="uses-val">400</span></td>
+                                                <td class="center"><span class="workers-val">20</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="rar-chip rar-e">Épico</span></td>
+                                                <td class="center"><span class="bonus-val">+15</span></td>
+                                                <td class="center"><span class="uses-val">800</span></td>
+                                                <td class="center"><span class="workers-val">25</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /alq-tools-grid -->
+
+                <!-- Comparação rápida -->
+                <div class="alq-calc" style="margin-top:24px;">
+                    <div class="alq-calc-header">📊 Comparação: Kit vs Estação</div>
+                    <div style="padding:18px 22px;">
+                        <div class="alq-table-wrap">
+                            <table class="alq-table">
+                                <thead>
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th class="center">Kit (Épico)</th>
+                                        <th class="center">Estação (Épica)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bônus máximo ao teste</td>
+                                        <td class="center"><span class="bonus-val">+8</span></td>
+                                        <td class="center"><span class="bonus-val">+15</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Usos máximos</td>
+                                        <td class="center"><span class="uses-val">80</span></td>
+                                        <td class="center"><span class="uses-val">800</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Máximo de pessoas</td>
+                                        <td class="center"><span class="workers-val">5</span></td>
+                                        <td class="center"><span class="workers-val">25</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Portátil?</td>
+                                        <td class="center" style="color:var(--alq-green)">✔ Sim</td>
+                                        <td class="center" style="color:var(--alq-red)">✘ Não</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Combinável?</td>
+                                        <td class="center" style="color:var(--alq-text-dim)">—</td>
+                                        <td class="center" style="color:var(--alq-amber)">✔ Kit + Estação</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p
+                            style="font-family:'Crimson Text',serif;font-style:italic;color:var(--alq-text-dim);font-size:.95rem;margin-top:14px;padding:0;">
+                            💡 <strong style="color:var(--alq-green)">Dica:</strong> Kit e Estação podem ser combinados
+                            — os bônus se acumulam! Um Kit Épico (+8) usado em uma Estação Épica (+15) resulta em
+                            <strong style="color:var(--alq-amber)">+23</strong> no teste de fabricação (mais os
+                            ajudantes).
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ──────────────────────────────────────
+         PAINEL: PLANTAS & ESSÊNCIAS
+    ────────────────────────────────────── -->
+        <div class="alq-panel" id="panel-plantas">
+
+            <div class="alq-section-title" style="margin-top:28px;">As Seis Essências</div>
+
+            <div class="alq-essence-legend">
+                <div class="alq-ess-item">
+                    <div class="alq-ess-sym"
+                        style="background:rgba(74,176,232,.25);border:1px solid var(--ess-agua);color:var(--ess-agua);">
+                        λ</div>
+                    <div>
+                        <div class="alq-ess-name">Água (λ)</div>
+                        <div class="alq-ess-elem">Elemento: Água &amp; Fluxo</div>
+                    </div>
+                </div>
+                <div class="alq-ess-item">
+                    <div class="alq-ess-sym"
+                        style="background:rgba(200,224,248,.12);border:1px solid var(--ess-ar);color:var(--ess-ar);">Φ
+                    </div>
+                    <div>
+                        <div class="alq-ess-name">Ar (Φ)</div>
+                        <div class="alq-ess-elem">Elemento: Ar &amp; Vento</div>
+                    </div>
+                </div>
+                <div class="alq-ess-item">
+                    <div class="alq-ess-sym"
+                        style="background:rgba(232,112,64,.25);border:1px solid var(--ess-fogo);color:var(--ess-fogo);">
+                        Ω</div>
+                    <div>
+                        <div class="alq-ess-name">Fogo (Ω)</div>
+                        <div class="alq-ess-elem">Elemento: Fogo &amp; Energia</div>
+                    </div>
+                </div>
+                <div class="alq-ess-item">
+                    <div class="alq-ess-sym"
+                        style="background:rgba(184,120,64,.25);border:1px solid var(--ess-terra);color:var(--ess-terra);">
+                        Σ</div>
+                    <div>
+                        <div class="alq-ess-name">Terra (Σ)</div>
+                        <div class="alq-ess-elem">Elemento: Terra &amp; Corpo</div>
+                    </div>
+                </div>
+                <div class="alq-ess-item">
+                    <div class="alq-ess-sym"
+                        style="background:rgba(78,203,122,.25);border:1px solid var(--ess-pos);color:var(--ess-pos);">ζ
+                    </div>
+                    <div>
+                        <div class="alq-ess-name">Positiva (ζ)</div>
+                        <div class="alq-ess-elem">Elemento: Luz &amp; Vida</div>
+                    </div>
+                </div>
+                <div class="alq-ess-item">
+                    <div class="alq-ess-sym"
+                        style="background:rgba(160,112,232,.25);border:1px solid var(--ess-neg);color:var(--ess-neg);">Ψ
+                    </div>
+                    <div>
+                        <div class="alq-ess-name">Negativa (Ψ)</div>
+                        <div class="alq-ess-elem">Elemento: Sombra &amp; Morte</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alq-section-title">Plantas por Bioma</div>
+
+            <div class="rules-section" style="margin-bottom:24px;">
+                <div class="rules-section-header">
+                    <span class="rules-section-icon">🗺️</span>
+                    <div class="rules-section-title">Selecione o Bioma</div>
+                </div>
+                <div class="rules-section-body">
+                    <div class="alq-form-group" style="margin-bottom:16px;">
+                        <label>Ambiente de Exploração</label>
+                        <select id="biomeSelect" class="alq-select" style="width:100%;max-width:320px;margin-top:6px;">
+                            <!-- Preenchido pelo JS -->
+                        </select>
+                    </div>
+                    <ul id="biomeList" style="list-style:none;padding:0;margin:0;">
+                        <!-- Preenchido pelo JS -->
+                    </ul>
+                    <p
+                        style="font-family:'Crimson Text',serif;font-style:italic;color:var(--alq-text-dim);font-size:.9rem;margin-top:14px;padding:0;">
+                        Role 1d100 ao coletar para determinar qual planta encontrou. Sucessos no teste de Natureza CD 15
+                        permitem a coleta.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ──────────────────────────────────────
+         PAINEL: MISTURA DE POÇÕES
+    ────────────────────────────────────── -->
+        <div class="alq-panel" id="panel-mistura">
+
+            <div class="alq-section-title" style="margin-top:28px;">Mistura de Poções</div>
+
+            <div class="alq-rules-grid">
+
+                <div class="rules-section" style="grid-column:1/-1;">
+                    <div class="rules-section-header">
+                        <span class="rules-section-icon">🧪</span>
+                        <div class="rules-section-title">Regras Gerais</div>
+                    </div>
+                    <div class="rules-section-body">
+                        <p>Um personagem pode beber uma poção enquanto ainda está sob efeito de outra, ou colocar
+                            diversas poções dentro de um único recipiente. Os estranhos ingredientes usados na criação
+                            de poções podem resultar em interações imprevisíveis.</p>
+                        <p>Quando um personagem <strong>mistura duas poções</strong>, role na tabela de Miscibilidade
+                            abaixo. Se mais de duas forem combinadas, role novamente para cada poção subsequente,
+                            combinando os resultados.</p>
+                        <p>A não ser que o efeito seja obvio de imediato, revele-os apenas quando eles se tornarem
+                            evidentes. Um personagem que esteja sob efeito ou possua imunidade a doenças tem
+                            <strong>vantagem nessa rolagem</strong>.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Tabela de miscibilidade -->
+            <div class="alq-mixing-table">
+                <div class="alq-table-wrap">
+                    <table class="alq-table">
+                        <thead>
+                            <tr>
+                                <th class="center">d6</th>
+                                <th>Efeito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="center"
+                                    style="color:var(--rar-comum);font-family:'Cinzel',serif;font-size:1.1rem;">1</td>
+                                <td>Uma poção perde o efeito completamente.</td>
+                            </tr>
+                            <tr>
+                                <td class="center"
+                                    style="color:var(--rar-incomum);font-family:'Cinzel',serif;font-size:1.1rem;">2</td>
+                                <td>Apenas uma das poções funciona, mas seu efeito é <strong
+                                        style="color:var(--alq-amber)">permanente</strong>. Escolha o efeito mais
+                                    simples para tornar permanente — por exemplo, uma poção de cura poderia aumentar o
+                                    máximo de PV permanentemente.</td>
+                            </tr>
+                            <tr>
+                                <td class="center"
+                                    style="color:var(--rar-rara);font-family:'Cinzel',serif;font-size:1.1rem;">3</td>
+                                <td>Ambas as poções funcionam normalmente.</td>
+                            </tr>
+                            <tr>
+                                <td class="center"
+                                    style="color:var(--rar-muito-rara);font-family:'Cinzel',serif;font-size:1.1rem;">4
+                                </td>
+                                <td>Os efeitos numéricos e duração de uma das poções é <strong
+                                        style="color:var(--alq-green)">dobrado</strong>. Se nenhuma das poções possuir
+                                    nada para dobrar dessa forma, ela funciona normalmente.</td>
+                            </tr>
+                            <tr>
+                                <td class="center"
+                                    style="color:var(--rar-lendaria);font-family:'Cinzel',serif;font-size:1.1rem;">5
+                                </td>
+                                <td>O personagem sofre uma <strong style="color:var(--alq-amber)">cicatriz terrível ou
+                                        efeito arcano aleatório</strong> a critério do Mestre.</td>
+                            </tr>
+                            <tr>
+                                <td class="center"
+                                    style="color:var(--alq-red);font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;">
+                                    6</td>
+                                <td>A mistura cria uma <strong style="color:var(--alq-red)">explosão mágica</strong>,
+                                    causando a morte da criatura que bebeu a poção e <strong
+                                        style="color:var(--alq-red)">300d10 de dano de energia</strong> a cada criatura
+                                    a até 1,5 metros.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Rolador de d6 integrado -->
+            <div class="alq-calc" style="margin-top:24px;">
+                <div class="alq-calc-header">🎲 Rolar Miscibilidade</div>
+                <div style="padding:18px 22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+                    <button onclick="rollMiscibility()" class="alq-calc-btn" style="font-size:.9rem;padding:12px 28px;">
+                        🎲 Rolar d6
+                    </button>
+                    <div id="miscResult" style="display:none;" class="alq-calc-result"
+                        style="display:none;padding:0;border:none;">
+                        <div class="alq-result-row" style="flex-wrap:nowrap;align-items:center;gap:14px;">
+                            <div class="alq-result-item">
+                                <span class="alq-result-label">Resultado</span>
+                                <span class="alq-result-val" id="miscDiceVal">—</span>
+                            </div>
+                            <p class="alq-result-note" id="miscResultText" style="min-width:0;flex:1;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div><!-- /alq-content -->
+
+    <!-- =============================================
+     MODAL DE POÇÃO
+============================================= -->
+    <div class="alq-modal-overlay" id="potionModal">
+        <div class="alq-modal">
+
+            <div class="modal-head">
+                <button class="modal-close" id="modalClose" title="Fechar (ESC)">✕</button>
+                <div class="modal-head-top">
+                    <span class="modal-icon" id="mIcon">⚗️</span>
+                    <div class="modal-title-block">
+                        <h2 class="modal-name" id="mName"></h2>
+                        <div class="modal-rarity" id="mRarity"></div>
+                    </div>
+                </div>
+                <div class="modal-formula-row">
+                    <span class="modal-formula-label">Fórmula:</span>
+                    <div id="mFormula" style="display:flex;flex-wrap:wrap;gap:4px;"></div>
+                </div>
+            </div>
+
+            <!-- Quick stats -->
+            <div class="modal-quick-stats">
+                <div class="mqs">
+                    <span class="mqs-label">Componentes</span>
+                    <span class="mqs-val" id="mQsComps">—</span>
+                </div>
+                <div class="mqs">
+                    <span class="mqs-label">CD Base</span>
+                    <span class="mqs-val" id="mQsCd" style="color:var(--alq-amber)">—</span>
+                </div>
+                <div class="mqs">
+                    <span class="mqs-label">Nível de Desafio</span>
+                    <span class="mqs-val" id="mQsDesafio" style="color:var(--alq-purple)">—</span>
+                </div>
+            </div>
+
+            <!-- Abas -->
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="desc">📜 Descrição</button>
+                <button class="modal-tab" data-tab="fabrico">⚗️ Fabrico</button>
+                <button class="modal-tab" data-tab="formula">🧬 Essências</button>
+            </div>
+
+            <!-- Corpo -->
+            <div class="modal-body">
+                <div class="tab-pane active" id="pane-desc">
+                    <p class="alq-desc" id="mDesc"></p>
+                </div>
+
+                <div class="tab-pane" id="pane-fabrico">
+                    <div class="alq-detail-block">
+                        <div class="alq-detail-title">Núcleo</div>
+                        <div class="alq-detail-text" id="mNucleo"></div>
+                    </div>
+                    <div class="alq-detail-block alq-melhoria" style="">
+                        <div class="alq-detail-title">✨ Melhoria</div>
+                        <div class="alq-detail-text" id="mMelhoria"></div>
+                    </div>
+                    <div class="alq-detail-block" style="border-left-color:var(--alq-text-dim);opacity:.8;">
+                        <div class="alq-detail-title" style="color:var(--alq-text-dim);">Validade</div>
+                        <div class="alq-detail-text">Semanas iguais ao seu <strong>bônus de proficiência</strong> no
+                            momento da criação.</div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="pane-formula">
+                    <div id="mEssDetail"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =============================================
+     FOOTER
+============================================= -->
+    <footer class="alq-footer">
+        <p>© 2025 Tatânea Temple — Compêndio de Alquimia · Criado por TonhoDevi</p>
+        <nav class="alq-footer-links">
+            <a href="https://github.com/TonhoDevi/Tatanea-Temple" target="_blank">GitHub</a>
+            <a href="index.html">Início</a>
+            <a href="html/compendium/compendium-races.html">Raças</a>
+            <a href="html/compendium/compendium-classes.html">Classes</a>
+            <a href="html/compendium/compedium-talents.html">Talentos</a>
+        </nav>
+    </footer>
+
+    <!-- =============================================
+     SCRIPTS
+============================================= -->
+    <script src="js/shared/navbar.js"></script>
+    <script src="js/compendium/compendium-alquimia.js"></script>
+    <script>
+        // Rolagem de miscibilidade inline
+        function rollMiscibility() {
+            const result = Math.floor(Math.random() * 6) + 1;
+            const effects = {
+                1: 'Uma poção perde o efeito completamente.',
+                2: 'Uma das poções funciona com efeito PERMANENTE! Escolha o mais simples.',
+                3: 'Ambas as poções funcionam normalmente. Ufa!',
+                4: 'Os efeitos e duração de uma das poções são DOBRADOS!',
+                5: 'O personagem sofre uma cicatriz terrível ou efeito arcano aleatório.',
+                6: '💥 EXPLOSÃO MÁGICA! O bebedor morre e 300d10 de dano a 1,5m ao redor!'
+            };
+            const colors = { 1: 'var(--rar-comum)', 2: 'var(--alq-purple)', 3: 'var(--alq-green)', 4: 'var(--alq-amber)', 5: 'var(--alq-amber)', 6: 'var(--alq-red)' };
+
+            const valEl = document.getElementById('miscDiceVal');
+            const textEl = document.getElementById('miscResultText');
+            const resEl = document.getElementById('miscResult');
+
+            valEl.textContent = result;
+            valEl.style.color = colors[result];
+            textEl.textContent = effects[result];
+            resEl.style.display = 'block';
+        }
+
+        // Navbar toggle (compatibilidade)
+        function toggleNavbar() {
+            document.querySelector('.navbar-menu')?.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>
