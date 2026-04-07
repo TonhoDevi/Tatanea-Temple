@@ -1,0 +1,225 @@
+/* ============================================================
+   NAVBAR & FOOTER — Dossel da Selva
+============================================================ */
+
+:root {
+    --nv-jungle-bright: #4ade80;
+    --nv-jungle-mist: rgba(74, 222, 128, 0.12);
+    --nv-jungle-glow: rgba(34, 197, 94, 0.35);
+    --nv-snake-gold: #eab308;
+    --nv-gem-emerald: #10b981;
+    --nv-font-display: 'Cinzel', 'Pirata One', serif;
+    --nv-text-primary: #d4f7e0;
+    --nv-text-secondary: #7db89a;
+    --nv-shadow-dark: rgba(0, 0, 0, 0.85);
+    --nv-shadow-jungle: rgba(6, 20, 10, 0.80);
+    --nv-border-jungle: rgba(74, 222, 128, 0.35);
+    --nv-bg-dark: rgba(3, 13, 7, 0.98);
+}
+
+.navbar {
+    background:
+        linear-gradient(135deg,
+            rgba(3, 13, 7, 0.98) 0%,
+            rgba(6, 20, 10, 0.96) 60%,
+            rgba(10, 30, 16, 0.95) 100%);
+    border-bottom: 2px solid var(--nv-border-jungle);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow:
+        0 4px 20px var(--nv-shadow-jungle),
+        0 1px 0 rgba(74, 222, 128, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--nv-snake-gold) 20%,
+            var(--nv-jungle-bright) 50%,
+            var(--nv-snake-gold) 80%,
+            transparent);
+    opacity: 0.5;
+}
+
+.navbar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.navbar-logo {
+    font-family: var(--nv-font-display);
+    font-size: 1.8rem;
+    color: var(--nv-snake-gold);
+    text-decoration: none;
+    text-shadow:
+        2px 2px 6px var(--nv-shadow-dark),
+        0 0 20px rgba(234, 179, 8, 0.5);
+    /* snake-glow */
+    letter-spacing: 1px;
+    transition: all 0.35s ease;
+    position: relative;
+}
+
+.navbar-logo:hover {
+    color: var(--nv-jungle-bright);
+    text-shadow:
+        0 0 15px var(--nv-jungle-glow),
+        0 0 35px rgba(16, 185, 129, 0.5);
+    /* gem-glow-emerald */
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu li a {
+    color: var(--nv-text-secondary);
+    text-decoration: none;
+    font-family: var(--nv-font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    padding: 8px 15px;
+    border-bottom: 2px solid transparent;
+    position: relative;
+}
+
+.navbar-menu li a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--nv-gem-emerald), var(--nv-snake-gold));
+    transition: all 0.35s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-menu li a:hover,
+.navbar-menu li a.active {
+    color: var(--nv-jungle-bright);
+    border-bottom-color: transparent;
+}
+
+.navbar-menu li a:hover::after,
+.navbar-menu li a.active::after {
+    width: 100%;
+}
+
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: 2px solid var(--nv-border-jungle);
+    color: var(--nv-jungle-bright);
+    font-size: 1.5rem;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggle:hover {
+    background: var(--nv-jungle-mist);
+    box-shadow: 0 0 10px var(--nv-jungle-glow);
+}
+
+/* Footer (adaptado para a mesma paleta) */
+.footer {
+    background: var(--nv-bg-dark);
+    border-top: 2px solid var(--nv-border-jungle);
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--nv-jungle-mist) 20%,
+            var(--nv-jungle-bright) 50%,
+            var(--nv-jungle-mist) 80%,
+            transparent);
+    opacity: 0.5;
+}
+
+.footer p {
+    font-family: 'Crimson Text', serif;
+    color: var(--nv-text-primary);
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    font-family: var(--nv-font-display);
+    color: var(--nv-jungle-bright);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--nv-snake-gold);
+    text-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
+}
+
+/* Responsividade da Navbar */
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(160deg, rgba(3, 13, 7, 0.98), rgba(6, 20, 10, 0.95));
+        border-bottom: 2px solid var(--nv-border-jungle);
+        padding: 20px 0;
+        text-align: center;
+        gap: 15px;
+        box-shadow: 0 15px 30px var(--nv-shadow-dark);
+        backdrop-filter: blur(10px);
+    }
+
+    .navbar-menu.active {
+        display: flex;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+}

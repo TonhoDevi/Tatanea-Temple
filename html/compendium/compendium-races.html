@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <base href="/">
@@ -7,18 +8,23 @@
     <title>Compêndio de Raças - D&D 5e Homebrew</title>
 
     <!-- Fontes -->
-    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=MedievalSharp&display=swap"
+        rel="stylesheet">
 
     <!-- CSS existente -->
     <link rel="stylesheet" href="css/1-variables.css">
     <link rel="stylesheet" href="css/2-base.css">
     <link rel="stylesheet" href="css/3-components.css">
-    <link rel="stylesheet" href="css/4-navbar.css">
+    <link rel="stylesheet" href="css/navbar/navbar.css">
     <link rel="stylesheet" href="css/6-character.css">
     <link rel="stylesheet" href="css/compendium/races.css">
     <link rel="stylesheet" href="css/8-responsive.css">
+    <!-- Tema Selva — sobrescreve paleta cosmos com paleta StyleIndex -->
+    <link rel="stylesheet" href="css/compendium/compendium-theme.css">
 
 </head>
+
 <body>
 
     <!-- =========================================
@@ -42,7 +48,9 @@
         <span class="hero-rune-right">🐉</span>
         <span class="hero-eyebrow">Tomo das Origens</span>
         <h1>Compêndio de Raças</h1>
-        <div class="hero-divider"><div class="hero-divider-gem"></div></div>
+        <div class="hero-divider">
+            <div class="hero-divider-gem"></div>
+        </div>
         <p>Explore as linhagens, culturas e poderes de cada povo do mundo homebrew</p>
     </header>
 
@@ -108,13 +116,8 @@
             <div class="filter-controls">
                 <div class="search-wrap">
                     <span class="search-icon">🔍</span>
-                    <input
-                        type="text"
-                        id="searchRace"
-                        class="search-input-v2"
-                        placeholder="Buscar por nome, habilidade ou traço..."
-                        autocomplete="off"
-                    >
+                    <input type="text" id="searchRace" class="search-input-v2"
+                        placeholder="Buscar por nome, habilidade ou traço..." autocomplete="off">
                 </div>
 
                 <select id="filterSize" class="filter-select-v2" title="Filtrar por tamanho">
@@ -249,4 +252,5 @@
     <script src="js/shared/navbar.js"></script>
 
 </body>
+
 </html>

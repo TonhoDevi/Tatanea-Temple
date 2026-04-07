@@ -1,0 +1,440 @@
+/* ============================================================
+   COMPENDIUM THEME — Paleta Selva & Joias
+   Arquivo: css/compendium/compendium-theme.css
+
+   Sobrescreve as variáveis cosmos (1-variables.css) com a
+   paleta do Templo de Tatânea: Selva, Dinossauros, Joias.
+
+   Baseado em: css/StyleIndex.css
+   Aplicar APÓS 1-variables.css nos HTMLs dos compêndios.
+============================================================ */
+
+:root {
+    /* ──────────────────────────────────────────────────────────
+       FUNDOS — Selva Noturna no lugar do Cosmos Roxo
+    ────────────────────────────────────────────────────────── */
+    --cosmos-void:          #030d07;   /* Escuridão da selva profunda */
+    --cosmos-deep:          #06140a;   /* Floresta densa à noite      */
+    --cosmos-card:          #0a1e10;   /* Solo úmido e musgo          */
+    --cosmos-section:       #0d1f11;   /* Base das seções             */
+    --cosmos-input:         rgba(10, 24, 14, 0.95);
+    --cosmos-statbox:       #112214;   /* Folhagem escura — cards     */
+    --cosmos-bonusbox:      #0f2918;   /* Sombra de dossel            */
+    --cosmos-bonusprof:     #0a1e10;
+
+    /* ──────────────────────────────────────────────────────────
+       BORDAS — Verde Selva e Dourado Serpente
+    ────────────────────────────────────────────────────────── */
+    --cosmos-ornament:      #4ade80;   /* Verde neon de folha jovem  */
+    --cosmos-border:        rgba(74, 222, 128, 0.55);
+    --cosmos-border-dim:    rgba(22, 101, 52, 0.20);
+
+    /* ──────────────────────────────────────────────────────────
+       TEXTOS — Tons de Menta e Dourado
+    ────────────────────────────────────────────────────────── */
+    --cosmos-silver:        #86efac;   /* Samambaia clara — texto base */
+    --cosmos-silver-bright: #d4f7e0;   /* Verde-branco suave — destaques */
+    --cosmos-text:          #d4f7e0;   /* Verde-branco para texto principal */
+    --cosmos-text-dim:      #4a7a5e;   /* Verde apagado para secundários  */
+
+    /* ──────────────────────────────────────────────────────────
+       BRILHOS — Esmeralda e Dourado (substituindo crimson)
+    ────────────────────────────────────────────────────────── */
+    --shine-gold-subtle:    rgba(74, 222, 128, 0.04);  /* brilho-vermelho-leve  */
+    --shine-gold-light:     rgba(74, 222, 128, 0.09);  /* brilho-vermelho-medio */
+    --shine-amber-subtle:   rgba(34, 197, 94, 0.04);   /* brilho-crimson-leve   */
+    --shine-amber-light:    rgba(34, 197, 94, 0.14);   /* brilho-crimson-medio  */
+    --shine-amber-medium:   rgba(34, 197, 94, 0.28);   /* brilho-crimson-forte  */
+    --shine-orange:         rgba(74, 222, 128, 0.50);  /* brilho-laranja        */
+
+    /* ──────────────────────────────────────────────────────────
+       SOMBRAS — Selva e Escuridão
+    ────────────────────────────────────────────────────────── */
+    --shadow-gold-dark:     rgba(6, 20, 10, 0.25);    /* sombra-vermelho        */
+    --shadow-gold-medium:   rgba(22, 101, 52, 0.40);  /* sombra-crimson         */
+    --shadow-gold-bright:   rgba(34, 197, 94, 0.65);  /* sombra-crimson-forte   */
+    --shadow-gold-deep:     rgba(3, 13, 7, 0.85);     /* sombra-crimson-intensa */
+    --shadow-gold-dark-total: rgba(6, 20, 10, 0.92);  /* sombra-crimson-total   */
+    --shadow-amber:         rgba(22, 101, 52, 0.50);  /* sombra-laranja         */
+
+    /* ──────────────────────────────────────────────────────────
+       TRANSPARÊNCIAS — Selva
+    ────────────────────────────────────────────────────────── */
+    --transparency-stone:       rgba(6, 20, 10, 0.70);    /* transp-marrom        */
+    --transparency-stone-dark:  rgba(6, 20, 10, 0.92);    /* transp-marrom-escuro */
+    --transparency-gold:        rgba(22, 101, 52, 0.45);  /* transp-vermelho      */
+    --transparency-gold-soft:   rgba(22, 101, 52, 0.28);  /* transp-crimson       */
+
+    /* ──────────────────────────────────────────────────────────
+       CATEGORIAS — Joias da Selva (substituindo crimson/medieval)
+       Mapeando sobre as variáveis existentes:
+         global      → Esmeralda (defesa/suporte)
+         tribal      → Âmbar Dourado (combate/força)
+         mistica     → Ametista (magia/arcano)
+         sobrenatural→ Fúcsia Orquídea (habilidade/especial)
+    ────────────────────────────────────────────────────────── */
+    --color-category-global:       #059669;   /* Jade imperial — verde esmeralda  */
+    --color-category-tribal:       #d97706;   /* Âmbar com fóssil — combate/força */
+    --color-category-mystical:     #7c3aed;   /* Ametista encantada — magia       */
+    --color-category-supernatural: #c026d3;   /* Fúcsia orquídea — habilidade     */
+
+    --color-category-global-text:       #4ade80;   /* Verde neon — texto global      */
+    --color-category-tribal-text:       #fbbf24;   /* Dourado vibrante — texto tribal*/
+    --color-category-mystical-text:     #a78bfa;   /* Violeta claro — texto mística  */
+    --color-category-supernatural-text: #e879f9;   /* Fúcsia claro — texto sobrenat. */
+
+    --color-category-global-bg:        rgba( 5, 150, 105, .18);
+    --color-category-tribal-bg:        rgba(217, 119,   6, .18);
+    --color-category-mystical-bg:      rgba(124,  58, 237, .18);
+    --color-category-supernatural-bg:  rgba(192,  38, 211, .18);
+
+    /* ──────────────────────────────────────────────────────────
+       ALIASES extras (usados diretamente nos compêndios)
+    ────────────────────────────────────────────────────────── */
+
+    /* cor14 é usada como destaque e borda de foco — dourado serpente */
+    --cosmos-section: #166534;
+
+    /* cor7 (botão clear, efeito ember) — verde selva */
+    --color-effect-ember: rgba(34, 197, 94, 0.70);
+
+    /* cor9 — verde vibrante secundário */
+    --cor9: #86efac;
+
+    /* FOCO / LINKS */
+    --color-text-highlight: #a7f3d0;    /* menta brilhante */
+    --color-text-secondary: #7db89a;    /* verde acinzentado */
+    --color-text-primary:   #d4f7e0;    /* verde-branco suave */
+}
+
+/* ============================================================
+   BODY — Fundo Selva Noturna
+============================================================ */
+body {
+    background-color: #030d07;
+    background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%,
+            rgba(6, 20, 10, 0.70) 0%, transparent 70%),
+        radial-gradient(ellipse at 15% 20%, rgba(22, 101, 52, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 75%, rgba(232, 121, 249, 0.06) 0%, transparent 45%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    font-family: 'Crimson Text', Georgia, serif;
+    color: #d4f7e0;
+}
+
+/* ============================================================
+   BARRA DE BUSCA — Foco Esmeralda
+============================================================ */
+.search-input-v2:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.20);
+}
+
+.filter-select-v2:focus {
+    border-color: #22c55e;
+}
+
+/* ============================================================
+   HERO — Glow Esmeralda no lugar do Crimson
+============================================================ */
+.compendio-hero::before {
+    background: radial-gradient(
+        ellipse 60% 80% at 50% 0%,
+        rgba(34, 197, 94, 0.14) 0%,
+        transparent 70%
+    );
+}
+
+/* ============================================================
+   HERO DIVIDER — Trilha Esmeralda
+============================================================ */
+.hero-divider::before {
+    background: linear-gradient(90deg, transparent, #22c55e);
+}
+.hero-divider::after {
+    background: linear-gradient(90deg, #22c55e, transparent);
+}
+.hero-divider-gem {
+    background: #4ade80;
+    box-shadow: 0 0 10px #4ade80, 0 0 20px rgba(74, 222, 128, 0.40);
+}
+
+/* ============================================================
+   HERO RUNES — Verdes Suaves
+============================================================ */
+.hero-rune-left,
+.hero-rune-right {
+    color: #4ade80;
+    opacity: 0.05;
+}
+
+/* ============================================================
+   STAT PILLS / CAT TABS — Brilho Esmeralda
+============================================================ */
+.stat-pill,
+.cat-tab {
+    background: rgba(34, 197, 94, 0.14);
+    border-color: rgba(34, 197, 94, 0.28);
+    color: #86efac;
+}
+.cat-tab:hover,
+.cat-tab.active {
+    background: rgba(34, 197, 94, 0.28);
+    border-color: #4ade80;
+    color: #d4f7e0;
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.35);
+}
+.stat-pill-num { color: #d4f7e0; }
+.cat-count     { color: #d4f7e0; }
+
+/* ============================================================
+   BOTÃO DE FILTRO (toggle) — Dourado Serpente
+============================================================ */
+.filter-toggle-btn {
+    background: rgba(234, 179, 8, 0.14);
+    border-color: rgba(234, 179, 8, 0.50);
+    color: #fde68a;
+}
+.filter-toggle-btn:hover,
+.filter-toggle-btn.active {
+    background: rgba(234, 179, 8, 0.28);
+    border-color: #eab308;
+    box-shadow: 0 0 12px rgba(234, 179, 8, 0.35);
+}
+
+/* ============================================================
+   CATEGORY TABS CONTAINER — sem borda inferior, usa fundo selva
+============================================================ */
+.category-tabs {
+    background: linear-gradient(180deg, #06140a 0%, #030d07 100%);
+    border-color: rgba(22, 101, 52, 0.30);
+}
+
+/* ============================================================
+   CARDS — Brilho e Bordas Esmeralda
+============================================================ */
+.talent-card,
+.raca-card-v2 {
+    background: linear-gradient(160deg, rgba(10, 24, 14, 0.95) 0%, #06140a 100%);
+    border-color: rgba(22, 101, 52, 0.35);
+}
+.talent-card::before,
+.raca-card-v2::before {
+    background: linear-gradient(160deg, rgba(34, 197, 94, 0.06) 0%, transparent 50%);
+}
+.talent-card:hover,
+.raca-card-v2:hover {
+    border-color: #22c55e;
+    box-shadow: 0 12px 40px rgba(6, 20, 10, 0.80), 0 0 0 1px #22c55e;
+}
+.talent-name,
+.card-name {
+    color: #d4f7e0;
+}
+.talent-desc,
+.card-desc {
+    color: #7db89a;
+}
+
+/* ============================================================
+   CARD BUTTON — Brilho Esmeralda
+============================================================ */
+.card-btn {
+    border-color: rgba(34, 197, 94, 0.30);
+    color: #86efac;
+}
+.card-btn:hover {
+    background: rgba(34, 197, 94, 0.20);
+    border-color: #4ade80;
+}
+
+/* ============================================================
+   FILTROS PANEL — Sombra Selva
+============================================================ */
+.filtros-panel {
+    background: #06140a;
+    border-bottom-color: rgba(22, 101, 52, 0.40);
+    box-shadow: 0 4px 24px rgba(6, 20, 10, 0.80);
+}
+
+/* ============================================================
+   FILTER TAGS — Esmeralda
+============================================================ */
+.filter-tag {
+    background: rgba(34, 197, 94, 0.14);
+    border-color: rgba(34, 197, 94, 0.28);
+    color: #86efac;
+}
+.filter-tag-remove       { color: #22c55e; }
+.filter-tag-remove:hover { color: #4ade80; }
+
+/* ============================================================
+   MODAL — Tema Selva
+============================================================ */
+.modal-v2 {
+    background: linear-gradient(160deg, rgba(10, 24, 14, 0.98) 0%, #030d07 100%);
+    border-color: rgba(22, 101, 52, 0.40);
+    box-shadow:
+        0 24px 80px rgba(6, 20, 10, 0.90),
+        0 0 0 1px rgba(34, 197, 94, 0.16);
+}
+.modal-talent-header,
+.modal-hero {
+    background: linear-gradient(160deg, rgba(34, 197, 94, 0.10) 0%, transparent 60%);
+}
+.modal-talent-icon-wrap {
+    border-color: #22c55e;
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.30);
+}
+.modal-hero-name,
+.modal-hero-name h2 {
+    color: #d4f7e0;
+}
+.modal-close-btn {
+    border-color: rgba(34, 197, 94, 0.30);
+    color: #86efac;
+}
+.modal-close-btn:hover {
+    background: rgba(34, 197, 94, 0.20);
+    border-color: #4ade80;
+    color: #d4f7e0;
+}
+.modal-tabs {
+    border-bottom-color: rgba(22, 101, 52, 0.30);
+}
+.modal-tab {
+    color: #4a7a5e;
+    border-bottom-color: transparent;
+}
+.modal-tab:hover {
+    color: #86efac;
+}
+.modal-tab.active {
+    color: #4ade80;
+    border-bottom-color: #4ade80;
+}
+.modal-quick-stats {
+    border-bottom-color: rgba(22, 101, 52, 0.25);
+    background: rgba(6, 20, 10, 0.50);
+}
+
+/* ============================================================
+   FOOTER — Selva
+============================================================ */
+.footer-v2 {
+    background: #030d07;
+    border-top-color: rgba(22, 101, 52, 0.30);
+    color: #4a7a5e;
+}
+.footer-links-v2 a {
+    color: #7db89a;
+}
+.footer-links-v2 a:hover {
+    color: #4ade80;
+}
+
+/* ============================================================
+   RESULTADOS COUNT
+============================================================ */
+.results-count { color: #4a7a5e; }
+.results-count strong { color: #86efac; }
+
+/* ============================================================
+   NO RESULTS
+============================================================ */
+.no-results { color: #4a7a5e; }
+
+/* ============================================================
+   ANIMAÇÃO FADEÍN (para collapsible-filters)
+============================================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   CARD BADGES por Categoria — JOIAS DA SELVA
+    global       → Esmeralda  (Defesa)
+    tribal       → Âmbar      (Combate)
+    mistica      → Ametista   (Magia)
+    sobrenatural → Fúcsia     (Habilidade)
+============================================================ */
+
+/* Barra de topo dos cards */
+.raca-card-v2[data-cat="global"]::after,
+.talent-card[data-cat="defesa"]::after   { background: #10b981; }
+.raca-card-v2[data-cat="tribal"]::after,
+.talent-card[data-cat="combate"]::after  { background: #f59e0b; }
+.raca-card-v2[data-cat="mistica"]::after,
+.talent-card[data-cat="magia"]::after    { background: #8b5cf6; }
+.raca-card-v2[data-cat="sobrenatural"]::after,
+.talent-card[data-cat="habilidade"]::after { background: #e879f9; }
+.talent-card[data-cat="geral"]::after    { background: #22c55e; }
+
+/* Badges de categoria */
+[data-cat="global"] .card-cat-badge,
+.talent-card[data-cat="defesa"] .talent-cat-badge,
+.talent-badge--defesa {
+    background: rgba( 5, 150, 105, .18);
+    border-color: #10b981;
+    color: #4ade80;
+}
+[data-cat="tribal"] .card-cat-badge,
+.talent-card[data-cat="combate"] .talent-cat-badge,
+.talent-badge--combate {
+    background: rgba(217, 119, 6, .18);
+    border-color: #f59e0b;
+    color: #fbbf24;
+}
+[data-cat="mistica"] .card-cat-badge,
+.talent-card[data-cat="magia"] .talent-cat-badge,
+.talent-badge--magia {
+    background: rgba(124, 58, 237, .18);
+    border-color: #8b5cf6;
+    color: #a78bfa;
+}
+[data-cat="sobrenatural"] .card-cat-badge,
+.talent-card[data-cat="habilidade"] .talent-cat-badge,
+.talent-badge--habilidade {
+    background: rgba(192, 38, 211, .18);
+    border-color: #e879f9;
+    color: #e879f9;
+}
+.talent-card[data-cat="geral"] .talent-cat-badge,
+.talent-badge--geral {
+    background: rgba(34, 197, 94, .18);
+    border-color: #22c55e;
+    color: #4ade80;
+}
+
+/* ============================================================
+   CHIP DE STAT (races)
+============================================================ */
+.stat-chip {
+    background: rgba(6, 20, 10, 0.70);
+    border-color: rgba(34, 197, 94, 0.20);
+    color: #7db89a;
+}
+
+/* ============================================================
+   VIEW TOGGLE BUTTONS
+============================================================ */
+.view-btn { color: #4a7a5e; }
+.view-btn:hover { color: #86efac; }
+.view-btn.active {
+    background: rgba(34, 197, 94, 0.28);
+    color: #4ade80;
+}
+
+/* ============================================================
+   ANIMAÇÕES EXISTENTES — mantém nomes compatíveis
+============================================================ */
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes tagIn {
+    from { opacity: 0; transform: scale(.85); }
+    to   { opacity: 1; transform: scale(1); }
+}

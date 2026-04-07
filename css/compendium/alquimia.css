@@ -229,6 +229,32 @@ body.alq-page {
     color: var(--alq-amber);
 }
 
+/* ── Pills como botões de filtro de raridade ── */
+button.alq-stat-pill.alq-rar-btn {
+    cursor: pointer;
+    transition: transform var(--alq-t), box-shadow var(--alq-t), opacity var(--alq-t);
+    opacity: 0.65;
+}
+
+button.alq-stat-pill.alq-rar-btn:hover {
+    opacity: 0.90;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .5);
+}
+
+button.alq-stat-pill.alq-rar-btn.active {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .6), 0 0 0 2px currentColor;
+    font-weight: 600;
+}
+
+/* pill "Todas" ativa */
+button.alq-stat-pill.alq-rar-btn[data-rar=""].active {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .6), 0 0 0 2px var(--alq-green);
+    color: var(--alq-green);
+}
+
 /* ═══════════════════════════════════════════
    NAVEGAÇÃO POR ABAS PRINCIPAL
 ═══════════════════════════════════════════ */
@@ -578,6 +604,7 @@ body.alq-page {
     margin-bottom: 12px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -780,7 +807,7 @@ body.alq-page {
     line-height: 1;
 }
 
-.modal-title-block {}
+
 
 .modal-name {
     font-family: 'Cinzel Decorative', 'Cinzel', serif;

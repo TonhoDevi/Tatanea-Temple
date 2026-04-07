@@ -379,10 +379,22 @@ function bindEvents() {
         render();
     });
 
-    // Raridade
-    document.getElementById('rarFilter')?.addEventListener('change', e => {
-        STATE.raridade = e.target.value;
-        render();
+    // Raridade — botões pills na barra de estatísticas
+    document.querySelectorAll('.alq-rar-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const val = btn.dataset.rar;
+            // toggle: clicar na ativa volta para "todas"
+            if (STATE.raridade === val && val !== '') {
+                STATE.raridade = '';
+                document.querySelectorAll('.alq-rar-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('.alq-rar-btn[data-rar=""]').classList.add('active');
+            } else {
+                STATE.raridade = val;
+                document.querySelectorAll('.alq-rar-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            render();
+        });
     });
 
     // Botões de essência (incluindo novos ξ e δ)

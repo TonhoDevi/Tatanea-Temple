@@ -5,26 +5,26 @@
 
 const STATE = {
     categoria: '',
-    search:    '',
-    prereq:    '', // 'sim' | 'nao' | ''
-    sort:      'default',
-    view:      'grid',
+    search: '',
+    prereq: '', // 'sim' | 'nao' | ''
+    sort: 'default',
+    view: 'grid',
 };
 
 const CAT_LABELS = {
-    combate:    '🗡️ Combate',
-    defesa:     '🛡️ Defesa',
-    magia:      '✨ Magia',
+    combate: '🗡️ Combate',
+    defesa: '🛡️ Defesa',
+    magia: '✨ Magia',
     habilidade: '🎯 Habilidade',
-    geral:      '⚖️ Geral',
+    geral: '⚖️ Geral',
 };
 
 const CAT_ICONS = {
-    combate:    '🗡️',
-    defesa:     '🛡️',
-    magia:      '✨',
+    combate: '🗡️',
+    defesa: '🛡️',
+    magia: '✨',
     habilidade: '🎯',
-    geral:      '⚖️',
+    geral: '⚖️',
 };
 
 // ============================================================
@@ -41,24 +41,24 @@ document.addEventListener('DOMContentLoaded', () => {
 // CONTADORES
 // ============================================================
 function preencherContadores() {
-    const total  = TALENTOS_DATA.length;
+    const total = TALENTOS_DATA.length;
     const porCat = {};
     TALENTOS_DATA.forEach(t => {
         porCat[t.categoria] = (porCat[t.categoria] || 0) + 1;
     });
 
-    setEl('totalTalentos',        total);
-    setEl('countCombate',         porCat.combate    || 0);
-    setEl('countDefesa',          porCat.defesa     || 0);
-    setEl('countMagia',           porCat.magia      || 0);
-    setEl('countHabilidade',      porCat.habilidade || 0);
-    setEl('countGeral',           porCat.geral      || 0);
-    setEl('tab-count-all',        total);
-    setEl('tab-count-combate',    porCat.combate    || 0);
-    setEl('tab-count-defesa',     porCat.defesa     || 0);
-    setEl('tab-count-magia',      porCat.magia      || 0);
+    setEl('totalTalentos', total);
+    setEl('countCombate', porCat.combate || 0);
+    setEl('countDefesa', porCat.defesa || 0);
+    setEl('countMagia', porCat.magia || 0);
+    setEl('countHabilidade', porCat.habilidade || 0);
+    setEl('countGeral', porCat.geral || 0);
+    setEl('tab-count-all', total);
+    setEl('tab-count-combate', porCat.combate || 0);
+    setEl('tab-count-defesa', porCat.defesa || 0);
+    setEl('tab-count-magia', porCat.magia || 0);
     setEl('tab-count-habilidade', porCat.habilidade || 0);
-    setEl('tab-count-geral',      porCat.geral      || 0);
+    setEl('tab-count-geral', porCat.geral || 0);
 }
 
 // ============================================================
@@ -158,10 +158,10 @@ function getFiltered() {
     const ORDEM_CAT = ['combate', 'defesa', 'magia', 'habilidade', 'geral'];
 
     switch (STATE.sort) {
-        case 'az':        list.sort((a, b) => a.nome.localeCompare(b.nome, 'pt')); break;
-        case 'za':        list.sort((a, b) => b.nome.localeCompare(a.nome, 'pt')); break;
+        case 'az': list.sort((a, b) => a.nome.localeCompare(b.nome, 'pt')); break;
+        case 'za': list.sort((a, b) => b.nome.localeCompare(a.nome, 'pt')); break;
         case 'categoria': list.sort((a, b) => ORDEM_CAT.indexOf(a.categoria) - ORDEM_CAT.indexOf(b.categoria)); break;
-        case 'prereq':    list.sort((a, b) => (a.prereq ? 1 : -1) - (b.prereq ? 1 : -1)); break;
+        case 'prereq': list.sort((a, b) => (a.prereq ? 1 : -1) - (b.prereq ? 1 : -1)); break;
         default: break;
     }
 
@@ -172,7 +172,7 @@ function getFiltered() {
 // RENDERIZAR GRID
 // ============================================================
 function render() {
-    const grid  = document.getElementById('talentosGrid');
+    const grid = document.getElementById('talentosGrid');
     const count = document.getElementById('resultsCount');
     if (!grid) return;
 
@@ -214,9 +214,9 @@ function render() {
             <div class="talent-card-body">
                 <h3 class="talent-name">${talento.nome}</h3>
                 ${talento.prereq
-                    ? `<div class="talent-prereq">⚠️ <em>${talento.prereq}</em></div>`
-                    : `<div class="talent-prereq talent-prereq--none">✅ Sem pré-requisito</div>`
-                }
+                ? `<div class="talent-prereq">⚠️ <em>${talento.prereq}</em></div>`
+                : `<div class="talent-prereq talent-prereq--none">✅ Sem pré-requisito</div>`
+            }
                 <p class="talent-desc">${talento.descricao}</p>
                 <div class="talent-card-footer">
                     <span class="talent-bcount">📋 ${talento.beneficios.length} benefício${talento.beneficios.length > 1 ? 's' : ''}</span>
@@ -315,7 +315,7 @@ function clearAllFilters() {
 function showTalentDetails(index) {
     const talento = TALENTOS_DATA[index];
     if (!talento) return;
-    const modal    = document.getElementById('talentModal');
+    const modal = document.getElementById('talentModal');
     const catLabel = CAT_LABELS[talento.categoria] || talento.categoria;
 
     // Header
@@ -326,7 +326,7 @@ function showTalentDetails(index) {
     const badge = document.getElementById('modalTalentBadge');
     if (badge) {
         badge.textContent = catLabel;
-        badge.className   = `modal-hero-badge talent-badge--${talento.categoria}`;
+        badge.className = `modal-hero-badge talent-badge--${talento.categoria}`;
     }
 
     // Pré-requisito
@@ -338,9 +338,9 @@ function showTalentDetails(index) {
     }
 
     // Quick stats
-    setEl('qsCategoria',  catLabel);
+    setEl('qsCategoria', catLabel);
     setEl('qsBeneficios', talento.beneficios.length + ' benefício' + (talento.beneficios.length > 1 ? 's' : ''));
-    setEl('qsPrereq',     talento.prereq ? 'Sim' : 'Não');
+    setEl('qsPrereq', talento.prereq ? 'Sim' : 'Não');
 
     // Aba: visão geral
     setEl('modalDescricao', talento.descricao);
@@ -384,3 +384,40 @@ function setEl(id, text) {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
 }
+
+// ============================================================
+// COMPORTAMENTO DA ÁREA DE FILTROS COLAPSÁVEL
+// ============================================================
+function toggleFilters() {
+    const filtersArea = document.getElementById('collapsibleFilters');
+    const btn = document.getElementById('filterToggleBtn');
+    if (!filtersArea || !btn) return;
+
+    filtersArea.classList.toggle('active');
+    btn.classList.toggle('active');
+
+    // Atualizar texto
+    const isActive = filtersArea.classList.contains('active');
+    const textSpan = btn.querySelector('.btn-text');
+    if (textSpan) {
+        textSpan.textContent = isActive ? 'Ocultar Filtros' : 'Filtros';
+    }
+}
+
+// Fechar os filtros automaticamente ao descer a página
+let lastScrollTop = 0;
+window.addEventListener('scroll', () => {
+    const filtersArea = document.getElementById('collapsibleFilters');
+    const btn = document.getElementById('filterToggleBtn');
+    if (!filtersArea || !filtersArea.classList.contains('active')) return;
+
+    let st = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (st > lastScrollTop && st > 500) {
+        filtersArea.classList.remove('active');
+        btn.classList.remove('active');
+        const textSpan = btn.querySelector('.btn-text');
+        if (textSpan) textSpan.textContent = 'Filtros';
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+}, { passive: true });

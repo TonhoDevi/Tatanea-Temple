@@ -11,8 +11,8 @@
         href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/1-variables.css">
-    <link rel="stylesheet" href="css/4-navbar.css">
+
+    <link rel="stylesheet" href="css/navbar/navbar.css">
     <link rel="stylesheet" href="css/compendium/alquimia.css">
 
     <!-- Estilos adicionais para card-duration, novas essências e preços -->
@@ -122,26 +122,33 @@
     </header>
 
     <!-- =============================================
-     BARRA DE ESTATÍSTICAS
+     BARRA DE ESTATÍSTICAS / FILTROS DE RARIDADE
 ============================================= -->
     <div class="alq-stats-bar">
         <div class="alq-stats-inner">
-            <div class="alq-stat-pill">⚗️ <span class="num" id="statTotal">0</span> Poções Totais</div>
-            <div class="alq-stat-pill" style="border-color:var(--rar-comum);background:rgba(160,160,160,.08)">⬛
+            <button class="alq-stat-pill alq-rar-btn active" data-rar="">
+                ⚗️ <span class="num" id="statTotal">0</span> Todas
+            </button>
+            <button class="alq-stat-pill alq-rar-btn" data-rar="Comum"
+                style="border-color:var(--rar-comum);background:rgba(160,160,160,.08)">⬛
                 <span class="num" style="color:var(--rar-comum)" id="statComum">0</span> Comuns
-            </div>
-            <div class="alq-stat-pill" style="border-color:var(--rar-incomum);background:rgba(78,203,122,.08)">🟢
+            </button>
+            <button class="alq-stat-pill alq-rar-btn" data-rar="Incomum"
+                style="border-color:var(--rar-incomum);background:rgba(78,203,122,.08)">🟢
                 <span class="num" style="color:var(--rar-incomum)" id="statIncomum">0</span> Incomuns
-            </div>
-            <div class="alq-stat-pill" style="border-color:var(--rar-rara);background:rgba(74,176,232,.08)">🔵
+            </button>
+            <button class="alq-stat-pill alq-rar-btn" data-rar="Rara"
+                style="border-color:var(--rar-rara);background:rgba(74,176,232,.08)">🔵
                 <span class="num" style="color:var(--rar-rara)" id="statRara">0</span> Raras
-            </div>
-            <div class="alq-stat-pill" style="border-color:var(--rar-muito-rara);background:rgba(192,96,240,.08)">🟣
+            </button>
+            <button class="alq-stat-pill alq-rar-btn" data-rar="Muito Rara"
+                style="border-color:var(--rar-muito-rara);background:rgba(192,96,240,.08)">🟣
                 <span class="num" style="color:var(--rar-muito-rara)" id="statMuitoRara">0</span> Muito Raras
-            </div>
-            <div class="alq-stat-pill" style="border-color:var(--rar-lendaria);background:rgba(232,160,48,.08)">🟡
+            </button>
+            <button class="alq-stat-pill alq-rar-btn" data-rar="Lendária"
+                style="border-color:var(--rar-lendaria);background:rgba(232,160,48,.08)">🟡
                 <span class="num" style="color:var(--rar-lendaria)" id="statLendaria">0</span> Lendárias
-            </div>
+            </button>
         </div>
     </div>
 
@@ -186,14 +193,6 @@
                     <input type="text" id="searchInput" class="alq-search"
                         placeholder="Buscar por nome, fórmula, efeito, duração ou núcleo..." autocomplete="off">
                 </div>
-                <select id="rarFilter" class="alq-select">
-                    <option value="">Todas as raridades</option>
-                    <option value="Comum">Comum</option>
-                    <option value="Incomum">Incomum</option>
-                    <option value="Rara">Rara</option>
-                    <option value="Muito Rara">Muito Rara</option>
-                    <option value="Lendária">Lendária</option>
-                </select>
             </div>
 
             <!-- Filtro por essência — inclui ξ e δ -->
@@ -792,7 +791,8 @@
                         <div id="biomeButtons" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
                     </div>
                     <!-- Cabeçalho da Lista -->
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(78,203,122,.2); font-family:'Crimson Text',serif; font-size:1.05rem; font-weight:bold; color:var(--alq-primary);">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(78,203,122,.2); font-family:'Crimson Text',serif; font-size:1.05rem; font-weight:bold; color:var(--alq-primary);">
                         <div style="flex:1;">Nome da Planta</div>
                         <div style="flex:1;">Essências</div>
                         <div style="flex:1; text-align:right;">Range de d100</div>

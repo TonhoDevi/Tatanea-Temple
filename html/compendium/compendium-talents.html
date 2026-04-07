@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <base href="/">
@@ -7,16 +8,21 @@
     <title>Compêndio de Talentos - D&D 5e Homebrew</title>
 
     <!-- Fontes -->
-    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
 
     <!-- CSS existente -->
     <link rel="stylesheet" href="css/1-variables.css">
     <link rel="stylesheet" href="css/2-base.css">
     <link rel="stylesheet" href="css/3-components.css">
-    <link rel="stylesheet" href="css/4-navbar.css">
+    <link rel="stylesheet" href="css/navbar/navbar.css">
     <link rel="stylesheet" href="css/8-responsive.css">
     <link rel="stylesheet" href="css/compendium/talents.css">
+    <!-- Tema Selva — sobrescreve paleta cosmos com paleta StyleIndex -->
+    <link rel="stylesheet" href="css/compendium/compendium-theme.css">
 </head>
+
 <body>
 
     <!-- =========================================
@@ -40,111 +46,77 @@
         <span class="hero-rune-right">✦</span>
         <span class="hero-eyebrow">Tomo das Capacidades</span>
         <h1>Compêndio de Talentos</h1>
-        <div class="hero-divider"><div class="hero-divider-gem"></div></div>
+        <div class="hero-divider">
+            <div class="hero-divider-gem"></div>
+        </div>
         <p>Descubra habilidades que definem e diferenciam cada herói do mundo homebrew</p>
     </header>
-
-    <!-- =========================================
-         BARRA DE ESTATÍSTICAS
-    ========================================= -->
-    <div class="stats-bar">
-        <div class="stats-bar-inner">
-            <div class="stat-pill">
-                <span class="stat-pill-icon">📜</span>
-                <span class="stat-pill-num" id="totalTalentos">0</span>
-                <span>Talentos Totais</span>
-            </div>
-            <div class="stat-pill">
-                <span class="stat-pill-icon">🗡️</span>
-                <span class="stat-pill-num" id="countCombate">0</span>
-                <span>Combate</span>
-            </div>
-            <div class="stat-pill">
-                <span class="stat-pill-icon">🛡️</span>
-                <span class="stat-pill-num" id="countDefesa">0</span>
-                <span>Defesa</span>
-            </div>
-            <div class="stat-pill">
-                <span class="stat-pill-icon">✨</span>
-                <span class="stat-pill-num" id="countMagia">0</span>
-                <span>Magia</span>
-            </div>
-            <div class="stat-pill">
-                <span class="stat-pill-icon">🎯</span>
-                <span class="stat-pill-num" id="countHabilidade">0</span>
-                <span>Habilidade</span>
-            </div>
-            <div class="stat-pill">
-                <span class="stat-pill-icon">⚖️</span>
-                <span class="stat-pill-num" id="countGeral">0</span>
-                <span>Geral</span>
-            </div>
-        </div>
+    <!-- Abas de categoria -->
+    <div class="category-tabs" role="tablist">
+        <button class="cat-tab active" data-cat="" role="tab">
+            Todos <span class="cat-count" id="tab-count-all">0</span>
+        </button>
+        <button class="cat-tab" data-cat="combate" role="tab">
+            🗡️ Combate <span class="cat-count" id="tab-count-combate">0</span>
+        </button>
+        <button class="cat-tab" data-cat="defesa" role="tab">
+            🛡️ Defesa <span class="cat-count" id="tab-count-defesa">0</span>
+        </button>
+        <button class="cat-tab" data-cat="magia" role="tab">
+            ✨ Magia <span class="cat-count" id="tab-count-magia">0</span>
+        </button>
+        <button class="cat-tab" data-cat="habilidade" role="tab">
+            🎯 Habilidade <span class="cat-count" id="tab-count-habilidade">0</span>
+        </button>
+        <button class="cat-tab" data-cat="geral" role="tab">
+            ⚖️ Geral <span class="cat-count" id="tab-count-geral">0</span>
+        </button>
     </div>
-
     <!-- =========================================
          PAINEL DE FILTROS
     ========================================= -->
-    <div class="filtros-panel">
+    <div class="filtros-panel" id="filtrosPanel">
         <div class="filtros-panel-inner">
-
-            <!-- Abas de categoria -->
-            <div class="category-tabs" role="tablist">
-                <button class="cat-tab active" data-cat="" role="tab">
-                    Todos <span class="cat-count" id="tab-count-all">0</span>
-                </button>
-                <button class="cat-tab" data-cat="combate" role="tab">
-                    🗡️ Combate <span class="cat-count" id="tab-count-combate">0</span>
-                </button>
-                <button class="cat-tab" data-cat="defesa" role="tab">
-                    🛡️ Defesa <span class="cat-count" id="tab-count-defesa">0</span>
-                </button>
-                <button class="cat-tab" data-cat="magia" role="tab">
-                    ✨ Magia <span class="cat-count" id="tab-count-magia">0</span>
-                </button>
-                <button class="cat-tab" data-cat="habilidade" role="tab">
-                    🎯 Habilidade <span class="cat-count" id="tab-count-habilidade">0</span>
-                </button>
-                <button class="cat-tab" data-cat="geral" role="tab">
-                    ⚖️ Geral <span class="cat-count" id="tab-count-geral">0</span>
-                </button>
-            </div>
-
-            <!-- Controles de filtro -->
-            <div class="filter-controls">
+            <!-- Controles principais: Busca e Botão de Filtro -->
+            <div class="search-main-bar">
                 <div class="search-wrap">
                     <span class="search-icon">🔍</span>
-                    <input
-                        type="text"
-                        id="searchTalent"
-                        class="search-input-v2"
-                        placeholder="Buscar por nome, benefício ou pré-requisito..."
-                        autocomplete="off"
-                    >
+                    <input type="text" id="searchTalent" class="search-input-v2"
+                        placeholder="Buscar por nome, benefício ou pré-requisito..." autocomplete="off">
                 </div>
-
-                <select id="filterPrereq" class="filter-select-v2" title="Filtrar por pré-requisito">
-                    <option value="">Todos os talentos</option>
-                    <option value="nao">✅ Sem pré-requisito</option>
-                    <option value="sim">⚠️ Com pré-requisito</option>
-                </select>
-
-                <select id="sortBy" class="filter-select-v2" title="Ordenar por">
-                    <option value="default">Ordem padrão</option>
-                    <option value="az">A → Z</option>
-                    <option value="za">Z → A</option>
-                    <option value="categoria">Por categoria</option>
-                    <option value="prereq">Sem prereq. primeiro</option>
-                </select>
-
-                <div class="view-toggle" title="Alternar visualização">
-                    <button class="view-btn active" id="viewGrid" onclick="setView('grid')" title="Grade">⊞</button>
-                    <button class="view-btn" id="viewList" onclick="setView('list')" title="Lista">☰</button>
-                </div>
+                <button class="filter-toggle-btn" id="filterToggleBtn" onclick="toggleFilters()"
+                    title="Mostrar/Ocultar Filtros">
+                    ⚙️ <span class="btn-text">Filtros</span>
+                </button>
             </div>
 
-            <!-- Tags de filtros ativos -->
-            <div class="active-filters" id="activeFilters"></div>
+            <!-- Área colapsável de filtros e categorias -->
+            <div class="collapsible-filters" id="collapsibleFilters">
+                <!-- Controles de filtro secundários -->
+                <div class="filter-selects">
+                    <select id="filterPrereq" class="filter-select-v2" title="Filtrar por pré-requisito">
+                        <option value="">Todos os talentos</option>
+                        <option value="nao">✅ Sem pré-requisito</option>
+                        <option value="sim">⚠️ Com pré-requisito</option>
+                    </select>
+
+                    <select id="sortBy" class="filter-select-v2" title="Ordenar por">
+                        <option value="default">Ordem padrão</option>
+                        <option value="az">A → Z</option>
+                        <option value="za">Z → A</option>
+                        <option value="categoria">Por categoria</option>
+                        <option value="prereq">Sem prereq. primeiro</option>
+                    </select>
+
+                    <div class="view-toggle" title="Alternar visualização">
+                        <button class="view-btn active" id="viewGrid" onclick="setView('grid')" title="Grade">⊞</button>
+                        <button class="view-btn" id="viewList" onclick="setView('list')" title="Lista">☰</button>
+                    </div>
+                </div>
+
+                <!-- Tags de filtros ativos -->
+                <div class="active-filters" id="activeFilters"></div>
+            </div>
         </div>
     </div>
 
@@ -247,4 +219,5 @@
     <script src="js/shared/navbar.js"></script>
 
 </body>
+
 </html>

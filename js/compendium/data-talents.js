@@ -95,17 +95,17 @@ const TALENTOS_DATA = [
         ],
     },
     {
-        id: 'envenenador',
-        nome: 'Envenenador',
+        id: 'especialista-veneno',
+        nome: 'Especialista em Veneno',
         categoria: 'combate',
         icone: '🧪',
-        prereq: '',
+        prereq: 'Proficiência com kit de Alquimia.',
         descricao: 'Mestre na criação e aplicação de venenos letais que ignoram resistências.',
         beneficios: [
-            'Dano venenoso ignora resistências.',
-            'Aplica veneno com ação bônus em vez de ação.',
-            'Proficiência com kit de envenenador.',
-            'Cria doses de veneno (CD 14, 2d8 venenoso + envenenado) com 1 hora de trabalho e 50 po.',
+            'Você recebe resistência a dano venenoso.',
+            'Você recebe um bonus de +3 em rolagem de fabricação de poções do tipo veneno.',
+            'Dano de veneno criado por você é aumentado em uma quantidade igual ao seu bônus de proficiência.',
+            'Você pode usar uma ação bônus para aplicar veneno em uma arma ou projétil.'
         ],
     },
     {
@@ -129,7 +129,7 @@ const TALENTOS_DATA = [
         prereq: '',
         descricao: 'Domínio completo de bestas: ignore a recarga, atire próximo a inimigos e use ação bônus para atacar.',
         beneficios: [
-            'Ignora a qualidade de recarga de bestas com proficiência.',
+            'Ignora a propriedade de recarga de bestas com ação bônus.',
             'Estar a 1,5 m de inimigos não impõe desvantagem nos ataques.',
             'Ao usar ação de Ataque com arma de uma mão, pode usar ação bônus para atacar com besta de mão.',
         ],
@@ -144,7 +144,7 @@ const TALENTOS_DATA = [
         beneficios: [
             '+1 em Força ou Constituição (máx. 20).',
             'Ataques desarmados ou com armas improvisadas causam 1d4 de dano extra.',
-            'Ao acertar ataque desarmado ou improvisado, ação bônus para tentar agarrar o alvo.',
+            'Ao acertar ataque desarmado ou improvisado, pode usar ação bônus para tentar agarrar o alvo.',
         ],
     },
     {
@@ -168,7 +168,7 @@ const TALENTOS_DATA = [
         descricao: 'Treinamento marcial único que ensina um Estilo de Luta da lista do guerreiro.',
         beneficios: [
             '+1 em Força ou Destreza (máx. 20).',
-            'Aprende um Estilo de Luta à escolha da lista do guerreiro.',
+            'Aprende um Estilo de Luta à sua escolha da lista de estilos de luta do guerreiro.',
             'Pode trocar o estilo ao subir de nível.',
         ],
     },
@@ -202,10 +202,10 @@ const TALENTOS_DATA = [
         nome: 'Maestria em Arma de Haste',
         categoria: 'combate',
         icone: '🪄',
-        prereq: '',
+        prereq: 'Proficiência com armas de Haste',
         descricao: 'Mantém inimigos afastados e ataca com a extremidade oposta como ação bônus.',
         beneficios: [
-            'Ao atacar com glaive, alabarda ou bordão, ação bônus para atacar com a outra extremidade (1d4 contundente).',
+            'Ao atacar com glaive, alabarda ou bordão, você pode usar uma ação bônus para atacar com a outra extremidade (1d4 contundente).',
             'Criaturas que entrarem no seu alcance enquanto empunha armas de haste provocam ataques de oportunidade.',
         ],
     },
@@ -223,15 +223,15 @@ const TALENTOS_DATA = [
         ],
     },
     {
-        id: 'mestre-armas',
-        nome: 'Mestre de Armas',
+        id: 'adepto-armas',
+        nome: 'Adepto de Armas',
         categoria: 'combate',
         icone: '⚙️',
         prereq: '',
         descricao: 'Treinamento extensivo com uma variedade de armas simples e marciais.',
         beneficios: [
             '+1 em Força ou Destreza (máx. 20).',
-            'Ganha proficiência com quatro armas simples ou marciais à escolha.',
+            'Ganha proficiência com todas as armas.',
         ],
     },
     {
@@ -239,11 +239,12 @@ const TALENTOS_DATA = [
         nome: 'Mestre de Armas Grandes',
         categoria: 'combate',
         icone: '🪓',
-        prereq: '',
+        prereq: 'Força 13 ou maior e proficiência com pelo menos uma arma pesada',
         descricao: 'Usa o peso das armas pesadas a seu favor, com ataques bônus em críticos e dano devastador.',
         beneficios: [
-            'Ao acertar crítico ou reduzir alvo a 0 PV, ação bônus para realizar outro ataque corpo a corpo.',
-            'Pode sofrer –5 na jogada de ataque para ganhar +10 no dano com arma pesada.',
+            'Você causa o dobro de dano a construções e objetos.',
+            'Ao acertar um acerto crítico ou reduzir alvo a 0 PV, você pode como parte desse mesmo ataque atingir uma outra criatua que esteja em seu alcance desde que a rolagem original também à atinja.',
+            'Antes de realizar um ataque com arma pesada você pode escolher sofrer –5 na jogada de ataque para ganhar +10 no dano.',
         ],
     },
     {
@@ -251,12 +252,12 @@ const TALENTOS_DATA = [
         nome: 'Mestre de Escudo',
         categoria: 'combate',
         icone: '🛡️',
-        prereq: '',
+        prereq: 'Proficiência com escudos',
         descricao: 'Usa o escudo como arma ofensiva e proteção extra contra magias e efeitos de área.',
         beneficios: [
-            'Ação bônus para empurrar criaturas após usar a ação de Ataque.',
+            'Com uma ação bônus você pode empurrar uma criatura no alcance, para trás a até 3m de distância.',
             'Adiciona o bônus de CA do escudo a testes de resistência de Destreza.',
-            'Reação: ao passar no teste de resistência de Destreza, pode não sofrer nenhum dano.',
+            'Quando um aliado a até 1,5m de você for alvo de um ataque corpo a corpo, você pode usar sua reação para impor desvantagem no ataque. Essa habilidade funciona em conjunto com o estilo de luta Defensor.',
         ],
     },
     {
@@ -286,20 +287,6 @@ const TALENTOS_DATA = [
         ],
     },
     {
-        id: 'pistoleiro',
-        nome: 'Pistoleiro',
-        categoria: 'combate',
-        icone: '🔫',
-        prereq: '',
-        descricao: 'Mestre no uso de armas de fogo: ignora recarga e mira, e atira mesmo próximo a inimigos.',
-        beneficios: [
-            '+1 em Destreza (máx. 20).',
-            'Proficiência com armas de fogo.',
-            'Ignora as propriedades de recarga e mira.',
-            'Não sofre desvantagem em ataques à distância a 1,5 m de criatura hostil.',
-        ],
-    },
-    {
         id: 'sentinela',
         nome: 'Sentinela',
         categoria: 'combate',
@@ -307,9 +294,8 @@ const TALENTOS_DATA = [
         prereq: '',
         descricao: 'Dominador do ataque de oportunidade: para inimigos na fuga, pune quem desengaja e protege aliados.',
         beneficios: [
-            'Ao acertar ataque de oportunidade, o deslocamento da criatura se torna 0.',
+            'Ao acertar ataque de oportunidade, o deslocamento da criatura se torna 0 e você pode mover o alvo 1,5 m em qualquer direção. Se o alvo colidir com obstáculo ou criatura, sofre dano extra igual ao bônus de proficiência.',
             'Criaturas provocam ataque de oportunidade mesmo ao usar Desengajar.',
-            'Reação: ao criatura atacar aliado a até 1,5 m, pode atacar o agressor.',
         ],
     },
     {
@@ -317,12 +303,11 @@ const TALENTOS_DATA = [
         nome: 'Titã de Ataque',
         categoria: 'combate',
         icone: '💪',
-        prereq: '',
+        prereq: 'Força 15 ou maior',
         descricao: 'Força imparável no campo de batalha: ignore a propriedade de duas mãos e destrua em sequência.',
         beneficios: [
-            'Pode ignorar a propriedade de duas mãos de armas pesadas.',
+            'Você pode ignorar a propriedade de duas mãos de armas pesadas.',
             'Ao se mover pelo menos 3 m antes de atacar, rola dano duas vezes e fica com o melhor.',
-            'Ao acertar uma criatura, próximo ataque contra outra a até 3 m ganha bônus de dano igual ao nível.',
         ],
     },
 
@@ -336,68 +321,21 @@ const TALENTOS_DATA = [
         descricao: 'Usa armadura média sem penalidade de furtividade e extrai o máximo de proteção com alta Destreza.',
         beneficios: [
             'Armadura média não impõe desvantagem em Furtividade.',
-            'Com Destreza 16+, adiciona 3 à CA em vez de 2.',
+            'Recebe um bonus de +1 em CA se tiver Destreza 16 ou maior e estiver usando armadura média.',
+            'Se tiver Destreza 16 ou maior e estiver usando armadura média, recebe um bonus de +1 em testes de resistência de Destreza.',
         ],
     },
     {
         id: 'maestria-armadura-pesada',
         nome: 'Maestria em Armadura Pesada',
         categoria: 'defesa',
-        icone: '⚔️',
+        icone: '🛡️',
         prereq: 'Proficiência em armadura pesada',
-        descricao: 'Armadura pesada reduz dano físico não-mágico recebido em 3.',
+        descricao: 'Armadura pesada reduz dano físico não-mágico recebido em 3 e aumenta a CA.',
         beneficios: [
-            '+1 em Força (máx. 20).',
             'Dano de concussão, cortante e perfurante não-mágico recebido é reduzido em 3.',
-        ],
-    },
-    {
-        id: 'protecao-leve',
-        nome: 'Proteção Leve',
-        categoria: 'defesa',
-        icone: '🧥',
-        prereq: '',
-        descricao: 'Treinamento com armaduras leves para os que ainda não possuem essa proficiência.',
-        beneficios: [
-            '+1 em Força ou Destreza (máx. 20).',
-            'Ganha proficiência com armaduras leves.',
-        ],
-    },
-    {
-        id: 'protecao-moderada',
-        nome: 'Proteção Moderada',
-        categoria: 'defesa',
-        icone: '🥋',
-        prereq: 'Proficiência em armadura leve',
-        descricao: 'Expande a proteção para armaduras médias e escudos.',
-        beneficios: [
-            '+1 em Força ou Destreza (máx. 20).',
-            'Ganha proficiência com armaduras médias e escudos.',
-        ],
-    },
-    {
-        id: 'protecao-pesada',
-        nome: 'Proteção Pesada',
-        categoria: 'defesa',
-        icone: '🏰',
-        prereq: 'Proficiência em armadura média',
-        descricao: 'Culminação do treinamento com armaduras — proficiência com as mais pesadas.',
-        beneficios: [
-            '+1 em Força (máx. 20).',
-            'Ganha proficiência com armaduras pesadas.',
-        ],
-    },
-    {
-        id: 'protetor',
-        nome: 'Protetor',
-        categoria: 'defesa',
-        icone: '🤝',
-        prereq: 'Constituição 13 ou maior, Proficiência com escudos',
-        descricao: 'Interpõe-se entre aliados e ataques, absorvendo o golpe no lugar deles.',
-        beneficios: [
-            '+1 em Constituição (máx. 20).',
-            'Reação: interpõe-se em ataques contra aliados dentro do seu deslocamento, sofrendo o dano no lugar.',
-            'Pode usar essa habilidade um número de vezes igual ao modificador de Destreza (recuperado em descanso).',
+            'Se tiver Força 16 ou maior e estiver usando armadura pesada, recebe um bonus de +1 em CA.',
+            'Se tiver Força 16 ou maior e estiver usando armadura pesada, recebe um bonus de +1 em testes de resistência de Força.',
         ],
     },
     {
@@ -418,10 +356,10 @@ const TALENTOS_DATA = [
         categoria: 'defesa',
         icone: '🪨',
         prereq: '',
-        descricao: 'Corpo endurecido que recupera mais PV ao gastar Dados de Vida.',
+        descricao: 'Corpo resistente que recebe mais cura.',
         beneficios: [
             '+1 em Constituição (máx. 20).',
-            'Ao rolar Dado de Vida para recuperar PV, o mínimo é duas vezes o modificador de Constituição.',
+            'Ao receber uma cura, ela é aumentada em 50%.',
         ],
     },
     {
@@ -450,7 +388,6 @@ const TALENTOS_DATA = [
             'Escolha um tipo: ácido, elétrico, fogo, frio ou trovão.',
             'Suas magias ignoram resistência ao tipo escolhido.',
             'Ao rolar dano com esse tipo, pode relançar qualquer dado com resultado 1.',
-            'Pode escolher esse talento múltiplas vezes para tipos diferentes.',
         ],
     },
     {
@@ -503,7 +440,7 @@ const TALENTOS_DATA = [
         beneficios: [
             'Vantagem em testes de Constituição para manter concentração após sofrer dano.',
             'Pode realizar componentes somáticos mesmo com armas ou escudo nas mãos.',
-            'Reação: ao criatura provocar ataque de oportunidade, pode conjurar magia de 1 ação com um alvo no lugar.',
+            'Quando uma criatura provocar ataque de oportunidade contra você, você pode com uma reação conjurar uma magia com tempo de conjuração de ação ou ação bônus com um alvo no lugar.',
         ],
     },
     {
@@ -775,7 +712,7 @@ const TALENTOS_DATA = [
     {
         id: 'leitura-combate',
         nome: 'Leitura de Combate',
-        categoria: 'habilidade',
+        categoria: 'combate',
         icone: '👁️',
         prereq: '',
         descricao: 'Você analisa padrões de ataque e defesa durante o combate.',
@@ -787,7 +724,7 @@ const TALENTOS_DATA = [
     {
         id: 'passo-calculado',
         nome: 'Passo Calculado',
-        categoria: 'habilidade',
+        categoria: 'defesa',
         icone: '🧭',
         prereq: '',
         descricao: 'Você se move com precisão, evitando riscos desnecessários.',
@@ -824,17 +761,15 @@ const TALENTOS_DATA = [
     {
         id: 'foco-disciplinado',
         nome: 'Foco Disciplinado',
-        categoria: 'habilidade',
+        categoria: 'magia',
         icone: '🎯',
         prereq: '',
         descricao: 'Você mantém concentração e precisão mesmo sob pressão.',
         beneficios: [
             'Recebe +2 em testes de Constituição para manter concentração.',
-            'Ao falhar por 2 ou menos, pode tratar o resultado como sucesso.',
+            'Ao falhar por 2 ou menos, pode repetir o teste mais uma única vez.',
         ],
     },
-
-    // ─── EXPANSÃO: UTILIDADE & HABILIDADE ─────────────────────
 
     {
         id: 'leitor-intencoes',
@@ -921,13 +856,12 @@ const TALENTOS_DATA = [
         nome: 'Momentos Heroicos',
         categoria: 'geral',
         icone: '🌟',
-        prereq: 'Um atributo 13 ou maior',
-        descricao: 'Você ultrapassa seus limites naturais por um curto período.',
+        prereq: '',
+        descricao: 'Você ultrapassa seus limites quando mais precisa.',
         beneficios: [
-            'Escolha um atributo com valor mínimo 13.',
-            'Ação: aumente esse atributo e seu valor máximo em 1d4 por 1 minuto.',
-            'Pode usar essa habilidade uma vez por descanso longo.',
-            'Pode adquirir este talento múltiplas vezes para atributos diferentes.',
+            '+1 em Constituição (máx. 20).',
+            'No momento que você for levado a 0 pontos de vida, você pode usar sua reação para realizar uma ação completa.',
+            'Você pode usar essa habilidade uma vez por descanso longo.',
         ],
     },
     {
@@ -938,8 +872,9 @@ const TALENTOS_DATA = [
         prereq: '',
         descricao: 'Seu corpo se acostumou à ausência de luz e descanso irregular.',
         beneficios: [
-            '+1 em Constituição (máx. 20).',
+            '+1 em Sabedoria (máx. 20).',
             'Você adquire visão no escuro de 9 m, ou aumenta em 9 m se já possuir.',
+            'Você não sofre desvantagem em qualquer teste de perícia realizado na escuridão total.',
             'Recebe +2 em testes contra exaustão causada por falta de descanso.',
         ],
     },
@@ -952,7 +887,7 @@ const TALENTOS_DATA = [
         descricao: 'Você percebe o ambiente através das vibrações do solo.',
         beneficios: [
             '+1 em Sabedoria (máx. 20).',
-            'Enquanto estiver cego ou de olhos fechados, você possui percepção por vibração em 9 m.',
+            'Enquanto estiver cego ou de olhos fechados, você possui visão sísmica em 9 m.',
         ],
     },
     {
@@ -967,7 +902,6 @@ const TALENTOS_DATA = [
             'Seus ataques contra esses tipos são críticos com 19–20.',
             'Ao realizar um acerto crítico, adiciona seu modificador de Inteligência ou Sabedoria ao dano.',
             'Recebe +2 em testes para recordar informações sobre esses tipos.',
-            'Pode adquirir este talento novamente para outros tipos.',
         ],
     },
     {
@@ -975,23 +909,23 @@ const TALENTOS_DATA = [
         nome: 'Ataque Preciso',
         categoria: 'combate',
         icone: '🎯',
-        prereq: 'Inteligência, Sabedoria ou Carisma 16 ou maior',
+        prereq: '',
         descricao: 'Você maximiza precisão em condições favoráveis.',
         beneficios: [
-            'Quando tiver vantagem em ataques com esse atributo, rola 3 dados em vez de 2.',
+            'Quando tiver vantagem em ataques, rola 3 dados em vez de 2.',
             'Se tiver vantagem, seu crítico ocorre com 19–20.',
         ],
     },
     {
-        id: 'elitista',
-        nome: 'Elitista',
-        categoria: 'geral',
-        icone: '👑',
+        id: 'valentao',
+        nome: 'Valentão',
+        categoria: 'combate',
+        icone: '👊',
         prereq: '',
-        descricao: 'Você despreza oponentes fracos e os elimina com eficiência.',
+        descricao: 'Você gosta de bater em pessoas mais fracas que você.',
         beneficios: [
-            'Causa +1 dado de dano contra criaturas com ND menor que metade do seu nível.',
-            'Causa +2 dados de dano se o ND for menor que um quarto do seu nível.',
+            'Sempre que você causar dano a uma criatura com ND menor que metade do seu nível, causa 1d10 de dano extra.',
+            'Se o ND for menor que um quarto do seu nível, causa 2d10 de dano extra.',
         ],
     },
     {
@@ -1021,20 +955,6 @@ const TALENTOS_DATA = [
         ],
     },
     {
-        id: 'foco-intenso',
-        nome: 'Foco Intenso',
-        categoria: 'magia',
-        icone: '🧘',
-        prereq: 'Capacidade de conjurar magia com concentração',
-        descricao: 'Você força sua mente além dos limites para manter magias.',
-        beneficios: [
-            'Adiciona bônus de proficiência em testes para manter concentração.',
-            'Ao atingir duração máxima de uma magia, pode tentar estendê-la (CD 12 +2 cumulativo).',
-            'Falha encerra a magia.',
-            'Enquanto estendida, testes de concentração por dano são feitos com desvantagem.',
-        ],
-    },
-    {
         id: 'multi-tarefa',
         nome: 'Multitarefa',
         categoria: 'geral',
@@ -1056,7 +976,7 @@ const TALENTOS_DATA = [
         beneficios: [
             'Ganha proficiência com kit de alquimia.',
             'Duração de poções criadas por você é multiplicada pelo bônus de proficiência.',
-            'Pode gastar um uso extra do kit para rolar testes com vantagem.',
+            'Pode gastar um uso extra do kit para rolar testes de fabricação com vantagem.',
         ],
     },
     {
@@ -1081,8 +1001,8 @@ const TALENTOS_DATA = [
         descricao: 'Você domina a arte do comércio e lucro.',
         beneficios: [
             '+1 em Carisma (máx. 20).',
-            'Ao negociar, role 1d6 e adicione ao teste.',
-            'Ao administrar negócio, adicione 1d20 ao lucro mensal.',
+            'Ao rolagar um teste de Persuasão ou Enganação para obter lucro financeiro, role 1d6 e adicione ao teste.',
+            'Ao administrar um negócio, aumente os ganhos em 25% ou reduza os custos em 25%',
         ],
     },
     {
@@ -1110,6 +1030,158 @@ const TALENTOS_DATA = [
             'Você e até 6 aliados não se perdem em masmorras.',
             'Aliados a até 3 m recebem +2 em Percepção, Investigação e Sobrevivência para detectar armadilhas e caminhos.',
             'Luz fraca é tratada como luz plena para você.',
+        ],
+    },
+    {
+        id: 'ossos-de-colosso',
+        nome: 'Ossos de Colosso',
+        categoria: 'defesa',
+        icone: '🦴',
+        prereq: 'Constituição 15 ou maior',
+        descricao: 'Seu corpo resiste como aço, absorvendo impactos pesados.',
+        beneficios: [
+            'Reduz todo dano físico (Concutente, Perfurante e Cortante) recebido em valor igual ao bonus de proficiencia.',
+        ],
+    },
+    {
+        id: 'resistencia-sob-pressao',
+        nome: 'Resistência Sob Pressão',
+        categoria: 'defesa',
+        icone: '🔥',
+        prereq: '',
+        descricao: 'Quanto mais ferido você está, mais difícil é derrubá-lo.',
+        beneficios: [
+            'Enquanto estiver com menos da metade dos PV, recebe +2 na CA.',
+            'Recebe +2 em testes de resistência.',
+        ],
+    },
+
+    {
+        id: 'equilibrio-perfeito',
+        nome: 'Equilíbrio Perfeito',
+        categoria: 'defesa',
+        icone: '⚖️',
+        prereq: 'Destreza 13 ou maior',
+        descricao: 'Você mantém postura impecável mesmo em situações adversas.',
+        beneficios: [
+            'Não pode ser derrubado enquanto estiver consciente, a menos que fique incapacitado.',
+            'Recebe +2 na CA contra ataques feitos com vantagem.',
+        ],
+    },
+
+    {
+        id: 'reserva-arcana',
+        nome: 'Reserva Arcana',
+        categoria: 'magia',
+        icone: '🔋',
+        prereq: 'Capacidade de conjurar magia e personagem de 5° nível ou superior.',
+        descricao: 'Você possui energia mágica adicional para momentos críticos.',
+        beneficios: [
+            'Ganha um espaço de magia adicional do menor nível disponível.',
+            'Uma vez por descanso longo, pode recuperar um espaço de magia gasto como ação bônus.',
+        ],
+    },
+    {
+        id: 'explosao-controlada',
+        nome: 'Explosão Controlada',
+        categoria: 'magia',
+        icone: '💣',
+        prereq: '',
+        descricao: 'Você molda suas magias para evitar aliados.',
+        beneficios: [
+            'Magias de área podem excluir um número de criaturas igual ao seu bonus de proficiência.',
+            'Criaturas excluídas não sofrem dano nem efeitos.',
+        ],
+    },
+
+    {
+        id: 'conjuracao-economica',
+        nome: 'Conjuração Econômica',
+        categoria: 'magia',
+        icone: '📉',
+        prereq: 'Capacidade de conjurar magia',
+        descricao: 'Você otimiza o uso de energia mágica, reduzindo desperdícios.',
+        beneficios: [
+            'Quando uma magia requer componentes verbais e somáticos, você pode ignorar um dos dois à sua escolha.',
+            'Uma vez por descanso longo, ao conjurar uma magia, pode tratar o seu custo em espaços de magia como se fosse de um nível inferior (mínimo 1º nível).',
+        ],
+    },
+
+    {
+        id: 'ancora-arcana',
+        nome: 'Âncora Arcana',
+        categoria: 'magia',
+        icone: '⚓',
+        prereq: 'Capacidade de conjurar magia com concentração',
+        descricao: 'Você fixa suas magias no tecido da realidade, tornando-as mais difíceis de dissipar.',
+        beneficios: [
+            'Criaturas têm desvantagem em testes para dissipar ou encerrar suas magias.',
+            'Se sua concentração for quebrada, o efeito da magia persiste até o final do turno atual.',
+        ],
+    },
+
+    {
+        id: 'alcance-flexivel',
+        nome: 'Alcance Flexível',
+        categoria: 'magia',
+        icone: '📏',
+        prereq: 'Capacidade de conjurar magia',
+        descricao: 'Você manipula o alcance de suas magias com precisão.',
+        beneficios: [
+            'Uma vez por turno, pode aumentar ou reduzir pela metade o alcance de uma magia.',
+            'Magias de toque podem ser conjuradas a até 3 m.',
+        ],
+    },
+
+    {
+        id: 'retencao-magica',
+        nome: 'Retenção Mágica',
+        categoria: 'magia',
+        icone: '🧠',
+        prereq: 'Capacidade de conjurar magia',
+        descricao: 'Você segura o fluxo da magia antes de liberá-la.',
+        beneficios: [
+            'Ao preparar uma ação para conjurar magia, não precisa manter concentração até o gatilho ocorrer.',
+            'Se o gatilho não ocorrer, você não perde o espaço de magia.',
+        ],
+    },
+
+    {
+        id: 'contrafluxo',
+        nome: 'Contrafluxo',
+        categoria: 'magia',
+        icone: '🔄',
+        prereq: 'Capacidade de conjurar magia',
+        descricao: 'Você manipula energia mágica residual ao seu redor.',
+        beneficios: [
+            'Reação: quando uma criatura a até 9 m conjurar uma magia que você tenha preparada, você recebe +2 no próximo teste de resistência contra magia até o fim do turno.',
+            'Se passar no teste, pode mover-se 3 m sem provocar ataques de oportunidade.',
+        ],
+    },
+
+    {
+        id: 'estabilidade-ritual',
+        nome: 'Estabilidade Ritual',
+        categoria: 'magia',
+        icone: '📜',
+        prereq: 'Capacidade de conjurar rituais',
+        descricao: 'Seus rituais são mais seguros e rápidos.',
+        beneficios: [
+            'Tempo adicional para conjurar rituais é reduzido pela metade.',
+            'Você não pode ser interrompido durante um ritual, a menos que fique incapacitado.',
+        ],
+    },
+
+    {
+        id: 'eco-defensivo',
+        nome: 'Eco Defensivo',
+        categoria: 'magia',
+        icone: '🛡️',
+        prereq: 'Capacidade de conjurar magia',
+        descricao: 'Resquícios mágicos protegem você após conjuração.',
+        beneficios: [
+            'Após conjurar uma magia de 1º nível ou superior, recebe +1 na CA até o início do próximo turno.',
+            'Se a magia exigir concentração, o bônus aumenta para +2 até o início do seu próximo turno.',
         ],
     },
 
