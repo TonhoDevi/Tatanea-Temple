@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <base href="/">
@@ -9,7 +10,9 @@
     <meta name="theme-color" content="#4a3728">
     <title>Tatânea Temple — M&M 3e</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="css/1-variables.css">
     <link rel="stylesheet" href="css/2-base.css">
@@ -23,12 +26,13 @@
 <script src="/js/shared/cloud-save.js"></script>
 <script>requireAuth();</script>
 <!-- seus scripts originais continuam depois -->
+
 <body>
 
     <!-- NAVBAR -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="index.html" class="navbar-logo">Tatânea Temple</a>
+            <a href="index.html" class="navbar-logo">Templo de Tatânea</a>
             <ul class="navbar-menu">
                 <li><a href="index.html">Início</a></li>
                 <li><a href="html/sheet/my-characters-sheet.html">Minhas Fichas</a></li>
@@ -93,7 +97,8 @@
                                 </div>
                             </div>
 
-                            <div style="display:grid; grid-template-columns:1fr 1fr 1fr 2fr; gap:15px; margin-top:15px;">
+                            <div
+                                style="display:grid; grid-template-columns:1fr 1fr 1fr 2fr; gap:15px; margin-top:15px;">
                                 <div class="input-group">
                                     <label class="input-label">Grupo / Afiliação</label>
                                     <input type="text" id="grupo" oninput="mmAutoSave(); mmUpdateDisplays()">
@@ -104,12 +109,13 @@
                                 </div>
                                 <div class="input-group">
                                     <label class="input-label">Origem</label>
-                                    <input type="text" id="origem" placeholder="Mutante, Tecnologia..." oninput="mmAutoSave(); mmUpdateDisplays()">
+                                    <input type="text" id="origem" placeholder="Mutante, Tecnologia..."
+                                        oninput="mmAutoSave(); mmUpdateDisplays()">
                                 </div>
                                 <div class="bonus-box">
                                     <div class="bonus-item">
-                                        <input type="number" class="bonus-value" id="nivelPoder" value="10" min="1" max="20"
-                                            oninput="mmCalculateAll(); mmAutoSave(); mmUpdateDisplays()">
+                                        <input type="number" class="bonus-value" id="nivelPoder" value="10" min="1"
+                                            max="20" oninput="mmCalculateAll(); mmAutoSave(); mmUpdateDisplays()">
                                         <label class="bonus-label">Nível de Poder</label>
                                     </div>
                                     <div class="bonus-item">
@@ -158,7 +164,8 @@
                             <!-- Coluna Esquerda — Atributos -->
                             <div>
                                 <div class="section">
-                                    <div class="section-title">Atributos <small style="font-size:0.7em;opacity:0.7;">(Custo: valor × 2 pts)</small></div>
+                                    <div class="section-title">Atributos <small
+                                            style="font-size:0.7em;opacity:0.7;">(Custo: valor × 2 pts)</small></div>
                                     <div class="stats-grid">
                                         <div class="stat-box">
                                             <div class="stat-label">Força</div>
@@ -207,15 +214,20 @@
                             <!-- Coluna Direita — Defesas & Combate -->
                             <div>
                                 <div class="section">
-                                    <div class="section-title">Defesas <small style="font-size:0.7em;opacity:0.7;">(Custo: valor em pts)</small></div>
+                                    <div class="section-title">Defesas <small
+                                            style="font-size:0.7em;opacity:0.7;">(Custo: valor em pts)</small></div>
 
-                                    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:4px;padding:0 2px;">
+                                    <div
+                                        style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:4px;padding:0 2px;">
                                         <div style="font-size:0.7em;opacity:0.6;font-weight:600;">Defesa</div>
-                                        <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Ranks</div>
-                                        <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Misc</div>
+                                        <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">
+                                            Ranks</div>
+                                        <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Misc
+                                        </div>
                                     </div>
 
-                                    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
+                                    <div
+                                        style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
                                         <label class="input-label" style="margin:0;">Esquiva</label>
                                         <input type="number" id="defEsquivaRanks" value="0" min="0"
                                             oninput="mmCalculateAll(); mmAutoSave()"
@@ -224,7 +236,8 @@
                                             oninput="mmCalculateAll(); mmAutoSave()"
                                             style="text-align:center;padding:4px;border-radius:4px;">
                                     </div>
-                                    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
+                                    <div
+                                        style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
                                         <label class="input-label" style="margin:0;">Resistência Física</label>
                                         <input type="number" id="defFisicaRanks" value="0" min="0"
                                             oninput="mmCalculateAll(); mmAutoSave()"
@@ -233,7 +246,8 @@
                                             oninput="mmCalculateAll(); mmAutoSave()"
                                             style="text-align:center;padding:4px;border-radius:4px;">
                                     </div>
-                                    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
+                                    <div
+                                        style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
                                         <label class="input-label" style="margin:0;">Resistência Mental</label>
                                         <input type="number" id="defMentalRanks" value="0" min="0"
                                             oninput="mmCalculateAll(); mmAutoSave()"
@@ -242,7 +256,8 @@
                                             oninput="mmCalculateAll(); mmAutoSave()"
                                             style="text-align:center;padding:4px;border-radius:4px;">
                                     </div>
-                                    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
+                                    <div
+                                        style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
                                         <label class="input-label" style="margin:0;">Resistência Elemental</label>
                                         <input type="number" id="defElementalRanks" value="0" min="0"
                                             oninput="mmCalculateAll(); mmAutoSave()"
@@ -367,14 +382,38 @@
                         <div class="section">
                             <div class="section-title">Atributos</div>
                             <div class="stats-grid">
-                                <div class="stat-box"><div class="stat-label">Força</div><div class="stat-value" id="display-modForca">+0</div></div>
-                                <div class="stat-box"><div class="stat-label">Vigor</div><div class="stat-value" id="display-modVigor">+0</div></div>
-                                <div class="stat-box"><div class="stat-label">Agilidade</div><div class="stat-value" id="display-modAgilidade">+0</div></div>
-                                <div class="stat-box"><div class="stat-label">Destreza</div><div class="stat-value" id="display-modDestreza">+0</div></div>
-                                <div class="stat-box"><div class="stat-label">Luta</div><div class="stat-value" id="display-modLuta">+0</div></div>
-                                <div class="stat-box"><div class="stat-label">Intelecto</div><div class="stat-value" id="display-modIntelecto">+0</div></div>
-                                <div class="stat-box"><div class="stat-label">Percepção</div><div class="stat-value" id="display-modPercepao">+0</div></div>
-                                <div class="stat-box"><div class="stat-label">Presença</div><div class="stat-value" id="display-modPresenca">+0</div></div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Força</div>
+                                    <div class="stat-value" id="display-modForca">+0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Vigor</div>
+                                    <div class="stat-value" id="display-modVigor">+0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Agilidade</div>
+                                    <div class="stat-value" id="display-modAgilidade">+0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Destreza</div>
+                                    <div class="stat-value" id="display-modDestreza">+0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Luta</div>
+                                    <div class="stat-value" id="display-modLuta">+0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Intelecto</div>
+                                    <div class="stat-value" id="display-modIntelecto">+0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Percepção</div>
+                                    <div class="stat-value" id="display-modPercepao">+0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Presença</div>
+                                    <div class="stat-value" id="display-modPresenca">+0</div>
+                                </div>
                             </div>
                         </div>
 
@@ -424,23 +463,29 @@
                         <!-- Defesas -->
                         <div class="section">
                             <div class="section-title">Defesas</div>
-                            <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;margin-bottom:4px;padding:0 2px;">
+                            <div
+                                style="display:grid;grid-template-columns:2fr 1fr;gap:6px;margin-bottom:4px;padding:0 2px;">
                                 <div style="font-size:0.7em;opacity:0.6;font-weight:600;">Defesa</div>
                                 <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Total</div>
                             </div>
-                            <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
+                            <div
+                                style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
                                 <label class="input-label" style="margin:0;">Esquiva</label>
-                                <div class="display-value" style="text-align:center;" id="display-defEsquivaTotal">+0</div>
+                                <div class="display-value" style="text-align:center;" id="display-defEsquivaTotal">+0
+                                </div>
                             </div>
-                            <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
+                            <div
+                                style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
                                 <label class="input-label" style="margin:0;">Resistência Física</label>
                                 <div class="display-value" style="text-align:center;" id="display-defFisica">10</div>
                             </div>
-                            <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
+                            <div
+                                style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
                                 <label class="input-label" style="margin:0;">Resistência Mental</label>
                                 <div class="display-value" style="text-align:center;" id="display-defMental">10</div>
                             </div>
-                            <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
+                            <div
+                                style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
                                 <label class="input-label" style="margin:0;">Resistência Elemental</label>
                                 <div class="display-value" style="text-align:center;" id="display-defElemental">10</div>
                             </div>
@@ -460,24 +505,32 @@
                         <!-- Perícias -->
                         <div>
                             <div class="section">
-                                <div class="section-title">Perícias <small style="font-size:0.7em;opacity:0.7;">(1 pt = 2 ranks)</small></div>
+                                <div class="section-title">Perícias <small style="font-size:0.7em;opacity:0.7;">(1 pt =
+                                        2 ranks)</small></div>
 
                                 <!-- Cabeçalho — 5 colunas, igual ao grid do JS -->
-                                <div style="display:grid;grid-template-columns:2.5fr 0.5fr 0.8fr 0.8fr 0.8fr;gap:6px;margin-bottom:6px;padding:0 2px;">
+                                <div
+                                    style="display:grid;grid-template-columns:2.5fr 0.5fr 0.8fr 0.8fr 0.8fr;gap:6px;margin-bottom:6px;padding:0 2px;">
                                     <div style="font-size:0.7em;opacity:0.6;font-weight:600;">Perícia</div>
-                                    <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Attr.</div>
-                                    <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Base</div>
-                                    <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Ranks</div>
-                                    <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Total</div>
+                                    <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Attr.
+                                    </div>
+                                    <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Base
+                                    </div>
+                                    <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Ranks
+                                    </div>
+                                    <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Total
+                                    </div>
                                 </div>
 
                                 <div id="mmSkillsList"></div>
 
                                 <!-- Especializações -->
                                 <div style="margin-top:12px;">
-                                    <div class="section-title" style="font-size:0.85em;">Especializações de Especialidade</div>
+                                    <div class="section-title" style="font-size:0.85em;">Especializações de
+                                        Especialidade</div>
                                     <div id="mmExtraSkillsList"></div>
-                                    <button class="btn btn-secondary" onclick="mmAddExtraSkill()" style="width:100%;margin-top:8px;">+ Adicionar Especialização</button>
+                                    <button class="btn btn-secondary" onclick="mmAddExtraSkill()"
+                                        style="width:100%;margin-top:8px;">+ Adicionar Especialização</button>
                                 </div>
                             </div>
                         </div>
@@ -485,14 +538,17 @@
                         <!-- Vantagens -->
                         <div>
                             <div class="section">
-                                <div class="section-title">Vantagens <small style="font-size:0.7em;opacity:0.7;">(1 pt cada)</small></div>
+                                <div class="section-title">Vantagens <small style="font-size:0.7em;opacity:0.7;">(1 pt
+                                        cada)</small></div>
                                 <div class="abilities-list" id="mmAdvantagesList"></div>
-                                <button class="btn btn-secondary" onclick="mmAddAdvantage()" style="width:100%;margin-top:10px;">+ Adicionar Vantagem</button>
+                                <button class="btn btn-secondary" onclick="mmAddAdvantage()"
+                                    style="width:100%;margin-top:10px;">+ Adicionar Vantagem</button>
                             </div>
 
                             <div class="section">
                                 <div class="section-title">Idiomas & Proficiências</div>
-                                <textarea id="mmIdiomas" oninput="mmAutoSave()" placeholder="Idiomas conhecidos, proficiências especiais..."></textarea>
+                                <textarea id="mmIdiomas" oninput="mmAutoSave()"
+                                    placeholder="Idiomas conhecidos, proficiências especiais..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -508,20 +564,23 @@
                     <!-- Ataques -->
                     <div class="section">
                         <div class="section-title">Ataques</div>
-                        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:6px;margin-bottom:4px;padding:0 2px;">
+                        <div
+                            style="display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:6px;margin-bottom:4px;padding:0 2px;">
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;">Nome</div>
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Bônus</div>
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Alcance</div>
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;">Efeito / Resistência</div>
                         </div>
                         <div class="attack-list" id="mmAttackList"></div>
-                        <button class="btn btn-secondary" onclick="mmAddAttack()" style="width:100%;margin-top:10px;">+ Adicionar Ataque</button>
+                        <button class="btn btn-secondary" onclick="mmAddAttack()" style="width:100%;margin-top:10px;">+
+                            Adicionar Ataque</button>
                     </div>
 
                     <!-- Poderes -->
                     <div class="section">
                         <div class="section-title">Poderes</div>
-                        <div style="display:grid;grid-template-columns:2fr 1fr 0.7fr 3fr 0.5fr;gap:6px;margin-bottom:4px;padding:0 2px;">
+                        <div
+                            style="display:grid;grid-template-columns:2fr 1fr 0.7fr 3fr 0.5fr;gap:6px;margin-bottom:4px;padding:0 2px;">
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;">Nome</div>
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Rank</div>
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">Custo</div>
@@ -529,26 +588,31 @@
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">✕</div>
                         </div>
                         <div id="mmPowersList"></div>
-                        <button class="btn btn-secondary" onclick="mmAddPower()" style="width:100%;margin-top:10px;">+ Adicionar Poder</button>
+                        <button class="btn btn-secondary" onclick="mmAddPower()" style="width:100%;margin-top:10px;">+
+                            Adicionar Poder</button>
                     </div>
 
                     <!-- Equipamentos -->
                     <div class="section">
-                        <div class="section-title">Equipamentos <small style="font-size:0.7em;opacity:0.7;">(5 itens EP = 1 pt Vantagem Equipamento)</small></div>
-                        <div style="display:grid;grid-template-columns:2fr 0.8fr 3fr 0.5fr;gap:6px;margin-bottom:4px;padding:0 2px;">
+                        <div class="section-title">Equipamentos <small style="font-size:0.7em;opacity:0.7;">(5 itens EP
+                                = 1 pt Vantagem Equipamento)</small></div>
+                        <div
+                            style="display:grid;grid-template-columns:2fr 0.8fr 3fr 0.5fr;gap:6px;margin-bottom:4px;padding:0 2px;">
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;">Nome</div>
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">EP</div>
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;">Propriedades</div>
                             <div style="font-size:0.7em;opacity:0.6;font-weight:600;text-align:center;">✕</div>
                         </div>
                         <div id="mmEquipList"></div>
-                        <button class="btn btn-secondary" onclick="mmAddEquip()" style="width:100%;margin-top:10px;">+ Adicionar Equipamento</button>
+                        <button class="btn btn-secondary" onclick="mmAddEquip()" style="width:100%;margin-top:10px;">+
+                            Adicionar Equipamento</button>
                     </div>
 
                     <!-- Veículo / QG -->
                     <div class="section">
                         <div class="section-title">Veículos & Quartel General</div>
-                        <textarea id="mmVeiculosQG" oninput="mmAutoSave()" style="min-height:120px;" placeholder="Descreva veículos, base de operações, etc..."></textarea>
+                        <textarea id="mmVeiculosQG" oninput="mmAutoSave()" style="min-height:120px;"
+                            placeholder="Descreva veículos, base de operações, etc..."></textarea>
                     </div>
                 </div>
             </div>
@@ -566,7 +630,8 @@
                                 <div class="section-title">Imagem do Herói</div>
                                 <div class="character-image-container">
                                     <div class="image-preview" id="imagePreview">
-                                        <img id="characterImage" src="" alt="Imagem do personagem" style="display:none;">
+                                        <img id="characterImage" src="" alt="Imagem do personagem"
+                                            style="display:none;">
                                         <div class="image-placeholder" id="imagePlaceholder">
                                             <span class="placeholder-icon">🦸</span>
                                             <span class="placeholder-text">Clique para adicionar imagem</span>
@@ -574,8 +639,11 @@
                                     </div>
                                     <input type="file" id="imageUpload" accept="image/*" style="display:none;">
                                     <div class="image-controls">
-                                        <button class="btn btn-secondary" onclick="document.getElementById('imageUpload').click()">📤 Escolher Imagem</button>
-                                        <button class="btn btn-danger" onclick="mmRemoveImage()" id="removeImageBtn" style="display:none;">🗑️ Remover</button>
+                                        <button class="btn btn-secondary"
+                                            onclick="document.getElementById('imageUpload').click()">📤 Escolher
+                                            Imagem</button>
+                                        <button class="btn btn-danger" onclick="mmRemoveImage()" id="removeImageBtn"
+                                            style="display:none;">🗑️ Remover</button>
                                     </div>
                                 </div>
                             </div>
@@ -584,25 +652,34 @@
                             <div>
                                 <div class="section-title">Detalhes Físicos</div>
                                 <div class="combat-grid">
-                                    <div class="input-group"><label class="input-label">Idade</label><input type="text" id="idade" oninput="mmAutoSave()"></div>
-                                    <div class="input-group"><label class="input-label">Altura</label><input type="text" id="altura" oninput="mmAutoSave()"></div>
-                                    <div class="input-group"><label class="input-label">Peso</label><input type="text" id="peso" oninput="mmAutoSave()"></div>
-                                    <div class="input-group"><label class="input-label">Olhos</label><input type="text" id="olhos" oninput="mmAutoSave()"></div>
-                                    <div class="input-group"><label class="input-label">Cabelo</label><input type="text" id="cabelo" oninput="mmAutoSave()"></div>
-                                    <div class="input-group"><label class="input-label">Gênero</label><input type="text" id="genero" oninput="mmAutoSave()"></div>
+                                    <div class="input-group"><label class="input-label">Idade</label><input type="text"
+                                            id="idade" oninput="mmAutoSave()"></div>
+                                    <div class="input-group"><label class="input-label">Altura</label><input type="text"
+                                            id="altura" oninput="mmAutoSave()"></div>
+                                    <div class="input-group"><label class="input-label">Peso</label><input type="text"
+                                            id="peso" oninput="mmAutoSave()"></div>
+                                    <div class="input-group"><label class="input-label">Olhos</label><input type="text"
+                                            id="olhos" oninput="mmAutoSave()"></div>
+                                    <div class="input-group"><label class="input-label">Cabelo</label><input type="text"
+                                            id="cabelo" oninput="mmAutoSave()"></div>
+                                    <div class="input-group"><label class="input-label">Gênero</label><input type="text"
+                                            id="genero" oninput="mmAutoSave()"></div>
                                 </div>
                                 <div class="input-group" style="margin-top:10px;">
                                     <label class="input-label">Aparência</label>
-                                    <textarea id="aparencia" oninput="mmAutoSave()" style="min-height:80px;" placeholder="Descrição física detalhada..."></textarea>
+                                    <textarea id="aparencia" oninput="mmAutoSave()" style="min-height:80px;"
+                                        placeholder="Descrição física detalhada..."></textarea>
                                 </div>
                                 <div class="combat-grid" style="grid-template-columns:1fr 1fr;margin-top:10px;">
                                     <div class="input-group">
                                         <label class="input-label">Personalidade</label>
-                                        <textarea id="personalidade" oninput="mmAutoSave()" style="min-height:80px;" placeholder="Como o herói age e pensa..."></textarea>
+                                        <textarea id="personalidade" oninput="mmAutoSave()" style="min-height:80px;"
+                                            placeholder="Como o herói age e pensa..."></textarea>
                                     </div>
                                     <div class="input-group">
                                         <label class="input-label">Motivação</label>
-                                        <textarea id="motivacao" oninput="mmAutoSave()" style="min-height:80px;" placeholder="O que move o herói..."></textarea>
+                                        <textarea id="motivacao" oninput="mmAutoSave()" style="min-height:80px;"
+                                            placeholder="O que move o herói..."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -612,28 +689,33 @@
                     <!-- Complicações -->
                     <div class="section">
                         <div class="section-title">Complicações</div>
-                        <p style="font-size:0.8em;opacity:0.7;margin-bottom:8px;">Complicações são a fonte dos Pontos Heroicos. Cada complicação deve ter um tipo e uma descrição.</p>
+                        <p style="font-size:0.8em;opacity:0.7;margin-bottom:8px;">Complicações são a fonte dos Pontos
+                            Heroicos. Cada complicação deve ter um tipo e uma descrição.</p>
                         <div id="mmComplicationsList"></div>
-                        <button class="btn btn-secondary" onclick="mmAddComplication()" style="width:100%;margin-top:10px;">+ Adicionar Complicação</button>
+                        <button class="btn btn-secondary" onclick="mmAddComplication()"
+                            style="width:100%;margin-top:10px;">+ Adicionar Complicação</button>
                     </div>
 
                     <!-- Aliados & Rivais -->
                     <div class="section">
                         <div class="section-title">Aliados, Rivais & Conhecidos</div>
                         <div class="individuals-list" id="mmIndividualsList"></div>
-                        <button class="btn btn-secondary" onclick="mmAddIndividual()" style="width:100%;margin-top:10px;">+ Adicionar Pessoa</button>
+                        <button class="btn btn-secondary" onclick="mmAddIndividual()"
+                            style="width:100%;margin-top:10px;">+ Adicionar Pessoa</button>
                     </div>
 
                     <!-- História -->
                     <div class="section">
                         <div class="section-title">História</div>
-                        <textarea id="historia" oninput="mmAutoSave()" style="min-height:300px;" placeholder="A origem e história do herói..."></textarea>
+                        <textarea id="historia" oninput="mmAutoSave()" style="min-height:300px;"
+                            placeholder="A origem e história do herói..."></textarea>
                     </div>
 
                     <!-- Anotações -->
                     <div class="section">
                         <div class="section-title">Anotações</div>
-                        <textarea id="anotacoes" oninput="mmAutoSave()" style="min-height:200px;" placeholder="Anotações de sessão, lembretes..."></textarea>
+                        <textarea id="anotacoes" oninput="mmAutoSave()" style="min-height:200px;"
+                            placeholder="Anotações de sessão, lembretes..."></textarea>
                     </div>
                 </div>
             </div>
@@ -651,10 +733,15 @@
                                     <div class="controls" style="flex-direction:column;gap:10px;">
                                         <button class="btn btn-secondary" onclick="mmSave()">💾 Salvar</button>
                                         <button class="btn btn-danger" onclick="mmNewSheet()">➕ Nova Ficha</button>
-                                        <button class="btn btn-primary" onclick="mmExportJSON()">💾 Baixar Ficha (.json)</button>
-                                        <button class="btn btn-secondary" onclick="mmShowLoadModal()">📂 Carregar</button>
-                                        <button class="btn btn-secondary" onclick="document.getElementById('importFileInput').click()">📂 Carregar Arquivo (.json)</button>
-                                        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Ficha</button>
+                                        <button class="btn btn-primary" onclick="mmExportJSON()">💾 Baixar Ficha
+                                            (.json)</button>
+                                        <button class="btn btn-secondary" onclick="mmShowLoadModal()">📂
+                                            Carregar</button>
+                                        <button class="btn btn-secondary"
+                                            onclick="document.getElementById('importFileInput').click()">📂 Carregar
+                                            Arquivo (.json)</button>
+                                        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir
+                                            Ficha</button>
                                     </div>
                                 </div>
                             </div>
@@ -664,7 +751,8 @@
                                 <div class="section-title">Configurações</div>
                                 <div class="section-content">
                                     <div class="input-group">
-                                        <label><input type="checkbox" id="toggleDarkMode" onchange="toggleDarkMode()"> Modo Escuro</label>
+                                        <label><input type="checkbox" id="toggleDarkMode" onchange="toggleDarkMode()">
+                                            Modo Escuro</label>
                                     </div>
                                 </div>
                             </div>
@@ -680,36 +768,37 @@
             <div class="modal-content">
                 <h2 class="modal-title">Carregar Personagem</h2>
                 <div id="mmCharacterList"></div>
-                <button class="btn btn-secondary" onclick="mmHideLoadModal()" style="width:100%;margin-top:15px;">Fechar</button>
+                <button class="btn btn-secondary" onclick="mmHideLoadModal()"
+                    style="width:100%;margin-top:15px;">Fechar</button>
             </div>
         </div>
 
     </div><!-- /app-container -->
 
-     <!-- Modal: Dice Roller -->
+    <!-- Modal: Dice Roller -->
     <div class="modal" id="diceModal" aria-hidden="true">
-    <div class="modal-content dice-modal-content">
-        <button class="menu-close" id="closeDiceBtn">✕</button>
-        <h2 class="modal-title">Lançador de Dados</h2>
+        <div class="modal-content dice-modal-content">
+            <button class="menu-close" id="closeDiceBtn">✕</button>
+            <h2 class="modal-title">Lançador de Dados</h2>
 
-        <div class="dice-grid">
+            <div class="dice-grid">
 
-        <!-- Controles -->
-        <div class="dice-controls">
+                <!-- Controles -->
+                <div class="dice-controls">
 
-            <div>
-            <div class="ctrl-label">Quantidade</div>
-            <div class="qty-spinner">
-                <button class="qty-btn" id="qtyDown">−</button>
-                <span class="qty-display" id="diceQty">1</span>
-                <button class="qty-btn" id="qtyUp">+</button>
-            </div>
-            </div>
+                    <div>
+                        <div class="ctrl-label">Quantidade</div>
+                        <div class="qty-spinner">
+                            <button class="qty-btn" id="qtyDown">−</button>
+                            <span class="qty-display" id="diceQty">1</span>
+                            <button class="qty-btn" id="qtyUp">+</button>
+                        </div>
+                    </div>
 
-            <div>
-            <div class="ctrl-label">Tipo de Dado</div>
+                    <div>
+                        <div class="ctrl-label">Tipo de Dado</div>
 
-            <!--
+                        <!--
                 Layout losango:
                 ------d6------
                 d4---------d8
@@ -719,88 +808,89 @@
 
                 Cada .die-oct-wrap envolve o botão para efeito octógono + borda via drop-shadow
             -->
-            <div class="dice-diamond" id="diceType">
+                        <div class="dice-diamond" id="diceType">
 
-                <div class="diamond-row center">
-                <div class="die-oct-wrap">
-                    <button class="die-btn" data-sides="6" data-label="d6" title="d6">
-                    <span>d6</span>
-                    </button>
-                </div>
+                            <div class="diamond-row center">
+                                <div class="die-oct-wrap">
+                                    <button class="die-btn" data-sides="6" data-label="d6" title="d6">
+                                        <span>d6</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="diamond-row sides">
+                                <div class="die-oct-wrap">
+                                    <button class="die-btn" data-sides="4" data-label="d4" title="d4">
+                                        <span>d4</span>
+                                    </button>
+                                </div>
+                                <div class="die-oct-wrap">
+                                    <button class="die-btn" data-sides="8" data-label="d8" title="d8">
+                                        <span>d8</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="diamond-row center">
+                                <div class="die-oct-wrap die-oct-wrap--d20">
+                                    <button class="die-btn die-btn--d20 active" data-sides="20" data-label="d20"
+                                        title="d20">
+                                        <span>d20</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="diamond-row sides">
+                                <div class="die-oct-wrap">
+                                    <button class="die-btn" data-sides="10" data-label="d10" title="d10">
+                                        <span>d10</span>
+                                    </button>
+                                </div>
+                                <div class="die-oct-wrap">
+                                    <button class="die-btn" data-sides="12" data-label="d12" title="d12">
+                                        <span>d12</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="diamond-row center">
+                                <div class="die-oct-wrap">
+                                    <button class="die-btn" data-sides="100" data-label="d100" title="d100">
+                                        <span>d100</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="roll-actions">
+                        <button class="btn btn-roll" id="rollDiceBtn">🎲 Rolar</button>
+                        <button class="btn btn-clear" id="clearDiceBtn">Limpar</button>
+                    </div>
+
+                </div><!-- /dice-controls -->
+
+                <!-- Resultados -->
+                <div class="dice-results-panel">
+                    <div class="dice-stage" id="diceResults">
+                        <div class="empty-state" id="emptyState">
+                            <div id="emptyShapeWrap"></div>
+                            <p>Aguardando rolagem</p>
+                        </div>
+                        <div class="rolling-overlay" id="rollingOverlay"></div>
+                        <div class="results-list" id="resultsList"></div>
+                    </div>
+
+                    <div class="results-summary" id="resultsSummary" style="display:none;">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-total" id="resultsTotal"></span>
+                        <span class="summary-breakdown" id="resultsBreakdown"></span>
+                    </div>
                 </div>
 
-                <div class="diamond-row sides">
-                <div class="die-oct-wrap">
-                    <button class="die-btn" data-sides="4" data-label="d4" title="d4">
-                    <span>d4</span>
-                    </button>
-                </div>
-                <div class="die-oct-wrap">
-                    <button class="die-btn" data-sides="8" data-label="d8" title="d8">
-                    <span>d8</span>
-                    </button>
-                </div>
-                </div>
-
-                <div class="diamond-row center">
-                <div class="die-oct-wrap die-oct-wrap--d20">
-                    <button class="die-btn die-btn--d20 active" data-sides="20" data-label="d20" title="d20">
-                    <span>d20</span>
-                    </button>
-                </div>
-                </div>
-
-                <div class="diamond-row sides">
-                <div class="die-oct-wrap">
-                    <button class="die-btn" data-sides="10" data-label="d10" title="d10">
-                    <span>d10</span>
-                    </button>
-                </div>
-                <div class="die-oct-wrap">
-                    <button class="die-btn" data-sides="12" data-label="d12" title="d12">
-                    <span>d12</span>
-                    </button>
-                </div>
-                </div>
-
-                <div class="diamond-row center">
-                <div class="die-oct-wrap">
-                    <button class="die-btn" data-sides="100" data-label="d100" title="d100">
-                    <span>d100</span>
-                    </button>
-                </div>
-                </div>
-
-            </div>
-            </div>
-
-            <div class="roll-actions">
-            <button class="btn btn-roll" id="rollDiceBtn">🎲 Rolar</button>
-            <button class="btn btn-clear" id="clearDiceBtn">Limpar</button>
-            </div>
-
-        </div><!-- /dice-controls -->
-
-        <!-- Resultados -->
-        <div class="dice-results-panel">
-            <div class="dice-stage" id="diceResults">
-            <div class="empty-state" id="emptyState">
-                <div id="emptyShapeWrap"></div>
-                <p>Aguardando rolagem</p>
-            </div>
-            <div class="rolling-overlay" id="rollingOverlay"></div>
-            <div class="results-list" id="resultsList"></div>
-            </div>
-
-            <div class="results-summary" id="resultsSummary" style="display:none;">
-            <span class="summary-label">Total</span>
-            <span class="summary-total" id="resultsTotal"></span>
-            <span class="summary-breakdown" id="resultsBreakdown"></span>
-            </div>
+            </div><!-- /dice-grid -->
         </div>
-
-        </div><!-- /dice-grid -->
-    </div>
     </div>
 
     <!-- Footer -->
@@ -820,4 +910,5 @@
     <script src="js/shared/dice-roller.js"></script>
     <script src="js/character/mm-character.js"></script>
 </body>
+
 </html>
