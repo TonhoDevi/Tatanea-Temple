@@ -5,196 +5,251 @@
     <meta charset="UTF-8">
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ladino — D&D 5e Homebrew</title>
+    <title>Ladino — D&D 5e Homebrew Tatânea</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="/css/1-variables.css">
-    <link rel="stylesheet" href="/css/2-base.css">
-    <link rel="stylesheet" href="/css/3-components.css">
     <link rel="stylesheet" href="/css/navbar/navbar.css">
-    <link rel="stylesheet" href="/css/8-responsive.css">
-    <link rel="stylesheet" href="/css/class/ladino.css">
+    <link rel="stylesheet" href="/css/class/classes.css">
 </head>
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="index.html" class="navbar-logo">Templo de Tatânea</a>
-            <ul class="navbar-menu" id="navbarMenu">
+            <a href="index.html" class="navbar-logo">🎲 Tatânea Temple</a>
+            <ul class="navbar-menu" id="navMenu">
                 <li><a href="index.html">Início</a></li>
+                <li><a href="html/compendium/compendium-classes.html">Classes</a></li>
             </ul>
-            <button class="navbar-toggle" id="navbarToggle">☰</button>
+            <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
         </div>
     </nav>
 
-
-    <!-- =============================================
+    <!-- ============================================================
      HERO
-============================================= -->
-    <section class="class-hero">
-        <div class="hero-bg-fallback">
-            <span class="hero-bg-fallback-icon">🗡️</span>
+============================================================ -->
+    <section class="class-hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-bg-icon">🗡️</div>
+
+        <!-- Slot para imagem (descomentar src quando disponível) -->
+        <div class="hero-img-slot" id="heroImg" style="background-image:url('/assets/class/ladino.jpg')"
+            onload="this.classList.add('loaded')">
         </div>
+
+        <div class="hero-gradient-overlay"></div>
+        <div class="hero-stripe hero-stripe-left"></div>
+        <div class="hero-stripe hero-stripe-right"></div>
+
         <a href="html/compendium/compendium-classes.html" class="back-link">← Compêndio de Classes</a>
+
         <div class="hero-content">
-            <div class="hero-meta">
+            <div class="hero-left">
                 <span class="hero-eyebrow">Arquétipo de Aventureiro</span>
                 <h1 class="hero-title">Ladino</h1>
-                <p class="hero-subtitle">Versão Épico • 20 Níveis</p>
+                <p class="hero-subtitle">Versão Épico · 20 Níveis · Homebrew Tatânea</p>
                 <div class="hero-badges">
                     <span class="hero-badge">🎲 Dado de Vida: 1d6</span>
                     <span class="hero-badge">⚡ Destreza</span>
                     <span class="hero-badge">🗡️ Furtividade</span>
-                    <span class="hero-badge">✦ 4 Arquétipos</span>
+                    <span class="hero-badge">🔑 4 Arquétipos</span>
+                    <span class="hero-badge">🛡️ Armadura Leve</span>
                 </div>
             </div>
-            <div class="hero-quickstats">
-                <div class="qs-box"><span class="qs-val">25d6</span><span class="qs-lbl">Ataque Furtivo</span></div>
-                <div class="qs-box"><span class="qs-val">+6</span><span class="qs-lbl">Prof. Máx.</span></div>
-                <div class="qs-box"><span class="qs-val">20</span><span class="qs-lbl">Nível Máx.</span></div>
+            <div class="hero-right">
+                <div class="qs-box">
+                    <span class="qs-val">25d6</span>
+                    <span class="qs-lbl">Atq. Furtivo</span>
+                </div>
+                <div class="qs-box">
+                    <span class="qs-val">+6</span>
+                    <span class="qs-lbl">Prof. Máx.</span>
+                </div>
+                <div class="qs-box">
+                    <span class="qs-val">20</span>
+                    <span class="qs-lbl">Nível Máx.</span>
+                </div>
+                <div class="qs-box">
+                    <span class="qs-val">4</span>
+                    <span class="qs-lbl">Arquétipos</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- =============================================
-     LAYOUT
-============================================= -->
-    <div class="page-layout">
+    <!-- ============================================================
+     TABS
+============================================================ -->
+    <div class="tabs-wrapper">
+        <div class="tabs-inner">
+            <button class="tab-btn active" onclick="switchTab('lore')">
+                <span class="tab-icon">📖</span>Lore &amp; Descrição
+            </button>
+            <button class="tab-btn" onclick="switchTab('sumario')">
+                <span class="tab-icon">📊</span>Sumário &amp; Progressão
+            </button>
+            <button class="tab-btn" onclick="switchTab('habilidades')">
+                <span class="tab-icon">⚔️</span>Habilidades
+            </button>
+            <button class="tab-btn" onclick="switchTab('subclasses')">
+                <span class="tab-icon">🏴</span>Arquétipos
+            </button>
+        </div>
+    </div>
 
-        <!-- COLUNA PRINCIPAL -->
-        <main class="main-col">
+    <!-- ============================================================
+     CONTEÚDO DAS TABS
+============================================================ -->
 
-            <!-- DESCRIÇÃO -->
-            <section class="section" id="sec-descricao">
-                <div class="section-title">Descrição</div>
-                <div class="section-divider">
-                    <div class="section-divider-gem"></div>
-                    <div class="section-divider-line"></div>
+    <!-- ── TAB LORE ── -->
+    <div class="tab-pane active" id="tab-lore">
+        <div class="page-content">
+
+            <!-- Bloco 1: Introdução + Imagem -->
+            <div class="lore-grid section-block">
+                <div>
+                    <div class="section-heading">Descrição</div>
+                    <p class="body-text">Sinalizando para seus companheiros esperarem, um pequenino caminha lentamente
+                        pelo corredor da masmorra. Ele pressiona seu ouvido junto à porta, então puxa um conjunto de
+                        ferramentas e destrava a tranca em um piscar de olhos. Em seguida, ele desaparece entre as
+                        sombras quando seu amigo guerreiro avança para chutar a porta e abri-la.</p>
+                    <p class="body-text">Uma humana se esconde entre as sombras de um beco enquanto seu cúmplice se
+                        prepara para a parte dela na emboscada. Quando o seu alvo – um notório traficante de escravos –
+                        passa em frente ao beco, o cúmplice solta um grito, o traficante vem investigar e a lâmina do
+                        assassino corta seu pescoço antes que ele possa fazer qualquer barulho.</p>
+                    <p class="body-text">Ladinos contam com sua perícia, furtividade e as vulnerabilidades de seus
+                        inimigos para obter vantagem em qualquer situação. Eles possuem uma habilidade especial para
+                        encontrar a solução para praticamente qualquer problema, demonstrando desenvoltura e
+                        versatilidade, a pedra angular de qualquer grupo de aventureiros de sucesso.</p>
                 </div>
-                <p class="body-text">Sinalizando para seus companheiros esperarem, um pequenino caminha lentamente pelo
-                    corredor da masmorra. Ele pressiona seu ouvido junto à porta, então puxa um conjunto de ferramentas
-                    e destrava a tranca em um piscar de olhos. Em seguida, ele desaparece entre as sombras quando seu
-                    amigo guerreiro avança para chutar a porta e abri-la.</p>
-                <p class="body-text">Uma humana se esconde entre as sombras de um beco enquanto seu cúmplice se prepara
-                    para a parte dela na emboscada. Quando o seu alvo – um notório traficante de escravos – passa em
-                    frente ao beco, o cúmplice solta um grito, o traficante vem investigar e a lâmina do assassino corta
-                    seu pescoço antes que ele possa fazer qualquer barulho.</p>
-                <p class="body-text">Ladinos contam com sua perícia, furtividade e as vulnerabilidades de seus inimigos
-                    para obter vantagem em qualquer situação. Eles possuem uma habilidade especial para encontrar a
-                    solução para praticamente qualquer problema, demonstrando desenvoltura e versatilidade, a pedra
-                    angular de qualquer grupo de aventureiros de sucesso.</p>
-            </section>
-
-            <!-- PERÍCIA E PRECISÃO -->
-            <section class="section" id="sec-pericia">
-                <div class="section-title">Perícia e Precisão</div>
-                <div class="section-divider">
-                    <div class="section-divider-gem"></div>
-                    <div class="section-divider-line"></div>
-                </div>
-                <p class="body-text">Ladinos devotam tanto esforço no domínio de uma variedade de perícias quanto no
-                    aperfeiçoamento de suas habilidades em combate, concedendo a eles uma vasta especialização de que
-                    poucos outros personagens podem alcançar. Muitos ladinos focam na furtividade e enganação, enquanto
-                    outros refinam suas perícias para ajudá-los em um ambiente de masmorra, como escalar, encontrar e
-                    desarmar armadilhas e abrir fechaduras.</p>
-                <p class="body-text">Quando o assunto é combate, ladinos priorizam astúcia ao invés de força bruta. Um
-                    ladino preferirá fazer um ataque preciso, colocando-o exatamente onde o golpe machucará mais o alvo,
-                    do que derrubar um oponente com uma barragem de ataques. Ladinos possuem uma habilidade quase
-                    sobrenatural de evitar o perigo e alguns poucos aprendem truques de magia para incrementar suas
-                    outras habilidades.</p>
-            </section>
-
-            <!-- UMA VIDA SOMBRIA -->
-            <section class="section" id="sec-vidasombria">
-                <div class="section-title">Uma Vida Sombria</div>
-                <div class="section-divider">
-                    <div class="section-divider-gem"></div>
-                    <div class="section-divider-line"></div>
-                </div>
-                <p class="body-text">Todo vilarejo e cidade possui sua cota de ladinos. A maioria deles vive de acordo
-                    com as piores estereótipos da classe, ganhando a vida como assaltantes, assassinos, batedores de
-                    carteira e vigaristas. Frequentemente, esses canalhas são organizados em guildas de ladrões ou
-                    famílias do crime. Muitos ladinos operam independentemente, mas mesmo eles, às vezes, recrutam
-                    aprendizes para ajudá-los em seus golpes e empreitadas.</p>
-                <p class="body-text">Alguns poucos ladinos levam uma vida honesta como chaveiros, investigadores ou
-                    exterminadores — trabalho que pode ser perigoso em um mundo onde ratos gigantes e lobisomens
-                    assombram os esgotos.</p>
-                <p class="body-text">Como aventureiros, ladinos caem nos dois lados da lei. Alguns são criminosos
-                    endurecidos que decidem procurar sua sorte em tesouros, enquanto outros tomam uma vida de aventuras
-                    para escapar da lei. Alguns aprenderam e aperfeiçoaram suas perícias com o propósito de infiltrar em
-                    ruínas antigas e criptas escondidas em busca de tesouros.</p>
-            </section>
-
-            <!-- PONTOS DE VIDA & PROFICIÊNCIAS -->
-            <section class="section" id="sec-proficiencias">
-                <div class="section-title">Características da Classe</div>
-                <div class="section-divider">
-                    <div class="section-divider-gem"></div>
-                    <div class="section-divider-line"></div>
-                </div>
-                <div class="prof-grid">
-                    <div class="prof-item">
-                        <span class="prof-lbl">Dado de Vida</span>
-                        <span class="prof-val">1d6 por nível</span>
-                    </div>
-                    <div class="prof-item">
-                        <span class="prof-lbl">PV no 1º Nível</span>
-                        <span class="prof-val">6 + mod. Constituição + 1</span>
-                    </div>
-                    <div class="prof-item">
-                        <span class="prof-lbl">PV em Níveis Superiores</span>
-                        <span class="prof-val">6 + mod. Constituição + metade do nível (arred. baixo)</span>
-                    </div>
-                    <div class="prof-item">
-                        <span class="prof-lbl">Armadura</span>
-                        <span class="prof-val">Armaduras leves</span>
-                    </div>
-                    <div class="prof-item">
-                        <span class="prof-lbl">Testes de Resistência</span>
-                        <span class="prof-val">Destreza, Inteligência</span>
-                    </div>
-                    <div class="prof-item">
-                        <span class="prof-lbl">Ferramentas</span>
-                        <span class="prof-val">Ferramentas de ladrão</span>
-                    </div>
-                    <div class="prof-item span-2">
-                        <span class="prof-lbl">Armas</span>
-                        <span class="prof-val">Armas simples, bestas de mão, espadas longas, rapieiras, espadas
-                            curtas</span>
-                    </div>
-                    <div class="prof-item span-2">
-                        <span class="prof-lbl">Perícias</span>
-                        <span class="prof-val">Escolha 4: Acrobacia, Atletismo, Atuação, Enganação, Furtividade,
-                            Intimidação, Intuição, Investigação, Percepção, Persuasão, Prestidigitação</span>
+                <div class="img-slot">
+                    <!-- Substitua src quando a imagem estiver disponível -->
+                    <img src="/assets/class/ladino-lore.jpg" alt="Ladino em ação"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="img-slot-placeholder" style="display:none">
+                        <span>🗡️</span>
+                        <span>Imagem do Ladino</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="section-title" style="font-size:1.2rem; margin-bottom:4px; margin-top:20px;">Equipamento
-                    Inicial</div>
+            <div class="ornament-div">
+                <div class="ornament-div-gem"></div>
+            </div>
+
+            <!-- Bloco 2: Perícia e Precisão -->
+            <div class="lore-grid section-block">
+                <div>
+                    <div class="section-heading">Perícia e Precisão</div>
+                    <p class="body-text">Ladinos devotam tanto esforço no domínio de uma variedade de perícias quanto no
+                        aperfeiçoamento de suas habilidades em combate, concedendo a eles uma vasta especialização de
+                        que poucos outros personagens podem alcançar. Muitos ladinos focam na furtividade e enganação,
+                        enquanto outros refinam suas perícias para ajudá-los em um ambiente de masmorra, como escalar,
+                        encontrar e desarmar armadilhas e abrir fechaduras.</p>
+                    <p class="body-text">Quando o assunto é combate, ladinos priorizam astúcia ao invés de força bruta.
+                        Um ladino preferirá fazer um ataque preciso, colocando-o exatamente onde o golpe machucará mais
+                        o alvo, do que derrubar um oponente com uma barragem de ataques. Ladinos possuem uma habilidade
+                        quase sobrenatural de evitar o perigo e alguns poucos aprendem truques de magia para incrementar
+                        suas outras habilidades.</p>
+                </div>
+                <div>
+                    <div class="section-heading">Uma Vida Sombria</div>
+                    <p class="body-text">Todo vilarejo e cidade possui sua cota de ladinos. A maioria deles vive de
+                        acordo com as piores estereótipos da classe, ganhando a vida como assaltantes, assassinos,
+                        batedores de carteira e vigaristas. Frequentemente, esses canalhas são organizados em guildas de
+                        ladrões ou famílias do crime. Muitos ladinos operam independentemente, mas mesmo eles, às vezes,
+                        recrutam aprendizes para ajudá-los em seus golpes e empreitadas.</p>
+                    <p class="body-text">Alguns poucos ladinos levam uma vida honesta como chaveiros, investigadores ou
+                        exterminadores — trabalho que pode ser perigoso em um mundo onde ratos gigantes e lobisomens
+                        assombram os esgotos.</p>
+                    <p class="body-text">Como aventureiros, ladinos caem nos dois lados da lei. Alguns são criminosos
+                        endurecidos que decidem procurar sua sorte em tesouros, enquanto outros tomam uma vida de
+                        aventuras para escapar da lei. Alguns aprenderam e aperfeiçoaram suas perícias com o propósito
+                        de infiltrar em ruínas antigas e criptas escondidas em busca de tesouros.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── TAB SUMÁRIO ── -->
+    <div class="tab-pane" id="tab-sumario">
+        <div class="page-content">
+
+            <!-- Pontos de Vida & Proficiências -->
+            <div class="section-block">
+                <div class="section-heading">Características da Classe</div>
+                <div class="prof-grid-2">
+                    <div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Dado de Vida</span>
+                            <span class="prof-card-value">1d6 por nível de Ladino</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">PV no 1º Nível</span>
+                            <span class="prof-card-value">6 + modificador de Constituição + 1</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">PV em Níveis Superiores</span>
+                            <span class="prof-card-value">6 + mod. de Constituição + metade do nível (arredondado para
+                                baixo)</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Armadura</span>
+                            <span class="prof-card-value">Armaduras leves</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Armas</span>
+                            <span class="prof-card-value">Armas simples, bestas de mão, espadas longas, rapieiras,
+                                espadas curtas</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Ferramentas</span>
+                            <span class="prof-card-value">Ferramentas de ladrão</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Testes de Resistência</span>
+                            <span class="prof-card-value">Destreza, Inteligência</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Habilidade de Conjuração</span>
+                            <span class="prof-card-value">Inteligência</span>
+                        </div>
+                        <div class="prof-card" style="grid-column: 1 / -1;">
+                            <span class="prof-card-label">Perícias</span>
+                            <span class="prof-card-value">Escolha quatro entre: Acrobacia, Atletismo, Atuação,
+                                Enganação, Furtividade, Intimidação, Intuição, Investigação, Percepção, Persuasão e
+                                Prestidigitação</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipamento Inicial -->
+            <div class="section-block">
+                <div class="section-heading">Equipamento Inicial</div>
                 <ul class="equip-list">
-                    <li class="equip-item"><span class="equip-bullet">◆</span> (a) uma rapieira ou (b) uma espada longa
+                    <li class="equip-item"><span class="equip-bullet">◆</span>(a) uma rapieira ou (b) uma espada longa
                     </li>
-                    <li class="equip-item"><span class="equip-bullet">◆</span> (a) um arco curto e aljava com 20 flechas
+                    <li class="equip-item"><span class="equip-bullet">◆</span>(a) um arco curto e aljava com 20 flechas
                         ou (b) uma espada curta</li>
-                    <li class="equip-item"><span class="equip-bullet">◆</span> (a) pacote de assaltante ou (b) de
+                    <li class="equip-item"><span class="equip-bullet">◆</span>(a) pacote de assaltante, (b) de
                         aventureiro ou (c) de explorador</li>
-                    <li class="equip-item"><span class="equip-bullet">◆</span> Armadura de couro, duas adagas e
+                    <li class="equip-item"><span class="equip-bullet">◆</span>Armadura de couro, duas adagas e
                         ferramentas de ladrão</li>
                 </ul>
-            </section>
+            </div>
 
-            <!-- TABELA DE PROGRESSÃO -->
-            <section class="section" id="sec-tabela">
-                <div class="section-title">Tabela de Progressão</div>
-                <div class="section-divider">
-                    <div class="section-divider-gem"></div>
-                    <div class="section-divider-line"></div>
-                </div>
-                <div class="level-table-wrap">
-                    <table class="level-table">
+            <!-- Tabela de Progressão -->
+            <div class="section-block">
+                <div class="section-heading">Tabela de Progressão</div>
+                <div class="table-wrap">
+                    <table class="prog-table">
                         <thead>
                             <tr>
                                 <th>Nível</th>
@@ -206,759 +261,649 @@
                         <tbody>
                             <tr class="milestone">
                                 <td>1º</td>
-                                <td class="bônus">+2</td>
-                                <td><a href="#feat-especializacao" class="feat-link">Especialização</a>, <a
-                                        href="#feat-ataquefurtivo" class="feat-link">Ataque Furtivo</a></td>
-                                <td class="dado">1d6</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-especializacao">Especialização</a>, <a
+                                        href="#feat-ataquefurtivo">Ataque Furtivo</a></td>
+                                <td class="dado center">1d6</td>
                             </tr>
                             <tr>
                                 <td>2º</td>
-                                <td class="bônus">+2</td>
-                                <td><a href="#feat-acaoardiosa" class="feat-link">Ação Ardilosa</a>, <a
-                                        href="#feat-incremento-inferior" class="feat-link">Incremento de Habilidade
-                                        Inferior</a></td>
-                                <td class="dado">2d6</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-acaoardiosa">Ação Ardilosa</a>, <a
+                                        href="#feat-incremento-inferior">Incremento Inferior</a></td>
+                                <td class="dado center">2d6</td>
                             </tr>
                             <tr class="milestone">
                                 <td>3º</td>
-                                <td class="bônus">+2</td>
-                                <td><a href="#feat-arquetipo" class="feat-link">Arquétipo de Ladino</a></td>
-                                <td class="dado">3d6</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-arquetipo">Arquétipo de Ladino</a></td>
+                                <td class="dado center">3d6</td>
                             </tr>
                             <tr>
                                 <td>4º</td>
-                                <td class="bônus">+2</td>
-                                <td><a href="#feat-incremento-superior" class="feat-link">Incremento de Habilidade
-                                        Superior</a></td>
-                                <td class="dado">4d6</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-incremento-superior">Incremento Superior</a></td>
+                                <td class="dado center">4d6</td>
                             </tr>
                             <tr>
                                 <td>5º</td>
-                                <td class="bônus">+3</td>
-                                <td><a href="#feat-esquiva" class="feat-link">Esquiva Sobrenatural</a>, <a
-                                        href="#feat-incremento-inferior" class="feat-link">Incremento de Habilidade
-                                        Inferior</a></td>
-                                <td class="dado">5d6</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-esquiva">Esquiva Sobrenatural</a>, <a
+                                        href="#feat-incremento-inferior">Incremento Inferior</a></td>
+                                <td class="dado center">5d6</td>
                             </tr>
                             <tr>
                                 <td>6º</td>
-                                <td class="bônus">+3</td>
-                                <td><a href="#feat-especializacao" class="feat-link">Especialização</a> (adicional)</td>
-                                <td class="dado">7d6</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-especializacao">Especialização</a> (adicional)</td>
+                                <td class="dado center">7d6</td>
                             </tr>
                             <tr>
                                 <td>7º</td>
-                                <td class="bônus">+3</td>
-                                <td><a href="#feat-evasao" class="feat-link">Evasão</a></td>
-                                <td class="dado">8d6</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-evasao">Evasão</a></td>
+                                <td class="dado center">8d6</td>
                             </tr>
                             <tr>
                                 <td>8º</td>
-                                <td class="bônus">+3</td>
-                                <td><a href="#feat-incremento-superior" class="feat-link">Incremento de Habilidade
-                                        Superior</a>, <a href="#feat-incremento-inferior" class="feat-link">Incremento
-                                        Inferior</a></td>
-                                <td class="dado">9d6</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-incremento-superior">Incremento Superior</a>, <a
+                                        href="#feat-incremento-inferior">Incremento Inferior</a></td>
+                                <td class="dado center">9d6</td>
                             </tr>
                             <tr class="milestone">
                                 <td>9º</td>
-                                <td class="bônus">+4</td>
+                                <td class="bônus center">+4</td>
                                 <td>Característica de Arquétipo</td>
-                                <td class="dado">10d6</td>
+                                <td class="dado center">10d6</td>
                             </tr>
                             <tr>
                                 <td>10º</td>
-                                <td class="bônus">+4</td>
-                                <td><a href="#feat-incremento-superior" class="feat-link">Incremento de Habilidade
-                                        Superior</a></td>
-                                <td class="dado">12d6</td>
+                                <td class="bônus center">+4</td>
+                                <td><a href="#feat-incremento-superior">Incremento Superior</a></td>
+                                <td class="dado center">12d6</td>
                             </tr>
                             <tr>
                                 <td>11º</td>
-                                <td class="bônus">+4</td>
-                                <td><a href="#feat-talentoconfiavel" class="feat-link">Talento Confiável</a>, <a
-                                        href="#feat-incremento-inferior" class="feat-link">Incremento de Habilidade
-                                        Inferior</a></td>
-                                <td class="dado">13d6</td>
+                                <td class="bônus center">+4</td>
+                                <td><a href="#feat-talentoconfiavel">Talento Confiável</a>, <a
+                                        href="#feat-incremento-inferior">Incremento Inferior</a></td>
+                                <td class="dado center">13d6</td>
                             </tr>
                             <tr>
                                 <td>12º</td>
-                                <td class="bônus">+4</td>
-                                <td><a href="#feat-incremento-superior" class="feat-link">Incremento de Habilidade
-                                        Superior</a></td>
-                                <td class="dado">14d6</td>
+                                <td class="bônus center">+4</td>
+                                <td><a href="#feat-incremento-superior">Incremento Superior</a></td>
+                                <td class="dado center">14d6</td>
                             </tr>
                             <tr class="milestone">
                                 <td>13º</td>
-                                <td class="bônus">+5</td>
-                                <td>Característica de Arquétipo, <a href="#feat-golpefantasma" class="feat-link">Golpe
-                                        Fantasma</a></td>
-                                <td class="dado">15d6</td>
+                                <td class="bônus center">+5</td>
+                                <td>Característica de Arquétipo, <a href="#feat-golpefantasma">Golpe Fantasma</a></td>
+                                <td class="dado center">15d6</td>
                             </tr>
                             <tr>
                                 <td>14º</td>
-                                <td class="bônus">+5</td>
-                                <td><a href="#feat-sentidocego" class="feat-link">Sentido Cego</a>, <a
-                                        href="#feat-incremento-superior" class="feat-link">Incremento Superior</a>, <a
-                                        href="#feat-incremento-inferior" class="feat-link">Incremento Inferior</a></td>
-                                <td class="dado">16d6</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-sentidocego">Sentido Cego</a>, <a
+                                        href="#feat-incremento-superior">Incremento Superior</a>, <a
+                                        href="#feat-incremento-inferior">Incremento Inferior</a></td>
+                                <td class="dado center">16d6</td>
                             </tr>
                             <tr>
                                 <td>15º</td>
-                                <td class="bônus">+5</td>
-                                <td><a href="#feat-menteescorregadia" class="feat-link">Mente Escorregadia</a></td>
-                                <td class="dado">17d6</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-menteescorregadia">Mente Escorregadia</a></td>
+                                <td class="dado center">17d6</td>
                             </tr>
                             <tr>
                                 <td>16º</td>
-                                <td class="bônus">+5</td>
-                                <td><a href="#feat-incremento-superior" class="feat-link">Incremento de Habilidade
-                                        Superior</a></td>
-                                <td class="dado">19d6</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-incremento-superior">Incremento Superior</a></td>
+                                <td class="dado center">19d6</td>
                             </tr>
                             <tr class="milestone">
                                 <td>17º</td>
-                                <td class="bônus">+6</td>
-                                <td>Característica de Arquétipo, <a href="#feat-incremento-inferior"
-                                        class="feat-link">Incremento de Habilidade Inferior</a></td>
-                                <td class="dado">20d6</td>
+                                <td class="bônus center">+6</td>
+                                <td>Característica de Arquétipo, <a href="#feat-incremento-inferior">Incremento
+                                        Inferior</a></td>
+                                <td class="dado center">20d6</td>
                             </tr>
                             <tr>
                                 <td>18º</td>
-                                <td class="bônus">+6</td>
-                                <td><a href="#feat-elusivo" class="feat-link">Elusivo</a></td>
-                                <td class="dado">21d6</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-elusivo">Elusivo</a></td>
+                                <td class="dado center">21d6</td>
                             </tr>
                             <tr>
                                 <td>19º</td>
-                                <td class="bônus">+6</td>
-                                <td><a href="#feat-lendario" class="feat-link">Lendário</a>, <a
-                                        href="#feat-incremento-superior" class="feat-link">Incremento de Habilidade
-                                        Superior</a></td>
-                                <td class="dado">22d6</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-lendario">Lendário</a>, <a
+                                        href="#feat-incremento-superior">Incremento Superior</a></td>
+                                <td class="dado center">22d6</td>
                             </tr>
                             <tr class="milestone">
                                 <td>20º</td>
-                                <td class="bônus">+6</td>
-                                <td><a href="#feat-golpedesorte" class="feat-link">Golpe de Sorte</a>, <a
-                                        href="#feat-incremento-inferior" class="feat-link">Incremento de Habilidade
-                                        Inferior</a></td>
-                                <td class="dado">25d6</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-golpedesorte">Golpe de Sorte</a>, <a
+                                        href="#feat-incremento-inferior">Incremento Inferior</a></td>
+                                <td class="dado center">25d6</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </section>
+            </div>
 
-            <!-- CARACTERÍSTICAS -->
-            <section class="section" id="sec-caracteristicas">
-                <div class="section-title">Características da Classe</div>
-                <div class="section-divider">
-                    <div class="section-divider-gem"></div>
-                    <div class="section-divider-line"></div>
+        </div>
+    </div>
+
+    <!-- ── TAB HABILIDADES ── -->
+    <div class="tab-pane" id="tab-habilidades">
+        <div class="page-content">
+
+            <div class="section-heading">Habilidades da Classe</div>
+
+            <div class="feature-card" id="feat-especializacao">
+                <span class="feature-level">Nível 1 · 6</span>
+                <div class="feature-name">Especialização</div>
+                <div class="feature-text">
+                    <p>No 1º nível, você escolhe duas de suas perícias que seja proficiente, ou uma perícia que seja
+                        proficiente e ferramentas de ladrão. Seu bônus de proficiência é <strong>dobrado</strong> em
+                        qualquer teste de habilidade que fizer com elas.</p>
+                    <p>No 6º nível, você pode escolher outras duas de suas proficiências (em perícias ou ferramentas de
+                        ladrão) para ganhar esse benefício.</p>
                 </div>
+            </div>
 
-                <div class="feature-card" id="feat-especializacao">
-                    <span class="feature-level">Nível 1 · 6</span>
-                    <div class="feature-name">Especialização</div>
-                    <div class="feature-text">
-                        <p>No 1º nível, você escolhe duas de suas perícias que seja proficiente, ou uma perícia que seja
-                            proficiente e ferramentas de ladrão. Seu bônus de proficiência é <strong>dobrado</strong> em
-                            qualquer teste de habilidade que fizer com elas.</p>
-                        <p>No 6º nível, você pode escolher outras duas de suas proficiências (em perícias ou ferramentas
-                            de ladrão) para ganhar esse benefício.</p>
-                    </div>
+            <div class="feature-card" id="feat-ataquefurtivo">
+                <span class="feature-level">Nível 1</span>
+                <div class="feature-name">Ataque Furtivo</div>
+                <div class="feature-text">
+                    <p>A partir do 1º nível, você sabe como atacar sutilmente e explorar a distração de seus inimigos.
+                        Uma vez por turno, você pode adicionar <strong>1d6</strong> nas jogadas de dano contra qualquer
+                        criatura que acertar, desde que tenha vantagem nas jogadas de ataque. O ataque deve ser com uma
+                        arma de acuidade ou à distância.</p>
+                    <p>Você não precisa ter vantagem se outro inimigo do seu alvo estiver a 1,5 metro dele, desde que
+                        este inimigo não esteja incapacitado e você não tenha desvantagem.</p>
+                    <p>O dano aumenta conforme você ganha níveis, chegando a <strong>25d6</strong> no nível 20.</p>
                 </div>
+            </div>
 
-                <div class="feature-card" id="feat-ataquefurtivo">
-                    <span class="feature-level">Nível 1</span>
-                    <div class="feature-name">Ataque Furtivo</div>
-                    <div class="feature-text">
-                        <p>A partir do 1º nível, você sabe como atacar sutilmente e explorar a distração de seus
-                            inimigos. Uma vez por turno, você pode adicionar <strong>1d6</strong> nas jogadas de dano
-                            contra qualquer criatura que acertar, desde que tenha vantagem nas jogadas de ataque. O
-                            ataque deve ser com uma arma de acuidade ou à distância.</p>
-                        <p>Você não precisa ter vantagem se outro inimigo do seu alvo estiver a 1,5 metro dele, desde
-                            que este inimigo não esteja incapacitado e você não tenha desvantagem.</p>
-                        <p>O dano aumenta conforme você ganha níveis, chegando a <strong>25d6</strong> no nível 20.</p>
-                    </div>
+            <div class="feature-card" id="feat-acaoardiosa">
+                <span class="feature-level">Nível 2</span>
+                <div class="feature-name">Ação Ardilosa</div>
+                <div class="feature-text">
+                    <p>A partir do 2º nível, seu pensamento rápido e agilidade faz você se mover e agir rapidamente.
+                        Você pode usar uma <strong>ação bônus</strong> durante cada um de seus turnos em combate. Esta
+                        ação pode ser usada somente para <strong>Disparada, Desengajar ou Esconder</strong>.</p>
                 </div>
+            </div>
 
-                <div class="feature-card" id="feat-acaoardiosa">
-                    <span class="feature-level">Nível 2</span>
-                    <div class="feature-name">Ação Ardilosa</div>
-                    <div class="feature-text">
-                        <p>A partir do 2º nível, seu pensamento rápido e agilidade faz você se mover e agir rapidamente.
-                            Você pode usar uma <strong>ação bônus</strong> durante cada um de seus turnos em combate.
-                            Esta ação pode ser usada somente para <strong>Disparada, Desengajar ou Esconder</strong>.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-incremento-inferior">
-                    <span class="feature-level">Nível 2 · 5 · 8 · 11 · 14 · 17 · 20</span>
-                    <div class="feature-name">Incremento no Valor de Habilidade Inferior</div>
-                    <div class="feature-text">
-                        <p>Quando você atinge o 2º nível, e novamente nos níveis <strong>5, 8, 11, 14, 17 e 20</strong>,
-                            você pode aumentar <strong>dois valores de habilidade</strong> à sua escolha em
-                            <strong>+1</strong> cada.</p>
-                        <p>Como padrão, você não pode elevar um valor de habilidade acima de <strong>20</strong> com
-                            essa característica.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-arquetipo">
-                    <span class="feature-level">Nível 3 · 9 · 13 · 17</span>
-                    <div class="feature-name">Arquétipo de Ladino</div>
-                    <div class="feature-text">
-                        <p>No 3º nível, você escolhe um arquétipo que se esforçará para se equiparar através do
-                            exercício de suas habilidades de ladino. Escolha entre <strong>Assassino, Inquisidor, Ladrão
-                                ou Saqueador</strong>.</p>
-                        <p>Sua escolha garante a você características no 3º nível e de novo nos níveis <strong>9, 13 e
-                                17</strong>. Consulte a seção de Arquétipos abaixo para os detalhes completos de cada
-                            subclasse.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-incremento-superior">
-                    <span class="feature-level">Nível 4 · 8 · 10 · 12 · 14 · 16 · 19</span>
-                    <div class="feature-name">Incremento no Valor de Habilidade Superior</div>
-                    <div class="feature-text">
-                        <p>Quando você atinge o 4º nível, e novamente nos níveis <strong>8, 10, 12, 14, 16 e
-                                19</strong>, você pode escolher uma das seguintes opções:</p>
-                        <ul>
-                            <li>Aumentar <strong>um valor de habilidade</strong> à sua escolha em <strong>+2</strong>,
-                                ou</li>
-                            <li>Aumentar <strong>dois valores de habilidade</strong> à sua escolha em
-                                <strong>+1</strong> cada.</li>
-                        </ul>
-                        <p>Como padrão, você não pode elevar um valor de habilidade acima de <strong>26</strong> com
-                            essa característica. Além disso, você <strong>recebe um talento</strong> a cada uso.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-esquiva">
-                    <span class="feature-level">Nível 5</span>
-                    <div class="feature-name">Esquiva Sobrenatural</div>
-                    <div class="feature-text">
-                        <p>A partir do 5º nível, quando um inimigo que você possa ver o acerta com um ataque, você pode
-                            usar sua <strong>reação</strong> para reduzir pela metade o dano sofrido.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-evasao">
-                    <span class="feature-level">Nível 7</span>
-                    <div class="feature-name">Evasão</div>
-                    <div class="feature-text">
-                        <p>A partir do 7º nível, você pode esquivar-se agilmente de certos efeitos em área. Quando for
-                            alvo de um efeito que exige um teste de resistência de Destreza para sofrer metade do dano:
-                        </p>
-                        <ul>
-                            <li><strong>Sucesso:</strong> você não sofre dano algum.</li>
-                            <li><strong>Falha:</strong> você sofre somente metade do dano.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-talentoconfiavel">
-                    <span class="feature-level">Nível 11</span>
-                    <div class="feature-name">Talento Confiável</div>
-                    <div class="feature-text">
-                        <p>No 11º nível, você refinou suas perícias beirando à perfeição. Toda vez que fizer um teste de
-                            habilidade no qual possa adicionar seu bônus de proficiência, você trata um resultado de
-                            <strong>9 ou menor no d20 como um 10</strong>.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-sentidocego">
-                    <span class="feature-level">Nível 14</span>
-                    <div class="feature-name">Sentido Cego</div>
-                    <div class="feature-text">
-                        <p>No 14º nível, se você for capaz de ouvir, você está ciente da localização de qualquer
-                            criatura <strong>escondida ou invisível</strong> a até <strong>9 metros</strong> de você.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-golpefantasma">
-                    <span class="feature-level">Nível 13</span>
-                    <div class="feature-name">Golpe Fantasma</div>
-                    <div class="feature-text">
-                        <p>A partir do 13º nível, você aprende a atacar com precisão quase sobrenatural. Quando você
-                            realiza um ataque furtivo, pode transformá-lo em um <strong>Golpe Fantasma</strong>. Este
-                            golpe causa metade do dano, mas <strong>ignora resistências e imunidades</strong>. Além
-                            disso, o alvo sofre um efeito debilitante até o início do seu próximo turno:</p>
-                        <ul>
-                            <li><strong>Desarme:</strong> A criatura é forçada a soltar um objeto que esteja segurando.
-                            </li>
-                            <li><strong>Abalado:</strong> A criatura tem desvantagem em ataques contra você.</li>
-                            <li><strong>Paralisado:</strong> A velocidade de deslocamento da criatura é reduzida pela
-                                metade.</li>
-                        </ul>
-                        <p>Você pode usar o Golpe Fantasma um número de vezes igual ao seu <strong>bônus de
-                                proficiência</strong>, recuperando todos os usos após um descanso longo.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-menteescorregadia">
-                    <span class="feature-level">Nível 15</span>
-                    <div class="feature-name">Mente Escorregadia</div>
-                    <div class="feature-text">
-                        <p>No 15º nível, você adquire uma grande força de vontade, adquirindo <strong>proficiência nos
-                                testes de resistência de Sabedoria</strong>.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-elusivo">
-                    <span class="feature-level">Nível 18</span>
-                    <div class="feature-name">Elusivo</div>
-                    <div class="feature-text">
-                        <p>A partir do 18º nível, você se torna tão sagaz que raramente alguém encosta a mão em você.
-                            <strong>Nenhuma jogada de ataque tem vantagem contra você</strong>, desde que você não
-                            esteja incapacitado.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-lendario">
-                    <span class="feature-level">Nível 19</span>
-                    <div class="feature-name">Lendário</div>
-                    <div class="feature-text">
-                        <p>Ao atingir o 19º nível, você pode escolher um <strong>talento épico</strong>.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card" id="feat-golpedesorte">
-                    <span class="feature-level">Nível 20</span>
-                    <div class="feature-name">Golpe de Sorte</div>
-                    <div class="feature-text">
-                        <p>No 20º nível, você adquire um dom incrível para ter sucesso nos momentos em que mais precisa:
-                        </p>
-                        <ul>
-                            <li>Se um ataque seu <strong>falhar</strong> contra um alvo ao seu alcance, você pode
-                                transformar essa <strong>falha em um acerto</strong>.</li>
-                            <li>Se falhar em um <strong>teste qualquer</strong>, você pode tratar a jogada como um
-                                <strong>20 natural</strong>.</li>
-                        </ul>
-                        <p>Uma vez que você use essa característica, não pode fazê-lo de novo até terminar um descanso
-                            curto ou longo.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SUBCLASSES -->
-            <section class="section" id="sec-subclasses">
-                <div class="section-title">Arquétipos de Ladino</div>
-                <div class="section-divider">
-                    <div class="section-divider-gem"></div>
-                    <div class="section-divider-line"></div>
-                </div>
-                <p class="body-text">No 3º nível, você escolhe um arquétipo que define seu caminho como ladino. Sua
-                    escolha garante características nos níveis 3, 9, 13 e 17.</p>
-
-                <!-- Seletores de subclasse -->
-                <div class="subclasses-grid">
-                    <button class="sub-selector active" data-sub="assassino">
-                        <span class="sub-selector-icon">💀</span>
-                        <div class="sub-selector-name">Assassino</div>
-                        <div class="sub-selector-desc">Arte da morte, veneno e disfarce perfeito</div>
-                    </button>
-                    <button class="sub-selector" data-sub="inquisidor">
-                        <span class="sub-selector-icon">🔍</span>
-                        <div class="sub-selector-name">Inquisidor</div>
-                        <div class="sub-selector-desc">Combate intuitivo e detecção de mentiras</div>
-                    </button>
-                    <button class="sub-selector" data-sub="ladrao">
-                        <span class="sub-selector-icon">🔑</span>
-                        <div class="sub-selector-name">Ladrão</div>
-                        <div class="sub-selector-desc">Roubo, escalada e uso de itens mágicos</div>
-                    </button>
-                    <button class="sub-selector" data-sub="saqueador">
-                        <span class="sub-selector-icon">🏹</span>
-                        <div class="sub-selector-name">Saqueador</div>
-                        <div class="sub-selector-desc">Sobrevivência, emboscadas e mobilidade</div>
-                    </button>
-                </div>
-
-                <!-- Painel: Assassino -->
-                <div class="sub-panel active" id="sub-assassino">
-                    <p class="body-text">Você concentra seu treinamento na sombria arte da morte. Furtividade, veneno e
-                        disfarce ajudam você a eliminar seus inimigos com eficiência mortal.</p>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Proficiências Extras</div>
-                        <div class="feature-text">
-                            <p>Você ganha proficiência com o <strong>kit de disfarce</strong> e o <strong>kit de
-                                    envenenador</strong>.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Assassinar</div>
-                        <div class="feature-text">
-                            <p>Você é mais mortal quando pega seus inimigos de surpresa. Você tem
-                                <strong>vantagem</strong> em rolagens de ataque contra qualquer criatura que ainda não
-                                tenha tido um turno no combate.</p>
-                            <p>Além disso, qualquer acerto contra uma criatura que esteja <strong>surpresa</strong> é
-                                automaticamente um <strong>acerto crítico</strong>.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 9</span>
-                        <div class="feature-name">Expertise em Infiltração</div>
-                        <div class="feature-text">
-                            <p>Você consegue criar falsas identidades sem falhas. Você deve passar <strong>sete
-                                    dias</strong> e gastar <strong>25 po</strong> para estabelecer a história, profissão
-                                e afiliações de uma identidade. Se você adotar a nova identidade como disfarce, outras
-                                criaturas acreditam que você é aquela pessoa até que tenham um motivo óbvio para duvidar
-                                disso.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 13</span>
-                        <div class="feature-name">Impostor</div>
-                        <div class="feature-text">
-                            <p>Você ganha a habilidade de imitar sem erro o <strong>discurso, escrita e
-                                    comportamento</strong> de outra pessoa. Você deve passar pelo menos <strong>três
-                                    horas</strong> estudando esses componentes. Sua fraude é indiscernível para o
-                                observador casual, e você tem <strong>vantagem</strong> em testes de Carisma (Enganação)
-                                para evitar detecção por criaturas cautelosas.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 17</span>
-                        <div class="feature-name">Golpe Mortal</div>
-                        <div class="feature-text">
-                            <p>Quando você ataca e acerta uma criatura que está <strong>surpresa</strong>, ela deve
-                                fazer um teste de resistência de Constituição (<strong>CD 8 + mod. Destreza + bônus de
-                                    proficiência</strong>). Em caso de falha, <strong>dobre o dano</strong> do seu
-                                ataque.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Painel: Inquisidor -->
-                <div class="sub-panel" id="sub-inquisidor">
-                    <p class="body-text">Como um Inquisitivo, você se destaca em descobrir segredos e desvendar
-                        mistérios. Você confia no seu olhar afiado para detalhes e na sua habilidade de ler as palavras
-                        e ações de outras criaturas.</p>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Ouvido para Mentiras</div>
-                        <div class="feature-text">
-                            <p>Sempre que fizer um teste de Sabedoria (Intuição) para determinar se uma criatura está
-                                mentindo, considere uma <strong>rolagem de 7 ou menos como sendo um 8</strong>.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Olhar para o Detalhe</div>
-                        <div class="feature-text">
-                            <p>Você pode usar uma <strong>ação livre</strong> para fazer um teste de Sabedoria
-                                (Percepção) para detectar uma criatura ou objeto escondido, ou um teste de Inteligência
-                                (Investigação) para descobrir ou decifrar pistas.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Combate Intuitivo</div>
-                        <div class="feature-text">
-                            <p>Como uma <strong>ação bônus</strong>, você faz um teste de Sabedoria (Intuição) contra
-                                uma criatura que você possa ver, contestado pelo teste de Carisma (Enganação) do alvo.
-                                Se tiver sucesso, pode usar seu <strong>Ataque Furtivo contra esse alvo sem precisar de
-                                    vantagem</strong> (desde que não tenha desvantagem).</p>
-                            <p>Este benefício dura <strong>1 minuto</strong> ou até você usar com sucesso esta
-                                característica contra um alvo diferente.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 9</span>
-                        <div class="feature-name">Olhar para a Fraqueza</div>
-                        <div class="feature-text">
-                            <p>Quando você atingir uma criatura com seu ataque furtivo enquanto o Combate Intuitivo
-                                estiver ativo, ela fica vulnerável — fazendo com que seu <strong>próximo ataque furtivo
-                                    cause 3d6 de dano extra</strong> contra ela.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 13</span>
-                        <div class="feature-name">Olhar Inabalável</div>
-                        <div class="feature-text">
-                            <p>Seus sentidos são quase impossíveis de enganar. Você sempre <strong>sente a presença de
-                                    ilusões, metamorfos e magias enganosas</strong> a até 30 pés de você, desde que não
-                                esteja cego ou surdo.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 17</span>
-                        <div class="feature-name">Expor Feridas</div>
-                        <div class="feature-text">
-                            <p>Enquanto o Combate Intuitivo se aplica a uma criatura, você pode abrir uma de suas
-                                feridas e dar a ela <strong>vulnerabilidade ao próximo dano</strong> que você causar.
-                                Utilizável uma vez a cada descanso longo. Se você atingir a criatura com um
-                                <strong>acerto crítico</strong>, esta habilidade funciona automaticamente.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Painel: Ladrão -->
-                <div class="sub-panel" id="sub-ladrao">
-                    <p class="body-text">Você aprimora suas habilidades nas artes do roubo. Além de melhorar sua
-                        agilidade e furtividade, você aprende a usar itens mágicos que normalmente não poderia empregar.
+            <div class="feature-card" id="feat-incremento-inferior">
+                <span class="feature-level">Nível 2 · 5 · 8 · 11 · 14 · 17 · 20</span>
+                <div class="feature-name">Incremento no Valor de Habilidade Inferior</div>
+                <div class="feature-text">
+                    <p>Quando você atinge o 2º nível, e novamente nos níveis <strong>5, 8, 11, 14, 17 e 20</strong>,
+                        você pode aumentar <strong>dois valores de habilidade</strong> à sua escolha em
+                        <strong>+1</strong> cada.
                     </p>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Mãos Rápidas</div>
-                        <div class="feature-text">
-                            <p>Você pode usar a <strong>ação bônus</strong> da Ação Ardilosa para fazer um teste de
-                                Destreza (Prestidigitação), usar ferramentas de ladrão para desarmar armadilha ou abrir
-                                fechadura, ou realizar a ação <strong>Usar um Objeto</strong>.</p>
-                        </div>
+                    <p>Como padrão, você não pode elevar um valor de habilidade acima de <strong>20</strong> com essa
+                        característica.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-arquetipo">
+                <span class="feature-level">Nível 3 · 9 · 13 · 17</span>
+                <div class="feature-name">Arquétipo de Ladino</div>
+                <div class="feature-text">
+                    <p>No 3º nível, você escolhe um arquétipo que se esforçará para se equiparar através do exercício de
+                        suas habilidades de ladino. Escolha entre <strong>Assassino, Inquisidor, Ladrão ou
+                            Saqueador</strong>.</p>
+                    <p>Sua escolha garante a você características no 3º nível e de novo nos níveis <strong>9, 13 e
+                            17</strong>. Consulte a aba de Arquétipos para os detalhes completos de cada subclasse.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-incremento-superior">
+                <span class="feature-level">Nível 4 · 8 · 10 · 12 · 14 · 16 · 19</span>
+                <div class="feature-name">Incremento no Valor de Habilidade Superior</div>
+                <div class="feature-text">
+                    <p>Quando você atinge o 4º nível, e novamente nos níveis <strong>8, 10, 12, 14, 16 e 19</strong>,
+                        você pode escolher uma das seguintes opções:</p>
+                    <ul>
+                        <li>Aumentar <strong>um valor de habilidade</strong> à sua escolha em <strong>+2</strong>, ou
+                        </li>
+                        <li>Aumentar <strong>dois valores de habilidade</strong> à sua escolha em <strong>+1</strong>
+                            cada.</li>
+                    </ul>
+                    <p>Como padrão, você não pode elevar um valor de habilidade acima de <strong>26</strong> com essa
+                        característica. Além disso, você <strong>recebe um talento</strong> a cada uso.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-esquiva">
+                <span class="feature-level">Nível 5</span>
+                <div class="feature-name">Esquiva Sobrenatural</div>
+                <div class="feature-text">
+                    <p>A partir do 5º nível, quando um inimigo que você possa ver o acerta com um ataque, você pode usar
+                        sua <strong>reação</strong> para reduzir pela metade o dano sofrido.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-evasao">
+                <span class="feature-level">Nível 7</span>
+                <div class="feature-name">Evasão</div>
+                <div class="feature-text">
+                    <p>A partir do 7º nível, você pode esquivar-se agilmente de certos efeitos em área. Quando for alvo
+                        de um efeito que exige um teste de resistência de Destreza para sofrer metade do dano:</p>
+                    <ul>
+                        <li><strong>Sucesso:</strong> você não sofre dano algum.</li>
+                        <li><strong>Falha:</strong> você sofre somente metade do dano.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-talentoconfiavel">
+                <span class="feature-level">Nível 11</span>
+                <div class="feature-name">Talento Confiável</div>
+                <div class="feature-text">
+                    <p>No 11º nível, você refinou suas perícias beirando à perfeição. Toda vez que fizer um teste de
+                        habilidade no qual possa adicionar seu bônus de proficiência, você trata um resultado de
+                        <strong>9 ou menor no d20 como um 10</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-golpefantasma">
+                <span class="feature-level">Nível 13</span>
+                <div class="feature-name">Golpe Fantasma</div>
+                <div class="feature-text">
+                    <p>A partir do 13º nível, você aprende a atacar com precisão quase sobrenatural. Quando você realiza
+                        um ataque furtivo, pode transformá-lo em um <strong>Golpe Fantasma</strong>. Este golpe causa
+                        metade do dano, mas <strong>ignora resistências e imunidades</strong>. Além disso, o alvo sofre
+                        um efeito debilitante até o início do seu próximo turno:</p>
+                    <ul>
+                        <li><strong>Desarme:</strong> A criatura é forçada a soltar um objeto que esteja segurando.</li>
+                        <li><strong>Abalado:</strong> A criatura tem desvantagem em ataques contra você.</li>
+                        <li><strong>Paralisado:</strong> A velocidade de deslocamento da criatura é reduzida pela
+                            metade.</li>
+                    </ul>
+                    <p>Você pode usar o Golpe Fantasma um número de vezes igual ao seu <strong>bônus de
+                            proficiência</strong>, recuperando todos os usos após um descanso longo.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-sentidocego">
+                <span class="feature-level">Nível 14</span>
+                <div class="feature-name">Sentido Cego</div>
+                <div class="feature-text">
+                    <p>No 14º nível, se você for capaz de ouvir, você está ciente da localização de qualquer criatura
+                        <strong>escondida ou invisível</strong> a até <strong>9 metros</strong> de você.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-menteescorregadia">
+                <span class="feature-level">Nível 15</span>
+                <div class="feature-name">Mente Escorregadia</div>
+                <div class="feature-text">
+                    <p>No 15º nível, você adquire uma grande força de vontade, adquirindo <strong>proficiência nos
+                            testes de resistência de Sabedoria</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-elusivo">
+                <span class="feature-level">Nível 18</span>
+                <div class="feature-name">Elusivo</div>
+                <div class="feature-text">
+                    <p>A partir do 18º nível, você se torna tão sagaz que raramente alguém encosta a mão em você.
+                        <strong>Nenhuma jogada de ataque tem vantagem contra você</strong>, desde que você não esteja
+                        incapacitado.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-lendario">
+                <span class="feature-level">Nível 19</span>
+                <div class="feature-name">Lendário</div>
+                <div class="feature-text">
+                    <p>Ao atingir o 19º nível, você pode escolher um <strong>talento épico</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-golpedesorte">
+                <span class="feature-level">Nível 20</span>
+                <div class="feature-name">Golpe de Sorte</div>
+                <div class="feature-text">
+                    <p>No 20º nível, você adquire um dom incrível para ter sucesso nos momentos em que mais precisa:</p>
+                    <ul>
+                        <li>Se um ataque seu <strong>falhar</strong> contra um alvo ao seu alcance, você pode
+                            transformar essa <strong>falha em um acerto</strong>.</li>
+                        <li>Se falhar em um <strong>teste qualquer</strong>, você pode tratar a jogada como um
+                            <strong>20 natural</strong>.
+                        </li>
+                    </ul>
+                    <p>Uma vez que você use essa característica, não pode fazê-lo de novo até terminar um descanso curto
+                        ou longo.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── TAB SUBCLASSES ── -->
+    <div class="tab-pane" id="tab-subclasses">
+        <div class="page-content">
+
+            <div class="section-heading">Arquétipos de Ladino</div>
+            <p class="body-text" style="margin-bottom:28px;">No 3º nível, você escolhe um arquétipo que define seu
+                caminho como ladino. Sua escolha garante características nos níveis 3, 9, 13 e 17.</p>
+
+            <!-- Seletores -->
+            <div class="sub-selector-grid">
+                <button class="sub-btn active" onclick="switchSub('assassino')">
+                    <span class="sub-btn-icon">💀</span>
+                    <span class="sub-btn-name">Assassino</span>
+                    <span class="sub-btn-desc">Arte da morte, veneno e disfarce perfeito</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('inquisidor')">
+                    <span class="sub-btn-icon">🔍</span>
+                    <span class="sub-btn-name">Inquisidor</span>
+                    <span class="sub-btn-desc">Combate intuitivo e detecção de mentiras</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('ladrao')">
+                    <span class="sub-btn-icon">🔑</span>
+                    <span class="sub-btn-name">Ladrão</span>
+                    <span class="sub-btn-desc">Roubo, escalada e uso de itens mágicos</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('saqueador')">
+                    <span class="sub-btn-icon">🏹</span>
+                    <span class="sub-btn-name">Saqueador</span>
+                    <span class="sub-btn-desc">Sobrevivência, emboscadas e mobilidade</span>
+                </button>
+            </div>
+
+            <!-- ── ASSASSINO ── -->
+            <div class="sub-panel active" id="sub-assassino">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/ladino-assassino.jpg" alt="Arquétipo: Assassino"
+                            onerror="this.style.display='none'">
                     </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Habilidade de Escalada</div>
-                        <div class="feature-text">
-                            <p><strong>Escalar não custa movimento extra</strong>. Além disso, quando você faz um salto
-                                em corrida, a distância que cobre aumenta em um número de pés igual a <strong>5 vezes o
-                                    seu modificador de Destreza</strong>.</p>
+                    <div>
+                        <div class="sub-intro">Você concentra seu treinamento na sombria arte da morte. Furtividade,
+                            veneno e disfarce ajudam você a eliminar seus inimigos com eficiência mortal. Ninguém sabe
+                            que você esteve lá até ser tarde demais.</div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Proficiências Extras</div>
+                            <div class="feature-text">
+                                <p>Você ganha proficiência com o <strong>kit de disfarce</strong> e o <strong>kit de
+                                        envenenador</strong>.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 9</span>
-                        <div class="feature-name">Furtividade Suprema</div>
-                        <div class="feature-text">
-                            <p>Você tem <strong>vantagem</strong> em testes de Destreza (Furtividade) se se mover a não
-                                mais que <strong>metade da sua velocidade</strong> no mesmo turno. Você também tem
-                                vantagem em testes de Destreza para desviar de armadilhas ou meios de segurança.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 13</span>
-                        <div class="feature-name">Usar Dispositivo Mágico</div>
-                        <div class="feature-text">
-                            <p>Você <strong>ignora todos os requisitos de classe, raça e nível</strong> no uso de itens
-                                mágicos e pode sincronizar com <strong>ilimitados itens mágicos</strong>.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 17</span>
-                        <div class="feature-name">Reflexos de Ladrão</div>
-                        <div class="feature-text">
-                            <p>Você pode realizar <strong>dois turnos durante a primeira rodada</strong> de qualquer
-                                combate. Seu primeiro turno ocorre na sua iniciativa normal e o segundo na sua
-                                <strong>iniciativa menos 10</strong>. Você não pode usar essa habilidade quando está
-                                surpreso.</p>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Assassinar</div>
+                            <div class="feature-text">
+                                <p>Você é mais mortal quando pega seus inimigos de surpresa. Você tem
+                                    <strong>vantagem</strong> em rolagens de ataque contra qualquer criatura que ainda
+                                    não tenha tido um turno no combate.
+                                </p>
+                                <p>Além disso, qualquer acerto contra uma criatura que esteja <strong>surpresa</strong>
+                                    é automaticamente um <strong>acerto crítico</strong>.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Painel: Saqueador -->
-                <div class="sub-panel" id="sub-saqueador">
-                    <p class="body-text">Você é habilidoso em furtividade e sobrevivência longe das ruas de uma cidade.
-                        Ladinos que abraçam este arquétipo são hábeis na natureza selvagem e em emboscadas.</p>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Lutador de Escaramuça</div>
-                        <div class="feature-text">
-                            <p>Você pode se mover até <strong>metade de sua velocidade</strong> como reação quando um
-                                inimigo encerra seu turno a 5 pés de você. Este movimento <strong>não provoca ataques de
-                                    oportunidade</strong>.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 3</span>
-                        <div class="feature-name">Sobrevivente</div>
-                        <div class="feature-text">
-                            <p>Você ganha proficiência em <strong>Natureza e Sobrevivência</strong> (se ainda não
-                                tiver), e seu bônus de proficiência é <strong>dobrado</strong> em testes que usem essas
-                                proficiências.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 9</span>
-                        <div class="feature-name">Mobilidade Superior</div>
-                        <div class="feature-text">
-                            <p>Sua velocidade de caminhada aumenta em <strong>+20 pés</strong>. Se você tiver velocidade
-                                de escalada ou natação, esse aumento se aplica a essa velocidade também.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 13</span>
-                        <div class="feature-name">Mestre da Emboscada</div>
-                        <div class="feature-text">
-                            <p>Você tem <strong>vantagem em rolagens de iniciativa</strong>. Além disso, a primeira
-                                criatura que você atingir durante o primeiro round de um combate se torna mais fácil de
-                                ser atingida — <strong>rolagens de ataque contra esse alvo têm vantagem</strong> até o
-                                início do seu próximo turno.</p>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <span class="feature-level">Nível 17</span>
-                        <div class="feature-name">Ataque Súbito</div>
-                        <div class="feature-text">
-                            <p>Se você realizar a ação de Ataque em seu turno, pode fazer um <strong>ataque adicional
-                                    como ação bônus</strong>. Este ataque pode se beneficiar do Ataque Furtivo mesmo se
-                                você já o tiver usado neste turno, mas você <strong>não pode usar Ataque Furtivo contra
-                                    o mesmo alvo mais de uma vez</strong> por turno.</p>
-                        </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 9</span>
+                    <div class="feature-name">Expertise em Infiltração</div>
+                    <div class="feature-text">
+                        <p>Você consegue criar falsas identidades sem falhas. Você deve passar <strong>sete
+                                dias</strong> e gastar <strong>25 po</strong> para estabelecer a história, profissão e
+                            afiliações de uma identidade. Se você adotar a nova identidade como disfarce, outras
+                            criaturas acreditam que você é aquela pessoa até que tenham um motivo óbvio para duvidar
+                            disso.</p>
                     </div>
                 </div>
-            </section>
-
-        </main><!-- /main-col -->
-
-        <!-- SIDEBAR -->
-        <aside class="side-col">
-
-            <!-- Navegação -->
-            <nav class="side-nav" id="sideNav">
-                <div class="side-nav-header">Navegação</div>
-                <ul class="side-nav-list">
-                    <li><a href="#sec-descricao">📖 Descrição</a></li>
-                    <li><a href="#sec-pericia">⚔ Perícia e Precisão</a></li>
-                    <li><a href="#sec-vidasombria">🌑 Uma Vida Sombria</a></li>
-                    <li><a href="#sec-proficiencias">⚙ Proficiências</a></li>
-                    <li><a href="#sec-tabela">📊 Progressão</a></li>
-                    <li><a href="#sec-caracteristicas">✦ Características</a></li>
-                    <li><a href="#feat-especializacao" style="padding-left:28px; font-size:.62rem">↳ Especialização</a>
-                    </li>
-                    <li><a href="#feat-ataquefurtivo" style="padding-left:28px; font-size:.62rem">↳ Ataque Furtivo</a>
-                    </li>
-                    <li><a href="#feat-acaoardiosa" style="padding-left:28px; font-size:.62rem">↳ Ação Ardilosa</a></li>
-                    <li><a href="#feat-incremento-inferior" style="padding-left:28px; font-size:.62rem">↳ Incremento
-                            Inferior</a></li>
-                    <li><a href="#feat-arquetipo" style="padding-left:28px; font-size:.62rem">↳ Arquétipo de Ladino</a>
-                    </li>
-                    <li><a href="#feat-incremento-superior" style="padding-left:28px; font-size:.62rem">↳ Incremento
-                            Superior</a></li>
-                    <li><a href="#feat-esquiva" style="padding-left:28px; font-size:.62rem">↳ Esquiva Sobrenatural</a>
-                    </li>
-                    <li><a href="#feat-evasao" style="padding-left:28px; font-size:.62rem">↳ Evasão</a></li>
-                    <li><a href="#feat-talentoconfiavel" style="padding-left:28px; font-size:.62rem">↳ Talento
-                            Confiável</a></li>
-                    <li><a href="#feat-sentidocego" style="padding-left:28px; font-size:.62rem">↳ Sentido Cego</a></li>
-                    <li><a href="#feat-golpefantasma" style="padding-left:28px; font-size:.62rem">↳ Golpe Fantasma</a>
-                    </li>
-                    <li><a href="#feat-menteescorregadia" style="padding-left:28px; font-size:.62rem">↳ Mente
-                            Escorregadia</a></li>
-                    <li><a href="#feat-elusivo" style="padding-left:28px; font-size:.62rem">↳ Elusivo</a></li>
-                    <li><a href="#feat-lendario" style="padding-left:28px; font-size:.62rem">↳ Lendário</a></li>
-                    <li><a href="#feat-golpedesorte" style="padding-left:28px; font-size:.62rem">↳ Golpe de Sorte</a>
-                    </li>
-                    <li><a href="#sec-subclasses">🏰 Arquétipos</a></li>
-                </ul>
-            </nav>
-
-            <!-- Info rápida -->
-            <div class="side-info-card">
-                <div class="side-info-header">Resumo</div>
-                <div class="side-info-rows">
-                    <div class="side-info-row">
-                        <span class="sir-lbl">Dado de Vida</span>
-                        <span class="sir-val">1d6</span>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 13</span>
+                    <div class="feature-name">Impostor</div>
+                    <div class="feature-text">
+                        <p>Você ganha a habilidade de imitar sem erro o <strong>discurso, escrita e
+                                comportamento</strong> de outra pessoa. Você deve passar pelo menos <strong>três
+                                horas</strong> estudando esses componentes. Sua fraude é indiscernível para o observador
+                            casual, e você tem <strong>vantagem</strong> em testes de Carisma (Enganação) para evitar
+                            detecção por criaturas cautelosas.</p>
                     </div>
-                    <div class="side-info-row">
-                        <span class="sir-lbl">Atributo Chave</span>
-                        <span class="sir-val">Destreza</span>
-                    </div>
-                    <div class="side-info-row">
-                        <span class="sir-lbl">Resistências</span>
-                        <span class="sir-val">Des · Int</span>
-                    </div>
-                    <div class="side-info-row">
-                        <span class="sir-lbl">Atq. Furtivo Máx.</span>
-                        <span class="sir-val">25d6 (nv. 20)</span>
-                    </div>
-                    <div class="side-info-row">
-                        <span class="sir-lbl">Nível do Arquétipo</span>
-                        <span class="sir-val">3, 9, 13, 17</span>
-                    </div>
-                    <div class="side-info-row">
-                        <span class="sir-lbl">Arquétipos</span>
-                        <span class="sir-val">4</span>
-                    </div>
-                    <div class="side-info-row">
-                        <span class="sir-lbl">Dificuldade</span>
-                        <span class="sir-val">Intermediário</span>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Golpe Mortal</div>
+                    <div class="feature-text">
+                        <p>Quando você ataca e acerta uma criatura que está <strong>surpresa</strong>, ela deve fazer um
+                            teste de resistência de Constituição (<strong>CD 8 + mod. Destreza + bônus de
+                                proficiência</strong>). Em caso de falha, <strong>dobre o dano</strong> do seu ataque.
+                        </p>
                     </div>
                 </div>
             </div>
 
-        </aside>
+            <!-- ── INQUISIDOR ── -->
+            <div class="sub-panel" id="sub-inquisidor">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/ladino-inquisidor.jpg" alt="Arquétipo: Inquisidor"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Como um Inquisitivo, você se destaca em descobrir segredos e desvendar
+                            mistérios. Você confia no seu olhar afiado para detalhes e na sua habilidade de ler as
+                            palavras e ações de outras criaturas.</div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Ouvido para Mentiras</div>
+                            <div class="feature-text">
+                                <p>Sempre que fizer um teste de Sabedoria (Intuição) para determinar se uma criatura
+                                    está mentindo, considere uma <strong>rolagem de 7 ou menos como sendo um 8</strong>.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Olhar para o Detalhe</div>
+                            <div class="feature-text">
+                                <p>Você pode usar uma <strong>ação livre</strong> para fazer um teste de Sabedoria
+                                    (Percepção) para detectar uma criatura ou objeto escondido, ou um teste de
+                                    Inteligência (Investigação) para descobrir ou decifrar pistas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 3</span>
+                    <div class="feature-name">Combate Intuitivo</div>
+                    <div class="feature-text">
+                        <p>Como uma <strong>ação bônus</strong>, você faz um teste de Sabedoria (Intuição) contra uma
+                            criatura que você possa ver, contestado pelo teste de Carisma (Enganação) do alvo. Se tiver
+                            sucesso, pode usar seu <strong>Ataque Furtivo contra esse alvo sem precisar de
+                                vantagem</strong> (desde que não tenha desvantagem).</p>
+                        <p>Este benefício dura <strong>1 minuto</strong> ou até você usar com sucesso esta
+                            característica contra um alvo diferente.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 9</span>
+                    <div class="feature-name">Olhar para a Fraqueza</div>
+                    <div class="feature-text">
+                        <p>Quando você atingir uma criatura com seu ataque furtivo enquanto o Combate Intuitivo estiver
+                            ativo, ela fica vulnerável — fazendo com que seu <strong>próximo ataque furtivo cause 3d6 de
+                                dano extra</strong> contra ela.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 13</span>
+                    <div class="feature-name">Olhar Inabalável</div>
+                    <div class="feature-text">
+                        <p>Seus sentidos são quase impossíveis de enganar. Você sempre <strong>sente a presença de
+                                ilusões, metamorfos e magias enganosas</strong> a até 30 pés de você, desde que não
+                            esteja cego ou surdo.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Expor Feridas</div>
+                    <div class="feature-text">
+                        <p>Enquanto o Combate Intuitivo se aplica a uma criatura, você pode abrir uma de suas feridas e
+                            dar a ela <strong>vulnerabilidade ao próximo dano</strong> que você causar. Utilizável uma
+                            vez a cada descanso longo. Se você atingir a criatura com um <strong>acerto
+                                crítico</strong>, esta habilidade funciona automaticamente.</p>
+                    </div>
+                </div>
+            </div>
 
-    </div><!-- /page-layout -->
+            <!-- ── LADRÃO ── -->
+            <div class="sub-panel" id="sub-ladrao">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/ladino-ladrao.jpg" alt="Arquétipo: Ladrão"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Você aprimora suas habilidades nas artes do roubo. Além de melhorar sua
+                            agilidade e furtividade, você aprende a usar itens mágicos que normalmente não poderia
+                            empregar.</div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Mãos Rápidas</div>
+                            <div class="feature-text">
+                                <p>Você pode usar a <strong>ação bônus</strong> da Ação Ardilosa para fazer um teste de
+                                    Destreza (Prestidigitação), usar ferramentas de ladrão para desarmar armadilha ou
+                                    abrir fechadura, ou realizar a ação <strong>Usar um Objeto</strong>.</p>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Habilidade de Escalada</div>
+                            <div class="feature-text">
+                                <p><strong>Escalar não custa movimento extra</strong>. Além disso, quando você faz um
+                                    salto em corrida, a distância que cobre aumenta em um número de pés igual a
+                                    <strong>5 vezes o seu modificador de Destreza</strong>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 9</span>
+                    <div class="feature-name">Furtividade Suprema</div>
+                    <div class="feature-text">
+                        <p>Você tem <strong>vantagem</strong> em testes de Destreza (Furtividade) se se mover a não mais
+                            que <strong>metade da sua velocidade</strong> no mesmo turno. Você também tem vantagem em
+                            testes de Destreza para desviar de armadilhas ou meios de segurança.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 13</span>
+                    <div class="feature-name">Usar Dispositivo Mágico</div>
+                    <div class="feature-text">
+                        <p>Você <strong>ignora todos os requisitos de classe, raça e nível</strong> no uso de itens
+                            mágicos e pode sincronizar com <strong>ilimitados itens mágicos</strong>.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Reflexos de Ladrão</div>
+                    <div class="feature-text">
+                        <p>Você pode realizar <strong>dois turnos durante a primeira rodada</strong> de qualquer
+                            combate. Seu primeiro turno ocorre na sua iniciativa normal e o segundo na sua
+                            <strong>iniciativa menos 10</strong>. Você não pode usar essa habilidade quando está
+                            surpreso.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- ── SAQUEADOR ── -->
+            <div class="sub-panel" id="sub-saqueador">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/ladino-saqueador.jpg" alt="Arquétipo: Saqueador"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Você é habilidoso em furtividade e sobrevivência longe das ruas de uma
+                            cidade. Ladinos que abraçam este arquétipo são hábeis na natureza selvagem e em emboscadas.
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Lutador de Escaramuça</div>
+                            <div class="feature-text">
+                                <p>Você pode se mover até <strong>metade de sua velocidade</strong> como reação quando
+                                    um inimigo encerra seu turno a 5 pés de você. Este movimento <strong>não provoca
+                                        ataques de oportunidade</strong>.</p>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Sobrevivente</div>
+                            <div class="feature-text">
+                                <p>Você ganha proficiência em <strong>Natureza e Sobrevivência</strong> (se ainda não
+                                    tiver), e seu bônus de proficiência é <strong>dobrado</strong> em testes que usem
+                                    essas proficiências.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 9</span>
+                    <div class="feature-name">Mobilidade Superior</div>
+                    <div class="feature-text">
+                        <p>Sua velocidade de caminhada aumenta em <strong>+20 pés</strong>. Se você tiver velocidade de
+                            escalada ou natação, esse aumento se aplica a essa velocidade também.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 13</span>
+                    <div class="feature-name">Mestre da Emboscada</div>
+                    <div class="feature-text">
+                        <p>Você tem <strong>vantagem em rolagens de iniciativa</strong>. Além disso, a primeira criatura
+                            que você atingir durante o primeiro round de um combate se torna mais fácil de ser atingida
+                            — <strong>rolagens de ataque contra esse alvo têm vantagem</strong> até o início do seu
+                            próximo turno.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Ataque Súbito</div>
+                    <div class="feature-text">
+                        <p>Se você realizar a ação de Ataque em seu turno, pode fazer um <strong>ataque adicional como
+                                ação bônus</strong>. Este ataque pode se beneficiar do Ataque Furtivo mesmo se você já o
+                            tiver usado neste turno, mas você <strong>não pode usar Ataque Furtivo contra o mesmo alvo
+                                mais de uma vez</strong> por turno.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+     FOOTER
+============================================================ -->
     <footer class="footer-cls">
-        <p>© 2025 D&D 5e Homebrew — Criado por TonhoDevi</p>
+        <p>© 2025 D&D 5e Homebrew Tatânea — Criado por TonhoDevi</p>
         <nav class="footer-links">
-            <a href="compendium-classes.html">← Todas as Classes</a>
-            <a href="compendium-races.html">Raças</a>
+            <a href="html/compendium/compendium-classes.html">← Todas as Classes</a>
+            <a href="html/compendium/compendium-races.html">Raças</a>
+            <a href="html/compendium/compedium-talents.html">Talentos</a>
             <a href="index.html">Início</a>
         </nav>
     </footer>
 
-    <script>
-        function toggleNavbar() {
-            document.querySelector('.navbar-menu').classList.toggle('active');
-        }
-
-        // --- Seletor de subclasses ---
-        document.querySelectorAll('.sub-selector').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const id = btn.dataset.sub;
-                document.querySelectorAll('.sub-selector').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById('sub-' + id)?.classList.add('active');
-            });
-        });
-
-        // --- Nav links da tabela → scroll suave para feature-card ---
-        document.querySelectorAll('.feat-link[href^="#"]').forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    // Efeito de destaque rápido
-                    target.style.borderLeftColor = 'var(--cls-accent)';
-                    target.style.boxShadow = '0 0 20px rgba(74,143,160,.2)';
-                    setTimeout(() => {
-                        target.style.borderLeftColor = '';
-                        target.style.boxShadow = '';
-                    }, 1500);
-                }
-            });
-        });
-
-        // --- Highlight sidebar nav ao scroll ---
-        const sections = document.querySelectorAll('section[id], .section[id]');
-        const navLinks = document.querySelectorAll('.side-nav-list a');
-
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(l => {
-                        l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id);
-                    });
-                }
-            });
-        }, { rootMargin: '-20% 0px -70% 0px' });
-
-        sections.forEach(s => observer.observe(s));
-    </script>
-</body>
-
-</html>
-<ul class="footer-links">
-    <li><a href="https://github.com/TonhoDevi/FichaProject" target="_blank">GitHub</a></li>
-    <li><a href="index.html">Início</a></li>
-    <li><a href="html/sheet/ddt-character-sheet.html">Ficha</a></li>
-    <li><a href="html/compendium/compendium-races.html">Raças</a></li>
-    <li><a href="html/compendium/compendium-classes.html">Classes</a></li>
-</ul>
-</footer>
-</div>
+    <script src="/js/shared/navbar.js"></script>
+    <script src="/js/class/class-page.js"></script>
 </body>
 
 </html>

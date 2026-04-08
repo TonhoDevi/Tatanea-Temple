@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caçador — D&D 5e Homebrew Tatânea</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/navbar/navbar.css">
+    <link rel="stylesheet" href="/css/class/classes.css">
+
+    <style>
+        /* Acento temático do Caçador: Verde floresta */
+        :root {
+            --cls-accent: #4a8a5a;
+            --cls-accent-dark: #2e5c3a;
+            --cls-accent-light: #7abf8a;
+            --cls-accent-glow: rgba(74, 138, 90, .28);
+            --cls-accent-dim: rgba(74, 138, 90, .10);
+            --cls-accent-border: rgba(74, 138, 90, .40);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">🎲 Tatânea Temple</a>
+            <ul class="navbar-menu" id="navMenu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="html/compendium/compendium-classes.html">Classes</a></li>
+            </ul>
+            <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+     HERO
+============================================================ -->
+    <section class="class-hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-bg-icon">🏹</div>
+        <div class="hero-img-slot" id="heroImg" style="background-image:url('/assets/class/cacador.jpg')">
+        </div>
+        <div class="hero-gradient-overlay"></div>
+        <div class="hero-stripe hero-stripe-left"></div>
+        <div class="hero-stripe hero-stripe-right"></div>
+
+        <a href="html/compendium/compendium-classes.html" class="back-link">← Compêndio de Classes</a>
+
+        <div class="hero-content">
+            <div class="hero-left">
+                <span class="hero-eyebrow">Arquétipo de Aventureiro</span>
+                <h1 class="hero-title">Caçador</h1>
+                <p class="hero-subtitle">Versão Épico · 20 Níveis · Homebrew Tatânea</p>
+                <div class="hero-badges">
+                    <span class="hero-badge">🎲 Dado de Vida: 1d10</span>
+                    <span class="hero-badge">🌿 Sabedoria</span>
+                    <span class="hero-badge">🏹 Meio Conjurador</span>
+                    <span class="hero-badge">🔮 3 Conclaves</span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="qs-box">
+                    <span class="qs-val">1d10</span>
+                    <span class="qs-lbl">Dado de Vida</span>
+                </div>
+                <div class="qs-box">
+                    <span class="qs-val">3</span>
+                    <span class="qs-lbl">Conclaves</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+     TABS
+============================================================ -->
+    <div class="tabs-wrapper">
+        <div class="tabs-inner">
+            <button class="tab-btn active" onclick="switchTab('lore')">
+                <span class="tab-icon">📖</span>Lore &amp; Descrição
+            </button>
+            <button class="tab-btn" onclick="switchTab('sumario')">
+                <span class="tab-icon">📊</span>Sumário &amp; Progressão
+            </button>
+            <button class="tab-btn" onclick="switchTab('habilidades')">
+                <span class="tab-icon">⚔️</span>Habilidades
+            </button>
+            <button class="tab-btn" onclick="switchTab('subclasses')">
+                <span class="tab-icon">🏴</span>Conclaves
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+     TAB: LORE
+============================================================ -->
+    <div class="tab-pane active" id="tab-lore">
+        <div class="page-content">
+
+            <div class="lore-grid section-block">
+                <div>
+                    <div class="section-heading">Descrição</div>
+                    <p class="body-text">Longe do burburinho das cidades e vilas, passadas as sebes que abrigam as
+                        fazendas mais distantes dos terrores da natureza selvagem, em meio as árvores densas de
+                        florestas sem trilhas e através de planícies vastas e desertas, os caçadores mantém sua vigília
+                        interminável.</p>
+                    <p class="body-text">Guerreiros da natureza, diversos e variados em seus talentos e especializações,
+                        todos os caçadores compartilham uma característica de ter uma conexão profunda com a natureza.
+                        Os caçadores dominam várias armas para atacar ameaças à sua terra natal de perto e de longe.
+                        Eles aprendem a rastrear suas presas como um predador faz, movendo-se furtivamente através da
+                        natureza e escondendo-se na selva ou na grama.</p>
+                    <p class="body-text">Graças a sua familiaridade com a natureza, os caçadores também adquirem a
+                        capacidade de conjurar magias que aproveitam o poder da natureza, como fazem os druidas. Seus
+                        feitiços, como suas habilidades em combate, enfatizam velocidade, furtividade e a caçada. Os
+                        talentos e habilidades de um caçador são aprimorados com uma experiência de combate mortal
+                        lutando contra ameaças nas fronteiras da civilização.</p>
+                </div>
+                <div class="img-slot">
+                    <img src="/assets/class/cacador-lore.jpg" alt="Caçador em ação"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="img-slot-placeholder" style="display:none">
+                        <span>🏹</span>
+                        <span>Imagem do Caçador</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ornament-div">
+                <div class="ornament-div-gem"></div>
+            </div>
+
+            <div class="lore-grid section-block">
+                <div>
+                    <div class="section-heading">Caçadores Ferozes e Versáteis</div>
+                    <p class="body-text">Caçadores são guerreiros ágeis e hábeis que usam seu conhecimento das terras
+                        selvagens para rastrear e caçar seus inimigos. Seja espreitando através da floresta no rastro de
+                        intrusos malignos, se aliando com um companheiro animal, ou focando suas habilidades de combate
+                        em criaturas aberrantes, os caçadores podem ser letais em suas táticas.</p>
+                    <p class="body-text">Independente dos métodos que os caçadores empreguem, os adversários
+                        considerarem enfrentá-los o mais difícil desafio que eles provavelmente enfrentarão, desde que
+                        eles permaneçam no terreno natural de um caçador. Mas os caçadores também podem adaptar suas
+                        habilidades para lutar em cidades e masmorras, fazendo deles valiosas figuras em muitos partidos
+                        de aventureiros.</p>
+                </div>
+                <div>
+                    <div class="section-heading">Protetores Independentes</div>
+                    <p class="body-text">Embora um caçador possa fazer uma vida como um rastreador ou caçador, o
+                        verdadeiro chamado de um caçador é defender as partes exteriores da civilização das incursões de
+                        monstros e hordas humanoides que pressionam das terras selvagens. Em algumas regiões, os
+                        caçadores se reúnem em ordens secretas ou se juntam a círculos de druidas.</p>
+                    <p class="body-text">Muitos caçadores, porém, são independentes quase ao ponto de serem reclusos,
+                        conhecendo apenas suas famílias ou mestres que os ensinaram suas formas. Um caçador pode
+                        escolher aventurar-se por várias razões. Proteger as fronteiras muitas vezes significa encontrar
+                        e derrotar bandidos, orcs, trolls, gigantes e piores criaturas. Mas alguns caçadores
+                        encontram-se assistindo às rotas de comércio. Todos esses esforços caem dentro do domínio
+                        natural do caçador.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+     TAB: SUMÁRIO
+============================================================ -->
+    <div class="tab-pane" id="tab-sumario">
+        <div class="page-content">
+
+            <div class="section-block">
+                <div class="section-heading">Tabela de Progressão</div>
+                <div class="table-wrap">
+                    <table class="prog-table">
+                        <thead>
+                            <tr>
+                                <th>Nível</th>
+                                <th class="center">Prof.</th>
+                                <th>Características</th>
+                                <th class="center">Magias</th>
+                                <th class="center">1º</th>
+                                <th class="center">2º</th>
+                                <th class="center">3º</th>
+                                <th class="center">4º</th>
+                                <th class="center">5º</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="milestone">
+                                <td>1º</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-marca">Marca do Caçador</a>, <a href="#feat-territorio">Território de
+                                        Caça</a></td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>2º</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-estilo">Estilo de Luta</a>, <a
+                                        href="#feat-conjuracao">Conjuração</a>, <a href="#feat-inc-inf">Incremento
+                                        Inferior</a></td>
+                                <td class="dado center">2</td>
+                                <td class="center">2</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr class="milestone">
+                                <td>3º</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-conclave">Conclave de Caçador</a></td>
+                                <td class="dado center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>4º</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-inc-sup">Incremento Superior</a></td>
+                                <td class="dado center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>5º</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-ataque-extra">Ataque Extra</a>, <a href="#feat-inc-inf">Incremento
+                                        Inferior</a></td>
+                                <td class="dado center">4</td>
+                                <td class="center">4</td>
+                                <td class="center">2</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>6º</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-desaparecer">Desaparecer</a>, <a href="#feat-inc-sup">Incremento
+                                        Superior</a></td>
+                                <td class="dado center">4</td>
+                                <td class="center">4</td>
+                                <td class="center">2</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>7º</td>
+                                <td class="bônus center">+3</td>
+                                <td>Característica de Conclave</td>
+                                <td class="dado center">5</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>8º</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-pes-rapidos">Pés Rápidos</a>, <a href="#feat-inc-sup">Incremento
+                                        Superior</a>, <a href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">5</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>9º</td>
+                                <td class="bônus center">+4</td>
+                                <td>—</td>
+                                <td class="dado center">6</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">2</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>10º</td>
+                                <td class="bônus center">+4</td>
+                                <td><a href="#feat-augmentacao">Augmentação Sombria</a>, <a
+                                        href="#feat-inc-sup">Incremento Superior</a></td>
+                                <td class="dado center">6</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">2</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr class="milestone">
+                                <td>11º</td>
+                                <td class="bônus center">+4</td>
+                                <td>Característica de Conclave, <a href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">7</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>12º</td>
+                                <td class="bônus center">+4</td>
+                                <td><a href="#feat-inc-sup">Incremento Superior</a></td>
+                                <td class="dado center">7</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">—</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>13º</td>
+                                <td class="bônus center">+5</td>
+                                <td>—</td>
+                                <td class="dado center">8</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">1</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>14º</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-alma">Alma Endurecida</a>, <a href="#feat-inc-sup">Incremento
+                                        Superior</a>, <a href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">8</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">1</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr class="milestone">
+                                <td>15º</td>
+                                <td class="bônus center">+5</td>
+                                <td>Característica de Conclave</td>
+                                <td class="dado center">9</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">2</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>16º</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-inc-sup">Incremento Superior</a></td>
+                                <td class="dado center">9</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">2</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>17º</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">10</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">1</td>
+                            </tr>
+                            <tr>
+                                <td>18º</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-perspicacia">Perspicácia na Caça</a>, Característica de Conclave</td>
+                                <td class="dado center">10</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">1</td>
+                            </tr>
+                            <tr>
+                                <td>19º</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-lendario">Lendário</a>, <a href="#feat-inc-sup">Incremento
+                                        Superior</a></td>
+                                <td class="dado center">11</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">2</td>
+                            </tr>
+                            <tr class="milestone">
+                                <td>20º</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-matador">Matador de Inimigos</a>, <a href="#feat-inc-inf">Incremento
+                                        Inferior</a></td>
+                                <td class="dado center">11</td>
+                                <td class="center">4</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">3</td>
+                                <td class="center">2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="prof-grid-3 section-block">
+                <div>
+                    <div class="section-heading">Detalhes de Vida</div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">Dado de Vida</span>
+                        <span class="prof-card-value">1d10 por nível de Caçador</span>
+                    </div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">PV no 1º Nível</span>
+                        <span class="prof-card-value">10 + modificador de Constituição + 1</span>
+                    </div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">PV em Níveis Superiores</span>
+                        <span class="prof-card-value">10 + mod. Constituição por nível após o 1º + metade do nível
+                            (arredondado para baixo)</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-heading">Proficiências Recebidas</div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">Armadura</span>
+                        <span class="prof-card-value">Armaduras leves, armaduras médias, escudos</span>
+                    </div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">Armas</span>
+                        <span class="prof-card-value">Armas simples, armas marciais</span>
+                    </div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">Ferramentas</span>
+                        <span class="prof-card-value">Nenhuma</span>
+                    </div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">Testes de Resistência</span>
+                        <span class="prof-card-value">Inteligência, Sabedoria</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-heading">Conjuração e Magia</div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">Habilidade de Conjuração</span>
+                        <span class="prof-card-value">Sabedoria</span>
+                    </div>
+                    <div class="prof-card">
+                        <span class="prof-card-label">CD de Magia</span>
+                        <span class="prof-card-value">8 + bônus de proficiência + mod. Sabedoria</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-heading">Perícias e Equipamento</div>
+                <div class="prof-grid-2">
+                    <div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Perícias</span>
+                            <span class="prof-card-value">Escolha três entre:<br></span>
+                            <span class="prof-card-value">
+                                Acrobacia, Arcana, Atletismo,<br>
+                                Furtividade, História, Percepção,<br>
+                                Investigação, Religião e Sobrevivência
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <ul class="equip-list">
+                            <li class="equip-item"><span class="equip-bullet">◆</span>(a) brunea ou (b) armadura de
+                                couro</li>
+                            <li class="equip-item"><span class="equip-bullet">◆</span>(a) duas espadas curtas ou (b)
+                                duas armas
+                                simples corpo-a-corpo</li>
+                            <li class="equip-item"><span class="equip-bullet">◆</span>(a) um pacote de explorador ou (b)
+                                um
+                                pacote de aventureiro</li>
+                            <li class="equip-item"><span class="equip-bullet">◆</span>Um arco longo e uma aljava com 20
+                                flechas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+     TAB: HABILIDADES
+============================================================ -->
+    <div class="tab-pane" id="tab-habilidades">
+        <div class="page-content">
+
+            <div class="section-heading">Habilidades da Classe</div>
+
+            <div class="feature-card" id="feat-marca">
+                <span class="feature-level">Nível 1</span>
+                <div class="feature-name">Marca do Caçador</div>
+                <div class="feature-text">
+                    <p>Começando no 1º nível, você pode focar seus sentidos em uma criatura, marcando-a misticamente
+                        como sua presa. Como uma <strong>ação bônus</strong>, você pode marcar uma criatura que você
+                        possa ver em um raio de <strong>27 metros</strong> de você. Alternativamente, você pode marcar
+                        uma criatura estudando seus rastros por pelo menos 1 minuto.</p>
+                    <p>O alvo é marcado enquanto está no mesmo plano de existência que você e não está protegido de
+                        magias de adivinhação. A marca também desaparece se você terminar um descanso curto ou longo,
+                        ficar inconsciente ou usar este recurso novamente para atingir outra criatura.</p>
+                    <p>Enquanto uma criatura estiver marcada, você ganha os seguintes benefícios:</p>
+                    <ul>
+                        <li>Você tem <strong>vantagem</strong> em qualquer teste de Sabedoria (Percepção) ou Sabedoria
+                            (Sobrevivência) para encontrar o alvo.</li>
+                        <li>Uma vez por turno, quando você acerta o alvo com um ataque com arma, você causa <strong>dano
+                                adicional</strong> conforme mostrado na coluna Dano de Marca do Caçador na tabela O
+                            Caçador.</li>
+                    </ul>
+                    <p>Você pode usar esse recurso um número de vezes igual ao seu <strong>modificador de
+                            Sabedoria</strong> (no mínimo uma vez) e você recupera todos usos gastos quando você termina
+                        um descanso curto ou longo.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-territorio">
+                <span class="feature-level">Nível 1</span>
+                <div class="feature-name">Território de Caça</div>
+                <div class="feature-text">
+                    <p>Você tem um talento natural para percorrer o mundo. Você ganha proficiência na perícia de
+                        <strong>Natureza ou Sobrevivência</strong>. Se você já está proficiente em Natureza ou
+                        Sobrevivência, seu bônus de proficiência é dobrado para qualquer teste de habilidade que você
+                        fizer e que o utilize.
+                    </p>
+                    <p>Quando você for procurar por comida e tiver sucesso no teste de Sabedoria (Sobrevivência), você
+                        descobre <strong>duas vezes mais comida e água</strong> do que normalmente faria. Se você
+                        falhar, você ainda encontrará metade da quantidade. Ao rastrear outras criaturas, você também
+                        aprende o número exato de indivíduos, seus tamanhos e há quanto tempo eles passaram pela área.
+                    </p>
+                    <p>Além disso, você está particularmente familiarizado com um tipo de ambiente. Escolha um
+                        <strong>Terreno Preferido</strong>:
+                    </p>
+                    <ul>
+                        <li><strong>Costa.</strong> Nadar não custa mais movimento extra. Você pode prender a respiração
+                            três vezes mais do que normalmente pode.</li>
+                        <li><strong>Deserto.</strong> Você está naturalmente adaptado a climas quentes. Você também
+                            ganha resistência contra danos de fogo.</li>
+                        <li><strong>Floresta.</strong> Você possui vantagem em todos os testes de percepção.</li>
+                        <li><strong>Pastagem.</strong> Sua velocidade aumenta em 3 metros.</li>
+                        <li><strong>Montanha.</strong> Escalar não custa mais movimento extra. Além disso, você está
+                            naturalmente adaptado a grandes altitudes.</li>
+                        <li><strong>Pântano.</strong> Você ganha resistência a dano venenoso e tem vantagem em testes de
+                            resistência contra doenças.</li>
+                        <li><strong>Tundra.</strong> Você está naturalmente adaptado a climas frios. Você também ganha
+                            resistência contra danos de frio.</li>
+                        <li><strong>Subterrâneo.</strong> Você aprende Sub-comum. Se você não tem visão no escuro, você
+                            a ganha com um alcance de 9 metros. Se você tem visão no escuro, você ganha visão às cegas
+                            com um alcance de 1,5 metro.</li>
+                        <li><strong>Urbano.</strong> Você ganha proficiência em Investigação e seu bônus de proficiência
+                            é duplicado para qualquer teste de habilidade que você fizer com essa habilidade. Você
+                            também aprende a falar, ler e escrever uma linguagem humanoide de sua escolha.</li>
+                    </ul>
+                    <p>Você escolhe um tipo de terreno favorito adicional no <strong>6º nível, no 10º nível e 14º
+                            nível</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-estilo">
+                <span class="feature-level">Nível 2</span>
+                <div class="feature-name">Estilo de Luta</div>
+                <div class="feature-text">
+                    <p>No 2º nível, você adota um estilo de combate particular que será sua especialidade. Escolha uma
+                        das opções a seguir. Você não pode escolher o mesmo Estilo de Combate mais de uma vez, mesmo se
+                        puder escolher de novo.</p>
+                    <ul>
+                        <li><strong>Arquearia.</strong> Você ganha +2 de bônus nas jogadas de ataque realizadas com uma
+                            arma de ataque à distância.</li>
+                        <li><strong>Combate com Duas Armas.</strong> Quando você estiver engajado em uma luta com duas
+                            armas, você pode adicionar o seu modificador de habilidade na jogada de dano do seu segundo
+                            ataque.</li>
+                        <li><strong>Defesa.</strong> Enquanto estiver usando armadura, você ganha +1 de bônus em sua CA.
+                        </li>
+                        <li><strong>Duelista.</strong> Quando você empunhar uma arma de ataque corpo-a-corpo em uma mão
+                            e nenhuma outra arma, você ganha +2 de bônus nas jogadas de dano com essa arma.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-conjuracao">
+                <span class="feature-level">Nível 2</span>
+                <div class="feature-name">Conjuração</div>
+                <div class="feature-text">
+                    <p>Quando você alcança o 2º nível, você aprende a usar a essência mágica da feitiçaria de sangue
+                        para conjurar feitiços arcanos. O Caçador é um <strong>meio conjurador</strong>.</p>
+                    <p>Você conhece duas magias de 1º nível da lista de magias de caçador. A coluna Magias Conhecidas na
+                        tabela O Caçador mostra quando você aprende mais magias. Cada uma dessas magias deve ser de um
+                        nível a que você tenha acesso. Além disso, quando você adquire um nível nessa classe, você pode
+                        substituir uma magia que você conhece por outra da lista de magias de caçador do mesmo nível.
+                    </p>
+                    <p><strong>Sabedoria</strong> é a sua habilidade de conjuração para suas magias de caçador, já que
+                        sua magia vem da sua sintonia com a natureza.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-inc-inf">
+                <span class="feature-level">Nível 2 · 5 · 8 · 11 · 14 · 17 · 20</span>
+                <div class="feature-name">Incremento no Valor de Habilidade Inferior</div>
+                <div class="feature-text">
+                    <p>Quando você atinge o 2º nível e novamente no <strong>5°, 8°, 11°, 14°, 17° e 20°</strong> nível,
+                        você pode aumentar <strong>dois valores de habilidade</strong> à sua escolha em
+                        <strong>+1</strong> cada. Como padrão, você não pode elevar um valor de habilidade acima de
+                        <strong>20</strong> com essa característica.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-conclave">
+                <span class="feature-level">Nível 3 · 7 · 11 · 15 · 18</span>
+                <div class="feature-name">Conclave de Caçador</div>
+                <div class="feature-text">
+                    <p>No 3º nível, você escolhe emular os ideais de treinamento de um conclave de caçador. Escolha uma
+                        das subclasses de caçador detalhada na sessão de Conclaves. Sua escolha lhe concede
+                        características no 3º nível e novamente no <strong>7°, 11°, 15° e 18°</strong> nível.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-inc-sup">
+                <span class="feature-level">Nível 4 · 6 · 8 · 10 · 12 · 14 · 16 · 19</span>
+                <div class="feature-name">Incremento no Valor de Habilidade Superior</div>
+                <div class="feature-text">
+                    <p>Quando você atinge o 4º nível e novamente no <strong>6°, 8°, 10°, 12°, 14°, 16° e 19°</strong>
+                        nível, você pode aumentar um valor de habilidade à sua escolha em <strong>2</strong>, ou dois
+                        valores de habilidade à sua escolha em <strong>1</strong> cada. Como padrão, você não pode
+                        elevar um valor de habilidade acima de <strong>26</strong> com essa característica. Além disso,
+                        você <strong>recebe um talento</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-ataque-extra">
+                <span class="feature-level">Nível 5</span>
+                <div class="feature-name">Ataque Extra</div>
+                <div class="feature-text">
+                    <p>A partir do 5º nível, você pode atacar <strong>duas vezes</strong>, ao invés de uma, sempre que
+                        você realizar a ação de Ataque no seu turno.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-desaparecer">
+                <span class="feature-level">Nível 6</span>
+                <div class="feature-name">Desaparecer</div>
+                <div class="feature-text">
+                    <p>A partir do 6º nível, sua velocidade e furtividade em combate tornam difícil de definir. Você
+                        pode realizar a ação <strong>Ocultar como uma ação bônus</strong> e você não pode ser rastreado
+                        por meios não mágicos, a menos que você decida deixar um rastro.</p>
+                    <p>Além disso, se você estiver escondido ao rolar a iniciativa, fazer um ataque durante a primeira
+                        rodada de combate não revelará sua localização se você cumprir as condições necessárias para se
+                        esconder.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-pes-rapidos">
+                <span class="feature-level">Nível 8</span>
+                <div class="feature-name">Pés Rápidos</div>
+                <div class="feature-text">
+                    <p>Começando no 8º nível, você pode usar a ação de <strong>Disparada como uma ação bônus</strong> no
+                        seu turno.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-augmentacao">
+                <span class="feature-level">Nível 10</span>
+                <div class="feature-name">Augmentação Sombria</div>
+                <div class="feature-text">
+                    <p>Começando no 10º nível, a magia infunde seu corpo para reforçar permanentemente sua resiliência.
+                        Sua <strong>velocidade aumenta em 5 pés</strong>, e você tem um bônus em testes de resistência
+                        de <strong>Força, Destreza e Constituição</strong> igual ao seu dado de dano de marca do
+                        caçador.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-alma">
+                <span class="feature-level">Nível 14</span>
+                <div class="feature-name">Alma Endurecida</div>
+                <div class="feature-text">
+                    <p>Começando no 14º nível, você se torna <strong>imune à condição amedrontado</strong> e tem
+                        vantagem em testes de resistência contra <strong>magias de encantamento</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-perspicacia">
+                <span class="feature-level">Nível 18</span>
+                <div class="feature-name">Perspicácia na Caça</div>
+                <div class="feature-text">
+                    <p>No 18º nível, você desenvolve uma mentalidade predatória intranspassável, permitindo-lhe
+                        canalizar o poder da magia para sua proteção contra suas presas. Você recebe <strong>resistência
+                            a todos os danos causados pelo seu alvo da Marca do Caçador</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-lendario">
+                <span class="feature-level">Nível 19</span>
+                <div class="feature-name">Lendário</div>
+                <div class="feature-text">
+                    <p>Ao atingir o 19º nível, você pode escolher um <strong>talento épico</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-matador">
+                <span class="feature-level">Nível 20</span>
+                <div class="feature-name">Matador de Inimigos</div>
+                <div class="feature-text">
+                    <p>No 20º nível, você se torna um caçador incomparável. Uma vez em cada um dos seus turnos, você
+                        pode adicionar seu <strong>modificador de Sabedoria na jogada de ataque e jogada de
+                            dano</strong> de um ataque que você fizer. Você pode escolher usar essa característica antes
+                        ou depois da rolagem, mas antes de qualquer efeito da jogada ser aplicado.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+     TAB: CONCLAVES
+============================================================ -->
+    <div class="tab-pane" id="tab-subclasses">
+        <div class="page-content">
+
+            <div class="section-heading">Conclaves de Caçador</div>
+            <p class="body-text" style="margin-bottom:28px;">No 3º nível, você escolhe um conclave que define seu
+                caminho como caçador. Sua escolha garante características nos níveis 3, 7, 11, 15 e 18.</p>
+
+            <div class="sub-selector-grid">
+                <button class="sub-btn active" onclick="switchSub('exterminador')">
+                    <span class="sub-btn-icon">☠️</span>
+                    <span class="sub-btn-name">Exterminador Profano</span>
+                    <span class="sub-btn-desc">Magia negra, maldições e erradicação do mal</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('perseguidor')">
+                    <span class="sub-btn-icon">🌀</span>
+                    <span class="sub-btn-name">Perseguidor do Horizonte</span>
+                    <span class="sub-btn-desc">Portais planares e caça interdimensional</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('predador')">
+                    <span class="sub-btn-icon">🐾</span>
+                    <span class="sub-btn-name">Predador Primal</span>
+                    <span class="sub-btn-desc">Instinto ancestral, velocidade e caça bruta</span>
+                </button>
+            </div>
+
+            <!-- ── EXTERMINADOR PROFANO ── -->
+            <div class="sub-panel active" id="sub-exterminador">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/cacador-exterminador.jpg" alt="Exterminador Profano"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Os Exterminadores Profanos são uma irmandade enigmática dedicada a
+                            erradicar o mal através do uso da magia negra. Estes caçadores sombrios empregam
+                            conhecimentos proibidos para rastrear e extinguir criaturas profanas, desfazendo suas
+                            existências corrompidas em uma busca implacável pela purificação do mundo. No entanto, seu
+                            compromisso com a erradicação do mal não vem sem custos, e cada Exterminador carrega o peso
+                            sombrio do sacrifício pessoal enquanto se aventuram nas profundezas das trevas para proteger
+                            a existência de todos.</div>
+
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3 — Magias do Exterminador Profano</span>
+                            <div class="feature-name">Magias de Conclave</div>
+                            <div class="feature-text">
+                                <p>Ao atingir o 3º nível, você aprende magias adicionais ao alcançar determinados
+                                    níveis. Essas magias contam como magias de caçador para você, mas não contam no
+                                    número de magias de caçador que você conhece.</p>
+                                <ul>
+                                    <li><strong>3º nível:</strong> Bruxaria</li>
+                                    <li><strong>5º nível:</strong> Raio do Enfraquecimento</li>
+                                    <li><strong>9º nível:</strong> Rogar Maldição</li>
+                                    <li><strong>13º nível:</strong> Sombra de Trastorno</li>
+                                    <li><strong>17º nível:</strong> Praga</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 3</span>
+                    <div class="feature-name">Guerreiro Profano</div>
+                    <div class="feature-text">
+                        <p>No 3º nível, você ganha a habilidade de canalizar essência vital para amaldiçoar e manipular
+                            criaturas por meio de magia negra. Quando você estiver com uma criatura marcada com sua
+                            Marca do Caçador, você pode nos turnos subsequentes infligir uma maldição no alvo. Se uma
+                            maldição pedir por uma jogada de ataque ou teste de resistência, o seu bônus e CD serão
+                            iguais ao de sua habilidade de conjuração. Você pode utilizar uma maldição um número de
+                            vezes igual ao seu <strong>bônus de proficiência</strong> e recupera todos os usos após um
+                            descanso curto ou longo.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 3</span>
+                    <div class="feature-name">Artes Obscuras — 3 Maldições</div>
+                    <div class="feature-text">
+                        <p>No 3º nível, suas pesquisas e esforços fizeram você aprender três maldições diferentes que
+                            permitem enfraquecer suas presas.</p>
+                        <ul>
+                            <li><strong>Maldição de Ansiedade.</strong> Com uma ação bônus, você intensifica o medo no
+                                corpo da criatura, tornando-a suscetível a influências fortes. Até o começo do seu
+                                próximo turno, todas as criaturas têm vantagem em testes de Carisma (Intimidação)
+                                direcionados à criatura alvo.</li>
+                            <li><strong>Maldição de Prisão.</strong> Com uma ação bônus, você tenta infligir uma onda
+                                letárgica que fraqueja as pernas do alvo. O alvo deve ter sucesso em um teste de
+                                resistência de Força ou terá sua velocidade reduzida a 0 e não pode usar reações até o
+                                começo do seu próximo turno.</li>
+                            <li><strong>Maldição de Escuridão.</strong> Com uma ação bônus, você obscurece a visão da
+                                criatura com sombras de morte. O alvo deve ser bem sucedido em um teste de resistência
+                                de Constituição ou ficar cego até o início do seu próximo turno.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 7</span>
+                    <div class="feature-name">Assombração Impiedosa — 3 Maldições</div>
+                    <div class="feature-text">
+                        <p>No 7º nível, seu desenvolvimento e descobertas lhe garantiram mais três maldições em seu
+                            repertório de artes negras.</p>
+                        <ul>
+                            <li><strong>Maldição de Agonia.</strong> Com uma ação bônus, você amaldiçoa a criatura com
+                                uma doença profunda que sensibiliza suas defesas. A criatura tem desvantagem em testes
+                                de habilidade de Força e Destreza e sofre 1d8 de dano necrótico sempre que for atingida
+                                por um ataque até o começo do seu próximo turno.</li>
+                            <li><strong>Maldição de Feridas.</strong> Com uma ação bônus, você pode tentar infligir uma
+                                praga na carne da sua presa. O alvo deve ser bem sucedido em um teste de resistência de
+                                Constituição ou não poderá se curar até o início do seu próximo turno.</li>
+                            <li><strong>Maldição de Estalo.</strong> Com uma reação, você lança um som terrível em forma
+                                de gritos diretamente para a mente da criatura. Quando a criatura tentar realizar uma
+                                jogada de d20, você pode utilizar essa maldição para diminuir o resultado em um valor
+                                igual ao seu dado de dano de caçador.</li>
+                        </ul>
+                        <p>Além disso, você se torna mais acostumado com as armas que criaturas horrendas usam. Você
+                            recebe <strong>resistência a dano de veneno</strong> e vantagem em teste de resistência
+                            contra ser envenenado.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 11</span>
+                    <div class="feature-name">Caçador de Horrores — 3 Maldições</div>
+                    <div class="feature-text">
+                        <p>No 11º nível, suas experiências com os horrores desse mundo garantiram a você a potência e as
+                            habilidades necessárias para sobreviver a elas, fazendo com que você aprenda mais 3
+                            maldições.</p>
+                        <ul>
+                            <li><strong>Maldição de Fraqueza.</strong> Com uma reação, você aflige a criatura com uma
+                                paralisia a deixando vulnerável brevemente. Quando a criatura sofrer um ataque ou magia,
+                                você pode usar sua reação para tentar paralisar. A criatura deve ser bem sucedida em um
+                                teste de resistência de Sabedoria ou irá ficar sobre a condição paralisada durante a
+                                realização do ataque ou magia que desencadeou a maldição.</li>
+                            <li><strong>Maldição da Transfusão.</strong> Com uma ação bônus, você pode rasgar a
+                                vitalidade da criatura e utilizar essa fagulha de energia a seu favor. A criatura deve
+                                ser bem sucedida em um teste de resistência de Constituição ou sofrerá uma quantidade de
+                                dano de Force igual ao seu dado de dano de caçador mais o seu nível, ou metade em um
+                                sucesso. Você pode curar uma criatura a até 9m de você em uma quantidade de pontos de
+                                vida igual ao dano causado.</li>
+                            <li><strong>Maldição de Dilacerar Magia.</strong> Com uma reação, você pode tentar perturbar
+                                a mente da criatura derrubando sua concentração. Se a criatura estiver conjurando ou
+                                mantendo uma magia, você pode obrigar ela a realizar um teste de resistência de
+                                Inteligência. Em uma falha a magia conjurada ou mantida é perdida.</li>
+                        </ul>
+                        <p>Além disso, você se torna mais próximo ao profano se tornando mais resistente às artes
+                            negras. Você recebe <strong>resistência a dano Necrótico</strong> e seu máximo de pontos de
+                            vida não pode ser diminuído de nenhuma forma.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 15</span>
+                    <div class="feature-name">Senhor das Maldições — 3 Maldições</div>
+                    <div class="feature-text">
+                        <p>No 15º nível, suas maldições atingiram o máximo de seu crescimento fazendo com que você tenha
+                            acesso as mais poderosas das maldições.</p>
+                        <ul>
+                            <li><strong>Maldição do Reflexo Frágil.</strong> Com uma ação bônus, você aflige a criatura
+                                com uma sensação de prisão e agonia. A criatura amaldiçoada vê seu corpo amarrado por
+                                magia negra diminuindo seus reflexos. Até o início do seu próximo turno, seus testes de
+                                resistência de Força, Destreza e a sua CA são diminuídos em um valor igual a uma rolagem
+                                de seu dado de dano de caçador.</li>
+                            <li><strong>Maldição da Atração Desenfreada.</strong> Com uma ação bônus, você pode
+                                amaldiçoar a criatura com uma compulsão por destruição. Ela deve ser bem sucedida em um
+                                teste de resistência de Sabedoria ou será atraída por alvos aliados, atacando-os no seu
+                                próximo turno.</li>
+                            <li><strong>Maldição do Tormento Desenfreado.</strong> Com uma ação bônus, você inflige dor
+                                na pele da criatura que a faz agonizar em destruição. A criatura deve ser bem sucedida
+                                em um teste de resistência de Sabedoria ou sofrerá um dano Psíquico igual a três vezes o
+                                seu dado de dano de caçador mais o seu nível e ficará amedrontada por você até o final
+                                do seu próximo turno. Uma criatura sofre metade em um sucesso e nenhum efeito.</li>
+                        </ul>
+                        <p>Além disso, você tem <strong>vantagem em qualquer teste de resistência que envolva magia de
+                                necromancia</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── PERSEGUIDOR DO HORIZONTE ── -->
+            <div class="sub-panel" id="sub-perseguidor">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/cacador-perseguidor.jpg" alt="Perseguidor do Horizonte"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Os Perseguidores do Horizonte protegem o mundo contra ameaças que se
+                            originam de outros planos ou que buscam devastar o reino mortal com magia de outros mundos.
+                            Eles procuram por portais planares e os vigiam, aventurando-se nos Planos Interiores e nos
+                            Planos Exteriores conforme necessário para enfrentar seus inimigos. Esses rangers também são
+                            aliados a qualquer força no multiverso — especialmente dragões benevolentes, seres feéricos
+                            e elementais — que trabalhem para preservar a vida e a ordem dos planos.</div>
+
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3 — Magias do Andarilho do Horizonte</span>
+                            <div class="feature-name">Magias de Conclave</div>
+                            <div class="feature-text">
+                                <ul>
+                                    <li><strong>3º nível:</strong> Proteção contra o Bem e o Mal</li>
+                                    <li><strong>5º nível:</strong> Passo Nebuloso</li>
+                                    <li><strong>9º nível:</strong> Clarividência</li>
+                                    <li><strong>13º nível:</strong> Banimento</li>
+                                    <li><strong>17º nível:</strong> Vidência</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 3</span>
+                    <div class="feature-name">Conhecimento Planar</div>
+                    <div class="feature-text">
+                        <p>No 3º nível, você acumulou conhecimento dos muitos planos no multiverso. Você ganha
+                            proficiência em sua escolha entre <strong>História, Arcana ou Natureza</strong>. Se você já
+                            possui proficiência, você ganha especialização na habilidade escolhida. Além disso, sempre
+                            que fizer um teste de resistência de Inteligência, você pode adicionar seu
+                            <strong>modificador de Sabedoria</strong> ao resultado (mínimo de +1).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 3</span>
+                    <div class="feature-name">Caçador Extraplanar</div>
+                    <div class="feature-text">
+                        <p>No 3º nível, você ganha a habilidade de detectar magicamente a presença de portais planares e
+                            criaturas extraplanares. Como ação, você detecta a distância e direção para o <strong>portal
+                                planar mais próximo dentro de 1,6 km</strong> de você. Além disso, você detecta a
+                            distância e direção para a criatura fey, celestial, abissal, elemental ou aberrante mais
+                            próxima dentro de 1,6 km de você que tenha sido convocada por um feitiço de 3º nível ou
+                            superior. Você pode usar essa habilidade um número de vezes igual ao bônus de proficiência,
+                            recuperando todos os usos em um descanso longo.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 3</span>
+                    <div class="feature-name">Destruição Planar</div>
+                    <div class="feature-text">
+                        <p>No 3º nível, você aprende a canalizar a energia do multiverso para aprimorar seus ataques
+                            contra sua presa. Contra o alvo de sua marca do caçador, você pode escolher aprimorar seu
+                            golpe causando <strong>1d8 de dano extra</strong> e transformar todo o dano causado em
+                            <strong>dano de Force</strong>. Você pode utilizar essa habilidade uma quantidade de vezes
+                            igual ao seu bônus de proficiência a cada descanso longo. Quando atinge o 11º nível nesta
+                            classe, o dano extra aumenta para <strong>2d8</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 7</span>
+                    <div class="feature-name">Foco Infinito</div>
+                    <div class="feature-text">
+                        <p>No 7º nível, você consegue ver as pequenas fissuras do espaço que nascem graças a magia que
+                            existe dentro de qualquer indivíduo. No começo do seu turno uma criatura inimiga aleatória
+                            se torna fragilizada em um ponto à sua volta. <strong>Role 1d8</strong> para saber qual
+                            diagonal ou lateral o indivíduo está fragilizado. Se você atacar uma criatura em seu ponto
+                            fragilizado ela sofre automaticamente os efeitos de sua Destruição Planar.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 11</span>
+                    <div class="feature-name">Caçada Dimensional</div>
+                    <div class="feature-text">
+                        <p>No 11º nível, sua determinação para perseguir sua presa se torna imparável não importa onde
+                            estejam. Você pode <strong>marcar criaturas independente da distância</strong> com sua Marca
+                            do Caçador desde que ela esteja no mesmo plano que você e você a tenha conhecido
+                            pessoalmente pelo menos uma vez. Você pode com uma <strong>ação bônus teletransportar a até
+                                9m</strong> de distância do seu alvo marcado pela sua Marca do Caçador desde que ele
+                            esteja no mesmo plano que você.</p>
+                        <p>Além disso, após você teletransportar dessa forma, você recebe <strong>vantagem em suas
+                                jogadas de ataque</strong> contra o seu alvo marcado neste turno.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 15</span>
+                    <div class="feature-name">Viajante Espectral</div>
+                    <div class="feature-text">
+                        <p>No 15º nível, sua habilidade de perseguir suas presas se tornam infinitas quebrando até
+                            barreiras interdimensionais. Você ganha os seguintes benefícios:</p>
+                        <ul>
+                            <li>Com seu Foco Infinito você pode marcar uma criatura com sua Marca do Caçador mesmo que
+                                ela esteja em <strong>qualquer lugar do multiverso</strong>, desde que você a conheça.
+                                Você sempre sabe em que plano ela está.</li>
+                            <li>Com sua Caçada Dimensional você pode teletransportar para o seu alvo independente de seu
+                                plano atual. Você ganha uma visão do local antes de teletransportar, podendo agora
+                                escolher qualquer lugar até <strong>500 pés do alvo</strong>.</li>
+                            <li>Quando uma criatura marcada por sua Marca do Caçador que esteja a até 9m de você tentar
+                                ir para mais de 9m de distância de você, você pode com uma reação forçar a criatura a
+                                realizar um teste de resistência de Sabedoria ou será teletransportada para um local a
+                                até 9m de você. O local deve ser uma superfície desocupada.</li>
+                            <li>Quando uma criatura marcada por sua Marca do Caçador acertar um ataque contra você, você
+                                pode com uma reação teletransportar para um local a até 9m delas fazendo com que
+                                <strong>o ataque erre automaticamente</strong>.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── PREDADOR PRIMAL ── -->
+            <div class="sub-panel" id="sub-predador">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/cacador-predador.jpg" alt="Predador Primal"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Os Predadores Primais mantém viva uma tradição ancestral há muito
+                            esquecida pela história escrita. Vivendo distantes da sociedade moderna, esses caçadores
+                            preservam um código de honra enraizado na natureza, sentindo-se deslocados em um mundo que
+                            valoriza a inovação sobre a sabedoria antiga. Desconfiados da tecnologia, eles formam vilas
+                            junto a bárbaros e druidas, onde a conexão com a natureza é venerada. Seu dogma de vida
+                            reside na busca e no deleite da caça, uma essência fundamental que permeia suas existências,
+                            moldando cada passo e decisão.</div>
+
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3 — Magias do Predador Primal</span>
+                            <div class="feature-name">Magias de Conclave</div>
+                            <div class="feature-text">
+                                <ul>
+                                    <li><strong>3º nível:</strong> Golpe de Zephyr</li>
+                                    <li><strong>5º nível:</strong> Aprimorar Habilidade</li>
+                                    <li><strong>9º nível:</strong> Velocidade</li>
+                                    <li><strong>13º nível:</strong> Movimentação Livre</li>
+                                    <li><strong>17º nível:</strong> Fortalecimento de Perícia</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 3</span>
+                    <div class="feature-name">Caça Bruta</div>
+                    <div class="feature-text">
+                        <p>Começando no 3º nível, você possui a experiência de combate e tenacidade de perseguir suas
+                            presas até que seus espíritos quebrem. Enquanto você marcar uma criatura com sua Marca do
+                            Caçador você recebe os seguintes benefícios enquanto estiver em sua perseguição:</p>
+                        <ul>
+                            <li>Sua <strong>velocidade de caminhada aumenta em 10 pés</strong>.</li>
+                            <li>Você tem <strong>vantagem em testes de resistência de Destreza</strong> e teste de
+                                habilidade de Atletismo e Acrobacia, contra efeitos que possa ver, como armadilhas,
+                                obstáculos e magias. Para obter esse benefício, você não pode estar cego, surdo ou
+                                incapacitado.</li>
+                            <li>Você recebe <strong>deslocamento de escalada e natação</strong> igual ao seu
+                                deslocamento de caminhada.</li>
+                            <li>Você ganha um bônus em sua <strong>Classe de Armadura igual ao seu bônus de
+                                    proficiência</strong> contra sua criatura marcada.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 7</span>
+                    <div class="feature-name">Caçador Incessável</div>
+                    <div class="feature-text">
+                        <p>No 7º nível, seus instintos e condicionamento para a caçada se tornam potentes o alertando do
+                            perigo e garantindo que você possa reagir a qualquer situação. Enquanto você marcar uma
+                            criatura com sua Marca do Caçador você recebe os seguintes benefícios enquanto estiver em
+                            sua perseguição:</p>
+                        <ul>
+                            <li>Sua <strong>velocidade de caminhada aumenta em 10 pés</strong> (cumulativo com Caça
+                                Bruta).</li>
+                            <li>Quando você acertar um ataque contra a criatura marcada a <strong>velocidade de
+                                    movimento dela diminui em 5 pés</strong>.</li>
+                            <li>Você se torna <strong>imune à condição exausto</strong>.</li>
+                            <li>A <strong>margem de críticos contra a criatura marcada se torna 19-20</strong>.</li>
+                        </ul>
+                        <p>Além disso, seus instintos estão tão afiados que você tem <strong>vantagem em testes de
+                                iniciativa</strong> e se você estiver surpreendido no início do combate e não estiver
+                            incapacitado, você pode agir normalmente em seu primeiro turno.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 11</span>
+                    <div class="feature-name">Enfraquecer Presa</div>
+                    <div class="feature-text">
+                        <p>Começando no 11º nível, você aprende a expor e explorar as fraquezas de suas presas que
+                            estrangulam para tentar fugir de sua frenesi sanguinária. Sempre que você acertar uma
+                            criatura marcada com um <strong>acerto crítico, a criatura também sofre 1 ponto de
+                                exaustão</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-level">Nível 15</span>
+                    <div class="feature-name">Superioridade Tática</div>
+                    <div class="feature-text">
+                        <p>A partir do 15º nível, suas técnicas de cerco e de execução estão lapidadas garantindo sua
+                            superioridade a qualquer criatura que você deseja predar. Você possui <strong>vantagem em
+                                qualquer jogada de d20 contra a criatura marcada</strong> por sua Marca do Caçador.</p>
+                        <p>Além disso, sua <strong>margem de crítico contra a criatura marcada se torna 18-20</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-cls">
+        <p>© 2025 D&D 5e Homebrew Tatânea — Criado por TonhoDevi</p>
+        <nav class="footer-links">
+            <a href="html/compendium/compendium-classes.html">← Todas as Classes</a>
+            <a href="html/compendium/compendium-races.html">Raças</a>
+            <a href="html/compendium/compedium-talents.html">Talentos</a>
+            <a href="index.html">Início</a>
+        </nav>
+    </footer>
+
+    <script src="/js/shared/navbar.js"></script>
+    <script src="/js/class/class-page.js"></script>
+</body>
+
+</html>
