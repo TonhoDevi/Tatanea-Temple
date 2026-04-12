@@ -6,10 +6,9 @@
 //    supabase CDN, supabase-auth.js, cloud-save.js
 // ================================================================
 
-const TIPO_LABEL = { dnd: 'D&D 5e', mem: 'M&M 3e' };
+const TIPO_LABEL = { dnd: 'D&D 5e' };
 const TIPO_HREF  = {
-    dnd: '/html/sheet/ddt-character-sheet.html',
-    mem: '/html/sheet/mem-character-sheet.html'
+    dnd: '/html/sheet/ddt-character-sheet.html'
 };
 
 let todasFichas = [];
@@ -69,7 +68,7 @@ function renderFichas() {
 
     grid.innerHTML = lista.map(function(ficha) {
         var data  = new Date(ficha.atualizado_em).toLocaleString('pt-BR');
-        var badge = ficha.tipo === 'dnd' ? 'badge-dnd' : 'badge-mem';
+        var badge = 'badge-dnd';
         var label = TIPO_LABEL[ficha.tipo] || ficha.tipo;
         var href  = TIPO_HREF[ficha.tipo]  || '#';
         return (
@@ -98,8 +97,7 @@ function setFilter(tipo) {
     document.querySelectorAll('.filter-btn').forEach(function(btn, i) {
         btn.classList.toggle('active',
             (tipo === ''    && i === 0) ||
-            (tipo === 'dnd' && i === 1) ||
-            (tipo === 'mem' && i === 2)
+            (tipo === 'dnd' && i === 1)
         );
     });
     renderFichas();

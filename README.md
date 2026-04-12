@@ -1,10 +1,9 @@
 # 🐉 Tatanea Temple (Templo de Tatânea)
 
 
-Uma plataforma definitiva para aventureiros! **Tatanea Temple** é um sistema web interativo e de alto desempenho para criação, gerenciamento e salvamento em nuvem de fichas de personagens para Dungeons & Dragons 5ª Edição e Mutantes & Malfeitores 3ª Edição, com foco total em conteúdo **Homebrew**.
+Uma plataforma definitiva para aventureiros! **Tatanea Temple** é um sistema web interativo e de alto desempenho para criação, gerenciamento e salvamento em nuvem de fichas de personagens para Dungeons & Dragons 5ª Edição, com foco total em conteúdo **Homebrew**.
 
 ![Badge](https://img.shields.io/badge/D%26D-5e-red?style=for-the-badge&logo=dungeons-and-dragons&logoColor=white)
-![Badge](https://img.shields.io/badge/M%26M-3e-blue?style=for-the-badge)
 ![Badge](https://img.shields.io/badge/Supabase-Auth-green?style=for-the-badge&logo=supabase)
 ![Badge](https://img.shields.io/badge/JavaScript-ES6+-yellow?style=for-the-badge&logo=javascript)
 ![Badge](https://img.shields.io/badge/Status-Beta-orange?style=for-the-badge)
@@ -13,7 +12,7 @@ Uma plataforma definitiva para aventureiros! **Tatanea Temple** é um sistema we
 
 ## ✨ Características Principais
 
-### ⚔️ Fichas Interativas (D&D 5e & M&M 3e)
+### ⚔️ Fichas Interativas (D&D 5e)
 - **Cálculo Automático**: Modificadores, testes de resistência, perícias e CD de magia calculados em tempo real.
 - **Sistema Multiclasse**: Suporte para acompanhamento de níveis e classes.
 - **Gerenciamento de Combate**: Controle de PV (Atual, Máximo, Temp), CA, Iniciativa e Deslocamentos.
@@ -80,7 +79,7 @@ Tatanea-Temple/
 ├── html/               # Páginas do sistema
 │   ├── auth/           # Login e cadastro
 │   ├── compendium/     # Enciclopédia de Tatânea
-│   └── sheet/          # Fichas (D&D, M&M, Minhas Fichas)
+│   └── sheet/          # Fichas (D&D, Minhas Fichas)
 ├── js/                 # Lógica do sistema
 │   ├── character/      # Motores de cálculo de fichas
 │   ├── compendium/     # Dados e renderização de compêndios

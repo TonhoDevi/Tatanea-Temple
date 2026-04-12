@@ -115,11 +115,6 @@ body {
     color: #f0d090;
     box-shadow: 0 4px 16px rgba(139,26,26,0.4);
 }
-.btn-new-mem {
-    background: linear-gradient(135deg, #1a3a8b 0%, #102060 100%);
-    color: #90c0f0;
-    box-shadow: 0 4px 16px rgba(26,58,139,0.4);
-}
 .btn-new:hover:not(:disabled) { transform: translateY(-2px); }
 
 /* ── GRADE DE FICHAS ── */
@@ -148,9 +143,6 @@ body {
 .sheet-card.tipo-dnd::before {
     background: linear-gradient(90deg, transparent, rgba(180,40,40,0.7), transparent);
 }
-.sheet-card.tipo-mem::before {
-    background: linear-gradient(90deg, transparent, rgba(40,80,180,0.7), transparent);
-}
 .sheet-card:hover {
     border-color: rgba(200,160,60,0.4);
     transform: translateY(-2px);
@@ -169,7 +161,6 @@ body {
     margin-bottom: 10px;
 }
 .badge-dnd { background: rgba(180,40,40,0.2);  color: #e08080; border: 1px solid rgba(180,40,40,0.3); }
-.badge-mem { background: rgba(40,80,180,0.2);  color: #80a0e0; border: 1px solid rgba(40,80,180,0.3); }
 
 /* ── CARD CONTENT ── */
 .sheet-card-name {
