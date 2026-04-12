@@ -8,25 +8,27 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#090d24">
-    <title>Tat�nea Temple � Personagem</title>
+    <meta name="theme-color" content="#4a3728">
+    <title>Tatânea Temple — Personagem</title>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/sheets/ddt-characters.css">
+    <link rel="stylesheet" href="css/1-variables.css">
+    <link rel="stylesheet" href="css/2-base.css">
+    <link rel="stylesheet" href="css/3-components.css">
     <link rel="stylesheet" href="css/navbar/navbar.css">
+    <link rel="stylesheet" href="css/6-character.css">
+    <link rel="stylesheet" href="css/8-responsive.css">
     <link rel="stylesheet" href="css/navbar/dice-roller.css">
 </head>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/shared/supabase-auth.js"></script>
 <script src="/js/shared/cloud-save.js"></script>
 <script>requireAuth();</script>
 <script src="/js/character/ddt-character.js"></script>
 <script src="/js/shared/dice-roller.js"></script>
-<script src="/js/shared/navbar.js"></script>
 
 <body>
 
@@ -35,177 +37,173 @@
     ========================================= -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="index.html" class="navbar-logo">Templo de Tat�nea</a>
+            <a href="index.html" class="navbar-logo">Templo de Tatânea</a>
             <ul class="navbar-menu">
-                <li><a href="index.html">In�cio</a></li>
+                <li><a href="index.html">Início</a></li>
                 <li><a href="html/sheet/my-characters-sheet.html">Minhas Fichas</a></li>
                 <li><a href="#" id="openDiceBtn">Dados</a></li>
             </ul>
-            <button class="navbar-toggle" onclick="toggleNavbar()">?</button>
+            <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
         </div>
     </nav>
 
-    <div class="ddt-app-container">
-
-        <div class="ddt-header">
+    <div class="app-container">
+        <div class="header">
             <h1>Ficha de Personagem</h1>
-            <p>Dungeons & Dragons Homebrew Tat�nea Temple</p>
+            <p>Dungeons & Dragons Homebrew Tatânea Temple</p>
         </div>
 
         <input type="file" id="importFileInput" accept=".json" onchange="importCharacterJSON(event)"
-            style="display:none;">
-        <div class="ddt-save-indicator" id="saveIndicator">? Salvo automaticamente</div>
+            style="display: none;">
 
-        <!-- =========================================
-             SISTEMA DE ABAS
-        ========================================= -->
-        <div class="ddt-tabs-container">
-            <div class="ddt-tabs-header">
-                <button class="ddt-tab-btn active" onclick="switchTab('tab1')">?? Principal</button>
-                <button class="ddt-tab-btn" onclick="switchTab('tab2')">?? Invent�rio</button>
-                <button class="ddt-tab-btn" onclick="switchTab('tab3')">? Habilidades</button>
-                <button class="ddt-tab-btn" onclick="switchTab('tab4')">?? Descri��o</button>
-                <button class="ddt-tab-btn" onclick="switchTab('tab5')">?? Configura��es</button>
+        <div class="save-indicator" id="saveIndicator">✓ Salvo automaticamente</div>
+
+        <!-- SISTEMA DE ABAS -->
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="switchTab('tab1')">⚔️ Principal</button>
+                <button class="tab-btn" onclick="switchTab('tab2')">📜 Inventário</button>
+                <button class="tab-btn" onclick="switchTab('tab3')">✨ Habilidades</button>
+                <button class="tab-btn" onclick="switchTab('tab4')">📖 Descrição</button>
+                <button class="tab-btn" onclick="switchTab('tab5')">⚙️ Configurações</button>
             </div>
 
             <!-- =========================================
-                 ABA 1: PRINCIPAL
-            ========================================= -->
-            <div class="ddt-tab-content active" id="tab1">
-                <div class="ddt-sheet-container">
+             ABA 1: PRINCIPAL
+        ========================================= -->
+            <div class="tab-content active" id="tab1">
+                <div class="sheet-container">
 
-                    <!-- Informa��es B�sicas -->
-                    <div class="ddt-info-grid">
-                        <div class="ddt-input-group">
-                            <label class="ddt-input-label">Nome do Personagem</label>
+                    <!-- Informações Básicas -->
+                    <div class="character-info-grid">
+                        <div class="input-group">
+                            <label class="input-label">Nome do Personagem</label>
                             <input type="text" id="nomePersonagem" oninput="autoSave()">
                         </div>
-                        <div class="ddt-input-group">
-                            <label class="ddt-input-label">Classe e N�vel</label>
+                        <div class="input-group">
+                            <label class="input-label">Classe e Nível</label>
                             <input type="text" id="classeNivel" placeholder="Ex: Guerreiro 5" oninput="autoSave()">
                         </div>
-                        <div class="ddt-input-group">
-                            <label class="ddt-input-label">Nome do Jogador</label>
+                        <div class="input-group">
+                            <label class="input-label">Nome do Jogador</label>
                             <input type="text" id="nomeJogador" oninput="autoSave()">
                         </div>
                     </div>
 
                     <!-- Segunda Linha -->
-                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 2fr; gap:15px; margin-bottom:20px;">
-                        <div class="ddt-input-group">
-                            <label class="ddt-input-label">Ra�a</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 2fr; gap: 15px; margin-bottom: 20px;">
+                        <div class="input-group">
+                            <label class="input-label">Raça</label>
                             <input type="text" id="raca" oninput="autoSave()">
                         </div>
-                        <div class="ddt-input-group">
-                            <label class="ddt-input-label">Antecedente</label>
+                        <div class="input-group">
+                            <label class="input-label">Antecedente</label>
                             <input type="text" id="antecedente" oninput="autoSave()">
                         </div>
-                        <div class="ddt-input-group">
-                            <label class="ddt-input-label">Tend�ncia</label>
+                        <div class="input-group">
+                            <label class="input-label">Tendência</label>
                             <input type="text" id="tendencia" oninput="autoSave()">
                         </div>
 
-                        <!-- Bonus Box: Inspira��o / Profici�ncia / Heroico -->
-                        <div class="ddt-bonus-box">
-                            <div class="ddt-bonus-item">
-                                <input type="checkbox" class="ddt-bonus-check" id="inspiracao" onchange="autoSave()">
-                                <label class="ddt-bonus-label" for="inspiracao">Inspira��o</label>
+                        <!-- Inspiração / Proficiência / Heroico -->
+                        <div class="character-bonus-box">
+                            <div class="character-bonus-item">
+                                <input type="checkbox" class="character-bonus-check" id="inspiracao"
+                                    onchange="autoSave()">
+                                <label class="character-bonus-label" for="inspiracao">Inspiração</label>
                             </div>
-                            <div class="ddt-bonus-item">
+                            <div class="character-bonus-item">
                                 <input type="number" class="bonus-value" id="bonusProficiencia" value="1"
                                     oninput="calculateModifiers(); autoSave()">
-                                <label class="ddt-bonus-label">Profici�ncia</label>
+                                <label class="character-bonus-label">Proficiência</label>
                             </div>
-                            <div class="ddt-bonus-item">
-                                <input type="checkbox" class="ddt-bonus-check" id="pontoHeroico" onchange="autoSave()">
-                                <label class="ddt-bonus-label" for="pontoHeroico">Ponto Hero�co</label>
+                            <div class="character-bonus-item">
+                                <input type="checkbox" class="character-bonus-check" id="pontoHeroico"
+                                    onchange="autoSave()">
+                                <label class="character-bonus-label" for="pontoHeroico">Ponto Heroíco</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="sheet-grid">
-
-                        <!-- Coluna Esquerda: Atributos + Per�cias -->
+                        <!-- Coluna Esquerda: Atributos + Perícias -->
                         <div>
-                            <div class="ddt-section">
+                            <div class="section">
                                 <div class="section-title">Atributos</div>
-                                <div class="ddt-stats-grid">
-
-                                    <div class="ddt-attribute-box">
-                                        <div class="ddt-attribute-label">For�a</div>
-                                        <input type="number" class="ddt-attribute-input" id="forca" value="10"
+                                <div class="character-stats-grid">
+                                    <div class="character-attribute-box">
+                                        <div class="character-attribute-label">Força</div>
+                                        <input type="number" class="character-attribute-input" id="forca" value="10"
                                             oninput="calculateModifiers(); autoSave()">
-                                        <input type="checkbox" class="ddt-proficiency-check" id="profForca"
+                                        <input type="checkbox" class="character-proficiency-check" id="profForca"
                                             onchange="calculateSavingThrows(); autoSave()">
-                                        <div class="ddt-attribute-modifier" id="forcaMod">+0</div>
-                                        <div class="ddt-saving-throw" id="forcaSave">+0</div>
+                                        <div class="character-attribute-modifier" id="forcaMod">+0</div>
+                                        <div class="character-saving-throw" id="forcaSave">+0</div>
                                     </div>
-
-                                    <div class="ddt-attribute-box">
-                                        <input type="checkbox" class="ddt-proficiency-check" id="profDestreza"
+                                    <div class="character-attribute-box">
+                                        <input type="checkbox" class="character-proficiency-check" id="profDestreza"
                                             onchange="calculateSavingThrows(); autoSave()">
-                                        <div class="ddt-attribute-label">Destreza</div>
-                                        <input type="number" class="ddt-attribute-input" id="destreza" value="10"
+                                        <div class="character-attribute-label">Destreza</div>
+                                        <input type="number" class="character-attribute-input" id="destreza" value="10"
                                             oninput="calculateModifiers(); autoSave()">
-                                        <div class="ddt-attribute-modifier" id="destrezaMod">+0</div>
-                                        <div class="ddt-saving-throw" id="destrezaSave">+0</div>
+                                        <div class="character-attribute-modifier" id="destrezaMod">+0</div>
+                                        <div class="character-saving-throw" id="destrezaSave">+0</div>
                                     </div>
-
-                                    <div class="ddt-attribute-box">
-                                        <input type="checkbox" class="ddt-proficiency-check" id="profConstituicao"
+                                    <div class="character-attribute-box">
+                                        <input type="checkbox" class="character-proficiency-check" id="profConstituicao"
                                             onchange="calculateSavingThrows(); autoSave()">
-                                        <div class="ddt-attribute-label">Constitui��o</div>
-                                        <input type="number" class="ddt-attribute-input" id="constituicao" value="10"
-                                            oninput="calculateModifiers(); autoSave()">
-                                        <div class="ddt-attribute-modifier" id="constituicaoMod">+0</div>
-                                        <div class="ddt-saving-throw" id="constituicaoSave">+0</div>
+                                        <div class="character-attribute-label">Constituição</div>
+                                        <input type="number" class="character-attribute-input" id="constituicao"
+                                            value="10" oninput="calculateModifiers(); autoSave()">
+                                        <div class="character-attribute-modifier" id="constituicaoMod">+0</div>
+                                        <div class="character-saving-throw" id="constituicaoSave">+0</div>
                                     </div>
-
-                                    <div class="ddt-attribute-box">
-                                        <input type="checkbox" class="ddt-proficiency-check" id="profInteligencia"
+                                    <div class="character-attribute-box">
+                                        <input type="checkbox" class="character-proficiency-check" id="profInteligencia"
                                             onchange="calculateSavingThrows(); autoSave()">
-                                        <div class="ddt-attribute-label">Intelig�ncia</div>
-                                        <input type="number" class="ddt-attribute-input" id="inteligencia" value="10"
-                                            oninput="calculateModifiers(); autoSave()">
-                                        <div class="ddt-attribute-modifier" id="inteligenciaMod">+0</div>
-                                        <div class="ddt-saving-throw" id="inteligenciaSave">+0</div>
+                                        <div class="character-attribute-label">Inteligência</div>
+                                        <input type="number" class="character-attribute-input" id="inteligencia"
+                                            value="10" oninput="calculateModifiers(); autoSave()">
+                                        <div class="character-attribute-modifier" id="inteligenciaMod">+0</div>
+                                        <div class="character-saving-throw" id="inteligenciaSave">+0</div>
                                     </div>
-
-                                    <div class="ddt-attribute-box">
-                                        <input type="checkbox" class="ddt-proficiency-check" id="profSabedoria"
+                                    <div class="character-attribute-box">
+                                        <input type="checkbox" class="character-proficiency-check" id="profSabedoria"
                                             onchange="calculateSavingThrows(); autoSave()">
-                                        <div class="ddt-attribute-label">Sabedoria</div>
-                                        <input type="number" class="ddt-attribute-input" id="sabedoria" value="10"
+                                        <div class="character-attribute-label">Sabedoria</div>
+                                        <input type="number" class="character-attribute-input" id="sabedoria" value="10"
                                             oninput="calculateModifiers(); autoSave()">
-                                        <div class="ddt-attribute-modifier" id="sabedoriaMod">+0</div>
-                                        <div class="ddt-saving-throw" id="sabedoriaSave">+0</div>
+                                        <div class="character-attribute-modifier" id="sabedoriaMod">+0</div>
+                                        <div class="character-saving-throw" id="sabedoriaSave">+0</div>
                                     </div>
-
-                                    <div class="ddt-attribute-box">
-                                        <input type="checkbox" class="ddt-proficiency-check" id="profCarisma"
+                                    <div class="character-attribute-box">
+                                        <input type="checkbox" class="character-proficiency-check" id="profCarisma"
                                             onchange="calculateSavingThrows(); autoSave()">
-                                        <div class="ddt-attribute-label">Carisma</div>
-                                        <input type="number" class="ddt-attribute-input" id="carisma" value="10"
+                                        <div class="character-attribute-label">Carisma</div>
+                                        <input type="number" class="character-attribute-input" id="carisma" value="10"
                                             oninput="calculateModifiers(); autoSave()">
-                                        <div class="ddt-attribute-modifier" id="carismaMod">+0</div>
-                                        <div class="ddt-saving-throw" id="carismaSave">+0</div>
+                                        <div class="character-attribute-modifier" id="carismaMod">+0</div>
+                                        <div class="character-saving-throw" id="carismaSave">+0</div>
                                     </div>
-
                                 </div>
                             </div>
 
-                            <!-- Per�cias -->
-                            <div class="ddt-section">
-                                <div class="section-title">Per�cias</div>
-                                <div class="ddt-skills-grid" id="skillsList"></div>
-                                <div class="sheet-grid" style="grid-template-columns:1fr 1fr;">
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Percep��o Passiva</label>
-                                        <input type="text" id="percepcaoPassiva">
+                            <!-- Perícias -->
+                            <div class="section">
+                                <div class="section-title">Perícias</div>
+                                <div class="character-skills-grid" id="skillsList"></div>
+                                <div class="sheet-grid" style="grid-template-columns: 1fr 1fr;">
+                                    <div>
+                                        <div class="input-group">
+                                            <label class="input-label">Percepção Passiva</label>
+                                            <input type="text" id="percepcaoPassiva">
+                                        </div>
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Intui��o Passiva</label>
-                                        <input type="text" id="intuicaoPassiva">
+                                    <div>
+                                        <div class="input-group">
+                                            <label class="input-label">Intuição Passiva</label>
+                                            <input type="text" id="intuicaoPassiva">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -213,12 +211,16 @@
 
                         <!-- Coluna Direita: Combate -->
                         <div>
-                            <div class="ddt-section">
+                            <div class="section">
                                 <div class="section-title">Combate</div>
 
-                                <!-- SVG Gradients embutidos -->
+                                <!-- ═══════════════════════════════════════
+                                 WIDGETS HEROICOS: CA · VIDA · INICIATIVA
+                                 SVG Gradients embutidos
+                            ═══════════════════════════════════════ -->
                                 <svg width="0" height="0" style="position:absolute;pointer-events:none;">
                                     <defs>
+                                        <!-- Escudo: Azul aço -->
                                         <linearGradient id="gradCA" x1="0%" y1="0%" x2="0%" y2="100%">
                                             <stop offset="0%" stop-color="#7eb8f7" />
                                             <stop offset="100%" stop-color="#1a3d7a" />
@@ -227,18 +229,22 @@
                                             <stop offset="0%" stop-color="#5a9ce0" stop-opacity="0.4" />
                                             <stop offset="100%" stop-color="#0d2455" stop-opacity="0.1" />
                                         </linearGradient>
+                                        <!-- Coração: Carmesim -->
                                         <linearGradient id="gradVida" x1="20%" y1="0%" x2="80%" y2="100%">
                                             <stop offset="0%" stop-color="#f07090" />
                                             <stop offset="100%" stop-color="#6e0a18" />
                                         </linearGradient>
+                                        <!-- Coração Máximo: Azul -->
                                         <linearGradient id="gradVidaMax" x1="20%" y1="0%" x2="80%" y2="100%">
                                             <stop offset="0%" stop-color="#70b0f0" />
                                             <stop offset="100%" stop-color="#0a3a6e" />
                                         </linearGradient>
+                                        <!-- Coração Temporário: Dourado -->
                                         <linearGradient id="gradVidaTemp" x1="20%" y1="0%" x2="80%" y2="100%">
                                             <stop offset="0%" stop-color="#f5d070" />
                                             <stop offset="100%" stop-color="#8a5800" />
                                         </linearGradient>
+                                        <!-- Raio: Dourado -->
                                         <linearGradient id="gradInit" x1="30%" y1="0%" x2="70%" y2="100%">
                                             <stop offset="0%" stop-color="#f5e070" />
                                             <stop offset="100%" stop-color="#8a5800" />
@@ -250,152 +256,184 @@
                                     </defs>
                                 </svg>
 
-                                <!-- Linha 1: Vida m�x + Vida atual + Vida temp -->
-                                <div class="ddt-combat-row">
+                                <!-- PRIMEIRA LINHA: Vida (grande ao centro) + Máximo (pequeno direita) + Temporário (pequeno direita) -->
+                                <div class="character-combat-row">
 
-                                    <!-- PV M�ximo � cora��o pequeno esquerdo -->
-                                    <div class="ddt-combat-stat ddt-combat-stat--small-heart">
-                                        <div class="ddt-combat-shape ddt-shape-vida-max">
+                                    <!-- ── VIDA MÁXIMA — CORAÇÃO PEQUENO (esquerda do principal) ── -->
+                                    <div class="character-combat-stat small-heart">
+                                        <div class="character-combat-shape shape-vida-max">
                                             <svg class="shape-bg" viewBox="0 0 100 95"
                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M 50,85 C 50,85 10,55 10,30 C 10,12 22,2 38,2 C 46,2 54,6 50,14 C 46,6 54,2 62,2 C 78,2 90,12 90,30 C 90,55 50,85 50,85 Z"
-                                                    fill="url(#gradVidaMax)" stroke="#a8d4ff" stroke-width="1.2"
-                                                    stroke-opacity="0.45" />
+                                                <!-- Coração pequeno -->
+                                                <path d="M 50,85
+                                                     C 50,85 10,55 10,30
+                                                     C 10,12 22,2 38,2
+                                                     C 46,2 54,6 50,14
+                                                     C 46,6 54,2 62,2
+                                                     C 78,2 90,12 90,30
+                                                     C 90,55 50,85 50,85 Z" fill="url(#gradVidaMax)" stroke="#a8d4ff"
+                                                    stroke-width="1.2" stroke-opacity="0.45" />
                                             </svg>
                                             <div class="shape-inner">
-                                                <input type="number" class="ddt-hero-main-val ddt-val--small"
-                                                    id="pvTotais" value="0" style="font-size:1.2em;width:50px;"
-                                                    oninput="autoSave()">
+                                                <input type="number" class="hero-main-val small-val" id="pvTotais"
+                                                    value="0" style="font-size:1.2em; width:50px;" oninput="autoSave()">
                                             </div>
                                         </div>
-                                        <div class="ddt-combat-label ddt-combat-label--small">PV M�x</div>
+                                        <div class="character-combat-label small-label">PV Máx</div>
                                     </div>
 
-                                    <!-- PV Atual � cora��o grande central -->
-                                    <div class="ddt-combat-stat ddt-combat-stat--main-heart">
-                                        <div class="ddt-combat-shape ddt-shape-vida">
+                                    <!-- ── VIDA ATUAL — CORAÇÃO GRANDE (centro) ── -->
+                                    <div class="character-combat-stat main-heart">
+                                        <div class="character-combat-shape shape-vida">
                                             <svg class="shape-bg" viewBox="0 0 138 130"
                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M 69,118 C 69,118 8,76 8,40 C 8,18 24,4 44,4 C 55,4 65,9 69,19 C 73,9 83,4 94,4 C 114,4 130,18 130,40 C 130,76 69,118 69,118 Z"
-                                                    fill="url(#gradVida)" stroke="#ffb0b0" stroke-width="1.5"
-                                                    stroke-opacity="0.45" />
+                                                <!-- Coração exterior -->
+                                                <path d="M 69,118
+                                                     C 69,118 8,76 8,40
+                                                     C 8,18 24,4 44,4
+                                                     C 55,4 65,9 69,19
+                                                     C 73,9 83,4 94,4
+                                                     C 114,4 130,18 130,40
+                                                     C 130,76 69,118 69,118 Z" fill="url(#gradVida)" stroke="#ffb0b0"
+                                                    stroke-width="1.5" stroke-opacity="0.45" />
+                                                <!-- Brilho interno superior esquerdo -->
                                                 <ellipse cx="45" cy="28" rx="14" ry="9" fill="white" fill-opacity="0.12"
                                                     transform="rotate(-25,45,28)" />
                                             </svg>
                                             <div class="shape-inner">
-                                                <input type="number" class="ddt-combat-value" id="pvAtuais" value="0"
-                                                    style="font-size:2em;width:80px;" oninput="autoSave()">
+                                                <!-- PV Atual (grande) -->
+                                                <input type="number" class="character-combat-value" id="pvAtuais"
+                                                    value="0" style="font-size:2em; width:80px;" oninput="autoSave()">
                                             </div>
                                         </div>
-                                        <div class="ddt-combat-label">Vida Atual</div>
+                                        <div class="character-combat-label">Vida Atual</div>
                                     </div>
 
-                                    <!-- PV Tempor�rio � cora��o pequeno direito -->
-                                    <div class="ddt-combat-stat ddt-combat-stat--small-heart">
-                                        <div class="ddt-combat-shape ddt-shape-vida-temp">
+                                    <!-- ── VIDA TEMPORÁRIA — CORAÇÃO PEQUENO (direita) ── -->
+                                    <div class="character-combat-stat small-heart">
+                                        <div class="character-combat-shape shape-vida-temp">
                                             <svg class="shape-bg" viewBox="0 0 100 95"
                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M 50,85 C 50,85 10,55 10,30 C 10,12 22,2 38,2 C 46,2 54,6 50,14 C 46,6 54,2 62,2 C 78,2 90,12 90,30 C 90,55 50,85 50,85 Z"
-                                                    fill="url(#gradVidaTemp)" stroke="#ffe890" stroke-width="1.2"
-                                                    stroke-opacity="0.45" />
+                                                <!-- Coração pequeno -->
+                                                <path d="M 50,85
+                                                     C 50,85 10,55 10,30
+                                                     C 10,12 22,2 38,2
+                                                     C 46,2 54,6 50,14
+                                                     C 46,6 54,2 62,2
+                                                     C 78,2 90,12 90,30
+                                                     C 90,55 50,85 50,85 Z" fill="url(#gradVidaTemp)" stroke="#ffe890"
+                                                    stroke-width="1.2" stroke-opacity="0.45" />
                                             </svg>
                                             <div class="shape-inner">
-                                                <input type="number" class="ddt-combat-value ddt-val--small" id="pvTemp"
-                                                    value="0" style="font-size:1.2em;width:50px;" oninput="autoSave()">
+                                                <input type="number" class="character-combat-value small-val"
+                                                    id="pvTemp" value="0" style="font-size:1.2em; width:50px;"
+                                                    oninput="autoSave()">
                                             </div>
                                         </div>
-                                        <div class="ddt-combat-label ddt-combat-label--small">PV Temp</div>
+                                        <div class="character-combat-label small-label">PV Temp</div>
                                     </div>
 
-                                </div>
+                                </div><!-- /combat-hero-row -->
 
-                                <!-- Linha 2: CA + Iniciativa -->
-                                <div class="ddt-combat-row">
+                                <!-- SEGUNDA LINHA: CA e Iniciativa -->
+                                <div class="character-combat-row">
 
-                                    <!-- CA � Escudo -->
-                                    <div class="ddt-combat-stat">
-                                        <div class="ddt-combat-shape ddt-shape-ca">
+                                    <!-- ── CA — ESCUDO ── -->
+                                    <div class="character-combat-stat">
+                                        <div class="character-combat-shape shape-ca">
                                             <svg class="shape-bg" viewBox="0 0 108 122"
                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <!-- Escudo principal -->
                                                 <path
                                                     d="M 54,4 L 102,22 L 102,60 C 102,90 78,112 54,118 C 30,112 6,90 6,60 L 6,22 Z"
                                                     fill="url(#gradCA)" stroke="#a8d4ff" stroke-width="1.5"
                                                     stroke-opacity="0.5" />
+                                                <!-- Detalhe interno -->
                                                 <path
                                                     d="M 54,12 L 95,27 L 95,60 C 95,86 74,106 54,111 C 34,106 13,86 13,60 L 13,27 Z"
                                                     fill="url(#gradCAInner)" stroke="#ffffff" stroke-width="1"
                                                     stroke-opacity="0.25" />
+                                                <!-- Divisória horizontal decorativa -->
                                                 <line x1="22" y1="52" x2="86" y2="52" stroke="#ffffff"
                                                     stroke-width="0.8" stroke-opacity="0.2" />
+                                                <!-- Cruz central decorativa -->
                                                 <line x1="54" y1="14" x2="54" y2="108" stroke="#ffffff"
                                                     stroke-width="0.6" stroke-opacity="0.12" />
                                             </svg>
                                             <div class="shape-inner">
-                                                <input type="number" class="ddt-combat-value" id="ca" value="10"
-                                                    style="font-size:2.1em;width:72px;" oninput="autoSave()">
+                                                <input type="number" class="character-combat-value" id="ca" value="10"
+                                                    style="font-size:2.1em; width:72px;" oninput="autoSave()">
                                             </div>
                                         </div>
-                                        <div class="ddt-combat-label">Classe de Armadura</div>
+                                        <div class="character-combat-label">Classe de Armadura</div>
                                     </div>
 
-                                    <!-- Iniciativa � Raio -->
-                                    <div class="ddt-combat-stat">
-                                        <div class="ddt-combat-shape ddt-shape-init">
+                                    <!-- ── INICIATIVA — RAIO ── -->
+                                    <div class="character-combat-stat">
+                                        <div class="character-combat-shape shape-init">
                                             <svg class="shape-bg" viewBox="0 0 86 122"
                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M 60,4 L 18,62 L 42,62 L 26,118 L 68,56 L 44,56 Z"
-                                                    fill="url(#gradInit)" stroke="#ffe890" stroke-width="1.5"
+                                                <!-- Raio exterior -->
+                                                <path d="M 60,4
+                                                     L 18,62
+                                                     L 42,62
+                                                     L 26,118
+                                                     L 68,56
+                                                     L 44,56
+                                                     Z" fill="url(#gradInit)" stroke="#ffe890" stroke-width="1.5"
                                                     stroke-opacity="0.55" />
-                                                <path d="M 56,12 L 24,62 L 44,62 L 30,108 L 62,58 L 42,58 Z"
-                                                    fill="url(#gradInitInner)" stroke="#ffffff" stroke-width="0.8"
+                                                <!-- Brilho interno -->
+                                                <path d="M 56,12
+                                                     L 24,62
+                                                     L 44,62
+                                                     L 30,108
+                                                     L 62,58
+                                                     L 42,58
+                                                     Z" fill="url(#gradInitInner)" stroke="#ffffff" stroke-width="0.8"
                                                     stroke-opacity="0.2" />
                                             </svg>
                                             <div class="shape-inner">
-                                                <input type="number" class="ddt-combat-value" id="iniciativa" value="0"
-                                                    style="font-size:2em;width:60px;margin-top:-4px;"
+                                                <input type="number" class="character-combat-value" id="iniciativa"
+                                                    value="0" style="font-size:2em; width:60px; margin-top:-4px;"
                                                     oninput="autoSave()">
                                             </div>
                                         </div>
-                                        <div class="ddt-combat-label">Iniciativa</div>
+                                        <div class="character-combat-label">Iniciativa</div>
                                     </div>
 
-                                </div>
+                                </div><!-- /combat-hero-row -->
 
-                                <!-- Deslocamento -->
+                                <!-- ── Demais stats de combate ── -->
                                 <div class="section-title">Deslocamento</div>
-                                <div class="ddt-displacement-grid">
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Caminhada</label>
+                                <div class="character-displacement-grid">
+                                    <div class="input-group">
+                                        <label class="input-label">Caminhada</label>
                                         <input type="text" id="deslocAndar" value="30" oninput="autoSave()">
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Nadar</label>
+                                    <div class="input-group">
+                                        <label class="input-label">Nadar</label>
                                         <input type="text" id="deslocNadar" value="15" oninput="autoSave()">
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Voar</label>
+                                    <div class="input-group">
+                                        <label class="input-label">Voar</label>
                                         <input type="text" id="deslocVoar" value="-" oninput="autoSave()">
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Escalar</label>
+                                    <div class="input-group">
+                                        <label class="input-label">Escalar</label>
                                         <input type="text" id="deslocEscalar" value="15" oninput="autoSave()">
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Salto</label>
+                                    <div class="input-group">
+                                        <label class="input-label">Salto</label>
                                         <input type="text" id="salto" placeholder="1,5" oninput="autoSave()">
                                     </div>
                                 </div>
 
                                 <!-- Idiomas -->
-                                <div class="ddt-section">
-                                    <div class="section-title">Idiomas e Profici�ncias</div>
+                                <div class="section">
+                                    <div class="section-title">Idiomas e Proficiências</div>
                                     <textarea id="idiomas" oninput="autoSave()"
-                                        placeholder="Liste idiomas e profici�ncias..."></textarea>
+                                        placeholder="Liste idiomas e proficiências..."></textarea>
                                 </div>
-
                             </div>
                         </div>
                     </div><!-- /sheet-grid -->
@@ -403,564 +441,589 @@
             </div><!-- /tab1 -->
 
             <!-- =========================================
-                 ABA 2: INVENT�RIO
-            ========================================= -->
-            <div class="ddt-tab-content" id="tab2">
-                <div class="ddt-sheet-container">
-
-                    <div class="ddt-section">
+             ABA 2: INVENTÁRIO
+        ========================================= -->
+            <div class="tab-content" id="tab2">
+                <div class="sheet-container">
+                    <div class="section">
                         <div class="section-title">Equipamento</div>
-                        <div class="ddt-currency-grid">
-                            <div class="ddt-currency-item">
-                                <div class="ddt-input-group">
-                                    <label class="ddt-input-label"><span class="ddt-currency-icon cobre"></span> PC</label>
+                        <div class="character-currency-grid">
+                            <div class="character-currency-item">
+                                <div class="input-group">
+                                    <label class="input-label"><span
+                                            class="character-currency-icon cobre"></span>PC</label>
                                     <input type="number" id="pc" value="0" oninput="autoSave()">
                                 </div>
                             </div>
-                            <div class="ddt-currency-item">
-                                <div class="ddt-input-group">
-                                    <label class="ddt-input-label"><span class="ddt-currency-icon prata"></span> PP</label>
+                            <div class="character-currency-item">
+                                <div class="input-group">
+                                    <label class="input-label"><span
+                                            class="character-currency-icon prata"></span>PP</label>
                                     <input type="number" id="pe" value="0" oninput="autoSave()">
                                 </div>
                             </div>
-                            <div class="ddt-currency-item">
-                                <div class="ddt-input-group">
-                                    <label class="ddt-input-label"><span class="ddt-currency-icon electrum"></span>
-                                        PE</label>
+                            <div class="character-currency-item">
+                                <div class="input-group">
+                                    <label class="input-label"><span
+                                            class="character-currency-icon electrum"></span>PE</label>
                                     <input type="number" id="pl" value="0" oninput="autoSave()">
                                 </div>
                             </div>
-                            <div class="ddt-currency-item">
-                                <div class="ddt-input-group">
-                                    <label class="ddt-input-label"><span class="ddt-currency-icon ouro"></span> PO</label>
+                            <div class="character-currency-item">
+                                <div class="input-group">
+                                    <label class="input-label"><span
+                                            class="character-currency-icon ouro"></span>PO</label>
                                     <input type="number" id="po" value="0" oninput="autoSave()">
                                 </div>
                             </div>
-                            <div class="ddt-currency-item">
-                                <div class="ddt-input-group">
-                                    <label class="ddt-input-label"><span class="ddt-currency-icon platina"></span>
-                                        PL</label>
+                            <div class="character-currency-item">
+                                <div class="input-group">
+                                    <label class="input-label"><span
+                                            class="character-currency-icon platina"></span>PL</label>
                                     <input type="number" id="pp" value="0" oninput="autoSave()">
                                 </div>
                             </div>
                         </div>
-                        <div class="ddt-inventory-list" id="inventoryList"></div>
-                        <button class="ddt-btn btn-secondary" onclick="addInventoryItem()"
-                            style="width:100%;margin-top:10px;">+ Adicionar Item</button>
+                        <div class="character-inventory-list" id="inventoryList"></div>
+                        <button class="btn btn-secondary" onclick="addInventoryItem()"
+                            style="width: 100%; margin-top: 10px;">+ Adicionar Item</button>
                     </div>
-
-                    <div class="ddt-section">
+                    <div class="section">
                         <div class="section-title">Tesouro</div>
                         <textarea id="tesouro" oninput="autoSave()" placeholder="Tesouros valiosos..."></textarea>
                     </div>
-
-                    <div class="ddt-section">
-                        <div class="section-title">Itens M�gicos</div>
-                        <div class="ddt-magic-items-list" id="magicItemsList"></div>
-                        <button class="ddt-btn btn-secondary" onclick="addMagicItem()" style="width:100%;margin-top:10px;">+
-                            Adicionar Item M�gico</button>
+                    <div class="section">
+                        <div class="section-title">Itens Mágicos</div>
+                        <div class="character-magic-items-list" id="magicItemsList"></div>
+                        <button class="btn btn-secondary" onclick="addMagicItem()"
+                            style="width: 100%; margin-top: 10px;">+ Adicionar Item Mágico</button>
                     </div>
-
                 </div>
-            </div><!-- /tab2 -->
+            </div>
 
             <!-- =========================================
-                 ABA 3: HABILIDADES
-            ========================================= -->
-            <div class="ddt-tab-content" id="tab3">
-                <div class="ddt-sheet-container">
-
-                    <div class="ddt-section">
+             ABA 3: HABILIDADES
+        ========================================= -->
+            <div class="tab-content" id="tab3">
+                <div class="sheet-container">
+                    <div class="section">
                         <div class="section-title">Ataques</div>
-                        <div class="ddt-attack-list" id="attackList"></div>
-                        <button class="ddt-btn btn-secondary" onclick="addAttack()" style="width:100%;margin-top:10px;">+
+                        <div class="character-attack-list" id="attackList"></div>
+                        <button class="btn btn-secondary" onclick="addAttack()" style="width: 100%; margin-top: 10px;">+
                             Adicionar Ataque</button>
                     </div>
-
-                    <div class="ddt-section">
-                        <div class="section-title">Habilidades e Caracter�sticas</div>
-                        <div class="ddt-abilities-list" id="abilitiesList"></div>
-                        <button class="ddt-btn btn-secondary" onclick="addAbility()" style="width:100%;margin-top:10px;">+
-                            Adicionar Habilidade</button>
+                    <div class="section">
+                        <div class="section-title">Habilidades e Características</div>
+                        <div class="character-abilities-list" id="abilitiesList"></div>
+                        <button class="btn btn-secondary" onclick="addAbility()"
+                            style="width: 100%; margin-top: 10px;">+ Adicionar Habilidade</button>
                     </div>
-
-                    <div class="ddt-section">
+                    <div class="section">
                         <div class="section-title">Magias</div>
-                        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:20px;">
-                            <div class="ddt-input-group">
-                                <label class="ddt-input-label">Habilidade de Conjura��o</label>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;">
+                            <div class="input-group">
+                                <label class="input-label">Habilidade de Conjuração</label>
                                 <select id="habilidadeMagia" onchange="updateMagicAtribute(this.value); autoSave()">
                                     <option value="">-</option>
-                                    <option value="forca">FOR�A</option>
+                                    <option value="forca">FORÇA</option>
                                     <option value="destreza">DESTREZA</option>
-                                    <option value="constituicao">CONSTITUI��O</option>
-                                    <option value="inteligencia">INTELIG�NCIA</option>
+                                    <option value="constituicao">CONSTITUIÇÃO</option>
+                                    <option value="inteligencia">INTELIGÊNCIA</option>
                                     <option value="sabedoria">SABEDORIA</option>
                                     <option value="carisma">CARISMA</option>
                                 </select>
                             </div>
-                            <div class="ddt-input-group">
-                                <label class="ddt-input-label">B�nus Extra</label>
+                            <div class="input-group">
+                                <label class="input-label">Bônus Extra</label>
                                 <input type="number" id="extraBonusMagia" value="0"
                                     oninput="updateMagicAtribute(document.getElementById('habilidadeMagia').value); autoSave()">
                             </div>
-                            <div class="ddt-input-group">
-                                <label class="ddt-input-label">CD de Magia</label>
+                            <div class="input-group">
+                                <label class="input-label">CD de Magia</label>
                                 <input type="number" id="cdMagia" value="8" readonly
-                                    style="background:var(--ddt-bg-statbox-proficient);font-weight:700;color:var(--ddt-text-bright);">
+                                    style="background: var(--cor12); font-weight: 700; color: var(--cor19);">
                             </div>
-                            <div class="ddt-input-group">
-                                <label class="ddt-input-label">B�nus de Ataque</label>
+                            <div class="input-group">
+                                <label class="input-label">Bônus de Ataque</label>
                                 <input type="text" id="bonusMagia" value="+0" readonly
-                                    style="background:var(--ddt-bg-statbox-proficient);font-weight:700;color:var(--ddt-text-bright);">
+                                    style="background: var(--cor12); font-weight: 700; color: var(--cor19);">
                             </div>
                         </div>
 
                         <!-- Truques -->
-                        <div class="ddt-cantrip-section">
-                            <div class="ddt-cantrip-header" onclick="toggleSpellLevel('truques')">
-                                <div class="ddt-cantrip-title">Truques (Cantrips)</div>
-                                <button class="ddt-cantrip-expand-btn" id="expandTruques">?</button>
+                        <div class="character-character-spell-level-section">
+                            <div class="character-character-spell-level-header" onclick="toggleSpellLevel('truques')">
+                                <div class="character-character-spell-level-title">Truéques (Cantrips)</div>
+                                <button class="character-character-spell-expand-btn" id="expandTruques">▼</button>
                             </div>
-                            <div class="ddt-cantrip-content" id="spellsTruques">
-                                <div class="ddt-cantrip-list" id="spellListTruques"></div>
-                                <button class="ddt-btn btn-secondary" onclick="addSpell('truques')"
-                                    style="width:100%;margin-top:10px;">+ Adicionar Truque</button>
+                            <div class="character-character-spell-level-content" id="spellsTruques">
+                                <div class="character-character-spell-list" id="spellListTruques"></div>
+                                <button class="btn btn-secondary" onclick="addSpell('truques')"
+                                    style="width: 100%; margin-top: 10px;">+ Adicionar Truque</button>
                             </div>
                         </div>
 
-                        <!-- N�veis 1�9 -->
-                        <div class="ddt-spell-slots-grid">
-
-                            <!-- N�vel 1 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel1')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 1</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot1Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
+                        <!-- Níveis 1–9 -->
+                        <div class="character-character-spell-slots-grid">
+                            <!-- Nível 1 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel1')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 1</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot1Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot1Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
-                                                onclick="event.stopPropagation()">
-                                        </div>
-                                    </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel1">?</button>
-                                </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel1">
-                                    <div class="ddt-spell-list" id="spellListNivel1"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel1')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
-                                </div>
-                            </div>
-
-                            <!-- N�vel 2 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel2')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 2</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot2Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
-                                                onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot2Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot1Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
                                         </div>
                                     </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel2">?</button>
+                                    <button class="character-spell-expand-btn" id="expandNivel1">▼</button>
                                 </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel2">
-                                    <div class="ddt-spell-list" id="spellListNivel2"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel2')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
+                                <div class="character-spell-level-content" id="spellsNivel1">
+                                    <div class="character-spell-list" id="spellListNivel1"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel1')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
                                 </div>
                             </div>
-
-                            <!-- N�vel 3 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel3')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 3</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot3Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
+                            <!-- Nível 2 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel2')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 2</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot2Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot3Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot2Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
                                         </div>
                                     </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel3">?</button>
+                                    <button class="character-spell-expand-btn" id="expandNivel2">▼</button>
                                 </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel3">
-                                    <div class="ddt-spell-list" id="spellListNivel3"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel3')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
+                                <div class="character-spell-level-content" id="spellsNivel2">
+                                    <div class="character-spell-list" id="spellListNivel2"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel2')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
                                 </div>
                             </div>
-
-                            <!-- N�vel 4 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel4')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 4</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot4Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
+                            <!-- Nível 3 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel3')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 3</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot3Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot4Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot3Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
                                         </div>
                                     </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel4">?</button>
+                                    <button class="character-spell-expand-btn" id="expandNivel3">▼</button>
                                 </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel4">
-                                    <div class="ddt-spell-list" id="spellListNivel4"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel4')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
+                                <div class="character-spell-level-content" id="spellsNivel3">
+                                    <div class="character-spell-list" id="spellListNivel3"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel3')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
                                 </div>
                             </div>
-
-                            <!-- N�vel 5 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel5')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 5</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot5Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
+                            <!-- Nível 4 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel4')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 4</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot4Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot5Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot4Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
                                         </div>
                                     </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel5">?</button>
+                                    <button class="character-spell-expand-btn" id="expandNivel4">▼</button>
                                 </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel5">
-                                    <div class="ddt-spell-list" id="spellListNivel5"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel5')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
+                                <div class="character-spell-level-content" id="spellsNivel4">
+                                    <div class="character-spell-list" id="spellListNivel4"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel4')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
                                 </div>
                             </div>
-
-                            <!-- N�vel 6 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel6')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 6</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot6Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
+                            <!-- Nível 5 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel5')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 5</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot5Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot6Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot5Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
                                         </div>
                                     </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel6">?</button>
+                                    <button class="character-spell-expand-btn" id="expandNivel5">▼</button>
                                 </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel6">
-                                    <div class="ddt-spell-list" id="spellListNivel6"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel6')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
+                                <div class="character-spell-level-content" id="spellsNivel5">
+                                    <div class="character-spell-list" id="spellListNivel5"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel5')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
                                 </div>
                             </div>
-
-                            <!-- N�vel 7 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel7')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 7</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot7Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
+                            <!-- Nível 6 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel6')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 6</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot6Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot7Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot6Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
                                         </div>
                                     </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel7">?</button>
+                                    <button class="character-spell-expand-btn" id="expandNivel6">▼</button>
                                 </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel7">
-                                    <div class="ddt-spell-list" id="spellListNivel7"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel7')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
+                                <div class="character-spell-level-content" id="spellsNivel6">
+                                    <div class="character-spell-list" id="spellListNivel6"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel6')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
                                 </div>
                             </div>
-
-                            <!-- N�vel 8 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel8')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 8</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot8Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
+                            <!-- Nível 7 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel7')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 7</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot7Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot8Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot7Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
                                         </div>
                                     </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel8">?</button>
+                                    <button class="character-spell-expand-btn" id="expandNivel7">▼</button>
                                 </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel8">
-                                    <div class="ddt-spell-list" id="spellListNivel8"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel8')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
+                                <div class="character-spell-level-content" id="spellsNivel7">
+                                    <div class="character-spell-list" id="spellListNivel7"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel7')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
                                 </div>
                             </div>
-
-                            <!-- N�vel 9 -->
-                            <div class="ddt-spell-level-section">
-                                <div class="ddt-spell-level-header" onclick="toggleSpellLevel('nivel9')">
-                                    <div class="ddt-spell-level-info">
-                                        <span class="ddt-spell-level-title">N�vel 9</span>
-                                        <div class="ddt-spell-slots">
-                                            <input type="number" class="ddt-slot-current" id="slot9Current" value="0"
-                                                min="0" oninput="autoSave();event.stopPropagation();"
+                            <!-- Nível 8 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel8')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 8</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot8Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
-                                            <span class="ddt-slot-separator">/</span>
-                                            <input type="number" class="ddt-slot-max" id="slot9Max" value="0" min="0"
-                                                oninput="autoSave();event.stopPropagation();"
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot8Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
                                                 onclick="event.stopPropagation()">
                                         </div>
                                     </div>
-                                    <button class="ddt-spell-expand-btn" id="expandNivel9">?</button>
+                                    <button class="character-spell-expand-btn" id="expandNivel8">▼</button>
                                 </div>
-                                <div class="ddt-spell-level-content" id="spellsNivel9">
-                                    <div class="ddt-spell-list" id="spellListNivel9"></div>
-                                    <button class="ddt-btn btn-secondary" onclick="addSpell('nivel9')"
-                                        style="width:100%;margin-top:10px;">+ Adicionar Magia</button>
+                                <div class="character-spell-level-content" id="spellsNivel8">
+                                    <div class="character-spell-list" id="spellListNivel8"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel8')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
                                 </div>
                             </div>
-
-                        </div><!-- /ddt-spell-slots-grid -->
+                            <!-- Nível 9 -->
+                            <div class="character-spell-level-section">
+                                <div class="character-spell-level-header" onclick="toggleSpellLevel('nivel9')">
+                                    <div class="character-spell-level-info">
+                                        <span class="character-spell-level-title">Nível 9</span>
+                                        <div class="character-spell-slots">
+                                            <input type="number" class="character-slot-current" id="slot9Current"
+                                                value="0" min="0" oninput="autoSave(); event.stopPropagation();"
+                                                onclick="event.stopPropagation()">
+                                            <span class="character-slot-separator">/</span>
+                                            <input type="number" class="character-slot-max" id="slot9Max" value="0"
+                                                min="0" oninput="autoSave(); event.stopPropagation();"
+                                                onclick="event.stopPropagation()">
+                                        </div>
+                                    </div>
+                                    <button class="character-spell-expand-btn" id="expandNivel9">▼</button>
+                                </div>
+                                <div class="character-spell-level-content" id="spellsNivel9">
+                                    <div class="character-spell-list" id="spellListNivel9"></div>
+                                    <button class="btn btn-secondary" onclick="addSpell('nivel9')"
+                                        style="width: 100%; margin-top: 10px;">+ Adicionar Magia</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-            </div><!-- /tab3 -->
+            </div>
 
             <!-- =========================================
-                 ABA 4: DESCRI��O
-            ========================================= -->
-            <div class="ddt-tab-content" id="tab4">
-                <div class="ddt-sheet-container">
-                    <div class="ddt-section">
+             ABA 4: DESCRIÇÃO
+        ========================================= -->
+            <div class="tab-content" id="tab4">
+                <div class="sheet-container">
+                    <div class="section">
                         <div class="sheet-grid-details">
-
-                            <!-- Imagem -->
                             <div>
                                 <div class="section-title">Imagem do Personagem</div>
-                                <div class="ddt-image-container">
-                                    <div class="ddt-image-preview" id="imagePreview">
+                                <div class="character-image-container">
+                                    <div class="image-preview" id="imagePreview">
                                         <img id="characterImage" src="" alt="Imagem do personagem"
-                                            style="display:none;">
-                                        <div class="ddt-image-placeholder" id="imagePlaceholder">
-                                            <span class="ddt-placeholder-icon">???</span>
-                                            <span class="ddt-placeholder-text">Clique para adicionar imagem</span>
+                                            style="display: none;">
+                                        <div class="image-placeholder" id="imagePlaceholder">
+                                            <span class="placeholder-icon">🖼️</span>
+                                            <span class="placeholder-text">Clique para adicionar imagem</span>
                                         </div>
                                     </div>
-                                    <input type="file" id="imageUpload" accept="image/*" style="display:none;">
-                                    <div class="ddt-image-controls">
-                                        <button class="ddt-btn btn-secondary"
-                                            onclick="document.getElementById('imageUpload').click()">?? Escolher
+                                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                                    <div class="image-controls">
+                                        <button class="btn btn-secondary"
+                                            onclick="document.getElementById('imageUpload').click()">📤 Escolher
                                             Imagem</button>
-                                        <button class="ddt-btn btn-danger" onclick="removeCharacterImage()"
-                                            id="removeImageBtn" style="display:none;">??? Remover</button>
+                                        <button class="btn btn-danger" onclick="removeCharacterImage()"
+                                            id="removeImageBtn" style="display: none;">🗑️ Remover</button>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Detalhes -->
                             <div>
                                 <div class="section-title">Detalhes</div>
                                 <div class="combat-grid">
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Idade</label>
+                                    <div class="input-group">
+                                        <label class="input-label">Idade</label>
                                         <input type="text" id="idade" placeholder="25 anos, Adulto"
                                             oninput="autoSave()">
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Altura</label>
+                                    <div class="input-group">
+                                        <label class="input-label">Altura</label>
                                         <input type="text" id="altura" placeholder="185cm" oninput="autoSave()">
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Peso</label>
+                                    <div class="input-group">
+                                        <label class="input-label">Peso</label>
                                         <input type="text" id="peso" placeholder="75kg" oninput="autoSave()">
                                     </div>
                                 </div>
-                                <div class="ddt-input-group">
-                                    <label class="ddt-input-label">Caracter�sticas</label>
-                                    <textarea id="caracteristicas" oninput="autoSave()" style="min-height:100px;"
+                                <div class="input-group">
+                                    <label class="input-label">Características</label>
+                                    <textarea id="caracteristicas" oninput="autoSave()" style="min-height: 100px;"
                                         placeholder="Calvo, nariz grande, olhos azuis..."></textarea>
                                 </div>
-                                <div class="combat-grid" style="grid-template-columns:1fr 1fr;">
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Personalidade</label>
-                                        <textarea id="personalidade" oninput="autoSave()" style="min-height:80px;"
-                                            placeholder="Tra�os de personalidade..."></textarea>
+                                <div class="combat-grid" style="grid-template-columns: 1fr 1fr;">
+                                    <div class="input-group">
+                                        <label class="input-label">Personalidade</label>
+                                        <textarea id="personalidade" oninput="autoSave()" style="min-height: 80px;"
+                                            placeholder="Traços de personalidade..."></textarea>
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Ideais</label>
-                                        <textarea id="ideais" oninput="autoSave()" style="min-height:80px;"
+                                    <div class="input-group">
+                                        <label class="input-label">Ideais</label>
+                                        <textarea id="ideais" oninput="autoSave()" style="min-height: 80px;"
                                             placeholder="Ideais..."></textarea>
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">V�nculos</label>
-                                        <textarea id="vinculos" oninput="autoSave()" style="min-height:80px;"
-                                            placeholder="V�nculos..."></textarea>
+                                    <div class="input-group">
+                                        <label class="input-label">Vínculos</label>
+                                        <textarea id="vinculos" oninput="autoSave()" style="min-height: 80px;"
+                                            placeholder="Vínculos..."></textarea>
                                     </div>
-                                    <div class="ddt-input-group">
-                                        <label class="ddt-input-label">Defeitos</label>
-                                        <textarea id="defeitos" oninput="autoSave()" style="min-height:80px;"
+                                    <div class="input-group">
+                                        <label class="input-label">Defeitos</label>
+                                        <textarea id="defeitos" oninput="autoSave()" style="min-height: 80px;"
                                             placeholder="Defeitos..."></textarea>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-                    <div class="ddt-section">
+                    <div class="section">
                         <div class="section-title">Conhecidos</div>
-                        <div class="ddt-individuals-list" id="individualsList"></div>
-                        <button class="ddt-btn btn-secondary" onclick="addIndividual()"
-                            style="width:100%;margin-top:10px;">+ Adicionar Conhecido</button>
+                        <div class="character-individuals-list" id="individualsList"></div>
+                        <button class="btn btn-secondary" onclick="addIndividual()"
+                            style="width: 100%; margin-top: 10px;">+ Adicionar Conhecido</button>
                     </div>
-
-                    <div class="ddt-section">
-                        <div class="section-title">Hist�ria</div>
-                        <textarea id="historia" oninput="autoSave()" style="min-height:360px;"
-                            placeholder="Hist�ria do personagem..."></textarea>
+                    <div class="section">
+                        <div class="section-title">História</div>
+                        <textarea id="historia" oninput="autoSave()" style="min-height: 360px;"
+                            placeholder="História do personagem..."></textarea>
                     </div>
-
-                    <div class="ddt-section">
-                        <div class="section-title">Anota��es</div>
-                        <textarea id="anotacoes" oninput="autoSave()" style="min-height:360px;"
-                            placeholder="Anota��es..."></textarea>
+                    <div class="section">
+                        <div class="section-title">Anotações</div>
+                        <textarea id="anotacoes" oninput="autoSave()" style="min-height: 360px;"
+                            placeholder="Anotações"></textarea>
                     </div>
-
                 </div>
-            </div><!-- /tab4 -->
+            </div>
 
             <!-- =========================================
-                 ABA 5: CONFIGURA��ES
-            ========================================= -->
-            <div class="ddt-tab-content" id="tab5">
-                <div class="ddt-sheet-container">
+             ABA 5: CONFIGURAÇÕES
+        ========================================= -->
+            <div class="tab-content" id="tab5">
+                <div class="sheet-container">
                     <div class="sheet-grid">
                         <div>
-                            <div class="ddt-section">
-                                <div class="section-title">A��es R�pidas</div>
-                                <div class="ddt-controls" style="flex-direction:column;gap:10px;">
-                                    <button class="ddt-btn btn-secondary" onclick="saveCharacter()">?? Salvar
-                                        Altera��es</button>
-                                    <button class="ddt-btn btn-primary" onclick="saveAsNewCharacter()">? Salvar como Nova
-                                        Ficha</button>
-                                    <button class="ddt-btn btn-danger" onclick="newCharacter()">? Nova Ficha em
-                                        Branco</button>
-                                    <button class="ddt-btn btn-primary" onclick="exportCharacterJSON()">?? Baixar Ficha
-                                        (.json)</button>
-                                    <button class="ddt-btn btn-secondary" onclick="showLoadModal()">?? Carregar</button>
-                                    <button class="ddt-btn btn-secondary"
-                                        onclick="document.getElementById('importFileInput').click()">?? Carregar Arquivo
-                                        (.json)</button>
-                                    <button class="ddt-btn btn-primary" onclick="window.print()">??? Imprimir Ficha</button>
+                            <div class="section">
+                                <div class="section-title">Ações Rápidas</div>
+                                <div class="section-content">
+                                    <div class="controls" style="flex-direction:column; gap:10px;">
+                                        <button class="btn btn-secondary" onclick="saveCharacter()">💾 Salvar Alterações</button>
+                                        <button class="btn btn-primary" onclick="saveAsNewCharacter()">✨ Salvar como Nova Ficha</button>
+                                        <button class="btn btn-danger" onclick="newCharacter()">➕ Nova Ficha em Branco</button>
+                                        <button class="btn btn-primary" onclick="exportCharacterJSON()">💾 Baixar Ficha
+                                            (.json)</button>
+                                        <button class="btn btn-secondary" onclick="showLoadModal()">📂 Carregar</button>
+                                        <button class="btn btn-secondary"
+                                            onclick="document.getElementById('importFileInput').click()">📂 Carregar
+                                            Arquivo (.json)</button>
+                                        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir
+                                            Ficha</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="section">
+                                <div class="section-title">Configurações & Modificações</div>
+                                <div class="section-content">
+                                    <div class="input-group">
+                                        <label><input type="checkbox" id="toggleDarkMode" onchange="toggleDarkMode()">
+                                            Modo Escuro</label>
+                                    </div>
+                                    <div id="modification-options" style="margin-top:12px;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!-- /tab5 -->
+            </div>
 
         </div><!-- /tabs-container -->
 
         <!-- Modal Carregar -->
-        <div class="ddt-modal" id="loadModal">
-            <div class="ddt-modal-content">
-                <h2 class="ddt-modal-title">Carregar Personagem</h2>
+        <div class="modal" id="loadModal">
+            <div class="modal-content">
+                <h2 class="modal-title">Carregar Personagem</h2>
                 <div id="characterList"></div>
-                <button class="ddt-btn btn-secondary" onclick="hideLoadModal()"
-                    style="width:100%;margin-top:15px;">Fechar</button>
+                <button class="btn btn-secondary" onclick="hideLoadModal()"
+                    style="width: 100%; margin-top: 15px;">Fechar</button>
             </div>
         </div>
 
     </div><!-- /app-container -->
-
-    <!-- =========================================
-         DICE ROLLER MODAL
-    ========================================= -->
-    <div class="ddt-modal" id="diceModal" aria-hidden="true">
+    <!-- Modal: Dice Roller -->
+    <div class="modal" id="diceModal" aria-hidden="true">
         <div class="modal-content dice-modal-content">
-            <button class="menu-close" id="closeDiceBtn">?</button>
-            <h2 class="ddt-modal-title">Lan�ador de Dados</h2>
+            <button class="menu-close" id="closeDiceBtn">✕</button>
+            <h2 class="modal-title">Lançador de Dados</h2>
+
             <div class="dice-grid">
+
+                <!-- Controles -->
                 <div class="dice-controls">
+
                     <div>
                         <div class="ctrl-label">Quantidade</div>
                         <div class="qty-spinner">
-                            <button class="qty-btn" id="qtyDown">-</button>
+                            <button class="qty-btn" id="qtyDown">−</button>
                             <span class="qty-display" id="diceQty">1</span>
                             <button class="qty-btn" id="qtyUp">+</button>
                         </div>
                     </div>
+
                     <div>
                         <div class="ctrl-label">Tipo de Dado</div>
+
+                        <!--
+                Layout losango:
+                ------d6------
+                d4---------d8
+                -----d20------   (maior)
+                d10-------d12
+                -----d100-----
+
+                Cada .die-oct-wrap envolve o botão para efeito octógono + borda via drop-shadow
+            -->
                         <div class="dice-diamond" id="diceType">
+
                             <div class="diamond-row center">
                                 <div class="die-oct-wrap">
-                                    <button class="die-btn" data-sides="6" data-label="d6"><span>d6</span></button>
+                                    <button class="die-btn" data-sides="6" data-label="d6" title="d6">
+                                        <span>d6</span>
+                                    </button>
                                 </div>
                             </div>
+
                             <div class="diamond-row sides">
                                 <div class="die-oct-wrap">
-                                    <button class="die-btn" data-sides="4" data-label="d4"><span>d4</span></button>
+                                    <button class="die-btn" data-sides="4" data-label="d4" title="d4">
+                                        <span>d4</span>
+                                    </button>
                                 </div>
                                 <div class="die-oct-wrap">
-                                    <button class="die-btn" data-sides="8" data-label="d8"><span>d8</span></button>
+                                    <button class="die-btn" data-sides="8" data-label="d8" title="d8">
+                                        <span>d8</span>
+                                    </button>
                                 </div>
                             </div>
+
                             <div class="diamond-row center">
                                 <div class="die-oct-wrap die-oct-wrap--d20">
-                                    <button class="die-btn die-btn--d20 active" data-sides="20"
-                                        data-label="d20"><span>d20</span></button>
+                                    <button class="die-btn die-btn--d20 active" data-sides="20" data-label="d20"
+                                        title="d20">
+                                        <span>d20</span>
+                                    </button>
                                 </div>
                             </div>
+
                             <div class="diamond-row sides">
                                 <div class="die-oct-wrap">
-                                    <button class="die-btn" data-sides="10" data-label="d10"><span>d10</span></button>
+                                    <button class="die-btn" data-sides="10" data-label="d10" title="d10">
+                                        <span>d10</span>
+                                    </button>
                                 </div>
                                 <div class="die-oct-wrap">
-                                    <button class="die-btn" data-sides="12" data-label="d12"><span>d12</span></button>
+                                    <button class="die-btn" data-sides="12" data-label="d12" title="d12">
+                                        <span>d12</span>
+                                    </button>
                                 </div>
                             </div>
+
                             <div class="diamond-row center">
                                 <div class="die-oct-wrap">
-                                    <button class="die-btn" data-sides="100"
-                                        data-label="d100"><span>d100</span></button>
+                                    <button class="die-btn" data-sides="100" data-label="d100" title="d100">
+                                        <span>d100</span>
+                                    </button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="roll-actions">
-                        <button class="ddt-btn btn-roll" id="rollDiceBtn">?? Rolar</button>
-                        <button class="ddt-btn btn-clear" id="clearDiceBtn">Limpar</button>
+                        <button class="btn btn-roll" id="rollDiceBtn">🎲 Rolar</button>
+                        <button class="btn btn-clear" id="clearDiceBtn">Limpar</button>
                     </div>
-                </div>
+
+                </div><!-- /dice-controls -->
+
+                <!-- Resultados -->
                 <div class="dice-results-panel">
                     <div class="dice-stage" id="diceResults">
                         <div class="empty-state" id="emptyState">
@@ -970,29 +1033,30 @@
                         <div class="rolling-overlay" id="rollingOverlay"></div>
                         <div class="results-list" id="resultsList"></div>
                     </div>
+
                     <div class="results-summary" id="resultsSummary" style="display:none;">
                         <span class="summary-label">Total</span>
                         <span class="summary-total" id="resultsTotal"></span>
                         <span class="summary-breakdown" id="resultsBreakdown"></span>
                     </div>
                 </div>
-            </div>
+
+            </div><!-- /dice-grid -->
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="ddt-footer">
+    <footer class="footer">
         <div class="container">
-            <p>� 2026 D&D 5e Homebrew � Sistema criado por TonhoDevi</p>
+            <p>© 2026 D&D 5e Homebrew - Sistema criado por TonhoDevi</p>
             <div class="footer-links">
                 <a href="https://github.com/TonhoDevi/FichaProject" target="_blank">GitHub</a>
-                <a href="index.html">In�cio</a>
+                <a href="index.html">Início</a>
                 <a href="html/sheet/ddt-character-sheet.html" class="active">Ficha</a>
-                <a href="html/compendium/compendium-races.html">Ra�as</a>
+                <a href="html/compendium/compendium-races.html">Raças</a>
             </div>
         </div>
     </footer>
-
 </body>
 
 </html>
