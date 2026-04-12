@@ -579,7 +579,13 @@ async function saveCharacter() {
     // 1. Backup local
     localStorage.setItem('characterData', JSON.stringify(char));
 
-    // 2. Nuvem
+    // 2. Nuvem - só salva se houver ID ativo (ficha existente)
+    const activeId = getActiveSheetId('dnd');
+    if (!activeId) {
+        // Sem ID ativo, não tenta salvar. O usuário deve clicar em "Salvar como Nova Ficha"
+        return;
+    }
+
     const nome = char.nomePersonagem || 'Sem nome';
     const { error } = await cloudSave('dnd', char, nome);
 
@@ -591,7 +597,35 @@ async function saveCharacter() {
     }
 }
 
-// Debounce — 1.5s após última edição
+// SALVAR COMO NOVA FICHA - Ação Manual (sem autoSave)
+async function saveAsNewCharacter() {
+    const char = getCurrentCharacter();
+    
+    if (!char.nomePersonagem) {
+        alert('Por favor, insira um nome para o personagem antes de salvar.');
+        return;
+    }
+
+    // Confirma com o usuário
+    if (!confirm(`Salvar novo personagem: "${char.nomePersonagem}"?\nVocê poderá editar depois.`)) return;
+
+    // 1. Backup local
+    localStorage.setItem('characterData', JSON.stringify(char));
+
+    // 2. Nuvem - Cria nova ficha
+    const nome = char.nomePersonagem || 'Sem nome';
+    const { error } = await cloudSaveNew('dnd', char, nome);
+
+    if (error) {
+        alert('Erro ao salvar: ' + (error === 'limite_atingido' ? 'Limite de fichas atingido!' : error));
+        console.error('cloudSaveNew D&D:', error);
+    } else {
+        alert('Personagem salvo com sucesso! Agora ele será atualizado automaticamente.');
+        showSaveIndicator('Personagem criado com sucesso!');
+    }
+}
+
+// Debounce — 1.5s após última edição (só tenta se houver ID ativo)
 function autoSave() {
     clearTimeout(_autoSaveTimer);
     _autoSaveTimer = setTimeout(saveCharacter, 1500);

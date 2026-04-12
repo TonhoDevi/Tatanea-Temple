@@ -29,7 +29,19 @@ async function cloudSave(tipo, dados, nome) {
         return result;
     }
 
-    // INSERT — verifica o limite antes de criar
+    // NOVO COMPORTAMENTO: Não cria automaticamente. Retorna erro indicando que é necessária ação manual
+    // showSaveIndicator('Para salvar uma ficha nova, use o menu "Salvar como Nova"', true);
+    return { error: 'sem_id_ativo_use_menu' };
+}
+
+// ── SALVAR COMO NOVA FICHA (AÇÃO MANUAL) ─────────────────────────
+async function cloudSaveNew(tipo, dados, nome) {
+    const user = await getUser();
+    if (!user) return { error: 'Nao autenticado' };
+
+    const nomeFinal = (nome || 'Sem nome').trim() || 'Sem nome';
+
+    // Verifica o limite antes de criar
     const { count } = await sb.from('fichas')
         .select('id', { count: 'exact', head: true })
         .eq('user_id', user.id);
@@ -39,12 +51,14 @@ async function cloudSave(tipo, dados, nome) {
         return { error: 'limite_atingido' };
     }
 
+    // Cria nova ficha
     const result = await sb.from('fichas')
         .insert({ user_id: user.id, tipo, nome: nomeFinal, dados })
         .select().single();
 
     if (result.data && result.data.id) {
         setActiveSheetId(tipo, result.data.id);
+        showSaveIndicator('Nova ficha criada: ' + nomeFinal);
     }
     return result;
 }

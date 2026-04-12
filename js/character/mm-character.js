@@ -467,7 +467,13 @@ async function mmSave() {
     // 1. Salva local (fallback)
     localStorage.setItem(MM_STORAGE_KEY, JSON.stringify(data));
 
-    // 2. Salva na nuvem
+    // 2. Salva na nuvem - só salva se houver ID ativo (ficha existente)
+    const activeId = getActiveSheetId('mem');
+    if (!activeId) {
+        // Sem ID ativo, não tenta salvar. O usuário deve clicar em "Salvar como Nova Ficha"
+        return;
+    }
+
     const nome = data.nomeHeroi || 'Heroi sem nome';
     const { error } = await cloudSave('mem', data, nome);
 
@@ -479,7 +485,35 @@ async function mmSave() {
     }
 }
 
-// Debounce — espera 1.5s depois da ultima edicao
+// SALVAR COMO NOVA FICHA - Ação Manual (sem autoSave)
+async function mmSaveAsNew() {
+    const data = mmCollectData();
+    
+    if (!data.nomeHeroi) {
+        alert('Por favor, insira um nome para o herói antes de salvar.');
+        return;
+    }
+
+    // Confirma com o usuário
+    if (!confirm(`Salvar novo herói: "${data.nomeHeroi}"?\nVocê poderá editar depois.`)) return;
+
+    // 1. Salva local (fallback)
+    localStorage.setItem(MM_STORAGE_KEY, JSON.stringify(data));
+
+    // 2. Salva na nuvem - Cria nova ficha
+    const nome = data.nomeHeroi || 'Heroi sem nome';
+    const { error } = await cloudSaveNew('mem', data, nome);
+
+    if (error) {
+        alert('Erro ao salvar: ' + (error === 'limite_atingido' ? 'Limite de fichas atingido!' : error));
+        console.error('cloudSaveNew M&M error:', error);
+    } else {
+        alert('Herói salvo com sucesso! Agora ele será atualizado automaticamente.');
+        showSaveIndicator('Herói criado com sucesso!');
+    }
+}
+
+// Debounce — espera 1.5s depois da ultima edicao (só tenta se houver ID ativo)
 function mmAutoSave() {
     clearTimeout(mmSaveTimer);
     mmSaveTimer = setTimeout(mmSave, 1500);
