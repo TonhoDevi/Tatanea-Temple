@@ -66,14 +66,10 @@ function initSkills() {
         const div = document.createElement('div');
         div.className = 'character-skill-item';
         div.innerHTML = `
-            <select class="ddt-skill-prof-select" id="skillProf_${skill.name}"
-                onchange="updateSkillProf('${skill.name}', this.value)">
-                <option value="none">-</option>
-                <option value="proficient">Prof</option>
-                <option value="expert">Esp</option>
-            </select>
-            <span class="ddt-skill-name">${skill.name}</span>
-            <span class="ddt-skill-value" id="skillValue_${skill.name}">+0</span>`;
+            <span class="character-skill-name">${skill.name}</span>
+            <span class="character-skill-value" id="skillValue_${skill.name}">+0</span>
+            <button class="ddt-skill-prof-toggle" id="skillToggle_${skill.name}" 
+                onclick="toggleSkillProf('${skill.name}')" title="Alternar Proficiência"></button>`;
         list.appendChild(div);
     });
 }
@@ -88,18 +84,18 @@ function calculateModifiers() {
     ['forca', 'destreza', 'constituicao', 'inteligencia', 'sabedoria', 'carisma'].forEach(attr => {
         const value = parseInt(document.getElementById(attr).value) || 10;
         const mod = getModifier(value);
-        
+
         const checkboxId = `prof${attr.charAt(0).toUpperCase() + attr.slice(1)}`;
         const checkbox = document.getElementById(checkboxId);
         const proficient = checkbox ? checkbox.checked : false;
-        
+
         const finalBonus = mod + (proficient ? profBonus : 0);
-        
+
         const modEl = document.getElementById(`${attr}Mod`);
         if (modEl) {
             modEl.textContent = finalBonus >= 0 ? `+${finalBonus}` : `${finalBonus}`;
         }
-        
+
         checkbox?.closest('.character-attribute-box')?.classList.toggle('is-proficient', proficient);
     });
     calculateSkills();
@@ -142,8 +138,27 @@ function calculateSkills() {
 
 function updateSkillProf(skillName, level) {
     skillProficiencies[skillName] = level;
+
+    // Atualiza visual do botão
+    const btn = document.getElementById(`skillToggle_${skillName}`);
+    if (btn) {
+        btn.classList.remove('is-proficient', 'is-expert', 'none');
+        if (level === 'proficient') btn.classList.add('is-proficient');
+        else if (level === 'expert') btn.classList.add('is-expert');
+    }
+
     calculateSkills();
     autoSave();
+}
+
+function toggleSkillProf(skillName) {
+    const current = skillProficiencies[skillName] || 'none';
+    let next = 'none';
+    if (current === 'none') next = 'proficient';
+    else if (current === 'proficient') next = 'expert';
+    else next = 'none';
+
+    updateSkillProf(skillName, next);
 }
 
 // ================================================================
@@ -570,8 +585,13 @@ function loadCharacterData(char) {
     spells = char.spells || { truques: [], nivel1: [], nivel2: [], nivel3: [], nivel4: [], nivel5: [], nivel6: [], nivel7: [], nivel8: [], nivel9: [] };
 
     SKILLS.forEach(skill => {
-        const sel = document.getElementById(`skillProf_${skill.name}`);
-        if (sel) sel.value = skillProficiencies[skill.name] || 'none';
+        const level = skillProficiencies[skill.name] || 'none';
+        const btn = document.getElementById(`skillToggle_${skill.name}`);
+        if (btn) {
+            btn.classList.remove('is-proficient', 'is-expert');
+            if (level === 'proficient') btn.classList.add('is-proficient');
+            else if (level === 'expert') btn.classList.add('is-expert');
+        }
     });
 
     if (char.persistTags) {
@@ -757,10 +777,72 @@ function showSaveIndicator(msg = 'Salvo automaticamente', isError = false) {
 //  ABAS
 // ================================================================
 function switchTab(tabId) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById(tabId)?.classList.add('active');
+    const buttons = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+
+    buttons.forEach(b => b.classList.remove('active'));
+    contents.forEach(c => c.classList.remove('active'));
+
+    const targetContent = document.getElementById(tabId);
+    if (targetContent) targetContent.classList.add('active');
+
+    buttons.forEach(b => {
+        if (b.getAttribute('onclick')?.includes(tabId)) {
+            b.classList.add('active');
+            // Centraliza o botão no scroll horizontal do mobile
+            b.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    });
+
+    // Scroll para o topo ao mudar de aba apenas no mobile para facilitar leitura
+    if (window.innerWidth < 1024) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+// --- NAVEGAÇÃO POR SWIPE (MOBILE) ---
+let touchstartX = 0;
+let touchendX = 0;
+let touchstartY = 0;
+let touchendY = 0;
+
+document.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX;
+    touchstartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+document.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX;
+    touchendY = e.changedTouches[0].screenY;
+    handleSwipeGesture();
+}, { passive: true });
+
+function handleSwipeGesture() {
+    const swipeThreshold = 70; // Sensibilidade do deslize
+    const verticalLimit = 100; // Ignorar swipe se for muito vertical (como scroll)
+
+    const diffX = touchendX - touchstartX;
+    const diffY = Math.abs(touchendY - touchstartY);
+
+    if (Math.abs(diffX) > swipeThreshold && diffY < verticalLimit) {
+        const tabs = ['tab1', 'tab2', 'tab3', 'tab4', 'tab5'];
+        const activeTab = document.querySelector('.tab-content.active');
+        if (!activeTab) return;
+
+        const currentIndex = tabs.indexOf(activeTab.id);
+
+        if (diffX < -swipeThreshold) {
+            // Swipe para a esquerda (próxima aba)
+            if (currentIndex < tabs.length - 1) {
+                switchTab(tabs[currentIndex + 1]);
+            }
+        } else if (diffX > swipeThreshold) {
+            // Swipe para a direita (aba anterior)
+            if (currentIndex > 0) {
+                switchTab(tabs[currentIndex - 1]);
+            }
+        }
+    }
 }
 
 // ================================================================

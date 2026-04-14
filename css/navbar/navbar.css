@@ -199,6 +199,21 @@
 
 /* Responsividade da Navbar */
 @media (max-width: 768px) {
+    .navbar {
+        position: relative;
+        /* Não segue o usuário ao descer */
+    }
+
+    .navbar-container {
+        padding: 8px 15px;
+        /* Menor que os 15px/30px originais */
+    }
+
+    .navbar-logo {
+        font-size: 1.3rem;
+        /* Menor que os 1.8rem originais */
+    }
+
     .navbar-menu {
         display: none;
         flex-direction: column;
@@ -229,5 +244,7 @@
         display: block;
         position: relative;
         z-index: 1000;
+        padding: 3px 10px;
+        font-size: 1.1rem;
     }
 }

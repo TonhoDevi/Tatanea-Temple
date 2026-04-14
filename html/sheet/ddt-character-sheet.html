@@ -57,11 +57,11 @@
     ================================================================ -->
         <div class="tabs-container">
             <div class="tabs-header">
-                <button class="tab-btn active" onclick="switchTab('tab1')">⚔ Principal</button>
-                <button class="tab-btn" onclick="switchTab('tab2')">🎒 Inventário</button>
-                <button class="tab-btn" onclick="switchTab('tab3')">✨ Habilidades</button>
-                <button class="tab-btn" onclick="switchTab('tab4')">📖 Descrição</button>
-                <button class="tab-btn" onclick="switchTab('tab5')">⚙ Config</button>
+                <button class="tab-btn active" onclick="switchTab('tab1')">Principal</button>
+                <button class="tab-btn" onclick="switchTab('tab2')">Inventário</button>
+                <button class="tab-btn" onclick="switchTab('tab3')">Habilidades</button>
+                <button class="tab-btn" onclick="switchTab('tab4')">Descrição</button>
+                <button class="tab-btn" onclick="switchTab('tab5')">Config</button>
             </div>
 
             <!-- ============================================================
@@ -113,32 +113,32 @@
                         <svg width="0" height="0" style="position:absolute;pointer-events:none;overflow:hidden;">
                             <defs>
                                 <linearGradient id="gradCA" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#7eb8f7" />
-                                    <stop offset="100%" stop-color="#1a3d7a" />
+                                    <stop offset="0%" stop-color="var(--accent-bright)" />
+                                    <stop offset="100%" stop-color="var(--raised)" />
                                 </linearGradient>
                                 <linearGradient id="gradCAInner" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#5a9ce0" stop-opacity=".4" />
-                                    <stop offset="100%" stop-color="#0d2455" stop-opacity=".1" />
+                                    <stop offset="0%" stop-color="var(--accent-pale)" stop-opacity=".4" />
+                                    <stop offset="100%" stop-color="var(--surface)" stop-opacity=".1" />
                                 </linearGradient>
                                 <linearGradient id="gradVida" x1="20%" y1="0%" x2="80%" y2="100%">
-                                    <stop offset="0%" stop-color="#f07090" />
-                                    <stop offset="100%" stop-color="#6e0a18" />
+                                    <stop offset="0%" stop-color="var(--crim)" />
+                                    <stop offset="100%" stop-color="#2e0509" />
                                 </linearGradient>
                                 <linearGradient id="gradVidaMax" x1="20%" y1="0%" x2="80%" y2="100%">
-                                    <stop offset="0%" stop-color="#70b0f0" />
-                                    <stop offset="100%" stop-color="#0a3a6e" />
+                                    <stop offset="0%" stop-color="var(--mana-hi)" />
+                                    <stop offset="100%" stop-color="var(--mana)" />
                                 </linearGradient>
                                 <linearGradient id="gradVidaTemp" x1="20%" y1="0%" x2="80%" y2="100%">
-                                    <stop offset="0%" stop-color="#f5d070" />
-                                    <stop offset="100%" stop-color="#8a5800" />
+                                    <stop offset="0%" stop-color="var(--gold-pale)" />
+                                    <stop offset="100%" stop-color="var(--gold)" />
                                 </linearGradient>
                                 <linearGradient id="gradInit" x1="30%" y1="0%" x2="70%" y2="100%">
-                                    <stop offset="0%" stop-color="#f5e070" />
-                                    <stop offset="100%" stop-color="#8a5800" />
+                                    <stop offset="0%" stop-color="var(--gold-bright)" />
+                                    <stop offset="100%" stop-color="var(--high)" />
                                 </linearGradient>
                                 <linearGradient id="gradInitInner" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#ffe090" stop-opacity=".35" />
-                                    <stop offset="100%" stop-color="#a07000" stop-opacity="0" />
+                                    <stop offset="0%" stop-color="var(--gold-pale)" stop-opacity=".35" />
+                                    <stop offset="100%" stop-color="var(--void)" stop-opacity="0" />
                                 </linearGradient>
                             </defs>
                         </svg>
@@ -151,7 +151,7 @@
                                     <svg class="shape-bg" viewBox="0 0 100 95" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M50,85 C50,85 10,55 10,30 C10,12 22,2 38,2 C46,2 54,6 50,14 C46,6 54,2 62,2 C78,2 90,12 90,30 C90,55 50,85 50,85Z"
-                                            fill="url(#gradVidaMax)" stroke="#a8d4ff" stroke-width="1.2"
+                                            fill="url(#gradVidaMax)" stroke="var(--mana-hi)" stroke-width="1.2"
                                             stroke-opacity=".45" />
                                     </svg>
                                     <div class="shape-inner">
@@ -167,7 +167,7 @@
                                     <svg class="shape-bg" viewBox="0 0 138 130" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M69,118 C69,118 8,76 8,40 C8,18 24,4 44,4 C55,4 65,9 69,19 C73,9 83,4 94,4 C114,4 130,18 130,40 C130,76 69,118 69,118Z"
-                                            fill="url(#gradVida)" stroke="#ffb0b0" stroke-width="1.5"
+                                            fill="url(#gradVida)" stroke="var(--crim)" stroke-width="1.5"
                                             stroke-opacity=".45" />
                                         <ellipse cx="45" cy="28" rx="14" ry="9" fill="white" fill-opacity=".10"
                                             transform="rotate(-25,45,28)" />
@@ -185,7 +185,7 @@
                                     <svg class="shape-bg" viewBox="0 0 100 95" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M50,85 C50,85 10,55 10,30 C10,12 22,2 38,2 C46,2 54,6 50,14 C46,6 54,2 62,2 C78,2 90,12 90,30 C90,55 50,85 50,85Z"
-                                            fill="url(#gradVidaTemp)" stroke="#ffe890" stroke-width="1.2"
+                                            fill="url(#gradVidaTemp)" stroke="var(--gold-pale)" stroke-width="1.2"
                                             stroke-opacity=".45" />
                                     </svg>
                                     <div class="shape-inner">
@@ -216,7 +216,7 @@
                                 <div class="character-combat-shape shape-ca">
                                     <svg class="shape-bg" viewBox="0 0 108 122" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M54,4 L102,22 L102,60 C102,90 78,112 54,118 C30,112 6,90 6,60 L6,22Z"
-                                            fill="url(#gradCA)" stroke="#a8d4ff" stroke-width="1.5"
+                                            fill="url(#gradCA)" stroke="var(--accent-bright)" stroke-width="1.5"
                                             stroke-opacity=".5" />
                                         <path d="M54,12 L95,27 L95,60 C95,86 74,106 54,111 C34,106 13,86 13,60 L13,27Z"
                                             fill="url(#gradCAInner)" stroke="#ffffff" stroke-width="1"
@@ -238,7 +238,7 @@
                                 <div class="character-combat-shape shape-init">
                                     <svg class="shape-bg" viewBox="0 0 86 122" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M60,4 L18,62 L42,62 L26,118 L68,56 L44,56Z" fill="url(#gradInit)"
-                                            stroke="#ffe890" stroke-width="1.5" stroke-opacity=".55" />
+                                            stroke="var(--gold-bright)" stroke-width="1.5" stroke-opacity=".55" />
                                         <path d="M56,12 L24,62 L44,62 L30,108 L62,58 L42,58Z" fill="url(#gradInitInner)"
                                             stroke="#ffffff" stroke-width=".8" stroke-opacity=".18" />
                                     </svg>
@@ -284,13 +284,15 @@
                         <div class="col-label">Resistências & Vulnerabilidades</div>
                         <div class="add-badge-group">
                             <input type="text" id="inputTagGeneral" placeholder="Dano, condição, etc...">
-                            <button class="hp-btn heal-btn small-btn" onclick="addTagEnhanced('resistance')" title="Adicionar como Resistência">+ Res</button>
-                            <button class="hp-btn damage-btn small-btn" onclick="addTagEnhanced('vulnerability')" title="Adicionar como Vulnerabilidade">+ Vul</button>
+                            <button class="hp-btn heal-btn small-btn" onclick="addTagEnhanced('resistance')"
+                                title="Adicionar como Resistência">+ Res</button>
+                            <button class="hp-btn damage-btn small-btn" onclick="addTagEnhanced('vulnerability')"
+                                title="Adicionar como Vulnerabilidade">+ Vul</button>
                         </div>
                         <div id="unifiedTagsContainer" class="badge-container"></div>
 
                         <!-- Idiomas -->
-                        <div class="col-label">Idiomas & Proficiências</div>
+                        <div class="col-label" style="margin-top:16px;">Idiomas & Proficiências</div>
                         <textarea id="idiomas" oninput="autoSave()" placeholder="Idiomas e proficiências especiais..."
                             style="min-height:72px;"></textarea>
 
@@ -411,7 +413,8 @@
                     <div class="section-title">Moedas</div>
                     <div class="character-currency-grid">
                         <div class="input-group">
-                            <label class="input-label"><span class="character-currency-icon cobre"></span>PC</label>
+                            <label class="input-label"><span class="character-currency-icon cobre"><span
+                                        class="character-currency-symbol">ω</span></span>PC</label>
                             <div class="qty-spinner">
                                 <button class="qty-btn" onclick="changeValue('pc', -1)">−</button>
                                 <input type="number" id="pc" value="0" oninput="autoSave()">
@@ -419,7 +422,8 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label class="input-label"><span class="character-currency-icon prata"></span>PP</label>
+                            <label class="input-label"><span class="character-currency-icon prata"><span
+                                        class="character-currency-symbol">σ</span></span>PP</label>
                             <div class="qty-spinner">
                                 <button class="qty-btn" onclick="changeValue('pp', -1)">−</button>
                                 <input type="number" id="pp" value="0" oninput="autoSave()">
@@ -427,7 +431,8 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label class="input-label"><span class="character-currency-icon electrum"></span>PE</label>
+                            <label class="input-label"><span class="character-currency-icon electrum"><span
+                                        class="character-currency-symbol">ε</span></span>PE</label>
                             <div class="qty-spinner">
                                 <button class="qty-btn" onclick="changeValue('pe', -1)">−</button>
                                 <input type="number" id="pe" value="0" oninput="autoSave()">
@@ -435,7 +440,8 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label class="input-label"><span class="character-currency-icon ouro"></span>PO</label>
+                            <label class="input-label"><span class="character-currency-icon ouro"><span
+                                        class="character-currency-symbol">λ</span></span>PO</label>
                             <div class="qty-spinner">
                                 <button class="qty-btn" onclick="changeValue('po', -1)">−</button>
                                 <input type="number" id="po" value="0" oninput="autoSave()">
@@ -443,7 +449,8 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label class="input-label"><span class="character-currency-icon platina"></span>PL</label>
+                            <label class="input-label"><span class="character-currency-icon platina"><span
+                                        class="character-currency-symbol">α</span></span>PL</label>
                             <div class="qty-spinner">
                                 <button class="qty-btn" onclick="changeValue('pl', -1)">−</button>
                                 <input type="number" id="pl" value="0" oninput="autoSave()">
@@ -1033,7 +1040,7 @@
             if (!value) return;
 
             tagDataArray.push({ text: value, type: type });
-            
+
             input.value = '';
             renderUnifiedTags();
             autoSave();
@@ -1048,7 +1055,7 @@
         function renderUnifiedTags() {
             const container = document.getElementById('unifiedTagsContainer');
             if (!container) return;
-            
+
             container.innerHTML = '';
             tagDataArray.forEach((tag, index) => {
                 const badge = document.createElement('div');
