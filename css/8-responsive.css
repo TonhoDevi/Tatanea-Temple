@@ -2,14 +2,22 @@
    IMPRESSÃO
 ======================================== */
 @media print {
-    body, body::before {
+
+    body,
+    body::before {
         background: var(--impressao-branco);
     }
-    
-    .header, .controls, .save-indicator, .menu-overlay, .menu-toggle, .side-menu, .tabs-header {
+
+    .header,
+    .controls,
+    .save-indicator,
+    .menu-overlay,
+    .menu-toggle,
+    .side-menu,
+    .tabs-header {
         display: none !important;
     }
-    
+
     .sheet-container {
         box-shadow: none;
         padding: 15px;
@@ -20,15 +28,15 @@
         display: block !important;
         page-break-before: always;
     }
-    
+
     .tab-content:first-child {
         page-break-before: auto;
     }
-    
+
     .input-label {
         color: var(--impressao-preto) !important;
     }
-    
+
     .input-group input,
     .input-group textarea,
     .input-group select {
@@ -43,16 +51,16 @@
         color: var(--impressao-preto) !important;
         text-shadow: none !important;
     }
-    
+
     .section {
         background: var(--impressao-branco);
     }
 
-    .character-attribute-box {
+    .ddt-attribute-box {
         background: var(--cor13);
     }
 
-    .character-attribute-box.proficient {
+    .ddt-attribute-box.proficient {
         background: var(--cor18);
     }
 
@@ -61,13 +69,15 @@
         color: var(--impressao-preto) !important;
         text-shadow: none !important;
     }
-    
+
     * {
         color: var(--impressao-preto) !important;
         text-shadow: none !important;
     }
-    
-    input, textarea, select {
+
+    input,
+    textarea,
+    select {
         background: var(--impressao-branco) !important;
         border: 1px solid var(--impressao-preto) !important;
         color: var(--impressao-preto) !important;
@@ -146,7 +156,7 @@
         grid-template-columns: 1fr;
         gap: 15px;
     }
-    
+
     .sheet-grid-details {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -191,7 +201,7 @@
         gap: 10px;
     }
 
-    .character-attribute-box {
+    .ddt-attribute-box {
         padding: 10px 10px;
     }
 
@@ -248,7 +258,9 @@
         margin-bottom: 4px;
     }
 
-    input, textarea, select {
+    input,
+    textarea,
+    select {
         font-size: 0.95rem;
         padding: 10px;
         min-height: 44px;
@@ -269,16 +281,16 @@
         border-left: 4px solid var(--cor3);
     }
 
-    .character-skill-name {
+    .ddt-skill-name {
         font-size: 0.95rem;
     }
 
-    .character-skill-value {
+    .ddt-skill-value {
         font-size: 0.95rem;
         min-width: 45px;
     }
 
-    .character-skill-prof-select {
+    .ddt-skill-prof-select {
         min-width: 90px;
         font-size: 0.9rem;
         padding: 6px 10px;
@@ -390,12 +402,12 @@
     }
 
     /* ── Item Mágico ── */
-    .magic-item-header {
+    .ddt-magic-item-header {
         grid-template-columns: 1fr auto;
         gap: 8px;
     }
 
-    .magic-item-sync {
+    .ddt-magic-item-sync {
         grid-column: 1 / -1;
         justify-content: flex-start;
         padding: 8px 0;
@@ -408,11 +420,11 @@
         width: 250px;
         height: 330px;
     }
-    
+
     .image-controls {
         width: 100%;
     }
-    
+
     .image-controls .btn {
         flex: 1;
         min-width: 120px;
@@ -460,7 +472,7 @@
         grid-template-columns: 1fr;
     }
 
-    .character-attribute-box {
+    .ddt-attribute-box {
         padding: 12px;
     }
 
@@ -544,7 +556,7 @@
         gap: 8px;
     }
 
-    .character-attribute-box {
+    .ddt-attribute-box {
         padding: 8px 5px;
     }
 
@@ -565,7 +577,10 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    input, select, textarea, button {
+    input,
+    select,
+    textarea,
+    button {
         font-size: 16px !important;
     }
 
@@ -577,7 +592,7 @@
         font-size: 2rem !important;
     }
 
-    .character-skill-prof-select,
+    .ddt-skill-prof-select,
     .character-bonus-check,
     .character-proficiency-check,
     .delete-btn,
