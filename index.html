@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -9,162 +9,28 @@
 
     <!-- StyleIndex.css — Tema Exclusivo: Selva, Dinossauros, Flores, Joias e Serpentes -->
     <link rel="stylesheet" href="./css/StyleIndex.css">
+    <!-- Google Fonts para texto circular do medalhão -->
+    <link rel="stylesheet" href="./css/art/landscape.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/js/shared/supabase-auth.js"></script>
 
 <body>
-
-    <!-- ═══════════════════════════════════════
-         PANEL: FICHAS
-    ═══════════════════════════════════════ -->
-    <div class="panel-overlay" id="panel-fichas" onclick="closePanel(event, 'panel-fichas')">
-        <div class="tome-panel" role="dialog" aria-modal="true" aria-label="Fichas de Personagem">
-            <button class="tome-close" onclick="closePanelById('panel-fichas')" aria-label="Fechar">✕</button>
-            <div class="tome-header">
-                <span class="tome-header-rune">📜</span>
-                <h2>Fichas de Personagem</h2>
-                <p>Escolha o tipo de ficha para o seu aventureiro</p>
-            </div>
-            <div class="tome-divider"><span>✦</span></div>
-            <div class="tome-grid">
-
-                <a href="./html/sheet/ddt-character-sheet.html" class="tome-card">
-                    <span class="tome-card-badge badge-ready">Pronto</span>
-                    <div class="tome-card-icon">⚔️</div>
-                    <div class="tome-card-title">Ficha de Personagem D&D Tatânea Homebrew</div>
-                    <div class="tome-card-desc">Ficha criada para as campanhas da Tatarana Homebrew.</div>
-                    <div class="tome-card-arrow">ABRIR →</div>
-                </a>
-
-
-                <a href="./html/sheet/ddt-character-sheet.html#inventory" class="tome-card">
-                    <span class="tome-card-badge badge-ready">Pronto</span>
-                    <div class="tome-card-icon">🎒</div>
-                    <div class="tome-card-title">Inventário</div>
-                    <div class="tome-card-desc">Equipamentos, itens mágicos e gestão de moedas.</div>
-                    <div class="tome-card-arrow">ABRIR →</div>
-                </a>
-
-                <a href="#" class="tome-card" style="pointer-events:none; opacity:0.5;">
-                    <span class="tome-card-badge badge-soon">Em breve</span>
-                    <div class="tome-card-icon">🐉</div>
-                    <div class="tome-card-title">Ficha de Monstro</div>
-                    <div class="tome-card-desc">Block stat completo para criaturas e NPCs.</div>
-                    <div class="tome-card-arrow">EM BREVE</div>
-                </a>
-
-                <a href="#" class="tome-card" style="pointer-events:none; opacity:0.5;">
-                    <span class="tome-card-badge badge-soon">Em breve</span>
-                    <div class="tome-card-icon">🏰</div>
-                    <div class="tome-card-title">Ficha do Mestre</div>
-                    <div class="tome-card-desc">Encontros, NPCs, recompensas e anotações de sessão.</div>
-                    <div class="tome-card-arrow">EM BREVE</div>
-                </a>
-
-                <a href="#" class="tome-card" style="pointer-events:none; opacity:0.5;">
-                    <span class="tome-card-badge badge-wip">WIP</span>
-                    <div class="tome-card-icon">🔮</div>
-                    <div class="tome-card-title">Ficha de Pact Magic</div>
-                    <div class="tome-card-desc">Sistema de magia de pacto para Warlocks e variantes.</div>
-                    <div class="tome-card-arrow">EM BREVE</div>
-                </a>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════
-         PANEL: COMPÊNDIOS
-    ═══════════════════════════════════════ -->
-    <div class="panel-overlay" id="panel-compendios" onclick="closePanel(event, 'panel-compendios')">
-        <div class="tome-panel" role="dialog" aria-modal="true" aria-label="Compêndios">
-            <button class="tome-close" onclick="closePanelById('panel-compendios')" aria-label="Fechar">✕</button>
-            <div class="tome-header">
-                <span class="tome-header-rune">📚</span>
-                <h2>Compêndios</h2>
-                <p>Toda a sabedoria do mundo de Tatânea reunida</p>
-            </div>
-            <div class="tome-divider"><span>✦</span></div>
-            <div class="tome-grid">
-
-                <a href="./html/compendium/compendium-races.html" class="tome-card">
-                    <span class="tome-card-badge badge-ready">Pronto</span>
-                    <div class="tome-card-icon">🧝</div>
-                    <div class="tome-card-title">Raças</div>
-                    <div class="tome-card-desc">Todas as raças homebrew com traços e habilidades raciais.</div>
-                    <div class="tome-card-arrow">VER →</div>
-                </a>
-
-                <a href="./html/compendium/compendium-classes.html" class="tome-card">
-                    <span class="tome-card-badge badge-ready">Pronto</span>
-                    <div class="tome-card-icon">⚔️</div>
-                    <div class="tome-card-title">Classes</div>
-                    <div class="tome-card-desc">Guerreiro, Mago, Ladino e todas as classes disponíveis.</div>
-                    <div class="tome-card-arrow">VER →</div>
-                </a>
-
-                <a href="./html/compendium/compendium-talents.html" class="tome-card">
-                    <span class="tome-card-badge badge-ready">Pronto</span>
-                    <div class="tome-card-icon">📿</div>
-                    <div class="tome-card-title">Talentos</div>
-                    <div class="tome-card-desc">Comuns, racias e especiais.</div>
-                    <div class="tome-card-arrow">VER →</div>
-                </a>
-                </a>
-
-                <a href="#" class="tome-card" style="pointer-events:none; opacity:0.5;">
-                    <span class="tome-card-badge badge-soon">Em breve</span>
-                    <div class="tome-card-icon">✨</div>
-                    <div class="tome-card-title">Magias</div>
-                    <div class="tome-card-desc">Feitiços, truques e magia homebrew por escola e nível.</div>
-                    <div class="tome-card-arrow">EM BREVE</div>
-                </a>
-
-                <a href="./html/compendium/compendium-alquimia.html" class="tome-card">
-                    <span class="tome-card-badge badge-ready">Pronto</span>
-                    <div class="tome-card-icon">⚗️</div>
-                    <div class="tome-card-title">Alquimia</div>
-                    <div class="tome-card-desc">Tudo sobre a Alquimia de Tatânea.</div>
-                    <div class="tome-card-arrow">VER →</div>
-                </a>
-
-                <a href="#" class="tome-card" style="pointer-events:none; opacity:0.5;">
-                    <span class="tome-card-badge badge-soon">Em breve</span>
-                    <div class="tome-card-icon">🐉</div>
-                    <div class="tome-card-title">Bestiário</div>
-                    <div class="tome-card-desc">Criaturas, monstros e feras do mundo homebrew.</div>
-                    <div class="tome-card-arrow">EM BREVE</div>
-                </a>
-
-                <a href="#" class="tome-card" style="pointer-events:none; opacity:0.5;">
-                    <span class="tome-card-badge badge-wip">WIP</span>
-                    <div class="tome-card-icon">🌍</div>
-                    <div class="tome-card-title">Lore do Mundo</div>
-                    <div class="tome-card-desc">Cosmologia, divindades, facções e história de Tatânea.</div>
-                    <div class="tome-card-arrow">EM BREVE</div>
-                </a>
-
-                <a href="#" class="tome-card" style="pointer-events:none; opacity:0.5;">
-                    <span class="tome-card-badge badge-wip">WIP</span>
-                    <div class="tome-card-icon">🎭</div>
-                    <div class="tome-card-title">Antecedentes</div>
-                    <div class="tome-card-desc">Backgrounds customizados para o cenário homebrew.</div>
-                    <div class="tome-card-arrow">EM BREVE</div>
-                </a>
-
-            </div>
-        </div>
-    </div>
-
     <!-- ═══════════════════════════════════════
          NAVBAR
     ═══════════════════════════════════════ -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="./index.html" class="navbar-logo">Templo de Tatânea</a>
+            <a href="./index.html" class="navbar-logo">
+                <img src="./assets/utils/Rose_logo_1_SF.png" alt="SF Logo" class="navbar-mini-logo">
+                <span class="navbar-logo-text">Templo de Tatânea</span>
+            </a>
             <ul class="navbar-menu">
                 <li><a href="./index.html" class="active">Início</a></li>
+                <li><a href="./html/utils/fichas.html">Fichas</a></li>
+                <li><a href="./html/utils/compendios.html">Compêndios</a></li>
             </ul>
             <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
         </div>
@@ -174,18 +40,185 @@
          HERO
     ═══════════════════════════════════════ -->
     <section class="home-hero-section">
+
+        <!-- Landscape Background Estático (Homebrew Jungle Island) -->
+        <div class="landscape-wrapper">
+
+            <!-- PAINEL 2 (-) Espelhado (Conecta perfeito com o 1! ) -->
+            <div class="cartoon cartoon-flip">
+                <div class="layer mountains"></div>
+                <!-- <div class="layer house"></div> -->
+                <div class="layer tree-layer-4"></div>
+                <div class="layer tree-layer-3"></div>
+                <div class="layer tree-layer-2"></div>
+                <div class="layer tree-layer-1"></div>
+                <div class="layer tree-layer-0"></div>
+            </div>
+
+            <!-- PAINEL 3 (+) Direita (Conecta perfeito com o 2! ) -->
+            <div class="cartoon">
+                <div class="layer mountains"></div>
+                <!-- <div class="layer house"></div> -->
+                <div class="layer tree-layer-4"></div>
+                <div class="layer tree-layer-3"></div>
+                <div class="layer tree-layer-2"></div>
+                <div class="layer tree-layer-1"></div>
+                <div class="layer tree-layer-0"></div>
+            </div>
+
+
+
+        </div>
+
+        <!-- Nuvens animadas -->
+        <div class="sky-clouds" aria-hidden="true">
+            <div class="cloud cloud--1"></div>
+            <div class="cloud cloud--2"></div>
+            <div class="cloud cloud--3"></div>
+            <div class="cloud cloud--4"></div>
+        </div>
+
+        <!-- Pássaros Animação em Sprite (Steps) -->
+        <div class="sky-birds" aria-hidden="true">
+            <div class="bird-container bird-container-one">
+                <div class="bird bird-one"></div>
+            </div>
+            <div class="bird-container bird-container-two">
+                <div class="bird bird-two"></div>
+            </div>
+            <div class="bird-container bird-container-three">
+                <div class="bird bird-three"></div>
+            </div>
+            <div class="bird-container bird-container-four">
+                <div class="bird bird-four"></div>
+            </div>
+        </div>
+
+        <!-- Sol — 67% visível com ondas grossas estilo chama (8 raios) -->
+        <div class="hero-sun" aria-label="Logo Templo de Tatânea">
+            <svg class="sun-svg" viewBox="0 0 400 350" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradiente do anel solar externo (Branco e Ouro Etéreo) -->
+                    <radialGradient id="sun-shell-grad" cx="50%" cy="50%" r="50%">
+                        <stop offset="60%" stop-color="#ffffff" />
+                        <stop offset="90%" stop-color="#fffceb" />
+                        <stop offset="100%" stop-color="#fde68a" />
+                    </radialGradient>
+
+                    <!-- Gradiente do glow atmosférico -->
+                    <radialGradient id="sun-glow-grad">
+                        <stop offset="0%" stop-color="#ffca28" />
+                        <stop offset="100%" stop-color="#ff6f00" />
+                    </radialGradient>
+
+                    <!-- Gradiente do espaço profundo (Universo) -->
+                    <radialGradient id="space-grad" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#140b2e" />
+                        <stop offset="60%" stop-color="#0a0514" />
+                        <stop offset="100%" stop-color="#000000" />
+                    </radialGradient>
+
+                    <!-- Gradiente da Cauda do Meteoro -->
+                    <linearGradient id="meteor-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+                        <stop offset="15%" stop-color="#a29bfe" stop-opacity="0.8" />
+                        <stop offset="100%" stop-color="#a29bfe" stop-opacity="0" />
+                    </linearGradient>
+
+                    <!-- Clip path do núcleo estrelar -->
+                    <clipPath id="sun-core-clip">
+                        <circle cx="200" cy="50" r="112" />
+                    </clipPath>
+
+                    <!-- Efeito de brilho para as estrelas -->
+                    <filter id="star-glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="1.2" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+
+                    <!-- Filtro Luz Amorfa (Apenas Luz, Translúcida e Viva) -->
+                    <filter id="amorphous-light" x="-50%" y="-50%" width="200%" height="200%">
+                        <!-- Dissolve completamente a borda vetorial (Derrete a forma pura em um halo estourado) -->
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="softGraphic" />
+
+                        <!-- Ruído lento, etéreo e expansivo, tipo gás flutuando no espaço livre -->
+                        <feTurbulence type="fractalNoise" baseFrequency="0.013" numOctaves="2" result="noise">
+                            <animate attributeName="baseFrequency" values="0.013;0.020;0.013" dur="40s"
+                                repeatCount="indefinite" />
+                        </feTurbulence>
+
+                        <!-- Arrastamos violentamente o desfoque pelas ondulações de gás para gerar os "Raios Brancos" esfumaçados -->
+                        <feDisplacementMap in="softGraphic" in2="noise" scale="65" xChannelSelector="R"
+                            yChannelSelector="G" result="amorphousShape" />
+                    </filter>
+                </defs>
+
+                <!-- Brilho Atmosférico Externo (Glow) -->
+                <!-- overflow="visible" no SVG agora impede o corte quadrado desse brilho -->
+                <g class="sun-glow-layer">
+                    <circle cx="200" cy="50" r="170" fill="url(#sun-glow-grad)" opacity="0.35" filter="blur(25px)" />
+                    <circle cx="200" cy="50" r="240" fill="url(#sun-glow-grad)" opacity="0.15" filter="blur(50px)" />
+                </g>
+
+                <!-- CAMADA 1: O SOL EXTERIOR (PURA LUZ AMORFA) -->
+                <circle cx="200" cy="50" r="145" fill="url(#sun-shell-grad)" filter="url(#amorphous-light)"
+                    opacity="0.65" />
+
+                <!-- CAMADA 2: A CAMADA NEGRA (ANEL DO TEXTO) -->
+                <circle cx="200" cy="50" r="136" fill="#08080a" />
+
+                <!-- CAMADA 3: O CENTRO ESTELAR (UNIVERSO PROFUNDO) -->
+                <g class="sun-starry-core" clip-path="url(#sun-core-clip)">
+                    <!-- Fundo do Espaço -->
+                    <rect x="50" y="-100" width="300" height="300" fill="url(#space-grad)" />
+
+                    <!-- Fundo Profundo de Poeira Estelar Estática (para contraste com o movimento JS) -->
+                    <g fill="white" opacity="0.15">
+                        <circle cx="160" cy="0" r="0.8" />
+                        <circle cx="230" cy="-20" r="0.5" />
+                        <circle cx="260" cy="30" r="1" />
+                        <circle cx="130" cy="60" r="0.7" />
+                        <circle cx="210" cy="110" r="1.2" />
+                        <circle cx="110" cy="10" r="0.6" />
+                        <circle cx="170" cy="40" r="0.5" />
+                    </g>
+
+                    <!-- As estrelas viajavantes geradas proceduralmente pelo JS entrarão aqui! -->
+                </g>
+
+                <!-- CAMADA 4: CONTEÚDO (MENSAGEM E LOGO) -->
+                <g class="sun-content-layer">
+                    <!-- Logo Centralizada (Menor e deslocada ainda mais para baixo) -->
+                    <image href="./assets/utils/Rose_logo_1_SF.png" x="135" y="5" width="130" height="130"
+                        preserveAspectRatio="xMidYMid meet" />
+
+                    <!-- Caminho circular irrestrito -->
+                    <path id="sun-msg-path" d="M 200,-74 A 124,124 0 0,0 200,174 A 124,124 0 0,0 200,-74" fill="none" />
+
+                    <!-- Mensagem - Diminuída e virada para fora -->
+                    <text font-family="'Cinzel Decorative', cursive" font-size="9.5" fill="#fde68a" letter-spacing="1">
+                        <textPath href="#sun-msg-path" startOffset="50%" text-anchor="middle">
+                            Pela Glória de Tatânea. Alma incandescente da nação Guerreira.
+                        </textPath>
+                    </text>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Conteúdo textual abaixo do sol -->
         <div class="home-hero-content">
             <h1 class="home-hero-title">Templo de Tatânea</h1>
             <p class="home-hero-subtitle">Sistema Completo de Fichas e Compêndios</p>
             <div class="home-hero-buttons">
-                <button class="btn-panel btn-panel-primary" onclick="openPanel('panel-fichas')">
-                    📜 &nbsp;Fichas de Personagem
-                </button>
-                <button class="btn-panel btn-panel-secondary" onclick="openPanel('panel-compendios')">
-                    📚 &nbsp;Compêndios
-                </button>
+                <a href="./html/utils/fichas.html" class="btn-panel btn-panel-secondary">
+                    Fichas de Personagem
+                </a>
+                <a href="./html/utils/compendios.html" class="btn-panel btn-panel-secondary">
+                    Compêndios
+                </a>
             </div>
         </div>
+    </section>
     </section>
 
     <!-- ═══════════════════════════════════════
@@ -200,15 +233,13 @@
                     <h3>Ficha Interativa</h3>
                     <p>Sistema completo de ficha de personagem com cálculos automáticos, salvamento local e exportação
                         JSON.</p>
-                    <a href="#" class="home-feature-link" onclick="openPanel('panel-fichas'); return false;">Ver Fichas
-                        →</a>
+                    <a href="./html/utils/fichas.html" class="home-feature-link">Ver Fichas →</a>
                 </div>
                 <div class="home-feature-card">
                     <div class="home-feature-icon">📚</div>
                     <h3>Compêndio de Raças</h3>
                     <p>Todas as raças homebrew com descrições detalhadas, características e habilidades especiais.</p>
-                    <a href="#" class="home-feature-link" onclick="openPanel('panel-compendios'); return false;">Ver
-                        Compêndios →</a>
+                    <a href="./html/utils/compendios.html" class="home-feature-link">Ver Compêndios →</a>
                 </div>
                 <div class="home-feature-card">
                     <div class="home-feature-icon">⚔️</div>
@@ -313,6 +344,7 @@
             }
         });
     </script>
+    <script src="./js/art/sun-stars.js"></script>
 </body>
 
 </html>

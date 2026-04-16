@@ -91,6 +91,12 @@
       /* Sol/Espirito */
       --cha: #d03878;
       /* Flor/Exótico */
+
+      /* Neon Blue (Spinners) */
+      --neon-blue: #00d4ff;
+      --neon-blue-bright: #70e4ff;
+      --neon-blue-glow: rgba(0, 212, 255, 0.6);
+      --neon-blue-glow2: rgba(0, 212, 255, 0.9);
     }
 
     /* ── BODY ── */
@@ -287,14 +293,14 @@
 
     .section-title {
       font-family: 'Cinzel', serif;
-      font-size: .68rem;
+      font-size: .85rem;
       font-weight: 600;
       letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 12px;
       padding-bottom: 7px;
-      border-bottom: 1px solid var(--b1);
+      border-bottom: 1.5px solid var(--gold-dim);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -320,7 +326,7 @@
       font-size: .58rem;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: var(--t3);
+      color: var(--gold);
       margin-bottom: 4px;
     }
 
@@ -520,6 +526,7 @@
       gap: 10px;
       margin: 10px 0 20px;
       width: 100%;
+      align-items: stretch;
     }
 
     .quick-stat-row {
@@ -533,8 +540,9 @@
       border: 1px solid var(--b1);
       border-radius: 4px;
       padding: 12px 6px;
-      min-height: 85px;
+      min-height: 92px;
       transition: border-color .2s, background .2s;
+      position: relative;
     }
 
     .quick-stat-row:hover {
@@ -542,13 +550,42 @@
       background: var(--high);
     }
 
+    /* Ornamental Corners & Screws (4 points) */
+    .quick-stat-row::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background:
+        /* Screws (Parafusos) - 4 dots */
+        radial-gradient(circle, var(--gold-bright) 1.5px, var(--gold) 2.5px, transparent 3px) 6px 6px / 6px 6px,
+        radial-gradient(circle, var(--gold-bright) 1.5px, var(--gold) 2.5px, transparent 3px) calc(100% - 6px) 6px / 6px 6px,
+        radial-gradient(circle, var(--gold-bright) 1.5px, var(--gold) 2.5px, transparent 3px) 6px calc(100% - 6px) / 6px 6px,
+        radial-gradient(circle, var(--gold-bright) 1.5px, var(--gold) 2.5px, transparent 3px) calc(100% - 6px) calc(100% - 6px) / 6px 6px,
+
+        /* Top corners (Symmetrical lines) */
+        linear-gradient(to right, var(--gold) 14px, transparent 14px) 0 0 / 14px 2px,
+        linear-gradient(to bottom, var(--gold) 14px, transparent 14px) 0 0 / 2px 14px,
+        linear-gradient(to left, var(--gold) 14px, transparent 14px) 100% 0 / 14px 2px,
+        linear-gradient(to bottom, var(--gold) 14px, transparent 14px) 100% 0 / 2px 14px,
+
+        /* Bottom corners (Symmetrical lines) */
+        linear-gradient(to right, var(--gold) 14px, transparent 14px) 0 100% / 14px 2px,
+        linear-gradient(to top, var(--gold) 14px, transparent 14px) 0 100% / 2px 14px,
+        linear-gradient(to left, var(--gold) 14px, transparent 14px) 100% 100% / 14px 2px,
+        linear-gradient(to top, var(--gold) 14px, transparent 14px) 100% 100% / 2px 14px;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 1;
+    }
+
     .quick-stat-label {
       font-family: 'Cinzel', serif;
       font-size: .6rem;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--t3);
-      flex: 1;
+      color: var(--gold);
+      text-align: center;
+      line-height: 1.2;
     }
 
     .quick-stat-value,
@@ -607,7 +644,8 @@
     .qty-btn {
       background: var(--accent-glow);
       border: none;
-      color: var(--gold-dim);
+      color: var(--neon-blue);
+      text-shadow: 0 0 5px var(--neon-blue-glow);
       font-family: 'Cinzel', serif;
       font-size: 1.1rem;
       width: 28px;
@@ -622,8 +660,8 @@
 
     .qty-btn:hover {
       background: var(--accent-glow2);
-      color: var(--accent-bright);
-      text-shadow: 0 0 8px var(--accent-glow3);
+      color: var(--neon-blue-bright);
+      text-shadow: 0 0 12px var(--neon-blue-glow2);
     }
 
     .qty-btn:active {
@@ -635,7 +673,7 @@
     .check-icon {
       width: 32px;
       height: 32px;
-      background: rgba(0, 170, 255, 0.9);
+      background: var(--accent-glow2);
       border: 1px solid var(--b2);
       border-radius: 4px;
       cursor: pointer;
@@ -660,7 +698,8 @@
       align-items: center;
       justify-content: center;
       font-size: 14px;
-      color: var(--gold);
+      color: var(--gold-bright);
+      text-shadow: 0 0 8px var(--gold-glow3), 0 0 15px var(--gold-dim);
     }
 
     /* Legacy bonus box — overriding 3-components */
@@ -696,14 +735,14 @@
     /* ── COLUMN HEADER ── */
     .col-label {
       font-family: 'Cinzel', serif;
-      font-size: .62rem;
+      font-size: .8rem;
       font-weight: 600;
       letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 10px;
       padding-bottom: 6px;
-      border-bottom: 1px solid var(--b1);
+      border-bottom: 1.5px solid var(--gold-dim);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -755,11 +794,13 @@
 
     .character-attribute-label {
       font-family: 'Cinzel', serif;
-      font-size: 0.65rem !important;
+      font-size: 0.82rem !important;
       letter-spacing: 0.15em !important;
-      color: var(--t3) !important;
+      color: var(--gold) !important;
       text-transform: uppercase;
-      margin-bottom: 2px;
+      margin-bottom: 6px;
+      padding-bottom: 3px;
+      border-bottom: 1.5px solid var(--gold-dim);
       z-index: 1;
     }
 
@@ -959,9 +1000,24 @@
       font-family: 'Crimson Text', serif;
       font-size: .92rem;
       color: var(--t1);
+      /* White for normal */
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      transition: color 0.3s;
+    }
+
+    /* Cores das perícias baseadas na proficiência */
+    .character-skill-item.is-proficient .character-skill-name {
+      color: var(--mana-hi);
+      /* Azul vibrante */
+      text-shadow: 0 0 8px var(--mana-glow);
+    }
+
+    .character-skill-item.is-expert .character-skill-name {
+      color: var(--gold-bright);
+      /* Dourado vibrante */
+      text-shadow: 0 0 10px var(--gold-glow3);
     }
 
     .character-skill-value {
@@ -1085,7 +1141,7 @@
       font-weight: 600;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--t3);
+      color: var(--gold);
       text-align: center;
     }
 
@@ -1431,32 +1487,50 @@
     .character-currency-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      margin: 8px 0;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .character-currency-grid .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      background: var(--raised);
+      padding: 15px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--b1);
+      transition: all 0.2s;
+    }
+
+    .character-currency-grid .input-group:hover {
+      border-color: var(--b2);
+      background: var(--high);
+      transform: translateY(-2px);
     }
 
     .character-currency-icon {
-      width: 22px;
-      height: 22px;
+      width: 44px;
+      height: 44px;
       clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      vertical-align: middle;
-      margin-right: 8px;
       position: relative;
       background: #000;
       flex-shrink: 0;
+      margin: 0 !important;
+      /* Reset margin for desktop vertical layout */
     }
 
     /* O preenchimento metálico */
     .character-currency-icon::before {
       content: '';
       position: absolute;
-      top: 2px;
-      left: 2px;
-      right: 2px;
-      bottom: 2px;
+      top: 3px;
+      left: 3px;
+      right: 3px;
+      bottom: 3px;
       background: inherit;
       clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
       z-index: 1;
@@ -1467,10 +1541,10 @@
     .character-currency-icon::after {
       content: '';
       position: absolute;
-      top: 2px;
-      left: 2px;
-      right: 2px;
-      bottom: 2px;
+      top: 3px;
+      left: 3px;
+      right: 3px;
+      bottom: 3px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, transparent 50%, rgba(0, 0, 0, 0.15) 100%);
       z-index: 3;
       clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
@@ -1484,7 +1558,7 @@
       left: 50% !important;
       transform: translate(-50%, -50%) !important;
       font-family: Arial, sans-serif;
-      font-size: 10px;
+      font-size: 14px;
       font-weight: bold;
       color: rgba(0, 0, 0, 0.35);
       z-index: 2;
@@ -1493,6 +1567,33 @@
       padding: 0;
       pointer-events: none;
       text-align: center;
+    }
+
+    .character-currency-grid .input-label {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold-pale);
+      margin-bottom: 0;
+      line-height: 1;
+    }
+
+    .character-currency-grid .qty-spinner {
+      width: 130px;
+      height: 34px;
+    }
+
+    .character-currency-grid input[type="number"] {
+      width: 70px !important;
+      padding: 0;
+      text-align: center;
+      font-weight: 700;
+      font-family: 'Cinzel', serif;
+      color: var(--gold-bright);
     }
 
     .character-currency-icon.cobre {
@@ -2451,6 +2552,8 @@
 
       .character-currency-grid .input-label {
         display: flex !important;
+        flex-direction: row !important;
+        /* Mantém horizontal no mobile/tablet */
         align-items: center !important;
         gap: 10px;
         margin: 0 !important;
@@ -2537,8 +2640,10 @@
       }
 
       .character-currency-grid .input-label {
-        display: flex;
-        align-items: center;
+        display: flex !important;
+        flex-direction: row !important;
+        /* Mantém horizontal no celular */
+        align-items: center !important;
         gap: 10px;
         margin: 0 !important;
         /* Remove o margin-bottom global que desalinhava no flex-row */

@@ -139,12 +139,20 @@ function calculateSkills() {
 function updateSkillProf(skillName, level) {
     skillProficiencies[skillName] = level;
 
-    // Atualiza visual do botão
+    // Atualiza visual do botão e do container
     const btn = document.getElementById(`skillToggle_${skillName}`);
+    const item = btn ? btn.parentElement : null;
     if (btn) {
         btn.classList.remove('is-proficient', 'is-expert', 'none');
-        if (level === 'proficient') btn.classList.add('is-proficient');
-        else if (level === 'expert') btn.classList.add('is-expert');
+        if (item) item.classList.remove('is-proficient', 'is-expert', 'none');
+
+        if (level === 'proficient') {
+            btn.classList.add('is-proficient');
+            if (item) item.classList.add('is-proficient');
+        } else if (level === 'expert') {
+            btn.classList.add('is-expert');
+            if (item) item.classList.add('is-expert');
+        }
     }
 
     calculateSkills();
@@ -588,9 +596,17 @@ function loadCharacterData(char) {
         const level = skillProficiencies[skill.name] || 'none';
         const btn = document.getElementById(`skillToggle_${skill.name}`);
         if (btn) {
+            const item = btn.parentElement;
             btn.classList.remove('is-proficient', 'is-expert');
-            if (level === 'proficient') btn.classList.add('is-proficient');
-            else if (level === 'expert') btn.classList.add('is-expert');
+            if (item) item.classList.remove('is-proficient', 'is-expert');
+            
+            if (level === 'proficient') {
+                btn.classList.add('is-proficient');
+                if (item) item.classList.add('is-proficient');
+            } else if (level === 'expert') {
+                btn.classList.add('is-expert');
+                if (item) item.classList.add('is-expert');
+            }
         }
     });
 

@@ -1,263 +1,80 @@
 /* ============================================================
    StyleIndex.css — Tema Exclusivo do index.html
-   Templo de Tatânea | Selva, Dinossauros, Flores, Joias e Serpentes
-   
-   ORGANIZAÇÃO:
-   ─── BLOCO 01: Fundação — Fundos e Bases
-   ─── BLOCO 02: Selva — Verdes e Folhagens
-   ─── BLOCO 03: Dinossauros — Tons Terrosos e Escamas
-   ─── BLOCO 04: Flores — Rosas, Lavendas e Vibrantes
-   ─── BLOCO 05: Joias — Gemas e Pedras Preciosas
-   ─── BLOCO 06: Serpentes — Dourados e Peles Repteis
-   ─── BLOCO 07: Tipografia
-   ─── BLOCO 08: Efeitos — Glows, Sombras, Transparências
-   ─── BLOCO 09: Brilhos — Shimmer e Reflexos
-   ─── BLOCO 10: Bordas e Ornamentos
-   ─── BLOCO 11: Responsividade
+   Templo de Tatânea | Selva, Dinossauros, Céu e Sol
 ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600&family=Outfit:wght@400;600&display=swap');
 
-/* ============================================================
-   VARIÁVEIS RAIZ
-============================================================ */
 :root {
-
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 01: FUNDAÇÃO — Fundos e Bases (Selva Noturna)
-    ───────────────────────────────────────────────────────── */
+    /* BLOCO 01: FUNDAÇÃO — Fundos e Bases */
     --idx-bg-void: #030d07;
-    /* Escuridão da selva profunda */
     --idx-bg-deep: #06140a;
-    /* Floresta densa à noite      */
     --idx-bg-dark: #0a1e10;
-    /* Solo úmido e musgo          */
     --idx-bg-medium: #0f2918;
-    /* Sombra de dossel            */
     --idx-bg-card: #112214;
-    /* Folhagem escura — cards     */
     --idx-bg-section: #0d1f11;
-    /* Base das seções             */
     --idx-bg-input: rgba(10, 24, 14, 0.95);
     --idx-bg-overlay: rgba(2, 8, 4, 0.85);
 
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 02: SELVA — Verdes Vivos e Folhagens Tropicais
-    ───────────────────────────────────────────────────────── */
+    /* BLOCO 02: SELVA — Verdes Vivos */
     --idx-jungle-bright: #4ade80;
-    /* Verde neon de folha jovem   */
     --idx-jungle-vivid: #22c55e;
-    /* Verde tropical intenso      */
     --idx-jungle-mid: #16a34a;
-    /* Vegetação densa             */
     --idx-jungle-deep: #166534;
-    /* Selva profunda              */
     --idx-jungle-shadow: #14532d;
-    /* Sombra de cipó              */
     --idx-jungle-mist: rgba(74, 222, 128, 0.12);
-    /* Névoa esmeralda */
     --idx-jungle-glow: rgba(34, 197, 94, 0.35);
-    --idx-jungle-fern: #86efac;
-    /* Samambaia clara             */
-    --idx-jungle-moss: #3f6b3d;
-    /* Musgo da pedra              */
-    --idx-jungle-canopy: rgba(22, 101, 52, 0.30);
-    /* Dossel translúcido */
 
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 03: DINOSSAUROS — Escamas, Ossos e Terra Primitiva
-    ───────────────────────────────────────────────────────── */
-    --idx-dino-scale-dark: #1a1005;
-    /* Escama negra                */
-    --idx-dino-scale-mid: #3d2b0e;
-    /* Escama marrom-ferrugem      */
-    --idx-dino-scale-warm: #6b4018;
-    /* Escama âmbar                */
-    --idx-dino-bone: #c4a96a;
-    /* Ósseo fóssil                */
-    --idx-dino-amber: #d97706;
-    /* Âmbar com fóssil            */
-    --idx-dino-claw: #92400e;
-    /* Garra envelhecida           */
-    --idx-dino-earth: #78350f;
-    /* Terra batida, primitiva     */
-    --idx-dino-hide: rgba(61, 43, 14, 0.65);
-    /* Couro de escama */
-    --idx-dino-fossil: rgba(196, 169, 106, 0.18);
-
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 04: FLORES — Pétalas Tropicais e Exóticas
-    ───────────────────────────────────────────────────────── */
-    --idx-flower-fuchsia: #e879f9;
-    /* Orquídea fúcsia             */
-    --idx-flower-pink: #f472b6;
-    /* Rosa hibisco                */
-    --idx-flower-coral: #fb7185;
-    /* Coral tropical              */
-    --idx-flower-violet: #a78bfa;
-    /* Violeta de selva            */
-    --idx-flower-yellow: #fbbf24;
-    /* Girassol silvestre          */
-    --idx-flower-lavender: #c4b5fd;
-    /* Lavanda suave               */
-    --idx-flower-bloom: rgba(232, 121, 249, 0.20);
-    /* Florescência */
-    --idx-flower-petal: rgba(244, 114, 182, 0.15);
-    /* Pétala translúcida */
-    --idx-flower-glow: rgba(232, 121, 249, 0.40);
-
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 05: JOIAS — Gemas Preciosas e Pedras Lapidadas
-    ───────────────────────────────────────────────────────── */
+    /* BLOCO 05: JOIAS */
     --idx-gem-emerald: #10b981;
-    /* Esmeralda viva              */
-    --idx-gem-sapphire: #3b82f6;
-    /* Safira profunda             */
-    --idx-gem-ruby: #ef4444;
-    /* Rubi ardente                */
-    --idx-gem-amethyst: #8b5cf6;
-    /* Ametista encantada          */
-    --idx-gem-topaz: #f59e0b;
-    /* Topázio âmbar               */
-    --idx-gem-jade: #059669;
-    /* Jade imperial               */
-    --idx-gem-diamond: #e0f2fe;
-    /* Diamante cristal            */
-    --idx-gem-onyx: #1c1917;
-    /* Ônix abissal                */
     --idx-gem-glow-emerald: rgba(16, 185, 129, 0.45);
-    --idx-gem-glow-amethyst: rgba(139, 92, 246, 0.40);
-    --idx-gem-glow-ruby: rgba(239, 68, 68, 0.35);
-    --idx-gem-shine: rgba(224, 242, 254, 0.08);
-    /* Refrações   */
 
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 06: SERPENTES — Escamas Douradas e Pele Iridescente
-    ───────────────────────────────────────────────────────── */
+    /* BLOCO 06: SERPENTES — Dourados */
     --idx-snake-gold: #eab308;
-    /* Dourado de cobra-rei        */
     --idx-snake-gold-dark: #a16207;
-    /* Escama dourada escura       */
-    --idx-snake-iridescent: #5eead4;
-    /* Iridescência de cobra verde */
-    --idx-snake-venom: #84cc16;
-    /* Verde-veneno limão          */
-    --idx-snake-copper: #c77e40;
-    /* Cobre da cascavel           */
-    --idx-snake-cream: #fef3c7;
-    /* Bege pálido underbelly      */
-    --idx-snake-pattern: rgba(234, 179, 8, 0.20);
-    /* Padrão escama */
     --idx-snake-glow: rgba(234, 179, 8, 0.45);
-    --idx-snake-shimmer: rgba(94, 234, 212, 0.30);
 
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 07: TIPOGRAFIA
-    ───────────────────────────────────────────────────────── */
-    --idx-font-display: 'Cinzel', 'Pirata One', serif;
-    --idx-font-body: 'Crimson Text', Georgia, serif;
+    /* BLOCO 07: TIPOGRAFIA */
+    --idx-font-display: 'Cinzel', serif;
+    --idx-font-body: 'Inter', sans-serif;
+    --idx-font-alt: 'Outfit', sans-serif;
     --idx-text-primary: #d4f7e0;
-    /* Verde-branco suave          */
     --idx-text-secondary: #7db89a;
-    /* Verde acinzentado           */
     --idx-text-highlight: #a7f3d0;
-    /* Menta brilhante             */
     --idx-text-gold: #fde68a;
-    /* Dourado de gema             */
-    --idx-text-flower: #f9a8d4;
-    /* Rosa pétala texto           */
-    --idx-text-dim: #4a7a5e;
-    /* Verde apagado               */
     --idx-text-on-dark: #ecfdf5;
-    /* Branco-verde puro           */
 
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 08: EFEITOS — Glows, Sombras e Transparências
-    ───────────────────────────────────────────────────────── */
+    /* BLOCO 08: EFEITOS */
     --idx-shadow-dark: rgba(0, 0, 0, 0.85);
     --idx-shadow-jungle: rgba(6, 20, 10, 0.80);
-    --idx-shadow-green: rgba(22, 101, 52, 0.50);
     --idx-shadow-gold: rgba(161, 98, 7, 0.45);
-    --idx-shadow-emerald: rgba(16, 185, 129, 0.30);
-    --idx-shadow-flower: rgba(232, 121, 249, 0.25);
-    --idx-transp-overlay: rgba(3, 13, 7, 0.88);
-    --idx-transp-card: rgba(10, 30, 16, 0.70);
-    --idx-transp-glass: rgba(17, 34, 20, 0.60);
-
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 09: BRILHOS — Shimmer, Reflexo de Joia, Iridescência
-    ───────────────────────────────────────────────────────── */
-    --idx-shine-subtle: rgba(78, 222, 128, 0.04);
-    --idx-shine-light: rgba(78, 222, 128, 0.09);
-    --idx-shine-gold-soft: rgba(234, 179, 8, 0.06);
-    --idx-shine-gold-med: rgba(234, 179, 8, 0.14);
-    --idx-shine-flower: rgba(232, 121, 249, 0.06);
-
-    /* ─────────────────────────────────────────────────────────
-       BLOCO 10: BORDAS E ORNAMENTOS
-    ───────────────────────────────────────────────────────── */
     --idx-border-jungle: rgba(74, 222, 128, 0.35);
     --idx-border-gold: rgba(234, 179, 8, 0.50);
-    --idx-border-flower: rgba(232, 121, 249, 0.30);
-    --idx-border-gem: rgba(16, 185, 129, 0.45);
-    --idx-border-dim: rgba(22, 101, 52, 0.20);
-    --idx-border-snake: rgba(94, 234, 212, 0.35);
+
+    /* MISSING UTILITIES */
+    --idx-text-dim: #7db89a;
+    --idx-border-dim: rgba(74, 222, 128, 0.15);
+    --idx-flower-fuchsia: #f0abfc;
 }
 
-
-/* ============================================================
-   RESET ESPECÍFICO PARA INDEX
-============================================================ */
 body {
     background-color: var(--idx-bg-void);
     background-image:
         radial-gradient(ellipse at 15% 20%, rgba(22, 101, 52, 0.18) 0%, transparent 50%),
-        radial-gradient(ellipse at 85% 75%, rgba(232, 121, 249, 0.08) 0%, transparent 45%),
-        radial-gradient(ellipse at 50% 100%, rgba(234, 179, 8, 0.06) 0%, transparent 40%);
+        radial-gradient(ellipse at 85% 75%, rgba(232, 121, 249, 0.08) 0%, transparent 45%);
     background-attachment: fixed;
     font-family: var(--idx-font-body);
     color: var(--idx-text-primary);
-    min-height: 100vh;
-    padding: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
 }
 
-
-/* ============================================================
-   NAVBAR — Dossel da Selva
-============================================================ */
 .navbar {
-    background:
-        linear-gradient(135deg,
-            rgba(3, 13, 7, 0.98) 0%,
-            rgba(6, 20, 10, 0.96) 60%,
-            rgba(10, 30, 16, 0.95) 100%);
+    background: rgba(3, 13, 7, 0.95);
     border-bottom: 2px solid var(--idx-border-jungle);
-    padding: 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow:
-        0 4px 20px var(--idx-shadow-jungle),
-        0 1px 0 rgba(74, 222, 128, 0.08);
     backdrop-filter: blur(10px);
-}
-
-.navbar::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg,
-            transparent,
-            var(--idx-snake-gold) 20%,
-            var(--idx-jungle-bright) 50%,
-            var(--idx-snake-gold) 80%,
-            transparent);
-    opacity: 0.5;
 }
 
 .navbar-container {
@@ -274,19 +91,34 @@ body {
     font-size: 1.8rem;
     color: var(--idx-snake-gold);
     text-decoration: none;
-    text-shadow:
-        2px 2px 6px var(--idx-shadow-dark),
-        0 0 20px var(--idx-snake-glow);
-    letter-spacing: 1px;
-    transition: all 0.35s ease;
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.navbar-logo:hover {
-    color: var(--idx-jungle-bright);
-    text-shadow:
-        0 0 15px var(--idx-jungle-glow),
-        0 0 35px var(--idx-gem-glow-emerald);
+.navbar-logo-text {
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.navbar-logo-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        var(--idx-gem-emerald) 15%, 
+        var(--idx-snake-gold) 50%, 
+        var(--idx-jungle-bright) 85%,
+        transparent 100%);
+    box-shadow: 0 0 10px var(--idx-gem-glow-emerald);
+}
+
+.navbar-mini-logo {
+    height: 60px;
 }
 
 .navbar-menu {
@@ -294,284 +126,386 @@ body {
     list-style: none;
     gap: 30px;
     margin: 0;
-    padding: 0;
 }
 
-.navbar-menu li a {
+.navbar-menu a {
     color: var(--idx-text-secondary);
     text-decoration: none;
-    font-family: var(--idx-font-display);
-    font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
-    transition: all 0.3s ease;
-    padding: 8px 15px;
-    border-bottom: 2px solid transparent;
     position: relative;
+    padding-bottom: 6px;
+    transition: color 0.3s ease;
 }
 
-.navbar-menu li a::after {
+.navbar-menu a::after {
     content: '';
     position: absolute;
-    bottom: -2px;
-    left: 50%;
+    bottom: 0;
+    left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--idx-gem-emerald), var(--idx-snake-gold));
-    transition: all 0.35s ease;
-    transform: translateX(-50%);
+    background: linear-gradient(90deg, 
+        var(--idx-gem-emerald) 0%, 
+        var(--idx-snake-gold) 50%, 
+        var(--idx-jungle-bright) 100%);
+    transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.navbar-menu li a:hover,
-.navbar-menu li a.active {
-    color: var(--idx-jungle-bright);
-    border-bottom-color: transparent;
+.navbar-menu a:hover {
+    color: var(--idx-text-primary);
 }
 
-.navbar-menu li a:hover::after,
-.navbar-menu li a.active::after {
+.navbar-menu a:hover::after {
     width: 100%;
+}
+
+.navbar-menu a.active {
+    color: var(--idx-snake-gold);
+    text-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
 }
 
 .navbar-toggle {
     display: none;
+    /* Hide on Desktop */
     background: none;
-    border: 2px solid var(--idx-border-jungle);
-    color: var(--idx-jungle-bright);
-    font-size: 1.5rem;
-    padding: 5px 15px;
+    border: none;
+    color: var(--idx-snake-gold);
+    font-size: 2rem;
     cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    padding: 0 10px;
+    transition: color 0.3s;
 }
 
 .navbar-toggle:hover {
-    background: var(--idx-jungle-mist);
-    box-shadow: 0 0 10px var(--idx-jungle-glow);
+    color: var(--idx-jungle-bright);
 }
 
-
 /* ============================================================
-   HERO SECTION — Clareira Sagrada da Selva
+   HERO SECTION — Céu, Nuvens e Fundo Artístico
 ============================================================ */
-.home-hero-section,
-.hero {
-    min-height: 80vh;
+.home-hero-section {
+    min-height: 85vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 80px 20px;
+    padding: 120px 20px 80px;
     position: relative;
     overflow: hidden;
-    border-bottom: 3px solid transparent;
-    border-image: linear-gradient(90deg,
-            transparent,
-            var(--idx-snake-gold) 25%,
-            var(--idx-gem-emerald) 50%,
-            var(--idx-snake-gold) 75%,
-            transparent) 1;
-    background:
-        radial-gradient(ellipse at 50% 0%, rgba(22, 101, 52, 0.25) 0%, transparent 60%),
-        radial-gradient(ellipse at 20% 80%, rgba(232, 121, 249, 0.10) 0%, transparent 45%),
-        radial-gradient(ellipse at 80% 20%, rgba(234, 179, 8, 0.08) 0%, transparent 40%),
-        linear-gradient(180deg, #030d07 0%, #06140a 60%, #040c08 100%);
+    background: linear-gradient(to bottom, #74b9ff 0%, #a29bfe 100%);
 }
 
-/* Textura de folhagem de fundo */
-.home-hero-section::before {
-    content: '';
+.sky-clouds {
     position: absolute;
     inset: 0;
-    background-image:
-        radial-gradient(circle at 10% 30%, rgba(74, 222, 128, 0.06) 0%, transparent 30%),
-        radial-gradient(circle at 90% 70%, rgba(232, 121, 249, 0.05) 0%, transparent 25%),
-        radial-gradient(circle at 50% 50%, rgba(94, 234, 212, 0.04) 0%, transparent 40%);
+    z-index: 1;
     pointer-events: none;
-    animation: heroAmbience 8s ease-in-out infinite alternate;
+    opacity: 0.6;
 }
 
-/* Partículas de selva no hero */
-.home-hero-section::after {
-    content: '🌿 🌸 🦕 💎 🐍 🌺 🌿 ✨ 💚 🌸';
+.cloud {
     position: absolute;
-    bottom: -20px;
+    background: #fff;
+    width: 220px;
+    height: 70px;
+    border-radius: 50px;
+    filter: blur(10px);
+    animation: moveC linear infinite;
+}
+
+.cloud::after,
+.cloud::before {
+    content: "";
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.cloud::after {
+    width: 110px;
+    height: 110px;
+    top: -55px;
+    left: 35px;
+}
+
+.cloud::before {
+    width: 90px;
+    height: 90px;
+    top: -45px;
+    right: 35px;
+}
+
+.cloud--1 {
+    top: 15%;
+    left: -300px;
+    animation-duration: 60s;
+}
+
+.cloud--2 {
+    top: 35%;
+    right: -300px;
+    animation: moveCR linear infinite 45s;
+}
+
+.cloud--3 {
+    top: 60%;
+    left: -250px;
+    animation-duration: 75s;
+    animation-delay: 15s;
+}
+
+@keyframes moveC {
+    from {
+        left: -300px;
+    }
+
+    to {
+        left: 110%;
+    }
+}
+
+@keyframes moveCR {
+    from {
+        right: -300px;
+    }
+
+    to {
+        right: 110%;
+    }
+}
+
+/* ============================================================
+   AMBIÊNCIA OCEASIONAL — Pássaros em Sprite Opesados
+============================================================ */
+.sky-birds {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10; /* Na FRENTE do Sol para evitar bugs de filtro SVG e focar silhueta */
+    overflow: hidden;
+}
+
+.bird {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/174479/bird-cells-new.svg');
+    /* Filtro silhueta escura: deixei levemente esbranquiçado/esverdeado para misturar na luz e no fundo escuro */
+    filter: invert(10%) sepia(55%) saturate(300%) hue-rotate(150deg) brightness(80%) contrast(110%);
+    background-size: auto 100%;
+    width: 88px;
+    height: 125px;
+    will-change: background-position;
+    animation: fly-cycle 6.8s steps(1) infinite;
+}
+
+.bird-one { animation-delay: -0.5s; }
+.bird-two { animation-delay: -0.75s; }
+.bird-three { animation-delay: -0.25s; }
+.bird-four { animation-delay: -0.5s; }
+
+.bird-container {
+    position: absolute;
+    top: 70%;
+    left: -10%;
+    transform: scale(0) translateX(-10vw);
+    will-change: transform;
+    animation: fly-right-one linear infinite;
+}
+
+/* Deixei um pouco mais lento para ser um pouco mais sutil que o original de 14s */
+.bird-container-one { top: 65%; animation-duration: 45s; animation-delay: 0s; }
+.bird-container-two { top: 45%; animation-duration: 48s; animation-delay: 5s; }
+.bird-container-three { top: 75%; animation-duration: 52s; animation-delay: 15s; }
+.bird-container-four { top: 30%; animation-duration: 46s; animation-delay: 20s; }
+
+@keyframes fly-cycle {
+    /* 0-58% do tempo (aprox 4s): Planando com ASAS ABERTAS (Frame 9) */
+    0%, 58% { background-position: -720px 0; }
+
+    /* 1ª Batida (58% - 79%): 10 quadros orgânicos */
+    60% { background-position: -810px 0; }
+    62% { background-position: 0 0; }
+    64% { background-position: -90px 0; }
+    66% { background-position: -180px 0; }
+    68% { background-position: -270px 0; }
+    70% { background-position: -360px 0; }
+    72% { background-position: -450px 0; }
+    74% { background-position: -540px 0; }
+    76% { background-position: -630px 0; }
+    78% { background-position: -720px 0; }
+
+    /* 2ª Batida (79% - 100%) */
+    81% { background-position: -810px 0; }
+    83% { background-position: 0 0; }
+    85% { background-position: -90px 0; }
+    87% { background-position: -180px 0; }
+    89% { background-position: -270px 0; }
+    91% { background-position: -360px 0; }
+    93% { background-position: -450px 0; }
+    95% { background-position: -540px 0; }
+    97% { background-position: -630px 0; }
+    100% { background-position: -720px 0; }
+}
+
+@keyframes fly-right-one {
+    0% { transform: scale(0.12) translateX(-10vw); }
+    15% { transform: translateY(2vh) translateX(20vw) scale(0.18); }
+    35% { transform: translateY(-1vh) translateX(45vw) scale(0.22); }
+    55% { transform: translateY(3vh) translateX(70vw) scale(0.18); }
+    75% { transform: translateY(0vh) translateX(95vw) scale(0.15); }
+    100% { transform: translateY(0vh) translateX(120vw) scale(0.12); }
+}
+
+.hero-sun {
+    position: absolute;
+    top: -5px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 1.2rem;
-    letter-spacing: 20px;
-    opacity: 0.18;
-    white-space: nowrap;
+    width: 550px;
+    z-index: 5;
     pointer-events: none;
+    /* Previne que o glow bloqueie os cliques nos botões */
+    filter: drop-shadow(0 0 40px rgba(255, 234, 0, 0.6));
 }
 
-@keyframes heroAmbience {
-    0% {
-        opacity: 0.6;
-    }
-
-    100% {
-        opacity: 1;
+/* Responsividade do Sol Oco & Content */
+@media (max-width: 768px) {
+    .hero-sun {
+        width: 320px;
     }
 }
 
-.home-hero-content,
-.hero-content {
-    max-width: 800px;
+/* (Sessão Limpa: Raios Solares deletados durante refatoração procedural JS) */
+
+.home-hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 10;
+    max-width: 900px;
+    margin-top: 40px;
+    animation: fUp 1.2s ease-out both;
+}
+
+@keyframes fUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .home-hero-title,
 .hero-title {
     font-family: var(--idx-font-display);
-    font-size: clamp(2.8rem, 7vw, 5rem);
-    font-weight: 700;
-    color: var(--idx-snake-gold);
-    margin-bottom: 20px;
-    text-shadow:
-        3px 3px 8px var(--idx-shadow-dark),
-        0 0 30px var(--idx-snake-glow),
-        0 0 60px rgba(234, 179, 8, 0.20);
-    line-height: 1.15;
+    font-size: 3.5rem;
+    color: var(--idx-text-gold);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+    margin-bottom: 8px;
     letter-spacing: 2px;
-    animation: titleReveal 1s ease-out both;
 }
 
-@keyframes titleReveal {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.home-hero-subtitle {
+    font-family: var(--idx-font-body);
+    font-size: 1.6rem;
+    color: var(--idx-text-on-dark);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+    margin-bottom: 25px;
 }
 
-.home-hero-subtitle,
-.hero-subtitle {
-    font-size: 1.4rem;
-    color: var(--idx-text-highlight);
-    margin-bottom: 40px;
-    font-style: italic;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 10px var(--idx-shadow-jungle);
-    animation: subtitleReveal 1s 0.3s ease-out both;
-}
-
-@keyframes subtitleReveal {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.home-hero-buttons,
-.hero-buttons {
+.home-hero-buttons {
     display: flex;
-    gap: 20px;
     justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 36px;
-    animation: buttonsReveal 1s 0.5s ease-out both;
+    gap: 20px;
 }
 
-@keyframes buttonsReveal {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* ─── Botões do Hero ─── */
 .btn-panel {
     font-family: var(--idx-font-display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    font-size: 1.1rem;
+    font-weight: 700;
     text-transform: uppercase;
-    padding: 15px 36px;
-    border-radius: 3px;
-    border: none;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 6px;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.25s, box-shadow 0.25s;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    width: 280px;
+    text-align: center;
+    box-sizing: border-box;
 }
 
-.btn-panel::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.12),
-            transparent);
-    transition: left 0.45s ease;
-}
-
-.btn-panel:hover::before {
-    left: 100%;
-}
-
-/* Primário — Selva Vibrante */
 .btn-panel-primary {
-    background: linear-gradient(135deg, var(--idx-jungle-deep) 0%, var(--idx-jungle-shadow) 100%);
-    color: var(--idx-jungle-bright);
-    box-shadow:
-        0 4px 20px var(--idx-shadow-green),
-        inset 0 1px 0 rgba(74, 222, 128, 0.20),
-        0 0 0 1px var(--idx-border-jungle);
+    background: linear-gradient(135deg, var(--idx-jungle-vivid), var(--idx-jungle-deep));
+    color: #fff;
+    box-shadow: 0 4px 15px var(--idx-jungle-glow);
+    border-color: var(--idx-jungle-bright);
 }
 
 .btn-panel-primary:hover {
+    background: linear-gradient(135deg, var(--idx-jungle-bright), var(--idx-jungle-vivid));
     transform: translateY(-3px);
-    box-shadow:
-        0 8px 32px var(--idx-shadow-green),
-        inset 0 1px 0 rgba(74, 222, 128, 0.28),
-        0 0 0 1px rgba(74, 222, 128, 0.65),
-        0 0 20px var(--idx-jungle-glow);
-    color: var(--idx-text-on-dark);
+    box-shadow: 0 8px 25px rgba(74, 222, 128, 0.5);
 }
 
-/* Secundário — Joia Dourada */
 .btn-panel-secondary {
-    background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(161, 98, 7, 0.08) 100%);
+    background: rgba(10, 24, 14, 0.6);
     color: var(--idx-snake-gold);
-    box-shadow:
-        0 4px 18px rgba(0, 0, 0, 0.40),
-        inset 0 0 0 1px var(--idx-border-gold);
+    border: 2px solid var(--idx-snake-gold);
+    box-shadow: 0 4px 15px var(--idx-snake-glow);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
+/* Textura da Pedra Preciosa Esmeralda (Invisível no Normal) */
+.btn-panel-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+    /* Cortes em Facetas e Feixe de Brilho Translúcido */
+    background: 
+        linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.6) 30%, transparent 40%),
+        linear-gradient(45deg, var(--idx-gem-emerald) 0%, rgba(4, 120, 87, 0.95) 45%, rgba(6, 95, 70, 1) 50%, var(--idx-gem-emerald) 100%),
+        linear-gradient(-45deg, transparent 40%, rgba(52, 211, 153, 0.3) 50%, transparent 60%);
+    background-size: 300% 300%, 100% 100%, 100% 100%;
+    background-position: 100% 50%, 0 0, 0 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* O Poder da Joia ao Passar o Mouse */
 .btn-panel-secondary:hover {
-    transform: translateY(-3px);
-    background: linear-gradient(135deg, rgba(234, 179, 8, 0.20) 0%, rgba(161, 98, 7, 0.14) 100%);
-    box-shadow:
-        0 8px 28px rgba(0, 0, 0, 0.50),
-        inset 0 0 0 1px rgba(234, 179, 8, 0.75),
-        0 0 20px var(--idx-snake-glow);
+    color: #fff;
+    border-color: #a7f3d0;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 
+        0 12px 35px rgba(16, 185, 129, 0.70), 
+        inset 0 0 25px rgba(2, 44, 34, 0.85); /* Profundidade escura dentro da joia */
 }
 
+/* Disparo do Brilho e Revelação Cristalina */
+.btn-panel-secondary:hover::before {
+    opacity: 1;
+    animation: gemShine 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
 
-/* ============================================================
-   FEATURES SECTION — Câmara das Relíquias da Selva
-============================================================ */
+/* A Luz Cruzando a Camada do Cristal */
+@keyframes gemShine {
+    0% {
+        background-position: 100% 50%, 0 0, 0 0;
+    }
+    100% {
+        background-position: -20% 50%, 0 0, 0 0;
+    }
+}
+
+/* Resto das Seções... */
+
 .home-features-section,
 .features {
     padding: 90px 20px;
@@ -583,7 +517,7 @@ body {
         linear-gradient(180deg, var(--idx-bg-deep) 0%, var(--idx-bg-medium) 50%, var(--idx-bg-deep) 100%);
 }
 
-/* Padrão de escamas de serpente no fundo */
+/* PadrÃ£o de escamas de serpente no fundo */
 .home-features-section::before {
     content: '';
     position: absolute;
@@ -724,7 +658,7 @@ body {
     opacity: 1;
 }
 
-/* Ícones das features — cada um com brilho de joia específica */
+/* Ãcones das features â€” cada um com brilho de joia especÃ­fica */
 .home-feature-icon,
 .feature-icon {
     font-size: 3rem;
@@ -795,7 +729,7 @@ body {
 
 
 /* ============================================================
-   ABOUT SECTION — Lenda da Selva
+   ABOUT SECTION â€” Lenda da Selva
 ============================================================ */
 .home-about-section,
 .about {
@@ -849,7 +783,7 @@ body {
 
 
 /* ============================================================
-   FOOTER — Raízes Antigas
+   FOOTER â€” RaÃ­zes Antigas
 ============================================================ */
 .footer {
     background:
@@ -869,7 +803,7 @@ body {
 }
 
 .footer::before {
-    content: '🌿 ◆ 🐍 ◆ 💎 ◆ 🦕 ◆ 🌸 ◆ 💎 ◆ 🐍 ◆ 🌿';
+    content: 'ðŸŒ¿ â—† ðŸ â—† ðŸ’Ž â—† ðŸ¦• â—† ðŸŒ¸ â—† ðŸ’Ž â—† ðŸ â—† ðŸŒ¿';
     display: block;
     font-size: 0.85rem;
     letter-spacing: 8px;
@@ -937,14 +871,14 @@ body {
 
 
 /* ============================================================
-   PANEL OVERLAY — Portal da Selva
+   PANEL OVERLAY â€” Portal da Selva
 ============================================================ */
 .panel-overlay {
     position: fixed;
     inset: 0;
     background: rgba(2, 8, 4, 0.88);
     backdrop-filter: blur(8px);
-    z-index: 1000;
+    z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -960,7 +894,7 @@ body {
 
 
 /* ============================================================
-   TOME PANEL — Pergaminho da Selva (Joias e Dinossauros)
+   TOME PANEL â€” Pergaminho da Selva (Joias e Dinossauros)
 ============================================================ */
 .tome-panel {
     position: relative;
@@ -1019,7 +953,7 @@ body {
 
 
 /* ============================================================
-   PANEL HEADER — Inscrição do Templo
+   PANEL HEADER â€” InscriÃ§Ã£o do Templo
 ============================================================ */
 .tome-header {
     padding: 34px 44px 22px;
@@ -1101,7 +1035,7 @@ body {
 
 
 /* ============================================================
-   TOME CARDS GRID — Relíquias da Selva
+   TOME CARDS GRID â€” RelÃ­quias da Selva
 ============================================================ */
 .tome-grid {
     display: grid;
@@ -1259,9 +1193,9 @@ body {
 
 .tome-card-desc {
     font-family: var(--idx-font-body);
-    font-size: 0.90rem;
+    font-size: 0.88rem;
     color: var(--idx-text-dim);
-    line-height: 1.55;
+    line-height: 1.6;
 }
 
 .tome-card-arrow {
@@ -1280,8 +1214,34 @@ body {
 
 
 /* ============================================================
-   CLOSE BUTTON — Espinho de Selva
+   CLOSE BUTTON â€” Espinho de Selva
 ============================================================ */
+.tome-panel.stand-alone {
+    transform: translateY(0);
+    opacity: 1;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    display: block; /* Garante que não herda display: none ou algo similar */
+}
+
+/* Revelar cards automaticamente em páginas stand-alone */
+.tome-panel.stand-alone .tome-card {
+    opacity: 1;
+    transform: translateY(0);
+    animation: cardReveal 0.5s ease forwards;
+}
+
+/* Escalonamento da animação para os cards stand-alone */
+.tome-panel.stand-alone .tome-card:nth-child(1) { animation-delay: 0.1s; }
+.tome-panel.stand-alone .tome-card:nth-child(2) { animation-delay: 0.15s; }
+.tome-panel.stand-alone .tome-card:nth-child(3) { animation-delay: 0.2s; }
+.tome-panel.stand-alone .tome-card:nth-child(4) { animation-delay: 0.25s; }
+.tome-panel.stand-alone .tome-card:nth-child(5) { animation-delay: 0.3s; }
+.tome-panel.stand-alone .tome-card:nth-child(6) { animation-delay: 0.35s; }
+.tome-panel.stand-alone .tome-card:nth-child(7) { animation-delay: 0.4s; }
+.tome-panel.stand-alone .tome-card:nth-child(8) { animation-delay: 0.45s; }
+
 .tome-close {
     position: absolute;
     top: 16px;
@@ -1310,7 +1270,7 @@ body {
 
 
 /* ============================================================
-   ANIMAÇÕES ORNAMENTAIS — Gemas Pulsantes
+   ANIMAÃ‡Ã•ES ORNAMENTAIS â€” Gemas Pulsantes
 ============================================================ */
 @keyframes gemPulse {
 
@@ -1347,7 +1307,7 @@ body {
     }
 }
 
-/* Seleção de texto — Cor de joia */
+/* SeleÃ§Ã£o de texto â€” Cor de joia */
 ::selection {
     background: rgba(74, 222, 128, 0.28);
     color: var(--idx-text-on-dark);
@@ -1355,7 +1315,7 @@ body {
 
 
 /* ============================================================
-   BLOCO 11: RESPONSIVIDADE — Selva em Todos os Tamanhos
+   BLOCO 11: RESPONSIVIDADE â€” Selva em Todos os Tamanhos
 ============================================================ */
 @media (max-width: 768px) {
     .navbar-container {
@@ -1448,6 +1408,14 @@ body {
 
     .home-hero-buttons {
         gap: 14px;
+        flex-direction: column; /* Botões empilhados para melhor clique no celular */
+        width: 100%;
+        padding: 0 10px;
+    }
+    
+    .btn-panel {
+        width: 100%; /* Ocupar toda a largura em telas pequenas */
+        text-align: center;
     }
 
     .tome-grid {
