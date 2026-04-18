@@ -533,6 +533,10 @@ body {
     animation: fade-in-entry 1s ease-out 1.6s forwards;
 }
 
+.sun-logo {
+    transform: translateY(0);
+}
+
 .sun-glow-shell {
     animation: pulse-glow-slow 2s ease-in-out infinite alternate;
 }
@@ -1588,6 +1592,11 @@ body {
     .home-section-title {
         font-size: 1.8rem;
     }
+
+    .sun-logo {
+        transform: translateY(120px);
+        /* ajusta até ficar bom */
+    }
 }
 
 @media (max-width: 480px) {
@@ -1627,7 +1636,10 @@ body {
     }
 }
 
-
+.sun-logo {
+    transform: translateY(120px);
+    /* ajusta até ficar bom */
+}
 
 /* Zoom focado apenas no pilar */
 
