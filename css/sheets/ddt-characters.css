@@ -1554,13 +1554,13 @@
     /* A letra central */
     .character-currency-symbol {
       position: absolute;
-      top: 50% !important;
-      left: 50% !important;
+      top: 52.5% !important;
+      left: 52.5% !important;
       transform: translate(-50%, -50%) !important;
       font-family: Arial, sans-serif;
       font-size: 14px;
       font-weight: bold;
-      color: rgba(0, 0, 0, 0.35);
+      color: rgba(0, 0, 0, 0.223);
       z-index: 2;
       line-height: 0;
       margin: 0;

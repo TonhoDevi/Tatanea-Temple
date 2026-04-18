@@ -482,7 +482,7 @@ body {
 
     /* Sequência: Silêncio (0.5s) -> Crescimento Vertical (3s) -> Pausa (0.5s) -> Expansão */
     transform-origin: center top;
-    animation: expand-pillar-cinematic 3.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    animation: expand-pillar-cinematic 2.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
 @keyframes expand-pillar-cinematic {
@@ -496,12 +496,12 @@ body {
         opacity: 1;
     }
 
-    65% {
+    35% {
         /* Desce até o chão */
         transform: translateX(-50%) scaleX(0.01) scaleY(1);
     }
 
-    85%,
+    65%,
     100% {
         /* Expande para os lados */
         transform: translateX(-50%) scaleX(1) scaleY(1);
@@ -525,16 +525,16 @@ body {
     /* Revelação sincronizada com o final da expansão */
     opacity: 0;
     transform: translateY(10px);
-    animation: fade-in-entry 0.8s ease-out 2.8s forwards;
+    animation: fade-in-entry 0.8s ease-out 1.8s forwards;
 }
 
 .sun-content-layer {
     opacity: 0;
-    animation: fade-in-entry 1s ease-out 2.6s forwards;
+    animation: fade-in-entry 1s ease-out 1.6s forwards;
 }
 
 .sun-glow-shell {
-    animation: pulse-glow-slow 4s ease-in-out infinite alternate;
+    animation: pulse-glow-slow 2s ease-in-out infinite alternate;
 }
 
 @keyframes pulse-glow-slow {
