@@ -8,10 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!core) return;
 
     // Configurações
-    const STAR_COUNT = 45;
-    const coreCenterX = 200;
-    const coreCenterY = 50;
-    const coreRadius = 112;
+    const STAR_COUNT = 80; // Reduzido para performance
+    const coreX = 100;
+    const coreY = -100;
+    const coreWidth = 200;
+    const coreHeight = 1100;
 
     const stars = [];
 
@@ -23,28 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
     class Star {
         constructor() {
             this.element = createSVGElement('circle');
-            this.init();
+            this.init(true);
             core.appendChild(this.element);
         }
 
         init(isFirstLoad = false) {
-            // Se for o primeiro carregamento, espalha por tudo. 
-            // Se for reset (saiu da tela), coloca na borda esquerda ou topo.
-            
-            this.r = Math.random() * 0.8 + 0.3; // Tamanho entre 0.3 e 1.1
+            this.r = Math.random() * 0.8 + 0.3;
             
             if (isFirstLoad) {
-                this.x = coreCenterX + (Math.random() - 0.5) * coreRadius * 2.2;
-                this.y = coreCenterY + (Math.random() - 0.5) * coreRadius * 2.2;
+                this.x = coreX + Math.random() * coreWidth;
+                this.y = coreY + Math.random() * coreHeight;
             } else {
-                // Reset na borda esquerda (viajando para a direita)
-                this.x = coreCenterX - coreRadius - 20;
-                this.y = coreCenterY + (Math.random() - 0.5) * coreRadius * 2;
+                // Reset no topo (viajando para baixo)
+                this.x = coreX + Math.random() * coreWidth;
+                this.y = coreY - 10;
             }
 
-            // Velocidade aleatória (Drift constante)
-            this.vx = Math.random() * 0.2 + 0.1; 
-            this.vy = (Math.random() - 0.5) * 0.05;
+            // Velocidade aleatória (Drift vertical predominante)
+            this.vx = (Math.random() - 0.5) * 0.05; 
+            this.vy = Math.random() * 0.3 + 0.1; // Caindo suavemente
 
             // Twinkle (Pulsação de opacidade)
             this.opacity = Math.random();
@@ -65,10 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.twinkleSpeed *= -1;
             }
 
-            // Se sair muito longe do centro (considerando o clip-path circular de 112r)
-            // Usamos uma margem maior para garantir que voltem de forma fluida
-            const dist = Math.sqrt((this.x - coreCenterX)**2 + (this.y - coreCenterY)**2);
-            if (this.x > coreCenterX + coreRadius + 10 || dist > coreRadius * 1.5) {
+            // Reset logic para o Retângulo do Pilar
+            if (this.y > coreY + coreHeight + 10 || 
+                this.x < coreX - 10 || 
+                this.x > coreX + coreWidth + 10) {
                 this.init();
             }
 
@@ -86,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializa as estrelas
     for (let i = 0; i < STAR_COUNT; i++) {
         const star = new Star();
-        star.init(true); // Espalha inicialmente
         stars.push(star);
     }
 

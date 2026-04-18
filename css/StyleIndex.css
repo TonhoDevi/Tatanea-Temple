@@ -108,12 +108,12 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, 
-        transparent 0%,
-        var(--idx-gem-emerald) 15%, 
-        var(--idx-snake-gold) 50%, 
-        var(--idx-jungle-bright) 85%,
-        transparent 100%);
+    background: linear-gradient(90deg,
+            transparent 0%,
+            var(--idx-gem-emerald) 15%,
+            var(--idx-snake-gold) 50%,
+            var(--idx-jungle-bright) 85%,
+            transparent 100%);
     box-shadow: 0 0 10px var(--idx-gem-glow-emerald);
 }
 
@@ -146,10 +146,10 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, 
-        var(--idx-gem-emerald) 0%, 
-        var(--idx-snake-gold) 50%, 
-        var(--idx-jungle-bright) 100%);
+    background: linear-gradient(90deg,
+            var(--idx-gem-emerald) 0%,
+            var(--idx-snake-gold) 50%,
+            var(--idx-jungle-bright) 100%);
     transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -284,7 +284,8 @@ body {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 10; /* Na FRENTE do Sol para evitar bugs de filtro SVG e focar silhueta */
+    z-index: 10;
+    /* Na FRENTE do Sol para evitar bugs de filtro SVG e focar silhueta */
     overflow: hidden;
 }
 
@@ -299,10 +300,21 @@ body {
     animation: fly-cycle 6.8s steps(1) infinite;
 }
 
-.bird-one { animation-delay: -0.5s; }
-.bird-two { animation-delay: -0.75s; }
-.bird-three { animation-delay: -0.25s; }
-.bird-four { animation-delay: -0.5s; }
+.bird-one {
+    animation-delay: -0.5s;
+}
+
+.bird-two {
+    animation-delay: -0.75s;
+}
+
+.bird-three {
+    animation-delay: -0.25s;
+}
+
+.bird-four {
+    animation-delay: -0.5s;
+}
 
 .bird-container {
     position: absolute;
@@ -314,76 +326,232 @@ body {
 }
 
 /* Deixei um pouco mais lento para ser um pouco mais sutil que o original de 14s */
-.bird-container-one { top: 65%; animation-duration: 45s; animation-delay: 0s; }
-.bird-container-two { top: 45%; animation-duration: 48s; animation-delay: 5s; }
-.bird-container-three { top: 75%; animation-duration: 52s; animation-delay: 15s; }
-.bird-container-four { top: 30%; animation-duration: 46s; animation-delay: 20s; }
+.bird-container-one {
+    top: 65%;
+    animation-duration: 45s;
+    animation-delay: 0s;
+}
+
+.bird-container-two {
+    top: 45%;
+    animation-duration: 48s;
+    animation-delay: 5s;
+}
+
+.bird-container-three {
+    top: 75%;
+    animation-duration: 52s;
+    animation-delay: 15s;
+}
+
+.bird-container-four {
+    top: 30%;
+    animation-duration: 46s;
+    animation-delay: 20s;
+}
 
 @keyframes fly-cycle {
+
     /* 0-58% do tempo (aprox 4s): Planando com ASAS ABERTAS (Frame 9) */
-    0%, 58% { background-position: -720px 0; }
+    0%,
+    58% {
+        background-position: -720px 0;
+    }
 
     /* 1ª Batida (58% - 79%): 10 quadros orgânicos */
-    60% { background-position: -810px 0; }
-    62% { background-position: 0 0; }
-    64% { background-position: -90px 0; }
-    66% { background-position: -180px 0; }
-    68% { background-position: -270px 0; }
-    70% { background-position: -360px 0; }
-    72% { background-position: -450px 0; }
-    74% { background-position: -540px 0; }
-    76% { background-position: -630px 0; }
-    78% { background-position: -720px 0; }
+    60% {
+        background-position: -810px 0;
+    }
+
+    62% {
+        background-position: 0 0;
+    }
+
+    64% {
+        background-position: -90px 0;
+    }
+
+    66% {
+        background-position: -180px 0;
+    }
+
+    68% {
+        background-position: -270px 0;
+    }
+
+    70% {
+        background-position: -360px 0;
+    }
+
+    72% {
+        background-position: -450px 0;
+    }
+
+    74% {
+        background-position: -540px 0;
+    }
+
+    76% {
+        background-position: -630px 0;
+    }
+
+    78% {
+        background-position: -720px 0;
+    }
 
     /* 2ª Batida (79% - 100%) */
-    81% { background-position: -810px 0; }
-    83% { background-position: 0 0; }
-    85% { background-position: -90px 0; }
-    87% { background-position: -180px 0; }
-    89% { background-position: -270px 0; }
-    91% { background-position: -360px 0; }
-    93% { background-position: -450px 0; }
-    95% { background-position: -540px 0; }
-    97% { background-position: -630px 0; }
-    100% { background-position: -720px 0; }
+    81% {
+        background-position: -810px 0;
+    }
+
+    83% {
+        background-position: 0 0;
+    }
+
+    85% {
+        background-position: -90px 0;
+    }
+
+    87% {
+        background-position: -180px 0;
+    }
+
+    89% {
+        background-position: -270px 0;
+    }
+
+    91% {
+        background-position: -360px 0;
+    }
+
+    93% {
+        background-position: -450px 0;
+    }
+
+    95% {
+        background-position: -540px 0;
+    }
+
+    97% {
+        background-position: -630px 0;
+    }
+
+    100% {
+        background-position: -720px 0;
+    }
 }
 
 @keyframes fly-right-one {
-    0% { transform: scale(0.12) translateX(-10vw); }
-    15% { transform: translateY(2vh) translateX(20vw) scale(0.18); }
-    35% { transform: translateY(-1vh) translateX(45vw) scale(0.22); }
-    55% { transform: translateY(3vh) translateX(70vw) scale(0.18); }
-    75% { transform: translateY(0vh) translateX(95vw) scale(0.15); }
-    100% { transform: translateY(0vh) translateX(120vw) scale(0.12); }
+    0% {
+        transform: scale(0.12) translateX(-10vw);
+    }
+
+    15% {
+        transform: translateY(2vh) translateX(20vw) scale(0.18);
+    }
+
+    35% {
+        transform: translateY(-1vh) translateX(45vw) scale(0.22);
+    }
+
+    55% {
+        transform: translateY(3vh) translateX(70vw) scale(0.18);
+    }
+
+    75% {
+        transform: translateY(0vh) translateX(95vw) scale(0.15);
+    }
+
+    100% {
+        transform: translateY(0vh) translateX(120vw) scale(0.12);
+    }
 }
 
 .hero-sun {
     position: absolute;
-    top: -5px;
+    top: 0;
     left: 50%;
-    transform: translateX(-50%);
-    width: 550px;
+    transform: translateX(-50%) scaleX(0.01) scaleY(0);
+    width: 650px;
+    height: 85%;
+    /* Reduzido de 100% para não ir além do necessário */
     z-index: 5;
     pointer-events: none;
-    /* Previne que o glow bloqueie os cliques nos botões */
-    filter: drop-shadow(0 0 40px rgba(255, 234, 0, 0.6));
+    overflow: hidden;
+    filter: drop-shadow(0 0 50px rgba(0, 210, 255, 0.3));
+
+    /* Sequência: Silêncio (0.5s) -> Crescimento Vertical (3s) -> Pausa (0.5s) -> Expansão */
+    transform-origin: center top;
+    animation: expand-pillar-cinematic 3.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes expand-pillar-cinematic {
+    0% {
+        /* Começa instantaneamente */
+        transform: translateX(-50%) scaleX(0.01) scaleY(0);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    65% {
+        /* Desce até o chão */
+        transform: translateX(-50%) scaleX(0.01) scaleY(1);
+    }
+
+    85%,
+    100% {
+        /* Expande para os lados */
+        transform: translateX(-50%) scaleX(1) scaleY(1);
+        opacity: 1;
+    }
 }
 
 /* Responsividade do Sol Oco & Content */
 @media (max-width: 768px) {
     .hero-sun {
-        width: 320px;
+        width: 380px;
     }
 }
-
-/* (Sessão Limpa: Raios Solares deletados durante refatoração procedural JS) */
 
 .home-hero-content {
     position: relative;
     z-index: 10;
     max-width: 900px;
     margin-top: 40px;
-    animation: fUp 1.2s ease-out both;
+
+    /* Revelação sincronizada com o final da expansão */
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fade-in-entry 0.8s ease-out 2.8s forwards;
+}
+
+.sun-content-layer {
+    opacity: 0;
+    animation: fade-in-entry 1s ease-out 2.6s forwards;
+}
+
+.sun-glow-shell {
+    animation: pulse-glow-slow 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow-slow {
+    from {
+        opacity: 0.5;
+    }
+
+    to {
+        opacity: 0.95;
+    }
+}
+
+@keyframes fade-in-entry {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fUp {
@@ -465,11 +633,14 @@ body {
 .btn-panel-secondary::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: -1;
     /* Cortes em Facetas e Feixe de Brilho Translúcido */
-    background: 
-        linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.6) 30%, transparent 40%),
+    background:
+        linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.6) 30%, transparent 40%),
         linear-gradient(45deg, var(--idx-gem-emerald) 0%, rgba(4, 120, 87, 0.95) 45%, rgba(6, 95, 70, 1) 50%, var(--idx-gem-emerald) 100%),
         linear-gradient(-45deg, transparent 40%, rgba(52, 211, 153, 0.3) 50%, transparent 60%);
     background-size: 300% 300%, 100% 100%, 100% 100%;
@@ -483,9 +654,10 @@ body {
     color: #fff;
     border-color: #a7f3d0;
     transform: translateY(-4px) scale(1.03);
-    box-shadow: 
-        0 12px 35px rgba(16, 185, 129, 0.70), 
-        inset 0 0 25px rgba(2, 44, 34, 0.85); /* Profundidade escura dentro da joia */
+    box-shadow:
+        0 12px 35px rgba(16, 185, 129, 0.70),
+        inset 0 0 25px rgba(2, 44, 34, 0.85);
+    /* Profundidade escura dentro da joia */
 }
 
 /* Disparo do Brilho e Revelação Cristalina */
@@ -499,6 +671,7 @@ body {
     0% {
         background-position: 100% 50%, 0 0, 0 0;
     }
+
     100% {
         background-position: -20% 50%, 0 0, 0 0;
     }
@@ -783,7 +956,7 @@ body {
 
 
 /* ============================================================
-   FOOTER â€” RaÃ­zes Antigas
+   FOOTER 
 ============================================================ */
 .footer {
     background:
@@ -803,7 +976,7 @@ body {
 }
 
 .footer::before {
-    content: 'ðŸŒ¿ â—† ðŸ â—† ðŸ’Ž â—† ðŸ¦• â—† ðŸŒ¸ â—† ðŸ’Ž â—† ðŸ â—† ðŸŒ¿';
+    content: ' Pela Glória de Tatânea. Alma incandescente da nação Guerreira.';
     display: block;
     font-size: 0.85rem;
     letter-spacing: 8px;
@@ -1221,8 +1394,9 @@ body {
     opacity: 1;
     margin: 0 auto;
     position: relative;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    display: block; /* Garante que não herda display: none ou algo similar */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    display: block;
+    /* Garante que não herda display: none ou algo similar */
 }
 
 /* Revelar cards automaticamente em páginas stand-alone */
@@ -1233,14 +1407,37 @@ body {
 }
 
 /* Escalonamento da animação para os cards stand-alone */
-.tome-panel.stand-alone .tome-card:nth-child(1) { animation-delay: 0.1s; }
-.tome-panel.stand-alone .tome-card:nth-child(2) { animation-delay: 0.15s; }
-.tome-panel.stand-alone .tome-card:nth-child(3) { animation-delay: 0.2s; }
-.tome-panel.stand-alone .tome-card:nth-child(4) { animation-delay: 0.25s; }
-.tome-panel.stand-alone .tome-card:nth-child(5) { animation-delay: 0.3s; }
-.tome-panel.stand-alone .tome-card:nth-child(6) { animation-delay: 0.35s; }
-.tome-panel.stand-alone .tome-card:nth-child(7) { animation-delay: 0.4s; }
-.tome-panel.stand-alone .tome-card:nth-child(8) { animation-delay: 0.45s; }
+.tome-panel.stand-alone .tome-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.tome-panel.stand-alone .tome-card:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.tome-panel.stand-alone .tome-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.tome-panel.stand-alone .tome-card:nth-child(4) {
+    animation-delay: 0.25s;
+}
+
+.tome-panel.stand-alone .tome-card:nth-child(5) {
+    animation-delay: 0.3s;
+}
+
+.tome-panel.stand-alone .tome-card:nth-child(6) {
+    animation-delay: 0.35s;
+}
+
+.tome-panel.stand-alone .tome-card:nth-child(7) {
+    animation-delay: 0.4s;
+}
+
+.tome-panel.stand-alone .tome-card:nth-child(8) {
+    animation-delay: 0.45s;
+}
 
 .tome-close {
     position: absolute;
@@ -1408,13 +1605,15 @@ body {
 
     .home-hero-buttons {
         gap: 14px;
-        flex-direction: column; /* Botões empilhados para melhor clique no celular */
+        flex-direction: column;
+        /* Botões empilhados para melhor clique no celular */
         width: 100%;
         padding: 0 10px;
     }
-    
+
     .btn-panel {
-        width: 100%; /* Ocupar toda a largura em telas pequenas */
+        width: 100%;
+        /* Ocupar toda a largura em telas pequenas */
         text-align: center;
     }
 
@@ -1426,4 +1625,18 @@ body {
     .footer-links {
         gap: 18px;
     }
+}
+
+
+
+/* Zoom focado apenas no pilar */
+
+.portal-transition-active .sun-content-layer {
+    opacity: 0 !important;
+    transition: opacity 0.3s ease-out !important;
+}
+
+.portal-transition-active .hero-sun .sun-glow-shell {
+    opacity: 1 !important;
+    animation: none !important;
 }

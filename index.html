@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -28,9 +28,6 @@
                 <span class="navbar-logo-text">Templo de Tatânea</span>
             </a>
             <ul class="navbar-menu">
-                <li><a href="./index.html" class="active">Início</a></li>
-                <li><a href="./html/utils/fichas.html">Fichas</a></li>
-                <li><a href="./html/utils/compendios.html">Compêndios</a></li>
             </ul>
             <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
         </div>
@@ -41,33 +38,100 @@
     ═══════════════════════════════════════ -->
     <section class="home-hero-section">
 
-        <!-- Landscape Background Estático (Homebrew Jungle Island) -->
+        <!-- Landscape Background (DDT Jungle Island) -->
         <div class="landscape-wrapper">
-
-            <!-- PAINEL 2 (-) Espelhado (Conecta perfeito com o 1! ) -->
-            <div class="cartoon cartoon-flip">
-                <div class="layer mountains"></div>
-                <!-- <div class="layer house"></div> -->
-                <div class="layer tree-layer-4"></div>
-                <div class="layer tree-layer-3"></div>
-                <div class="layer tree-layer-2"></div>
-                <div class="layer tree-layer-1"></div>
-                <div class="layer tree-layer-0"></div>
+            <!-- ═══════════════════════════════════════
+                 CAMADA FUNDO (Atrás do pilar) 
+            ═══════════════════════════════════════ -->
+            <div class="landscape-far">
+                <div class="cartoon cartoon-flip">
+                    <div class="layer mountains"></div>
+                    <div class="layer tree-layer-4"></div>
+                    <div class="layer tree-layer-3"></div>
+                </div>
+                <div class="cartoon">
+                    <div class="layer mountains"></div>
+                    <div class="layer tree-layer-4"></div>
+                    <div class="layer tree-layer-3"></div>
+                </div>
             </div>
 
-            <!-- PAINEL 3 (+) Direita (Conecta perfeito com o 2! ) -->
-            <div class="cartoon">
-                <div class="layer mountains"></div>
-                <!-- <div class="layer house"></div> -->
-                <div class="layer tree-layer-4"></div>
-                <div class="layer tree-layer-3"></div>
-                <div class="layer tree-layer-2"></div>
-                <div class="layer tree-layer-1"></div>
-                <div class="layer tree-layer-0"></div>
+            <!-- ═══════════════════════════════════════
+                 PILAR CENTRAL (AGORA SEM FILTROS PESADOS)
+            ═══════════════════════════════════════ -->
+            <div class="hero-sun" aria-label="Pilar de Tatânea">
+                <svg class="sun-svg" viewBox="0 0 400 1200" preserveAspectRatio="none" overflow="visible"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="sun-shell-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#00d2ff" />
+                            <stop offset="50%" stop-color="#ffffff" />
+                            <stop offset="100%" stop-color="#0072ff" />
+                        </linearGradient>
+
+                        <linearGradient id="space-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#050a1f" />
+                            <stop offset="50%" stop-color="#02040a" />
+                            <stop offset="100%" stop-color="#000000" />
+                        </linearGradient>
+
+                        <clipPath id="sun-core-clip">
+                            <rect x="100" y="-100" width="200" height="1300" rx="2" />
+                        </clipPath>
+
+                        <!-- Filtro de Brilho Azul (Menor para ser "mais curto") -->
+                        <filter id="soft-blue-glow" x="-10%" y="-10%" width="120%" height="120%">
+                            <feGaussianBlur stdDeviation="4" result="blur" />
+                        </filter>
+                    </defs>
+
+                    <!-- CAMADA 1: O BRILHO AZUL EXTERIOR (MAIS FINO) -->
+                    <rect x="94" y="-100" width="212" height="1300" rx="4" fill="url(#sun-shell-grad)" opacity="0.8"
+                        filter="url(#soft-blue-glow)" />
+
+                    <!-- CAMADA 2: A CAMADA NEGRA -->
+                    <rect x="100" y="-100" width="200" height="1300" rx="2" fill="#08080a" />
+
+                    <!-- CAMADA 3: O CENTRO ESTELAR -->
+                    <g class="sun-starry-core" clip-path="url(#sun-core-clip)">
+                        <rect x="0" y="-100" width="400" height="1300" fill="url(#space-grad)" />
+                        <g fill="white" opacity="0.1">
+                            <circle cx="160" cy="0" r="0.8" />
+                            <circle cx="230" cy="200" r="0.5" />
+                            <circle cx="260" cy="400" r="1" />
+                            <circle cx="130" cy="600" r="0.7" />
+                            <circle cx="210" cy="800" r="1.2" />
+                            <circle cx="110" cy="950" r="0.6" />
+                            <circle cx="170" cy="1100" r="0.5" />
+                        </g>
+                    </g>
+
+                    <!-- CAMADA 4: CONTEÚDO -->
+                    <g class="sun-content-layer">
+                        <image href="./assets/utils/Rose_logo_1_SF.png" x="117.5" y="10" width="165" height="165"
+                            preserveAspectRatio="xMidYMid meet" />
+                        <path id="sun-msg-path" d="M 200,-70 A 124,124 0 0,0 200,178 A 124,124 0 0,0 200,-70"
+                            fill="none" />
+                    </g>
+                </svg>
             </div>
 
-
-
+            <!-- ═══════════════════════════════════════
+                 CAMADA FRENTE (Frente do pilar) 
+            ═══════════════════════════════════════ -->
+            <div class="landscape-near">
+                <div class="cartoon cartoon-flip">
+                    <div class="layer tree-layer-2"></div>
+                    <div class="layer tree-layer-1"></div>
+                    <div class="layer tree-layer-0"></div>
+                </div>
+                <div class="cartoon">
+                    <div class="layer tree-layer-2"></div>
+                    <div class="layer tree-layer-1"></div>
+                    <div class="layer tree-layer-0"></div>
+                </div>
+            </div>
+        </div>
         </div>
 
         <!-- Nuvens animadas -->
@@ -94,177 +158,13 @@
             </div>
         </div>
 
-        <!-- Sol — 67% visível com ondas grossas estilo chama (8 raios) -->
-        <div class="hero-sun" aria-label="Logo Templo de Tatânea">
-            <svg class="sun-svg" viewBox="0 0 400 350" overflow="visible" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Gradiente do anel solar externo (Branco e Ouro Etéreo) -->
-                    <radialGradient id="sun-shell-grad" cx="50%" cy="50%" r="50%">
-                        <stop offset="60%" stop-color="#ffffff" />
-                        <stop offset="90%" stop-color="#fffceb" />
-                        <stop offset="100%" stop-color="#fde68a" />
-                    </radialGradient>
-
-                    <!-- Gradiente do glow atmosférico -->
-                    <radialGradient id="sun-glow-grad">
-                        <stop offset="0%" stop-color="#ffca28" />
-                        <stop offset="100%" stop-color="#ff6f00" />
-                    </radialGradient>
-
-                    <!-- Gradiente do espaço profundo (Universo) -->
-                    <radialGradient id="space-grad" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="#140b2e" />
-                        <stop offset="60%" stop-color="#0a0514" />
-                        <stop offset="100%" stop-color="#000000" />
-                    </radialGradient>
-
-                    <!-- Gradiente da Cauda do Meteoro -->
-                    <linearGradient id="meteor-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
-                        <stop offset="15%" stop-color="#a29bfe" stop-opacity="0.8" />
-                        <stop offset="100%" stop-color="#a29bfe" stop-opacity="0" />
-                    </linearGradient>
-
-                    <!-- Clip path do núcleo estrelar -->
-                    <clipPath id="sun-core-clip">
-                        <circle cx="200" cy="50" r="112" />
-                    </clipPath>
-
-                    <!-- Efeito de brilho para as estrelas -->
-                    <filter id="star-glow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur stdDeviation="1.2" result="blur" />
-                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                    </filter>
-
-                    <!-- Filtro Luz Amorfa (Apenas Luz, Translúcida e Viva) -->
-                    <filter id="amorphous-light" x="-50%" y="-50%" width="200%" height="200%">
-                        <!-- Dissolve completamente a borda vetorial (Derrete a forma pura em um halo estourado) -->
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="softGraphic" />
-
-                        <!-- Ruído lento, etéreo e expansivo, tipo gás flutuando no espaço livre -->
-                        <feTurbulence type="fractalNoise" baseFrequency="0.013" numOctaves="2" result="noise">
-                            <animate attributeName="baseFrequency" values="0.013;0.020;0.013" dur="40s"
-                                repeatCount="indefinite" />
-                        </feTurbulence>
-
-                        <!-- Arrastamos violentamente o desfoque pelas ondulações de gás para gerar os "Raios Brancos" esfumaçados -->
-                        <feDisplacementMap in="softGraphic" in2="noise" scale="65" xChannelSelector="R"
-                            yChannelSelector="G" result="amorphousShape" />
-                    </filter>
-                </defs>
-
-                <!-- Brilho Atmosférico Externo (Glow) -->
-                <!-- overflow="visible" no SVG agora impede o corte quadrado desse brilho -->
-                <g class="sun-glow-layer">
-                    <circle cx="200" cy="50" r="170" fill="url(#sun-glow-grad)" opacity="0.35" filter="blur(25px)" />
-                    <circle cx="200" cy="50" r="240" fill="url(#sun-glow-grad)" opacity="0.15" filter="blur(50px)" />
-                </g>
-
-                <!-- CAMADA 1: O SOL EXTERIOR (PURA LUZ AMORFA) -->
-                <circle cx="200" cy="50" r="145" fill="url(#sun-shell-grad)" filter="url(#amorphous-light)"
-                    opacity="0.65" />
-
-                <!-- CAMADA 2: A CAMADA NEGRA (ANEL DO TEXTO) -->
-                <circle cx="200" cy="50" r="136" fill="#08080a" />
-
-                <!-- CAMADA 3: O CENTRO ESTELAR (UNIVERSO PROFUNDO) -->
-                <g class="sun-starry-core" clip-path="url(#sun-core-clip)">
-                    <!-- Fundo do Espaço -->
-                    <rect x="50" y="-100" width="300" height="300" fill="url(#space-grad)" />
-
-                    <!-- Fundo Profundo de Poeira Estelar Estática (para contraste com o movimento JS) -->
-                    <g fill="white" opacity="0.15">
-                        <circle cx="160" cy="0" r="0.8" />
-                        <circle cx="230" cy="-20" r="0.5" />
-                        <circle cx="260" cy="30" r="1" />
-                        <circle cx="130" cy="60" r="0.7" />
-                        <circle cx="210" cy="110" r="1.2" />
-                        <circle cx="110" cy="10" r="0.6" />
-                        <circle cx="170" cy="40" r="0.5" />
-                    </g>
-
-                    <!-- As estrelas viajavantes geradas proceduralmente pelo JS entrarão aqui! -->
-                </g>
-
-                <!-- CAMADA 4: CONTEÚDO (MENSAGEM E LOGO) -->
-                <g class="sun-content-layer">
-                    <!-- Logo Centralizada (Aumentada e posicionada mais abaixo para destaque) -->
-                    <image href="./assets/utils/Rose_logo_1_SF.png" x="117.5" y="4" width="165" height="165"
-                        preserveAspectRatio="xMidYMid meet" />
-
-                    <!-- Caminho circular irrestrito -->
-                    <path id="sun-msg-path" d="M 200,-74 A 124,124 0 0,0 200,174 A 124,124 0 0,0 200,-74" fill="none" />
-
-                    <!-- Mensagem - Diminuída e virada para fora -->
-                    <text font-family="'Cinzel Decorative', cursive" font-size="9.5" fill="#fde68a" letter-spacing="1">
-                        <textPath href="#sun-msg-path" startOffset="50%" text-anchor="middle">
-                            Pela Glória de Tatânea. Alma incandescente da nação Guerreira.
-                        </textPath>
-                    </text>
-                </g>
-            </svg>
-        </div>
-
         <!-- Conteúdo textual abaixo do sol -->
         <div class="home-hero-content">
             <h1 class="home-hero-title">Templo de Tatânea</h1>
-            <p class="home-hero-subtitle">Sistema Completo de Fichas e Compêndios</p>
             <div class="home-hero-buttons">
                 <a href="./html/utils/fichas.html" class="btn-panel btn-panel-secondary">
-                    Fichas de Personagem
+                    Pergaminhos
                 </a>
-                <a href="./html/utils/compendios.html" class="btn-panel btn-panel-secondary">
-                    Compêndios
-                </a>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════
-         FEATURES
-    ═══════════════════════════════════════ -->
-    <section class="home-features-section">
-        <div class="home-container">
-            <h2 class="home-section-title">Funcionalidades</h2>
-            <div class="home-features-grid">
-                <div class="home-feature-card">
-                    <div class="home-feature-icon">🎲</div>
-                    <h3>Ficha Interativa</h3>
-                    <p>Sistema completo de ficha de personagem com cálculos automáticos, salvamento local e exportação
-                        JSON.</p>
-                    <a href="./html/utils/fichas.html" class="home-feature-link">Ver Fichas →</a>
-                </div>
-                <div class="home-feature-card">
-                    <div class="home-feature-icon">📚</div>
-                    <h3>Compêndio de Raças</h3>
-                    <p>Todas as raças homebrew com descrições detalhadas, características e habilidades especiais.</p>
-                    <a href="./html/utils/compendios.html" class="home-feature-link">Ver Compêndios →</a>
-                </div>
-                <div class="home-feature-card">
-                    <div class="home-feature-icon">⚔️</div>
-                    <h3>Sistema de Combate</h3>
-                    <p>Gerencie ataques, magias, slots de magia e recursos de combate de forma intuitiva.</p>
-                    <a href="./html/sheet/ddt-character-sheet.html" class="home-feature-link">Começar →</a>
-                </div>
-                <div class="home-feature-card">
-                    <div class="home-feature-icon">🎒</div>
-                    <h3>Inventário Avançado</h3>
-                    <p>Sistema completo de gerenciamento de equipamentos, itens mágicos e moedas.</p>
-                    <a href="./html/sheet/ddt-character-sheet.html" class="home-feature-link">Explorar →</a>
-                </div>
-                <div class="home-feature-card">
-                    <div class="home-feature-icon">📖</div>
-                    <h3>História e Personalidade</h3>
-                    <p>Registre a história completa do seu personagem, características e conhecidos importantes.</p>
-                    <a href="./html/sheet/ddt-character-sheet.html" class="home-feature-link">Criar →</a>
-                </div>
-                <div class="home-feature-card">
-                    <div class="home-feature-icon">💾</div>
-                    <h3>Salvar e Exportar</h3>
-                    <p>Salve localmente, exporte como JSON ou imprima sua ficha em formato profissional.</p>
-                    <a href="./html/sheet/ddt-character-sheet.html" class="home-feature-link">Começar →</a>
-                </div>
             </div>
         </div>
     </section>
