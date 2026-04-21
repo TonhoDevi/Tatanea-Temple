@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monge — D&D 5e Homebrew Tatânea</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/navbar/navbar.css">
+    <link rel="stylesheet" href="/css/class/classes.css">
+
+    <style>
+        /* Acento temático do Monge: âmbar dourado */
+        :root {
+            --cls-accent: #b8860b;
+            --cls-accent-dark: #7a5800;
+            --cls-accent-light: #e0b050;
+            --cls-accent-glow: rgba(184, 134, 11, .28);
+            --cls-accent-dim: rgba(184, 134, 11, .10);
+            --cls-accent-border: rgba(184, 134, 11, .40);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">🎲 Tatânea Temple</a>
+            <ul class="navbar-menu" id="navMenu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="html/compendium/compendium-classes.html">Classes</a></li>
+            </ul>
+            <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+     HERO
+============================================================ -->
+    <section class="class-hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-bg-icon">☯️</div>
+        <div class="hero-img-slot" id="heroImg" style="background-image:url('/assets/class/monge.jpg')">
+        </div>
+        <div class="hero-gradient-overlay"></div>
+        <div class="hero-stripe hero-stripe-left"></div>
+        <div class="hero-stripe hero-stripe-right"></div>
+
+        <a href="html/compendium/compendium-classes.html" class="back-link">← Compêndio de Classes</a>
+
+        <div class="hero-content">
+            <div class="hero-left">
+                <span class="hero-eyebrow">Arquétipo de Aventureiro</span>
+                <h1 class="hero-title">Monge</h1>
+                <p class="hero-subtitle">Versão Épico · 20 Níveis · Homebrew Tatânea</p>
+                <div class="hero-badges">
+                    <span class="hero-badge">🎲 Dado de Vida: 1d10</span>
+                    <span class="hero-badge">⚡ Destreza · Sabedoria</span>
+                    <span class="hero-badge">🔮 Ki</span>
+                    <span class="hero-badge">🥋 5 Tradições</span>
+                    <span class="hero-badge">👊 Artes Marciais</span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="qs-box">
+                    <span class="qs-val">1d10</span>
+                    <span class="qs-lbl">Dado de Vida</span>
+                </div>
+                <div class="qs-box">
+                    <span class="qs-val">Ki×2</span>
+                    <span class="qs-lbl">Pontos de Ki</span>
+                </div>
+                <div class="qs-box">
+                    <span class="qs-val">4×</span>
+                    <span class="qs-lbl">Ataques (nv. 20)</span>
+                </div>
+                <div class="qs-box">
+                    <span class="qs-val">5</span>
+                    <span class="qs-lbl">Tradições</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+     TABS
+============================================================ -->
+    <div class="tabs-wrapper">
+        <div class="tabs-inner">
+            <button class="tab-btn active" onclick="switchTab('lore')">
+                <span class="tab-icon">📖</span>Lore &amp; Descrição
+            </button>
+            <button class="tab-btn" onclick="switchTab('sumario')">
+                <span class="tab-icon">📊</span>Sumário &amp; Progressão
+            </button>
+            <button class="tab-btn" onclick="switchTab('habilidades')">
+                <span class="tab-icon">👊</span>Habilidades
+            </button>
+            <button class="tab-btn" onclick="switchTab('subclasses')">
+                <span class="tab-icon">☯️</span>Tradições
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+     TAB: LORE
+============================================================ -->
+    <div class="tab-pane active" id="tab-lore">
+        <div class="page-content">
+
+            <div class="lore-grid section-block">
+                <div>
+                    <div class="section-heading">Descrição</div>
+                    <p class="body-text">Em algum lugar entre o mortal e o divino existe o monge — um ser que escolheu
+                        não buscar poder por meio de espadas forjadas, tomos arcanos ou favores de deuses, mas pelo
+                        domínio absoluto de si mesmo. Nas alturas geladas de monastérios isolados, nas ruelas escuras de
+                        cidades esquecidas ou nas planícies varridas pelo vento onde o horizonte não tem fim, o monge
+                        traça seu próprio caminho: para dentro.</p>
+                    <p class="body-text">O ki é a força que permeia toda a existência — a corrente invisível que
+                        atravessa pedra, vento, chama e espírito. Os monges aprenderam a ouvir essa corrente, a moldá-la
+                        e, com maestria suficiente, a tornar-se um com ela. Cada golpe é uma sentença. Cada passo, um
+                        poema. Cada respiração, uma oração sem palavras endereçada ao universo.</p>
+                    <p class="body-text">Onde um guerreiro vê um inimigo a ser destruído, o monge enxerga um problema a
+                        ser resolvido com a precisão mínima necessária. Não há desperdício no movimento de um mestre —
+                        nenhuma ira, nenhum ego, apenas a geometria perfeita da força aplicada no momento exato.</p>
+                </div>
+                <div class="img-slot">
+                    <img src="/assets/class/monge-lore.jpg" alt="Monge em meditação"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="img-slot-placeholder" style="display:none">
+                        <span>☯️</span>
+                        <span>Imagem do Monge</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ornament-div">
+                <div class="ornament-div-gem"></div>
+            </div>
+
+            <div class="lore-grid section-block">
+                <div>
+                    <div class="section-heading">O Caminho Interior</div>
+                    <p class="body-text">Nenhum monge nasce pronto. O caminho começa com anos de disciplina que a
+                        maioria das pessoas jamais suportaria — acordar antes do sol, meditar por horas em posições que
+                        queimam cada músculo, aprender a cair para depois aprender a não cair, e repetir o mesmo golpe
+                        dez mil vezes até que o erro se torne impossível. É um processo que não termina: mesmo os
+                        grandmestres mais antigos afirmam estar apenas no começo.</p>
+                    <p class="body-text">Dentro dos monastérios, a tradição é sagrada. Cada escola tem sua própria
+                        filosofia, seus próprios segredos e seus próprios Caminhos — formas de canalizar o ki que foram
+                        destiladas por gerações de práticas. Dois monges do mesmo monastério podem parecer completamente
+                        diferentes em combate, pois cada um internalizou os ensinamentos de uma maneira única, como a
+                        água que toma a forma do recipiente que a contém.</p>
+                </div>
+                <div>
+                    <div class="section-heading">Monges no Mundo</div>
+                    <p class="body-text">Poucos monges escolhem a vida de aventureiro por vontade própria — é mais comum
+                        que o mundo os encontre. Um monastério destruído, um mestre assassinado, uma tarefa sagrada que
+                        exige braços que saibam tanto construir quanto destruir. Quando um monge deixa os muros de sua
+                        escola, ele carrega consigo não apenas suas técnicas, mas o peso de tudo que foi ensinado: que
+                        toda vida é preciosa, que a força deve servir à proteção, e que o verdadeiro inimigo raramente
+                        tem rosto.</p>
+                    <p class="body-text">Em um grupo de aventureiros, o monge é simultaneamente o mais autossuficiente e
+                        o mais enigmático. Ele come pouco, dorme pouco e fala menos ainda — mas quando a situação exige,
+                        ninguém no grupo se move com mais graça, velocidade ou precisão letal. O monge é a prova de que
+                        o corpo humano, treinado com devoção absoluta, é a arma mais perigosa que já existiu.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+     TAB: SUMÁRIO
+============================================================ -->
+    <div class="tab-pane" id="tab-sumario">
+        <div class="page-content">
+
+            <div class="section-block">
+                <div class="section-heading">Características da Classe</div>
+                <div class="prof-grid-2">
+                    <div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Dado de Vida</span>
+                            <span class="prof-card-value">1d10 por nível de Monge</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">PV no 1º Nível</span>
+                            <span class="prof-card-value">10 + modificador de Constituição + 1</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">PV em Níveis Superiores</span>
+                            <span class="prof-card-value">10 + mod. Constituição por nível após o 1º + metade do nível
+                                (arredondado para baixo)</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Armaduras</span>
+                            <span class="prof-card-value">Nenhuma</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Armas</span>
+                            <span class="prof-card-value">Armas simples, espadas curtas</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Ferramentas</span>
+                            <span class="prof-card-value">Escolha um tipo de ferramenta de artesão ou um instrumento
+                                musical</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Testes de Resistência</span>
+                            <span class="prof-card-value">Destreza, Sabedoria</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Perícias</span>
+                            <span class="prof-card-value">Escolha duas entre: Acrobacia, Atletismo, Furtividade,
+                                História, Intuição e Religião</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Pontos de Ki</span>
+                            <span class="prof-card-value">2 × seu nível de Monge — recuperados após descanso curto ou
+                                longo (30 min. meditando)</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">CD de Resistência de Ki</span>
+                            <span class="prof-card-value">8 + bônus de proficiência + modificador de Destreza</span>
+                        </div>
+                        <div class="prof-card">
+                            <span class="prof-card-label">Dano de Artes Marciais</span>
+                            <span class="prof-card-value">d4 (níveis 1–4) · d6 (5–8) · d8 (9–12) · d10 (13–16) · d12
+                                (17–20)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-heading">Equipamento Inicial</div>
+                <ul class="equip-list">
+                    <li class="equip-item"><span class="equip-bullet">◆</span>(a) uma espada curta ou (b) qualquer arma
+                        simples</li>
+                    <li class="equip-item"><span class="equip-bullet">◆</span>(a) um pacote de explorador ou (b) um
+                        pacote de aventureiro</li>
+                    <li class="equip-item"><span class="equip-bullet">◆</span>10 dardos</li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <div class="section-heading">Tabela de Progressão</div>
+                <div class="table-wrap">
+                    <table class="prog-table">
+                        <thead>
+                            <tr>
+                                <th>Nível</th>
+                                <th class="center">Prof.</th>
+                                <th>Características</th>
+                                <th class="center">Ki</th>
+                                <th class="center">Arts. Marc.</th>
+                                <th class="center">Mov. s/ Arm.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="milestone">
+                                <td>1º</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-defesa-sa">Defesa Sem Armadura</a>, <a
+                                        href="#feat-artes-marciais">Artes Marciais</a></td>
+                                <td class="center">—</td>
+                                <td class="dado center">d4</td>
+                                <td class="center">—</td>
+                            </tr>
+                            <tr>
+                                <td>2º</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-ki">Ki</a>, <a href="#feat-movimento-sa">Movimento Sem Armadura</a>,
+                                    <a href="#feat-inc-inf">Incremento Inferior</a>
+                                </td>
+                                <td class="dado center">4</td>
+                                <td class="dado center">d4</td>
+                                <td class="center">+3m</td>
+                            </tr>
+                            <tr class="milestone">
+                                <td>3º</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-tradicao">Tradição Monástica</a>, <a href="#feat-defletir">Defletir
+                                        Ataques</a></td>
+                                <td class="dado center">6</td>
+                                <td class="dado center">d4</td>
+                                <td class="center">+4,5m</td>
+                            </tr>
+                            <tr>
+                                <td>4º</td>
+                                <td class="bônus center">+2</td>
+                                <td><a href="#feat-inc-sup">Incremento Superior</a>, <a href="#feat-descanso">Descanso
+                                        Sereno</a>, <a href="#feat-queda">Queda Lenta</a></td>
+                                <td class="dado center">8</td>
+                                <td class="dado center">d4</td>
+                                <td class="center">+6m</td>
+                            </tr>
+                            <tr>
+                                <td>5º</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-ataque-extra">Ataque Extra</a>, <a href="#feat-forca-esp">Força
+                                        Espiritual</a>, <a href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">10</td>
+                                <td class="dado center">d6</td>
+                                <td class="center">+7,5m</td>
+                            </tr>
+                            <tr>
+                                <td>6º</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-golpes-ki">Golpes de Ki</a>, <a href="#feat-inc-sup">Incremento
+                                        Superior</a></td>
+                                <td class="dado center">12</td>
+                                <td class="dado center">d6</td>
+                                <td class="center">+9m</td>
+                            </tr>
+                            <tr>
+                                <td>7º</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-evasao">Evasão</a></td>
+                                <td class="dado center">14</td>
+                                <td class="dado center">d6</td>
+                                <td class="center">+10,5m</td>
+                            </tr>
+                            <tr>
+                                <td>8º</td>
+                                <td class="bônus center">+3</td>
+                                <td><a href="#feat-inc-sup">Incremento Superior</a>, <a href="#feat-inc-inf">Incremento
+                                        Inferior</a></td>
+                                <td class="dado center">16</td>
+                                <td class="dado center">d6</td>
+                                <td class="center">+12m</td>
+                            </tr>
+                            <tr>
+                                <td>9º</td>
+                                <td class="bônus center">+4</td>
+                                <td><a href="#feat-alma-diamante">Alma de Diamante</a>, <a
+                                        href="#feat-movimento-sa">Movimento Sem Armadura</a> (superfícies)</td>
+                                <td class="dado center">18</td>
+                                <td class="dado center">d8</td>
+                                <td class="center">+13,5m</td>
+                            </tr>
+                            <tr>
+                                <td>10º</td>
+                                <td class="bônus center">+4</td>
+                                <td><a href="#feat-pureza">Pureza Corporal</a>, <a href="#feat-inc-sup">Incremento
+                                        Superior</a></td>
+                                <td class="dado center">20</td>
+                                <td class="dado center">d8</td>
+                                <td class="center">+15m</td>
+                            </tr>
+                            <tr class="milestone">
+                                <td>11º</td>
+                                <td class="bônus center">+4</td>
+                                <td>Característica de Tradição, <a href="#feat-ataque-extra">Ataque Extra</a> (3×), <a
+                                        href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">22</td>
+                                <td class="dado center">d8</td>
+                                <td class="center">+16,5m</td>
+                            </tr>
+                            <tr>
+                                <td>12º</td>
+                                <td class="bônus center">+4</td>
+                                <td><a href="#feat-resiliencia">Resiliência</a>, <a href="#feat-inc-sup">Incremento
+                                        Superior</a></td>
+                                <td class="dado center">24</td>
+                                <td class="dado center">d8</td>
+                                <td class="center">+18m</td>
+                            </tr>
+                            <tr>
+                                <td>13º</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-idiomas">Idiomas do Sol e da Lua</a>, <a
+                                        href="#feat-tecnicas-ap">Técnicas de Ki Aprimoradas</a>, <a
+                                        href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">26</td>
+                                <td class="dado center">d10</td>
+                                <td class="center">+19,5m</td>
+                            </tr>
+                            <tr>
+                                <td>14º</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-mente-tranquila">Mente Tranquila</a>, <a
+                                        href="#feat-inc-sup">Incremento Superior</a>, <a href="#feat-inc-inf">Incremento
+                                        Inferior</a></td>
+                                <td class="dado center">28</td>
+                                <td class="dado center">d10</td>
+                                <td class="center">+21m</td>
+                            </tr>
+                            <tr>
+                                <td>15º</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-corpo-atemporal">Corpo Atemporal</a></td>
+                                <td class="dado center">30</td>
+                                <td class="dado center">d10</td>
+                                <td class="center">+22,5m</td>
+                            </tr>
+                            <tr>
+                                <td>16º</td>
+                                <td class="bônus center">+5</td>
+                                <td><a href="#feat-ressonancia">Ressonância de Ki</a>, <a
+                                        href="#feat-inc-sup">Incremento Superior</a></td>
+                                <td class="dado center">32</td>
+                                <td class="dado center">d10</td>
+                                <td class="center">+24m</td>
+                            </tr>
+                            <tr class="milestone">
+                                <td>17º</td>
+                                <td class="bônus center">+6</td>
+                                <td>Característica de Tradição, <a href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">34</td>
+                                <td class="dado center">d12</td>
+                                <td class="center">+25,5m</td>
+                            </tr>
+                            <tr>
+                                <td>18º</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-corpo-vazio">Corpo Vazio</a></td>
+                                <td class="dado center">36</td>
+                                <td class="dado center">d12</td>
+                                <td class="center">+27m</td>
+                            </tr>
+                            <tr>
+                                <td>19º</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-lendario">Lendário</a>, <a href="#feat-inc-sup">Incremento
+                                        Superior</a></td>
+                                <td class="dado center">38</td>
+                                <td class="dado center">d12</td>
+                                <td class="center">+28,5m</td>
+                            </tr>
+                            <tr class="milestone">
+                                <td>20º</td>
+                                <td class="bônus center">+6</td>
+                                <td><a href="#feat-auto-aperfeicoamento">Auto Aperfeiçoamento</a>, <a
+                                        href="#feat-ataque-extra">Ataque Extra</a> (4×), <a
+                                        href="#feat-inc-inf">Incremento Inferior</a></td>
+                                <td class="dado center">40</td>
+                                <td class="dado center">d12</td>
+                                <td class="center">+30m</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+     TAB: HABILIDADES
+============================================================ -->
+    <div class="tab-pane" id="tab-habilidades">
+        <div class="page-content">
+
+            <div class="section-heading">Habilidades da Classe</div>
+
+            <div class="feature-card" id="feat-defesa-sa">
+                <span class="feature-level">Nível 1</span>
+                <div class="feature-name">Defesa Sem Armadura</div>
+                <div class="feature-text">
+                    <p>A partir do 1º nível, quando você não estiver vestindo nenhuma armadura nem empunhando um escudo,
+                        sua Classe de Armadura será <strong>10 + modificador de Destreza + modificador de
+                            Sabedoria</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-artes-marciais">
+                <span class="feature-level">Nível 1</span>
+                <div class="feature-name">Artes Marciais</div>
+                <div class="feature-text">
+                    <p>No 1º nível, sua prática nas artes marciais concede maestria nos estilos de combate com golpes
+                        desarmados e <strong>armas de monge</strong> (espadas curtas e armas simples corpo-a-corpo sem
+                        propriedade pesada ou de duas mãos).</p>
+                    <p>Você ganha os seguintes benefícios enquanto estiver desarmado ou empunhando uma arma de monge e
+                        não estiver usando armadura ou escudo:</p>
+                    <ul>
+                        <li>Você pode usar <strong>Destreza ao invés de Força</strong> para as jogadas de ataque e dano
+                            dos seus golpes desarmados e armas de monge.</li>
+                        <li>Você pode rolar o <strong>dado de Artes Marciais</strong> no lugar do dano normal (d4 nos
+                            níveis 1–4, escalando até d12 nos níveis 17–20).</li>
+                        <li>Quando você usa a ação de Ataque com um golpe desarmado ou arma de monge, pode realizar um
+                            <strong>golpe desarmado com uma ação bônus</strong>.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-ki">
+                <span class="feature-level">Nível 2</span>
+                <div class="feature-name">Ki</div>
+                <div class="feature-text">
+                    <p>A partir do 2º nível, seu treinamento permitiu que você controlasse a energia mística do ki. Você
+                        possui <strong>pontos de ki iguais a 2 × seu nível de monge</strong>. Você recupera todos os
+                        pontos de ki ao terminar um descanso curto ou longo, desde que passe pelo menos 30 minutos
+                        meditando.</p>
+                    <p><strong>CD de resistência de ki</strong> = 8 + bônus de proficiência + modificador de Destreza.
+                    </p>
+                    <p>Você começa conhecendo três características de ki:</p>
+                    <ul>
+                        <li><strong>Rajada de Golpes.</strong> Imediatamente após você realizar a ação de Ataque, pode
+                            gastar 1 ponto de ki para realizar <strong>dois golpes desarmados</strong> com uma ação
+                            bônus.</li>
+                        <li><strong>Defesa Paciente.</strong> Você pode gastar 1 ponto de ki para realizar a
+                            <strong>ação de Esquivar</strong> com uma ação bônus no seu turno.
+                        </li>
+                        <li><strong>Passo do Vento.</strong> Você pode gastar 1 ponto de ki para realizar a ação de
+                            <strong>Desengajar ou Disparada</strong> com uma ação bônus, e sua distância de salto é
+                            dobrada nesse turno.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-movimento-sa">
+                <span class="feature-level">Nível 2 (e 9)</span>
+                <div class="feature-name">Movimento Sem Armadura</div>
+                <div class="feature-text">
+                    <p>A partir do 2º nível, seu deslocamento aumenta em <strong>3 metros</strong> enquanto você não
+                        estiver usando armadura nem empunhando um escudo. Esse bônus aumenta em +1,5m a cada nível,
+                        chegando a +30m no nível 20.</p>
+                    <p>No <strong>9º nível</strong>, você ganha a habilidade de se mover através de <strong>superfícies
+                            verticais e sobre líquidos</strong> no seu turno, sem cair durante o movimento.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-inc-inf">
+                <span class="feature-level">Nível 2 · 5 · 8 · 11 · 14 · 17 · 20</span>
+                <div class="feature-name">Incremento no Valor de Habilidade Inferior</div>
+                <div class="feature-text">
+                    <p>Quando você atinge o 2º nível e novamente no <strong>5°, 8°, 11°, 14°, 17° e 20°</strong> nível,
+                        você pode aumentar <strong>dois valores de habilidade</strong> à sua escolha em
+                        <strong>+1</strong> cada. Como padrão, você não pode elevar um valor de habilidade acima de
+                        <strong>20</strong> com essa característica.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-tradicao">
+                <span class="feature-level">Nível 3 · 6 · 11 · 17</span>
+                <div class="feature-name">Tradição Monástica</div>
+                <div class="feature-text">
+                    <p>Quando você alcança o 3º nível, você ingressa numa tradição monástica. Escolha uma das tradições
+                        de Monge detalhada na aba de Tradições. Sua tradição concede a você características no 3º nível
+                        e novamente no <strong>6°, 11° e 17°</strong> nível.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-defletir">
+                <span class="feature-level">Nível 3</span>
+                <div class="feature-name">Defletir Ataques</div>
+                <div class="feature-text">
+                    <p>No 3º nível, você pode usar sua <strong>reação</strong> para desviar ou receber um golpe quando
+                        for atingido por um ataque. Qualquer dano de concussão, perfurante ou cortante que você sofrer é
+                        reduzido em <strong>1d10 + modificador de Destreza + nível de monge</strong>.</p>
+                    <p>Se você reduzir o dano para 0, como parte da mesma reação pode gastar <strong>1 ponto de
+                            ki</strong> para realizar um ataque desarmado contra a criatura se ela estiver no alcance.
+                    </p>
+                    <p>Se o ataque foi um projétil à distância, você pode lançar o projétil de volta na criatura
+                        gastando <strong>1 ponto de ki</strong> para fazer um ataque à distância com alcance de 30/60,
+                        com proficiência, como parte da mesma reação. O projétil conta como arma de monge para o ataque.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-inc-sup">
+                <span class="feature-level">Nível 4 · 6 · 8 · 12 · 14 · 16 · 19</span>
+                <div class="feature-name">Incremento no Valor de Habilidade Superior</div>
+                <div class="feature-text">
+                    <p>Quando você atinge o 4º nível e novamente no <strong>6°, 8°, 12°, 14°, 16° e 19°</strong> nível,
+                        você pode aumentar um valor de habilidade em <strong>2</strong>, ou dois valores em
+                        <strong>1</strong> cada. Máximo de <strong>26</strong> com essa característica. Além disso, você
+                        <strong>recebe um talento</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-descanso">
+                <span class="feature-level">Nível 4</span>
+                <div class="feature-name">Descanso Sereno</div>
+                <div class="feature-text">
+                    <p>A partir do 4º nível, o fluxo constante de ki pelo seu corpo ajuda a repará-lo quando ferido.
+                        Quando você recupera pontos de vida de qualquer fonte, você recupera <strong>pontos de vida
+                            adicionais iguais ao seu modificador de Sabedoria</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-queda">
+                <span class="feature-level">Nível 4</span>
+                <div class="feature-name">Queda Lenta</div>
+                <div class="feature-text">
+                    <p>Começando no 4º nível, você pode usar sua <strong>reação</strong>, quando você cai, para reduzir
+                        o dano de queda sofrido por um valor igual a <strong>10 × seu nível de monge</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-ataque-extra">
+                <span class="feature-level">Nível 5 · 11 · 20</span>
+                <div class="feature-name">Ataque Extra</div>
+                <div class="feature-text">
+                    <p>A partir do 5º nível, você pode atacar <strong>duas vezes</strong> quando usar a ação de Ataque.
+                        O número de ataques aumenta para <strong>três</strong> quando você alcançar o 11º nível de Monge
+                        e para <strong>quatro</strong> quando alcançar o 20º nível.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-forca-esp">
+                <span class="feature-level">Nível 5</span>
+                <div class="feature-name">Força Espiritual</div>
+                <div class="feature-text">
+                    <p>A partir do 5º nível, você é capaz de enriquecer seu corpo com seu ki. Você pode adicionar seu
+                        <strong>modificador de Sabedoria</strong> a seus testes de <strong>Atletismo e
+                            Acrobacia</strong> se possuir pelo menos um ponto de ki.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-golpes-ki">
+                <span class="feature-level">Nível 6</span>
+                <div class="feature-name">Golpes de Ki</div>
+                <div class="feature-text">
+                    <p>A partir do 6º nível, enquanto você possuir pelo menos 1 ponto de Ki, seus golpes desarmados
+                        contam como <strong>armas mágicas</strong> para ultrapassar a resistência ou imunidade a ataques
+                        não-mágicos.</p>
+                    <p>Além disso, você recebe um <strong>bônus nas jogadas de acerto e dano</strong> com seus ataques
+                        desarmados:</p>
+                    <ul>
+                        <li><strong>+1</strong> no 6º nível</li>
+                        <li><strong>+2</strong> no 9º nível</li>
+                        <li><strong>+3</strong> no 12º nível</li>
+                        <li><strong>+4</strong> no 15º nível</li>
+                        <li><strong>+5</strong> no 18º nível</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-evasao">
+                <span class="feature-level">Nível 7</span>
+                <div class="feature-name">Evasão</div>
+                <div class="feature-text">
+                    <p>A partir do 7º nível, quando você for alvo de um efeito que exige um teste de resistência de
+                        Destreza para sofrer metade do dano, você <strong>não sofre dano algum se passar</strong>, e
+                        somente metade do dano se falhar.</p>
+                    <p>Além disso, você recebe um <strong>bônus em CA</strong>: +1 (7º), +2 (10º), +3 (13º), +4 (16º) e
+                        +5 (19º nível).</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-alma-diamante">
+                <span class="feature-level">Nível 9</span>
+                <div class="feature-name">Alma de Diamante</div>
+                <div class="feature-text">
+                    <p>A partir do 9º nível, sua maestria do ki concede a você <strong>proficiência em todos os testes
+                            de resistência</strong>. Além disso, toda vez que você realizar um teste de resistência e
+                        falhar, pode gastar <strong>1 ponto de ki</strong> para jogar novamente e ficar com o segundo
+                        resultado.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-pureza">
+                <span class="feature-level">Nível 10</span>
+                <div class="feature-name">Pureza Corporal</div>
+                <div class="feature-text">
+                    <p>No 10º nível, sua maestria do ki flui através de você, tornando-o <strong>imune a doenças, dano
+                            de veneno e à condição Envenenado</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-resiliencia">
+                <span class="feature-level">Nível 12</span>
+                <div class="feature-name">Resiliência</div>
+                <div class="feature-text">
+                    <p>No 12º nível, quando você rola a iniciativa, você <strong>recupera 8 pontos de ki</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-idiomas">
+                <span class="feature-level">Nível 13</span>
+                <div class="feature-name">Idiomas do Sol e da Lua</div>
+                <div class="feature-text">
+                    <p>A partir do 13º nível, você aprende a tocar o ki de outras mentes, fazendo com que você
+                        <strong>compreenda todos os idiomas falados</strong>. Além do mais, qualquer criatura que possa
+                        entender um idioma poderá entender o que você fala.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-tecnicas-ap">
+                <span class="feature-level">Nível 13</span>
+                <div class="feature-name">Técnicas de Ki Aprimoradas</div>
+                <div class="feature-text">
+                    <p>A partir do 13º nível, suas técnicas básicas de Ki se tornam mais poderosas:</p>
+                    <ul>
+                        <li><strong>Rajada de Golpes.</strong> Agora pode desferir <strong>3 ataques</strong>.</li>
+                        <li><strong>Defesa Paciente.</strong> Agora você pode utilizar a ação de <strong>esquiva e
+                                desengajar</strong> simultaneamente.</li>
+                        <li><strong>Passo do Vento.</strong> Agora você pode dar a ação de <strong>desengajar e
+                                disparada</strong> com um único uso.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-mente-tranquila">
+                <span class="feature-level">Nível 14</span>
+                <div class="feature-name">Mente Tranquila</div>
+                <div class="feature-text">
+                    <p>A partir do 14º nível, se você possuir pelo menos 1 ponto de Ki, você pode ler a vibração de
+                        todos os ki à sua volta, dando sempre conhecimento dos arredores. Você possui <strong>visão às
+                            cegas até 72 metros</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-corpo-atemporal">
+                <span class="feature-level">Nível 15</span>
+                <div class="feature-name">Corpo Atemporal</div>
+                <div class="feature-text">
+                    <p>No 15º nível, seu ki sustenta você tanto que você <strong>não sofre os efeitos da
+                            velhice</strong> e não pode envelhecer magicamente. Você ainda morrerá de velhice, no
+                        entanto seu tempo de vida ficará <strong>10 vezes maior</strong>. Além disso, você <strong>não
+                            precisa mais de comida ou água</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-ressonancia">
+                <span class="feature-level">Nível 16</span>
+                <div class="feature-name">Ressonância de Ki</div>
+                <div class="feature-text">
+                    <p>No 16º nível, seus ataques desarmados causam uma onda de ki que perturba o espírito do alvo.
+                        Quando você atingir uma criatura com seu ataque desarmado e ela estiver se concentrando, ela
+                        deve ser bem sucedida em um teste de resistência de Constituição contra o seu <strong>CD de
+                            ki</strong> ou perderá a concentração.</p>
+                    <p>Além disso, seus ataques <strong>ignoram pontos de vida temporários</strong> e habilidades ou
+                        magias que substituem os pontos de vida da criatura (como metamorfose ou forma selvagem do
+                        druida).</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-corpo-vazio">
+                <span class="feature-level">Nível 18</span>
+                <div class="feature-name">Corpo Vazio</div>
+                <div class="feature-text">
+                    <p>A partir do 18º nível, você se torna <strong>imune a magias da escola de Encantamento</strong>.
+                    </p>
+                    <p>Além disso, você pode gastar <strong>8 pontos de ki</strong> para conjurar a magia <em>Projeção
+                            Astral</em>, sem precisar de componentes materiais. Quando o fizer, você não pode levar
+                        qualquer outra criatura com você.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-lendario">
+                <span class="feature-level">Nível 19</span>
+                <div class="feature-name">Lendário</div>
+                <div class="feature-text">
+                    <p>Ao atingir o 19º nível, você pode escolher um <strong>talento épico</strong>.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" id="feat-auto-aperfeicoamento">
+                <span class="feature-level">Nível 20</span>
+                <div class="feature-name">Auto Aperfeiçoamento</div>
+                <div class="feature-text">
+                    <p>No 20º nível, seu domínio do ki permite que você execute técnicas básicas sem esforço. A
+                        <strong>Rajada de Golpes, Defesa Paciente e Passo do Vento agora custam zero de ki</strong> para
+                        serem usados.
+                    </p>
+                    <p>Além disso, seus valores de <strong>Destreza e Sabedoria aumentam em 4</strong>. Seu máximo para
+                        esses valores agora é <strong>30</strong>.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+     TAB: TRADIÇÕES
+============================================================ -->
+    <div class="tab-pane" id="tab-subclasses">
+        <div class="page-content">
+
+            <div class="section-heading">Tradições Monásticas</div>
+            <p class="body-text" style="margin-bottom:28px;">No 3º nível, você ingressa numa tradição monástica. Sua
+                escolha garante características nos níveis 3, 6, 11 e 17.</p>
+
+            <div class="sub-selector-grid" style="grid-template-columns: repeat(5, 1fr);">
+                <button class="sub-btn active" onclick="switchSub('mao-aberta')">
+                    <span class="sub-btn-icon">🤲</span>
+                    <span class="sub-btn-name">Mão Aberta</span>
+                    <span class="sub-btn-desc">Controle, cura e domínio marcial</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('mestre-bebado')">
+                    <span class="sub-btn-icon">🍶</span>
+                    <span class="sub-btn-name">Mestre Bêbado</span>
+                    <span class="sub-btn-desc">Movimentos erráticos e redirecionar</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('sombras')">
+                    <span class="sub-btn-icon">🌑</span>
+                    <span class="sub-btn-name">Sombras</span>
+                    <span class="sub-btn-desc">Escuridão, teletransporte e invisibilidade</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('kensei')">
+                    <span class="sub-btn-icon">⚔️</span>
+                    <span class="sub-btn-name">Kensei</span>
+                    <span class="sub-btn-desc">Maestria com armas e magias de combate</span>
+                </button>
+                <button class="sub-btn" onclick="switchSub('paciente')">
+                    <span class="sub-btn-icon">🧘</span>
+                    <span class="sub-btn-name">Paciente</span>
+                    <span class="sub-btn-desc">Defesa reativa e contra-ataques precisos</span>
+                </button>
+            </div>
+
+            <!-- ── MÃO ABERTA ── -->
+            <div class="sub-panel active" id="sub-mao-aberta">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/monge-mao-aberta.jpg" alt="Mão Aberta"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Os monges do Caminho da Mão Aberta são os mestres supremos do combate das
+                            artes marciais, armados ou desarmados. Eles aprendem técnicas para empurrar e derrubar seus
+                            oponentes, manipular o ki para curar danos em seus corpos e praticar meditações avançadas
+                            que podem protegê-los de danos.</div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Técnica da Mão Aberta</div>
+                            <div class="feature-text">
+                                <p>Começando quando você escolhe essa tradição no 3º nível, você pode manipular o ki do
+                                    seu inimigo quando canaliza o seu próprio. Sempre que acertar uma criatura com um
+                                    dos ataques concedidos pela sua <strong>Rajada de Golpes</strong>, você pode impor
+                                    um dos seguintes efeitos nesse alvo:</p>
+                                <ul>
+                                    <li>Ela deve ter sucesso em um teste de resistência de Destreza ou ser
+                                        <strong>derrubada</strong>.
+                                    </li>
+                                    <li>Ela deve fazer um teste de resistência de Força. Se falhar, você pode
+                                        <strong>empurrá-la até 15 pés</strong> de distância de você.
+                                    </li>
+                                    <li>Ela <strong>não pode realizar reações</strong> até o final do seu próximo turno.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 6</span>
+                    <div class="feature-name">Totalidade do Corpo</div>
+                    <div class="feature-text">
+                        <p>No 6º nível, você ganha a habilidade de se curar. Como uma <strong>ação bônus</strong>, você
+                            pode recuperar pontos de vida iguais a <strong>três vezes o seu nível de monge</strong>.
+                            Você deve terminar um descanso longo antes de poder usar esse recurso novamente.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 11</span>
+                    <div class="feature-name">Tranquilidade</div>
+                    <div class="feature-text">
+                        <p>Começando no 11º nível, você pode entrar em uma meditação especial que o cerca com uma aura
+                            de paz. No final de um descanso longo, você ganha o efeito de um feitiço <em>Santuário</em>
+                            que dura até o início do seu próximo descanso longo (o feitiço pode terminar mais cedo como
+                            normalmente). A <strong>CD do teste de resistência</strong> para o feitiço é igual a 8 +
+                            modificador de Sabedoria + bônus de proficiência.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Palma Trêmula</div>
+                    <div class="feature-text">
+                        <p>No 17º nível, você ganha a habilidade de gerar vibrações letais no corpo de alguém. Quando
+                            acertar uma criatura com um ataque desarmado, pode gastar <strong>3 pontos de ki</strong>
+                            para começar essas vibrações imperceptíveis, que duram um número de dias igual ao seu nível
+                            de monge.</p>
+                        <p>As vibrações são inofensivas a menos que você use sua ação para encerrá-las — você e o alvo
+                            devem estar no mesmo plano. Quando você usa essa ação, a criatura deve fazer um teste de
+                            resistência de Constituição. <strong>Se falhar, é reduzida a 0 pontos de vida.</strong> Se
+                            passar, sofre <strong>10d10 de dano necrótico</strong>. Você só pode ter uma criatura sob o
+                            efeito desse recurso por vez.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── MESTRE BÊBADO ── -->
+            <div class="sub-panel" id="sub-mestre-bebado">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/monge-bebado.jpg" alt="Mestre Bêbado"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">O Estilo do Mestre Bêbado ensina seus estudantes a se movimentarem com os
+                            movimentos bruscos e imprevisíveis de um bêbado. Um mestre bêbado balança, oscilando com pés
+                            instáveis, para parecer um combatente incompetente que se revela frustrante de engajar. As
+                            oscilações erráticas do mestre bêbado escondem uma dança cuidadosamente executada de
+                            bloqueios, paradas, avanços, ataques e recuos. Um mestre bêbado muitas vezes gosta de se
+                            fazer de tolo para trazer alegria aos desanimados ou para demonstrar humildade aos
+                            arrogantes, mas quando a batalha começa, pode ser um adversário enlouquecedor e habilidoso.
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Bônus de Proficiência</div>
+                            <div class="feature-text">
+                                <p>Quando você escolhe essa tradição no 3º nível, você ganha proficiência na perícia de
+                                    <strong>Atuação</strong> se ainda não a possuir. Você também ganha proficiência com
+                                    <strong>suprimentos de cervejeiro</strong> se ainda não a possuir.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Técnica Bêbada</div>
+                            <div class="feature-text">
+                                <p>No 3º nível, você aprende a girar e se movimentar rapidamente como parte do seu
+                                    Torrente de Golpes. Sempre que usar a <strong>Rajada de Golpes</strong>, você ganha
+                                    o benefício da ação <strong>Desengajar</strong>, e sua velocidade de caminhada
+                                    aumenta em <strong>20 pés</strong> até o final do turno atual.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 6</span>
+                    <div class="feature-name">Balanço Embriagado</div>
+                    <div class="feature-text">
+                        <p>Começando no 6º nível, você pode se mover de maneira repentina e oscilante. Você ganha os
+                            seguintes benefícios:</p>
+                        <ul>
+                            <li><strong>Levantar Rapidamente.</strong> Quando estiver caído, você pode se levantar sem
+                                gastar nenhum movimento extra.</li>
+                            <li><strong>Combatente Dorminhoco.</strong> Quando você estiver caído, você não sofre
+                                desvantagem para atacar criaturas e criaturas não possuem vantagem em atacar você.</li>
+                            <li><strong>Redirecionar Ataque.</strong> Quando uma criatura erra um ataque corpo a corpo
+                                contra você, você pode gastar <strong>1 ponto de ki</strong> como reação para fazer esse
+                                ataque acertar uma criatura à sua escolha, que não seja o atacante, e que você possa ver
+                                dentro de 5 pés de você.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 11</span>
+                    <div class="feature-name">Sorte do Bêbado</div>
+                    <div class="feature-text">
+                        <p>A partir do 11º nível, você sempre parece ter um golpe de sorte no momento certo. Quando
+                            fizer um teste de habilidade, ataque ou resistência e tiver <strong>desvantagem</strong>,
+                            você pode gastar <strong>2 pontos de ki</strong> para cancelar a desvantagem para esse
+                            teste.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Frenesi Intoxicado</div>
+                    <div class="feature-text">
+                        <p>No 17º nível, você ganha a habilidade de realizar um número avassalador de ataques contra um
+                            grupo de inimigos. Quando usar a sua <strong>Rajada de Golpes</strong>, você pode fazer até
+                            <strong>três ataques adicionais</strong> com ela (até um total de cinco ataques), desde que
+                            cada ataque atinja uma <strong>criatura diferente</strong> neste turno.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SOMBRAS ── -->
+            <div class="sub-panel" id="sub-sombras">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/monge-sombras.jpg" alt="Caminho das Sombras"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Os guerreiros das sombras praticam furtividade e subterfúgio, canalizando
+                            suas reservas de ki para aproveitar o poder do Shadowfell. Eles estão em casa na escuridão,
+                            capazes de envolver-se em trevas para se esconder, saltar de sombra em sombra e até assumir
+                            uma forma espectral de sombra viva.</div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Artes das Sombras</div>
+                            <div class="feature-text">
+                                <ul>
+                                    <li><strong>Escuridão.</strong> Você pode gastar 1 ponto de ki para conjurar a magia
+                                        <em>Escuridão</em> sem componentes. Você pode ver dentro da área quando a
+                                        conjura com essa habilidade. Enquanto a magia persistir, você pode mover sua
+                                        área de escuridão para um espaço dentro de 18 metros de você no início de cada
+                                        um dos seus turnos.
+                                    </li>
+                                    <li><strong>Visão no Escuro.</strong> Você ganha Visão no Escuro com um alcance de
+                                        18 metros. Se você já tiver Visão no Escuro, seu alcance aumenta em 18 metros.
+                                    </li>
+                                    <li><strong>Figuras Sombrias.</strong> Você conhece o truque <em>Ilusão Menor</em> e
+                                        usa Sabedoria como habilidade de conjuração para ele.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 6</span>
+                    <div class="feature-name">Passo das Sombras</div>
+                    <div class="feature-text">
+                        <p>Enquanto estiver completamente em <strong>Luz Fraca ou Escuridão</strong>, você pode usar uma
+                            ação bônus para se teletransportar até <strong>18 metros</strong> para um espaço desocupado
+                            que você possa ver e que também esteja em Luz Fraca ou Escuridão. Você então tem
+                            <strong>Vantagem no próximo ataque corpo a corpo</strong> que fizer antes do final do turno.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 11</span>
+                    <div class="feature-name">Passo das Sombras Aprimorado</div>
+                    <div class="feature-text">
+                        <p>Você pode usar sua conexão com as sombras para potencializar o teletransporte. Quando usar o
+                            Passo das Sombras, pode gastar <strong>1 ponto de ki</strong> para remover o requisito de
+                            precisar iniciar e terminar em Luz Fraca ou Escuridão. Como parte desta ação bônus, você
+                            pode realizar um <strong>ataque desarmado imediatamente</strong> após o teletransporte.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Manto das Sombras</div>
+                    <div class="feature-text">
+                        <p>Como ação bônus enquanto estiver completamente em Luz Fraca ou Escuridão, você pode gastar
+                            <strong>3 pontos de ki</strong> para se cobrir com escuridão mágica por <strong>1
+                                minuto</strong>, até ficar incapacitado ou até encerrar seu turno em Luz Brilhante.
+                            Enquanto coberto pelas sombras:
+                        </p>
+                        <ul>
+                            <li><strong>Invisibilidade.</strong> Você possui a condição Invisível.</li>
+                            <li><strong>Parcialmente Incorpóreo.</strong> Você pode se mover através de criaturas e
+                                objetos como se fossem terreno difícil, mas sofre 1d10 de dano de Force se encerrar seu
+                                turno dentro de uma criatura ou objeto.</li>
+                            <li><strong>Rajada das Sombras.</strong> Você pode usar sua Rajada de Golpes sem gastar
+                                nenhum ponto de ki.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── KENSEI ── -->
+            <div class="sub-panel" id="sub-kensei">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/monge-kensei.jpg" alt="Caminho do Kensei"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">Os monges do Caminho do Kensei treinam incansavelmente com suas armas, a
+                            ponto de a arma se tornar como uma extensão do próprio corpo. Fundada na maestria da luta
+                            com espadas, a tradição se expandiu para incluir muitas armas diferentes. Um kensei vê uma
+                            arma da mesma maneira que um calígrafo ou pintor vê uma caneta ou pincel — uma ferramenta
+                            usada para expressar a beleza e precisão das artes marciais.</div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Caminho do Kensei</div>
+                            <div class="feature-text">
+                                <p>Quando você escolhe esta tradição no 3º nível, você ganha os seguintes benefícios:
+                                </p>
+                                <ul>
+                                    <li><strong>Armas do Kensei.</strong> Escolha dois tipos de armas (simples ou
+                                        marciais, sem pesada ou especial; arco longo também é válido). Você ganha
+                                        proficiência com elas e elas se tornam armas de monge para você, recebendo todos
+                                        os benefícios das artes marciais. Ao alcançar o 6°, 11° e 17° nível, você pode
+                                        escolher outro tipo de arma.</li>
+                                    <li><strong>Defesa Kensei.</strong> Se você acertar um ataque com sua arma kensei,
+                                        ganha um bônus igual ao bônus de proficiência na sua <strong>CA</strong> até o
+                                        início do seu próximo turno contra a criatura atingida, enquanto a arma estiver
+                                        em sua mão.</li>
+                                    <li><strong>Golpes Certeiros.</strong> Criaturas atingidas por <strong>2 ataques no
+                                            mesmo turno</strong> (pelo menos um com arma Kensei) não podem realizar
+                                        ações bônus ou reação até o início do próximo turno delas.</li>
+                                    <li><strong>Caminho do Pincel.</strong> Você ganha proficiência com suprimentos de
+                                        caligrafia ou suprimentos de pintura (à sua escolha).</li>
+                                    <li><strong>Magias Kensei.</strong> Enquanto com sua arma Kensei, você pode conjurar
+                                        feitiços gastando pontos de ki (dobro do nível do feitiço): nível 3 — <em>Golpe
+                                            de Zephyr</em>; nível 5 — <em>Tornado de Lâminas de Irís</em>; nível 9 —
+                                        <em>Canção do Dragão de Tulipo</em>; nível 13 — <em>Bradação Guerreira de
+                                            Renan</em>; nível 17 — <em>Ataque do Vento de Aço</em>.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 6</span>
+                    <div class="feature-name">Potência Kensei</div>
+                    <div class="feature-text">
+                        <p>No 6º nível, você estende seu ki para suas armas do kensei:</p>
+                        <ul>
+                            <li><strong>Armas Mágicas.</strong> Seus ataques com suas armas do kensei contam como
+                                mágicos para superar resistência e imunidade a ataques não mágicos.</li>
+                            <li><strong>Retribuição.</strong> Quando uma criatura sob o efeito de sua Defesa Kensei
+                                errar um ataque contra você, pode com sua <strong>reação</strong> realizar um ataque
+                                desarmado contra a criatura.</li>
+                            <li><strong>Ritmo Kensei.</strong> Quando acertar uma criatura com um ataque de arma Kensei,
+                                você recebe <strong>+1 em suas próximas jogadas de ataque</strong> contra a criatura até
+                                o início do seu próximo turno.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 11</span>
+                    <div class="feature-name">Artista Kensei</div>
+                    <div class="feature-text">
+                        <p>No 11º nível, sua percepção de tempo e ritmo em combate se tornaram tão aprimoradas que
+                            nenhum movimento é desperdiçado. Quando você realizar a ação de ataque, pode <strong>abdicar
+                                de 2 de seus ataques para conjurar uma Magia Kensei</strong>.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Zona Kensei</div>
+                    <div class="feature-text">
+                        <p>No 17º nível, você pode gastar <strong>5 pontos de ki</strong> para entrar em um estado de
+                            foco absoluto por <strong>1 minuto</strong> (requer concentração). Durante este tempo,
+                            <strong>todas as suas jogadas de dano</strong> com armas e magias Kensei causam <strong>dano
+                                maximizado</strong>.
+                        </p>
+                        <p>Quando você realizar uma jogada de ataque com uma arma Kensei e errar, pode <strong>refazer a
+                                jogada de ataque</strong>. Você pode usar esse recurso uma vez por ataque.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── PACIENTE ── -->
+            <div class="sub-panel" id="sub-paciente">
+                <div class="sub-img-wrap">
+                    <div class="sub-img-slot">
+                        <img src="/assets/class/monge-paciente.jpg" alt="Caminho do Paciente"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                        <div class="sub-intro">A agressão nem sempre é o melhor caminho para derrotar um inimigo.
+                            Esperar o momento certo para atacar, observar as falhas na forma dos inimigos e os erros em
+                            seus ataques pode levar à vitória, mantendo o guerreiro são de corpo e calmo de mente. Os
+                            monges que seguem a tradição da paciência entendem essa verdade e usam a paciência como arma
+                            contra os ataques violentos de seus inimigos.</div>
+                        <div class="feature-card">
+                            <span class="feature-level">Nível 3</span>
+                            <div class="feature-name">Reação Paciente</div>
+                            <div class="feature-text">
+                                <p>A partir do 3º nível, você pode escolher aguardar as ações dos seus inimigos em vez
+                                    de se apressar para a batalha. Quando você realiza a ação de
+                                    <strong>Esquivar</strong>, você ganha uma <strong>reação adicional</strong> que pode
+                                    ser usada até o início do seu próximo turno.
+                                </p>
+                                <p>Além disso, sempre que uma criatura se mover para até 1,5 metros de você pela
+                                    primeira vez ou fizer um ataque contra você, você pode realizar um <strong>ataque de
+                                        oportunidade</strong> contra ela.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 6</span>
+                    <div class="feature-name">Calma da Mente</div>
+                    <div class="feature-text">
+                        <p>No 6º nível, sua paciência e serenidade protegem e restauram seu corpo de efeitos negativos.
+                            Quando você usar sua Defesa Paciente, pode <strong>encerrar a condição amedrontado ou
+                                enfeitiçado</strong> em você — tornando-se imune a essas condições até o início do seu
+                            próximo turno. Alternativamente, pode escolher em vez disso <strong>recuperar pontos de
+                                vida</strong> iguais a 5 + modificador de Sabedoria.</p>
+                        <p>Além disso, quando você usa a Defesa Paciente, você ganha os benefícios da ação de
+                            <strong>Esquivar</strong> até o início do seu próximo turno.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 11</span>
+                    <div class="feature-name">Reação Planejada</div>
+                    <div class="feature-text">
+                        <p>Quando você alcança o 11º nível, suas reações se tornam mais precisas. Uma vez por turno,
+                            você pode <strong>preparar uma ação à sua escolha sem usar uma ação</strong>. Você não pode
+                            usar a ação preparada neste turno.</p>
+                        <p>Além disso, quando você fizer um ataque de oportunidade, pode usar sua <strong>Rajada de
+                                Golpes nessa reação</strong>.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-level">Nível 17</span>
+                    <div class="feature-name">Reação Poderosa</div>
+                    <div class="feature-text">
+                        <p>No 17º nível, quando uma criatura dentro de 1,5 metros <strong>realizar um ataque contra você
+                                ou forçá-lo a fazer um teste de resistência</strong>, você pode realizar um ataque de
+                            oportunidade contra ela. Se acertar, você causa os efeitos normais do ataque e o
+                            <strong>ataque ou efeito da criatura falha automaticamente</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-cls">
+        <p>© 2025 D&D 5e Homebrew Tatânea — Criado por TonhoDevi</p>
+        <nav class="footer-links">
+            <a href="html/compendium/compendium-classes.html">← Todas as Classes</a>
+            <a href="html/compendium/compendium-races.html">Raças</a>
+            <a href="html/compendium/compedium-talents.html">Talentos</a>
+            <a href="index.html">Início</a>
+        </nav>
+    </footer>
+
+    <script src="/js/shared/navbar.js"></script>
+    <script src="/js/class/class-page.js"></script>
+</body>
+
+</html>

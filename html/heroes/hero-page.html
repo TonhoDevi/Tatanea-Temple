@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herói — D&D 5e Homebrew</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/1-variables.css">
+    <link rel="stylesheet" href="css/2-base.css">
+    <link rel="stylesheet" href="css/3-components.css">
+    <link rel="stylesheet" href="css/4-navbar.css">
+    <link rel="stylesheet" href="css/8-responsive.css">
+    <link rel="stylesheet" href="css/heroes/hero-page.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">🎲 D&D 5e Homebrew</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="html/compendium/compendium-heroes.html">Heróis</a></li>
+            </ul>
+            <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
+        </div>
+    </nav>
+
+    <!-- BACK LINK -->
+    <a href="html/compendium/compendium-heroes.html" class="hero-page-back">
+        ← Galeria dos Imortais
+    </a>
+
+    <!-- HERO TITLE BANNER -->
+    <div class="hero-title-banner">
+        <h1 id="heroPageNome">Carregando…</h1>
+        <span class="hero-title-alcunha" id="heroPageAlcunha"></span>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="heroPageContent">
+        <div class="hero-page-layout">
+
+            <!-- ── TOP ROW ─────────────────────────────── -->
+            <div class="hero-top-row">
+
+                <!-- Photo + Meta card -->
+                <div class="hero-photo-card">
+                    <div class="hero-photo-wrap">
+                        <div id="heroPhoto"></div>
+                        <div class="hero-photo-gradient"></div>
+                        <span class="hero-photo-cat" id="heroPageCategoria"></span>
+                    </div>
+                    <div class="hero-meta-body">
+                        <p class="hero-name-display" id="heroPageNomeSmall" style="display:none"></p>
+                        <div class="hmeta-grid" id="heroPageMeta"></div>
+                    </div>
+                </div>
+
+                <!-- História -->
+                <div class="hero-historia-card">
+                    <div class="hero-section-title">História</div>
+                    <div class="hero-historia-text" id="heroPageHistoria"></div>
+                </div>
+
+            </div><!-- /hero-top-row -->
+
+            <!-- ── VERSÕES ROW ──────────────────────────── -->
+            <div class="hero-versions-row">
+                <div class="hero-section-title">Versões</div>
+                <div class="ver-btns-wrap" id="heroVersionBtns"></div>
+                <p class="ver-desc" id="heroVersionDesc"></p>
+            </div>
+
+            <!-- ── BOTTOM ROW ───────────────────────────── -->
+            <div class="hero-bottom-row">
+
+                <!-- Radar: Atributos -->
+                <div class="radar-card">
+                    <div class="radar-card-title">Atributos</div>
+                    <div class="radar-svg-wrap">
+                        <svg id="radarAtributos" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" width="300"
+                            height="282" style="overflow:visible;">
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Radar: Poderes -->
+                <div class="radar-card">
+                    <div class="radar-card-title">Poderes</div>
+                    <div class="radar-svg-wrap">
+                        <svg id="radarPoderes" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" width="300"
+                            height="282" style="overflow:visible;">
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Powers accordion -->
+                <div class="powers-card">
+                    <div class="hero-section-title">Poderes Maiores</div>
+                    <div id="poderesMaioresArea"></div>
+                </div>
+
+            </div><!-- /hero-bottom-row -->
+
+        </div><!-- /hero-page-layout -->
+    </div><!-- /heroPageContent -->
+
+    <!-- FOOTER -->
+    <footer class="footer-v2" style="border-top:1px solid var(--cor11);padding:28px 20px;text-align:center;">
+        <p style="font-family:'Crimson Text',serif;font-size:.9rem;color:var(--cor10);margin:0 0 12px;">© 2025 D&D 5e
+            Homebrew — Criado por TonhoDevi</p>
+        <nav style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
+            <a href="index.html"
+                style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.1em;color:var(--cor14);text-decoration:none;text-transform:uppercase;">Início</a>
+            <a href="html/compendium/compendium-heroes.html"
+                style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.1em;color:var(--cor14);text-decoration:none;text-transform:uppercase;">←
+                Heróis</a>
+            <a href="html/compendium/compendium-races.html"
+                style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.1em;color:var(--cor14);text-decoration:none;text-transform:uppercase;">Raças</a>
+        </nav>
+    </footer>
+
+    <script src="js/compendium/data-heroes.js"></script>
+    <script src="js/heroes/hero-page.js"></script>
+    <script src="js/shared/navbar.js"></script>
+</body>
+
+</html>

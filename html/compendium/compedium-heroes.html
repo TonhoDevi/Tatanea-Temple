@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compêndio de Heróis - D&D 5e Homebrew</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/1-variables.css">
+    <link rel="stylesheet" href="css/2-base.css">
+    <link rel="stylesheet" href="css/3-components.css">
+    <link rel="stylesheet" href="css/4-navbar.css">
+    <link rel="stylesheet" href="css/8-responsive.css">
+    <link rel="stylesheet" href="css/compendium/heroes.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">🎲 D&D 5e Homebrew</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="html/compendium/compendium-races.html">Raças</a></li>
+                <li><a href="html/compendium/compendium-classes.html">Classes</a></li>
+            </ul>
+            <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
+        </div>
+    </nav>
+
+    <!-- HERO HEADER -->
+    <header class="compendio-hero">
+        <span class="hero-rune-left">⚔</span>
+        <span class="hero-rune-right">👑</span>
+        <span class="hero-eyebrow">Galeria dos Imortais</span>
+        <h1>Heróis de Tatânea</h1>
+        <div class="hero-divider">
+            <div class="hero-divider-gem"></div>
+        </div>
+        <p>Os grandes personagens que moldaram a história do mundo</p>
+    </header>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stats-bar-inner">
+            <div class="stat-pill">
+                <span class="stat-pill-icon">📜</span>
+                <span class="stat-pill-num" id="totalHerois">0</span>
+                <span>Total</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-pill-icon">👑</span>
+                <span class="stat-pill-num" id="count-lendario">0</span>
+                <span>Lendários</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-pill-icon">⚔️</span>
+                <span class="stat-pill-num" id="count-heroi">0</span>
+                <span>Heróis</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-pill-icon">💀</span>
+                <span class="stat-pill-num" id="count-vilao">0</span>
+                <span>Vilões</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-pill-icon">🌑</span>
+                <span class="stat-pill-num" id="count-misterioso">0</span>
+                <span>Misteriosos</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-pill-icon">🤝</span>
+                <span class="stat-pill-num" id="count-aliado">0</span>
+                <span>Aliados</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILTER PANEL -->
+    <div class="filtros-panel">
+        <div class="filtros-panel-inner">
+
+            <!-- Category tabs -->
+            <div class="category-tabs" role="tablist">
+                <button class="cat-tab active" data-cat="">
+                    Todos <span class="cat-count" id="tab-count-all">0</span>
+                </button>
+                <button class="cat-tab" data-cat="lendario">
+                    👑 Lendários <span class="cat-count" id="tab-count-lendario">0</span>
+                </button>
+                <button class="cat-tab" data-cat="heroi">
+                    ⚔️ Heróis <span class="cat-count" id="tab-count-heroi">0</span>
+                </button>
+                <button class="cat-tab" data-cat="vilao">
+                    💀 Vilões <span class="cat-count" id="tab-count-vilao">0</span>
+                </button>
+                <button class="cat-tab" data-cat="misterioso">
+                    🌑 Misteriosos <span class="cat-count" id="tab-count-misterioso">0</span>
+                </button>
+                <button class="cat-tab" data-cat="aliado">
+                    🤝 Aliados <span class="cat-count" id="tab-count-aliado">0</span>
+                </button>
+            </div>
+
+            <!-- Filter controls -->
+            <div class="filter-controls">
+                <div class="search-wrap">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchHero" class="search-input-v2"
+                        placeholder="Buscar por nome, alcunha, classe, espécie..." autocomplete="off">
+                </div>
+
+                <select id="sortHeroes" class="filter-select-v2">
+                    <option value="default">Ordem padrão</option>
+                    <option value="az">A → Z</option>
+                    <option value="za">Z → A</option>
+                </select>
+
+                <div class="view-toggle">
+                    <button class="view-btn active" id="viewHeroGrid" onclick="setHeroView('grid')"
+                        title="Grade">⊞</button>
+                    <button class="view-btn" id="viewHeroList" onclick="setHeroView('list')" title="Lista">☰</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTS COUNT -->
+    <div class="results-header">
+        <p class="results-count" id="heroesCount">
+            Mostrando <strong>0</strong> heróis
+        </p>
+    </div>
+
+    <!-- HEROES GRID -->
+    <section class="heroes-section">
+        <div class="heroes-container">
+            <div class="heroes-grid" id="heroesGrid">
+                <!-- populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="heroModal" role="dialog" aria-modal="true">
+        <div class="hero-modal" style="position:relative;">
+            <button class="modal-close-btn" onclick="closeHeroModal()" title="Fechar (ESC)">✕</button>
+
+            <div class="modal-hero-top">
+                <div class="modal-hero-img" id="modalHeroImg"></div>
+                <div class="modal-hero-info">
+                    <h2 class="modal-hero-nome" id="modalHeroNome"></h2>
+                    <p class="modal-hero-alcunha" id="modalHeroAlcunha"></p>
+                    <div class="modal-hero-badge-wrap">
+                        <span class="modal-hero-badge" id="modalHeroBadge"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-quick-stats">
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Classe</span>
+                    <span class="quick-stat-value" id="mqsClasse">—</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Espécie</span>
+                    <span class="quick-stat-value" id="mqsEspecie">—</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Nível</span>
+                    <span class="quick-stat-value" id="mqsNivel">—</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Plano</span>
+                    <span class="quick-stat-value" id="mqsPlano">—</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Tempo</span>
+                    <span class="quick-stat-value" id="mqsTempo">—</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="quick-stat-label">Versões</span>
+                    <span class="quick-stat-value" id="mqsVersoes">—</span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <p class="modal-hero-desc" id="modalHeroDesc"></p>
+
+                <div class="modal-versoes-title">✦ Versões disponíveis</div>
+                <div class="modal-versoes-list" id="modalVersoes"></div>
+
+                <a class="modal-hero-link" id="modalHeroPageLink" href="#">
+                    ↗ Abrir página completa do herói
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-v2">
+        <p>© 2025 D&D 5e Homebrew — Criado por TonhoDevi</p>
+        <nav class="footer-links-v2">
+            <a href="index.html">Início</a>
+            <a href="html/compendium/compendium-races.html">Raças</a>
+            <a href="html/compendium/compendium-classes.html">Classes</a>
+            <a href="html/compendium/compedium-talents.html">Talentos</a>
+        </nav>
+    </footer>
+
+    <script src="js/compendium/data-heroes.js"></script>
+    <script src="js/compendium/compendium-heroes.js"></script>
+    <script src="js/shared/navbar.js"></script>
+    <script>
+        // Patch modal link when modal opens
+        const _origShow = showHeroModal;
+        showHeroModal = function (idx) {
+            _origShow(idx);
+            const h = HEROES_DATA[idx];
+            const link = document.getElementById('modalHeroPageLink');
+            if (link && h) link.href = `html/heroes/hero-page.html?id=${h.id}`;
+        };
+    </script>
+</body>
+
+</html>

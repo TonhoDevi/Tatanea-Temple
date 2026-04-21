@@ -1,0 +1,626 @@
+/* ============================================
+   PÁGINA DO HERÓI — ESTILOS
+   Arquivo: css/heroes/hero-page.css
+============================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cor1);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    font-family: 'Crimson Text', Georgia, serif;
+    color: var(--cor8);
+}
+
+/* ── Back link ──────────────────────────────── */
+.hero-page-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cor10);
+    text-decoration: none;
+    padding: 12px 20px;
+    transition: color .25s;
+}
+
+.hero-page-back:hover {
+    color: var(--cor3);
+}
+
+/* ── Hero Title Banner ──────────────────────── */
+.hero-title-banner {
+    padding: 24px 24px 0;
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.hero-title-banner h1 {
+    font-family: 'Pirata One', cursive;
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    color: var(--cor19);
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 0 50px rgba(200, 160, 60, .25), 0 3px 12px rgba(0, 0, 0, .9);
+    letter-spacing: .03em;
+}
+
+.hero-title-alcunha {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--cor10);
+    margin: 6px 0 0;
+    display: block;
+}
+
+/* ── Main Layout ────────────────────────────── */
+.hero-page-layout {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* TOP ROW: photo+meta  |  história */
+.hero-top-row {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* Photo card */
+.hero-photo-card {
+    background: linear-gradient(160deg, var(--cor15) 0%, var(--cor5) 100%);
+    border: 1px solid var(--cor11);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-photo-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, var(--brilho-crimson-leve) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-photo-wrap {
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5, 8, 22, .7);
+}
+
+.hero-photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.hero-page-fallback {
+    font-size: 8rem;
+    line-height: 1;
+    opacity: .55;
+}
+
+.hero-photo-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(0deg, var(--cor5), transparent);
+}
+
+/* Categoria badge on photo */
+.hero-photo-cat {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: .62rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    backdrop-filter: blur(6px);
+    z-index: 2;
+}
+
+/* Meta below photo */
+.hero-meta-body {
+    padding: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-name-display {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cor19);
+    margin: 0 0 2px;
+}
+
+.hero-alcunha-display {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: .95rem;
+    color: var(--cor10);
+    margin: 0 0 12px;
+}
+
+.hmeta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.hmeta-item {
+    background: var(--transp-preto);
+    border: 1px solid var(--brilho-crimson-medio);
+    border-radius: 5px;
+    padding: 7px 10px;
+}
+
+.hmeta-lbl {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: .55rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cor10);
+    margin-bottom: 2px;
+}
+
+.hmeta-val {
+    display: block;
+    font-family: 'Crimson Text', serif;
+    font-size: .92rem;
+    color: var(--cor8);
+    font-weight: 600;
+}
+
+.hmeta-item.span-2 {
+    grid-column: 1 / -1;
+}
+
+/* História */
+.hero-historia-card {
+    background: linear-gradient(160deg, var(--cor15) 0%, var(--cor5) 100%);
+    border: 1px solid var(--cor11);
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-historia-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, var(--brilho-crimson-leve) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.hero-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--cor3);
+    margin-bottom: 16px;
+    opacity: .8;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cor14), transparent);
+}
+
+.hero-historia-text {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-historia-text p {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    color: var(--cor8);
+    line-height: 1.75;
+    margin: 0 0 14px;
+}
+
+.hero-historia-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── VERSÕES ROW ────────────────────────────── */
+.hero-versions-row {
+    background: linear-gradient(160deg, var(--cor15) 0%, var(--cor5) 100%);
+    border: 1px solid var(--cor11);
+    border-radius: 8px;
+    padding: 18px 22px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-versions-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, var(--brilho-crimson-leve) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.ver-btns-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.ver-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--transp-preto);
+    border: 1px solid var(--cor11);
+    border-radius: 6px;
+    padding: 9px 16px;
+    color: var(--cor10);
+    font-family: 'Cinzel', serif;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .25s ease;
+    position: relative;
+}
+
+.ver-btn::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 7px;
+    border: 2px solid transparent;
+    transition: border-color .25s ease;
+}
+
+.ver-btn:hover {
+    color: var(--cor8);
+    background: var(--brilho-crimson-medio);
+    border-color: var(--cor14);
+}
+
+.ver-btn.active {
+    color: var(--cor19);
+    background: var(--brilho-crimson-forte);
+    border-color: var(--cor3);
+    box-shadow: 0 0 12px rgba(200, 160, 60, .2);
+}
+
+.ver-btn-icon {
+    font-size: 1.1rem;
+}
+
+.ver-btn-nome {
+    font-size: .72rem;
+}
+
+.ver-desc {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: .95rem;
+    color: var(--cor10);
+    min-height: 1.5em;
+    position: relative;
+    z-index: 1;
+    transition: opacity .25s ease;
+}
+
+/* ── BOTTOM ROW: radars + powers ────────────── */
+.hero-bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+/* Radar cards */
+.radar-card {
+    background: linear-gradient(160deg, var(--cor15) 0%, var(--cor5) 100%);
+    border: 1px solid var(--cor11);
+    border-radius: 8px;
+    padding: 16px 12px 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.radar-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, var(--brilho-crimson-leve) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.radar-card-title {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--cor3);
+    margin-bottom: 10px;
+    opacity: .8;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.radar-svg-wrap {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.radar-svg-wrap svg {
+    transition: opacity .25s ease;
+    display: block;
+}
+
+/* Powers card */
+.powers-card {
+    background: linear-gradient(160deg, var(--cor15) 0%, var(--cor5) 100%);
+    border: 1px solid var(--cor11);
+    border-radius: 8px;
+    padding: 16px 16px 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.powers-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, var(--brilho-crimson-leve) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+/* Power buttons */
+.poderes-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.poder-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--transp-preto);
+    border: 1px solid var(--cor11);
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-family: 'Cinzel', serif;
+    font-size: .62rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--cor10);
+    cursor: pointer;
+    transition: all .2s ease;
+    white-space: nowrap;
+}
+
+.poder-btn:hover {
+    color: var(--cor8);
+    border-color: var(--cor14);
+    background: var(--brilho-crimson-medio);
+}
+
+.poder-btn.active {
+    color: var(--cor19);
+    border-color: var(--cor3);
+    background: var(--brilho-crimson-forte);
+    box-shadow: 0 0 10px rgba(200, 160, 60, .18);
+}
+
+.poder-btn-icon {
+    font-size: 1rem;
+}
+
+.poder-btn-nome {
+    font-size: .62rem;
+}
+
+/* Power content area */
+.poder-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.poder-content.open {
+    max-height: 500px;
+}
+
+.poder-detail {
+    background: var(--transp-preto);
+    border: 1px solid var(--brilho-crimson-forte);
+    border-left: 3px solid var(--cor3);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 16px;
+    margin-top: 8px;
+    animation: poderIn .2s ease;
+}
+
+.poder-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.poder-detail-icon {
+    font-size: 1.4rem;
+}
+
+.poder-detail-nome {
+    font-family: 'Cinzel', serif;
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--cor19);
+    margin: 0;
+    letter-spacing: .04em;
+}
+
+.poder-detail-desc {
+    font-family: 'Crimson Text', serif;
+    font-size: .98rem;
+    color: var(--cor10);
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* Empty state */
+.poderes-empty {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    color: var(--cor10);
+    font-size: .9rem;
+    padding: 12px 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Error ──────────────────────────────────── */
+.hero-page-error {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--cor10);
+    font-family: 'Crimson Text', serif;
+}
+
+.hero-page-error span {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.hero-page-error p {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.hero-page-error a {
+    color: var(--cor3);
+    font-family: 'Cinzel', serif;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+/* ── Animations ─────────────────────────────── */
+@keyframes poderIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 1100px) {
+    .hero-bottom-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .powers-card {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 750px) {
+    .hero-top-row {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-photo-card {
+        max-width: 400px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .hero-bottom-row {
+        grid-template-columns: 1fr;
+    }
+
+    .powers-card {
+        grid-column: auto;
+    }
+
+    .hero-title-banner h1 {
+        font-size: 2.6rem;
+    }
+
+    .radar-svg-wrap svg {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-page-layout {
+        padding: 16px 14px 40px;
+    }
+
+    .hero-title-banner {
+        padding: 16px 14px 0;
+    }
+
+    .hero-versions-row {
+        padding: 14px 14px;
+    }
+
+    .hmeta-grid {
+        grid-template-columns: 1fr;
+    }
+}
