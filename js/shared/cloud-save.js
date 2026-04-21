@@ -117,13 +117,81 @@ async function cloudDelete(tipo, id) {
 
 // ── NOVA FICHA / ABRIR FICHA ─────────────────────────────────────
 async function cloudNewSheet(tipo) {
-    const pode = await cloudPodeCriarNova();
-    if (!pode) {
+    const user = await getUser();
+    if (!user) return false;
+
+    const total = await cloudCount();
+    if (total >= LIMITE_FICHAS) {
         alert('Voce ja tem ' + LIMITE_FICHAS + ' fichas salvas.\nExclua uma antes de criar outra.');
         return false;
     }
-    clearActiveSheetId(tipo);
-    return true;
+
+    // Criar ficha vazia na database
+    const fichaVazia = {
+        nomePersonagem: 'Nova Ficha',
+        nomeJogador: '',
+        classeNivel: '',
+        raca: '',
+        antecedente: '',
+        tendencia: '',
+        inspiracao: false,
+        pontoHeroico: false,
+        forca: 10, destreza: 10, constituicao: 10, inteligencia: 10, sabedoria: 10, carisma: 10,
+        profForca: false, profDestreza: false, profConstituicao: false, profInteligencia: false, profSabedoria: false, profCarisma: false,
+        bonusProficiencia: 1,
+        ca: 10, iniciativa: 0,
+        deslocAndar: '30', deslocNadar: '15', deslocVoar: '-', deslocEscalar: '15', salto: '0',
+        pvTotais: 0, pvAtuais: 0, pvTemp: 0,
+        pc: 0, pe: 0, pl: 0, po: 0, pp: 0,
+        idiomas: '', tesouro: '',
+        habilidadeMagia: '', extraBonusMagia: 0, cdMagia: 8, bonusMagia: '+0',
+        slot1Current: 0, slot1Max: 0, slot2Current: 0, slot2Max: 0, slot3Current: 0, slot3Max: 0,
+        slot4Current: 0, slot4Max: 0, slot5Current: 0, slot5Max: 0, slot6Current: 0, slot6Max: 0,
+        slot7Current: 0, slot7Max: 0, slot8Current: 0, slot8Max: 0, slot9Current: 0, slot9Max: 0,
+        idade: '', altura: '', peso: '',
+        caracteristicas: '', personalidade: '', ideais: '', vinculos: '', defeitos: '',
+        historia: '', anotacoes: '',
+        skillProficiencies: {},
+        attacks: [], abilities: [], inventoryItems: [], magicItems: [], individualsUnit: [],
+        spells: { truques: [], nivel1: [], nivel2: [], nivel3: [], nivel4: [], nivel5: [], nivel6: [], nivel7: [], nivel8: [], nivel9: [] },
+        characterImage: null,
+        persistTags: "[]"
+    };
+
+    try {
+        // Insere nova ficha na database
+        const { data, error } = await sb.from('fichas').insert({
+            user_id: user.id,
+            tipo: tipo,
+            nome: 'Nova Ficha',
+            dados: fichaVazia
+        }).select().single();
+
+        // Verifica se houve erro na operacao
+        if (error) {
+            console.error('Erro ao criar nova ficha:', error);
+            alert('Erro ao criar nova ficha: ' + (error.message || error));
+            return false;
+        }
+
+        // Verifica se os dados foram retornados corretamente
+        if (!data || !data.id) {
+            console.error('Resposta inválida do servidor:', data);
+            alert('Erro: Ficha criada mas ID nao foi retornado.');
+            return false;
+        }
+
+        // Define o ID da ficha ativa (CRUCIAL para o carregamento)
+        setActiveSheetId(tipo, data.id);
+        console.log('Nova ficha criada com ID:', data.id);
+        
+        return true;
+
+    } catch (err) {
+        console.error('Excecao ao criar nova ficha:', err);
+        alert('Erro ao criar nova ficha: ' + err.message);
+        return false;
+    }
 }
 
 function cloudOpenSheet(tipo, id) { setActiveSheetId(tipo, id); }

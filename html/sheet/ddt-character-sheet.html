@@ -863,7 +863,6 @@
                             <div class="section-title">Ações</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <button class="btn btn-primary" onclick="saveCharacter()">💾 Salvar Ficha</button>
-                                <button class="btn btn-danger" onclick="newCharacter()">➕ Nova Ficha</button>
                                 <button class="btn btn-secondary" onclick="exportCharacterJSON()">📥 Exportar
                                     JSON</button>
                                 <button class="btn btn-secondary" onclick="showLoadModal()">📂 Carregar Local</button>
@@ -986,94 +985,6 @@
     <!-- Patch: the ddt-character.js references .character-bonus-check and .bonus-value via
      checkbox and input IDs. Override the old classes used for layout since we've redesigned them. -->
     <script>
-        // Ensure the JS finds inspiracao, pontoHeroico as the expected checkbox IDs — they're already correct.
-        // Patch calculateModifiers to update the saving throw display with our new format.
-        (function patchSavingThrowDisplay() {
-            const _orig = window.calculateModifiers;
-            if (!_orig) return;
-            // Saving throws were originally like "+0" — keep that format
-            // The class change listener for .proficient is also needed
-            const _origCST = window.calculateSavingThrows;
-            if (!_origCST) return;
-            window.calculateSavingThrows = function () {
-                _origCST();
-            };
-        })();
-
-        // Função global para controles numéricos customizados
-        function changeValue(id, delta) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            let newVal = parseInt(el.value || 0) + delta;
-            if (newVal < 0) newVal = 0; // Impede valores negativos
-            el.value = newVal;
-            // Dispara o evento de input para rodar cálculos e salvar
-            el.dispatchEvent(new Event('input', { bubbles: true }));
-        }
-
-        // Funções de Dano e Cura Rápida
-        function applyDamage() {
-            const amount = parseInt(document.getElementById('hpChangeAmount').value || 0);
-            const current = document.getElementById('pvAtuais');
-            if (amount <= 0 || !current) return;
-            current.value = Math.max(0, parseInt(current.value || 0) - amount);
-            current.dispatchEvent(new Event('input', { bubbles: true }));
-            document.getElementById('hpChangeAmount').value = 0; // Limpa após usar
-        }
-
-        function applyHealing() {
-            const amount = parseInt(document.getElementById('hpChangeAmount').value || 0);
-            const current = document.getElementById('pvAtuais');
-            const max = parseInt(document.getElementById('pvTotais').value || 0);
-            if (amount <= 0 || !current) return;
-            current.value = Math.min(max, parseInt(current.value || 0) + amount);
-            current.dispatchEvent(new Event('input', { bubbles: true }));
-            document.getElementById('hpChangeAmount').value = 0; // Limpa após usar
-        }
-
-        // --- SISTEMA DE TAGS UNIFICADO (BADGES) ---
-        let tagDataArray = [];
-
-        function addTagEnhanced(type) {
-            const input = document.getElementById('inputTagGeneral');
-            const value = input.value.trim();
-            if (!value) return;
-
-            tagDataArray.push({ text: value, type: type });
-
-            input.value = '';
-            renderUnifiedTags();
-            autoSave();
-        }
-
-        function removeUnifiedTag(index) {
-            tagDataArray.splice(index, 1);
-            renderUnifiedTags();
-            autoSave();
-        }
-
-        function renderUnifiedTags() {
-            const container = document.getElementById('unifiedTagsContainer');
-            if (!container) return;
-
-            container.innerHTML = '';
-            tagDataArray.forEach((tag, index) => {
-                const badge = document.createElement('div');
-                badge.className = `badge-item badge-${tag.type}`;
-                badge.innerHTML = `
-                    <span>${tag.text}</span>
-                    <button class="badge-remove" onclick="removeUnifiedTag(${index})">×</button>
-                `;
-                container.appendChild(badge);
-            });
-
-            // Sincroniza com o input oculto para o autoSave
-            const persistInput = document.getElementById('persistTags');
-            if (persistInput) {
-                persistInput.value = JSON.stringify(tagDataArray);
-                persistInput.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-        }
     </script>
 
 </body>
