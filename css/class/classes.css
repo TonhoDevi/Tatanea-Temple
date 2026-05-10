@@ -550,6 +550,28 @@ body {
     text-align: center;
 }
 
+/* Largura das colunas da tabela de progressão */
+.prog-table th.col-nivel,
+.prog-table td.col-nivel {
+    width: 60px;
+}
+.prog-table th.col-prof,
+.prog-table td.col-prof {
+    width: 60px;
+}
+.prog-table th.col-feats,
+.prog-table td.col-feats {
+    width: auto; /* ocupa o restante - longa */
+}
+.prog-table th.col-recurso1,
+.prog-table td.col-recurso1 {
+    width: 80px;
+}
+.prog-table th.col-recurso2,
+.prog-table td.col-recurso2 {
+    width: 100px;
+}
+
 .prog-table td {
     padding: 10px 16px;
     font-family: 'Crimson Text', serif;
