@@ -1741,6 +1741,153 @@ const RACAS_DATA = [
         descricao: "Uma vez por descanso curto: reação para interpor o escudo entre aliado em 1,5 m e um ataque sofrido, concedendo +2 de CA contra aquele ataque."
       }
     ]
+  },
+  {
+    nome: "Grung",
+    categoria: "tribal",
+    tamanho: "pequeno",
+    deslocamento: "7,5 m / 7,5 m (escalada)",
+    //imagem: "assets/races/grung.jpg",
+    descricao: "Pequenos humanoides anfíbios com aparência de sapos arborícolas. Ágeis, territorialistas e organizados em castas de cores vibrantes. Sua fofura esconde uma toxina letal para forasteiros.",
+    tracos: [
+      "Aumento de Destreza +2 e Constituição +1",
+      "Idade: amadurecem no primeiro ano de vida e vivem até 50 anos",
+      "Tamanho: 0,60–0,90 m, ~15 kg — Pequeno",
+      "Deslocamento: 7,5 m (caminhada), 7,5 m (escalada)",
+      "Anfíbio: pode respirar ar e água",
+      "Imunidade Venenosa: imunidade a dano de veneno e à condição envenenado",
+      "Idiomas: Comum e Grung"
+    ],
+    habilidades: [
+      {
+        nome: "Pele Tóxica",
+        descricao: "Sua pele secreta uma toxina natural. Sempre que uma criatura agarrar você ou for agarrada por você, ela sofre 1d4 de dano de veneno no início do turno dela. Além disso, uma vez por turno ao acertar um ataque corpo a corpo desarmado ou com armas perfurantes, você pode forçar o alvo a fazer um teste de Constituição (CD 8 + sua proficiência + sua Constituição) ou ficar envenenado até o final do próximo turno do alvo."
+      },
+      {
+        nome: "Salto Arbóreo",
+        descricao: "Sua distância de salto em distância ou altura é sempre dobrada. Você não precisa realizar movimentação prévia (teste de corrida) para alcançar a distância máxima dos seus saltos."
+      }
+    ]
+  },
+
+  {
+    nome: "Gungan",
+    categoria: "tribal",
+    tamanho: "medio",
+    deslocamento: "9 m / 9 m (natação)",
+    //imagem: "assets/races/gungan.jpg",
+    descricao: "Habitantes de cidades submersas e pântanos densos. Conhecidos por seu estilo de vida exótico e por possuírem uma 'sorte caótica', onde seus piores tropeços se convertem magicamente no infortúnio de seus inimigos.",
+    tracos: [
+      "Aumento de Destreza +2 e Carisma +1",
+      "Idade: adultos aos 15 anos, vivem até 80 anos",
+      "Tamanho: 1,80–2,00 m, esguios — Médio",
+      "Deslocamento: 9 m (caminhada), 9 m (natação)",
+      "Anfíbio: pode respirar ar e água",
+      "Visão no Escuro: 18 m na penumbra como luz plena (olhos adaptados às profundezas)",
+      "Idiomas: Comum e Gungan"
+    ],
+    habilidades: [
+      {
+        nome: "Atrapalhada Contagiosa",
+        descricao: "Quando você falha em uma jogada de ataque, teste de habilidade ou teste de resistência, você pode usar sua reação para transformar o erro em um desastre em cadeia. Uma criatura hostil a até 9 metros de você deve realizar um teste de Destreza (CD 8 + sua proficiência + seu Carisma). Se falhar, ela sofre desvantagem em sua próxima jogada ou deixa cair a arma que estiver segurando (sua escolha). Usos iguais ao bônus de proficiência por descanso longo."
+      },
+      {
+        nome: "Mergulhador Ágil",
+        descricao: "Movimentar-se na água, lama espessa ou pântanos não custa deslocamento adicional. Além disso, você tem proficiência em Acrobacia."
+      }
+    ]
+  },
+  {
+    nome: "Wookiee",
+    categoria: "tribal",
+    tamanho: "grande",
+    deslocamento: "9 m",
+    //imagem: "assets/races/wookiee.jpg",
+    descricao: "Gigantes peludos com um senso de honra inabalável e uma força aterrorizante. Suas emoções são tão imensas quanto suas estaturas. São aliados leais e implacáveis no campo de batalha.",
+    tracos: [
+      "Aumento de Força +2 e Constituição +1",
+      "Idade: amadurecem no ritmo humano, mas podem viver mais de 400 anos",
+      "Tamanho: 2,10–2,40 m, ~150 kg — Grande",
+      "Deslocamento: 9 m",
+      "Compleição Poderosa: conta como tamanho maior para carga, empurrar, erguer e agarrar",
+      "Idiomas: Comum (apenas entende) e Shyriiwook (fala nativa)"
+    ],
+    habilidades: [
+      {
+        nome: "Pelagem de Ferro",
+        descricao: "Sua pelagem espessa e músculos densos lhe concedem resistência a dano cortante. Além disso, você tem vantagem em testes de resistência para evitar a Exaustão e não requer mais que 4 horas de descanso para recuperar as energias."
+      },
+      {
+        nome: "Grito de Guerra Ancestral",
+        descricao: "Como uma ação bônus no seu primeiro turno de um combate, você emite um rugido ensurdecedor. Até o final do seu próximo turno, todos os aliados a até 9 metros que puderem ouvi-lo ganham vantagem em sua primeira jogada de ataque e recebem pontos de vida temporários iguais ao seu nível + seu modificador de Força. Você pode usar essa habilidade uma vez por descanso longo."
+      },
+      {
+        nome: "Fúria do Vínculo",
+        descricao: "Se um aliado que você possa ver for reduzido a 0 pontos de vida, você tem vantagem nas jogadas de ataque corpo a corpo no seu próximo turno contra o atacante."
+      }
+    ]
+  },
+
+  {
+    nome: "Kenku",
+    categoria: "mistica",
+    tamanho: "medio",
+    deslocamento: "9 m",
+    //imagem: "assets/races/kenku.jpg",
+    descricao: "Corvos humanoides amaldiçoados a perderem suas asas e a própria voz. Eles sobrevivem à margem das sociedades aglomeradas copiando sons, forjando documentos e servindo em guildas perigosas.",
+    tracos: [
+      "Aumento de Destreza +2 e Sabedoria +1",
+      "Idade: amadurecem aos 12 anos, vivem cerca de 60 anos",
+      "Tamanho: 1,50 m, ~45 kg — Médio",
+      "Deslocamento: 9 m",
+      "Lembrança Perfeita: você tem vantagem em testes para produzir falsificações ou cópias exatas de manuscritos e artesanatos",
+      "Idiomas: Apenas sons copiados, porém entende Comum e Auran"
+    ],
+    habilidades: [
+      {
+        nome: "Mimetismo",
+        descricao: "Você pode imitar perfeitamente sons que ouviu, incluindo vozes. Uma criatura que ouça os sons só pode perceber que são imitações se passar em um teste de Sabedoria (Intuição) resistido pelo seu Carisma (Enganação)."
+      },
+      {
+        nome: "Treinamento do Bando",
+        descricao: "Você tem proficiência em duas perícias à sua escolha entre: Acrobacia, Enganação, Furtividade ou Prestidigitação."
+      },
+      {
+        nome: "Emboscada Ecoante",
+        descricao: "Sempre que atacar uma criatura que esteja surpresa, você causa um dano adicional igual ao seu bônus de proficiência. Você pode usar seu mimetismo como uma Ação Bônus para distrair ou assustar alvos em combate."
+      }
+    ]
+  },
+  {
+    nome: "Dríade",
+    categoria: "mistica",
+    tamanho: "medio",
+    deslocamento: "9 m",
+    //imagem: "assets/races/driade.jpg",
+    descricao: "Seres nascidos do próprio coração das florestas. Feitas de casca, seiva e folhas, elas são a personificação da natureza protetora, radiando uma magia antiga de renovação e crescimento.",
+    tracos: [
+      "Aumento de Sabedoria +2 e Carisma +1",
+      "Idade: atrelada à árvore ou bioma de origem, podendo viver milênios",
+      "Tamanho: 1,60–1,80 m — Médio",
+      "Deslocamento: 9 m",
+      "Natureza Arbórea: você é considerado um ser Feérico em vez de humanoide. Não precisa comer ou dormir (apenas tomar sol e água)",
+      "Vulnerabilidade Vegetal: vulnerabilidade a dano de Fogo",
+      "Idiomas: Comum e Silvestre"
+    ],
+    habilidades: [
+      {
+        nome: "Camuflagem da Floresta",
+        descricao: "Se você estiver em um ambiente natural (floresta, pântano, etc.) e passar pelo menos 1 turno completamente imóvel, você recebe um bônus de +10 no seu próximo teste de Furtividade e conta como invisível para quem estiver a mais de 9 metros de você."
+      },
+      {
+        nome: "Essência Verdejante",
+        descricao: "A energia da vida corre forte em sua seiva. Sempre que você recuperar pontos de vida através de uma magia que não seja da escola de Necromancia, você recupera o dobro do valor rolado nos dados."
+      },
+      {
+        nome: "Magia Silvestre",
+        descricao: "Você conhece o truque Druidismo. A partir do 3º nível, pode conjurar Constrição uma vez por descanso longo. A partir do 5º nível, pode conjurar Pele de Árvore uma vez por descanso longo. Sua Sabedoria é o atributo de conjuração."
+      }
+    ]
   }
 
 ];
