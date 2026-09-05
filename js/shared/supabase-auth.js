@@ -3,12 +3,16 @@
 //  Coloque este arquivo em: js/shared/supabase-auth.js
 // ═══════════════════════════════════════════════════════════════
 
-// ── 1. SUAS CHAVES DO SUPABASE ───────────────────────────────────
-//  ⚠️  Substitua SUA_ANON_KEY pela chave "anon public" do Supabase
-//     Settings → API → anon public
+// ── 1. CONFIGURAÇÃO DO SUPABASE ───────────────────────────────
+//  Em produção, mantenha as credenciais em um arquivo local não versionado.
+//  Exemplo: js/shared/supabase-config.local.js
 // ────────────────────────────────────────────────────────────────
-const SUPABASE_URL  = 'https://mqremvyprwuzqnsmwfqt.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_OThvjoIRCIZsWoiEaEMj9w_dXEo4KvO';   // ← troque aqui
+const SUPABASE_URL = window.SUPABASE_CONFIG?.url || '';
+const SUPABASE_ANON = window.SUPABASE_CONFIG?.anonKey || '';
+
+if (!SUPABASE_URL || !SUPABASE_ANON) {
+    console.error('Supabase config missing. Create js/shared/supabase-config.local.js with url and anonKey.');
+}
 
 // ── 2. CLIENTE SUPABASE (via CDN, sem npm) ───────────────────────
 //  O CDN é carregado pelo HTML antes deste script.
