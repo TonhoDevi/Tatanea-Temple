@@ -1,0 +1,10 @@
+# Local Supabase config
+js/shared/supabase-config.local.js
+
+# Environment files
+.env
+.env.*
+*.local
+
+# OS files
+.DS_Store
