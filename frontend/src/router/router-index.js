@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../views/Home.vue';
 import SeletorRaca from '../components/compendio/SeletorRaca.vue';
 import CompendioTalentos from '../components/compendio/CompendioTalentos.vue';
 import CompendioAlquimia from '../components/compendio/CompendioAlquimia.vue';
@@ -9,6 +10,7 @@ import MeusPersonagens from '../views/MeusPersonagens.vue';
 import FichaPersonagem from '../views/FichaPersonagem.vue';
 
 const routes = [
+  { path: '/', name: 'home', component: Home },
   { path: '/racas', name: 'racas', component: SeletorRaca },
   { path: '/talentos', name: 'talentos', component: CompendioTalentos },
   { path: '/alquimia', name: 'alquimia', component: CompendioAlquimia },
