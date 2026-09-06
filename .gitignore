@@ -10,3 +10,4 @@ js/shared/supabase-config.local.js
 .DS_Store
 backend/target/
 .idea/
+frontend/node_modules/
