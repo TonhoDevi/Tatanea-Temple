@@ -8,3 +8,5 @@ js/shared/supabase-config.local.js
 
 # OS files
 .DS_Store
+backend/target/
+.idea/
