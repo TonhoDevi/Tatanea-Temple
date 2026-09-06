@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>com.ddt</groupId>
-    <artifactId>cosmos-sombrio</artifactId>
+    <artifactId>templeinfo</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <name>cosmos-sombrio</name>
     <description>Backend do sistema DDT (Cosmos Sombrio) - RPG de mesa homebrew</description>
@@ -49,8 +49,8 @@
 
         <!-- Migração de schema -->
         <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -66,11 +66,21 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test-autoconfigure</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
