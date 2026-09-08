@@ -1,11 +1,16 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref } from 'vue';
 
 const rooms = [
   { num: 'I', title: 'Sala das Raças', guardian: 'onça-pintada', art: '[ nicho de pedra com totens de linhagem ]', text: 'Nove povos do interior da mata, cada um com um pacto diferente com a floresta.', to: '/racas' },
   { num: 'II', title: 'Sala das Classes', guardian: 'arara-vermelha', art: '[ armas e adornos pendurados na parede ]', text: 'Caminhos de combate e de reza — inclusive os que a mata ensina sem pedir permissão.', to: '/classes' },
   { num: 'III', title: 'Sala dos Talentos', guardian: 'sapo venenoso', art: '[ entalhes geométricos em sequência ]', text: 'Marcas ganhas no corpo. Cada talento deixa cicatriz, tinta ou dívida.', to: '/talentos' },
   { num: 'IV', title: 'Sala da Alquimia', guardian: 'cobra-jararaca', art: '[ potes de barro, resinas, flores secas ]', text: 'Venenos, resinas e curas feitas com o que só cresce sob o dossel fechado.', to: '/alquimia' },
+  // Salas provisórias — ainda sem rota/página própria.
+  { num: 'V', title: 'Sala das Magias', guardian: '???', art: '[ pergaminhos flutuando sobre um braseiro ]', text: 'Feitiços que a mata sussurra pra quem sabe escutar. Sala ainda selada.', to: null },
+  { num: 'VI', title: 'Sala do Bestiário', guardian: '???', art: '[ ossadas e peles penduradas no teto ]', text: 'Registro de tudo que já tentou atravessar o templo — e não conseguiu.', to: null },
+  { num: 'VII', title: 'Sala dos Antecedentes', guardian: '???', art: '[ retratos entalhados na pedra ]', text: 'Quem você era antes de entrar aqui. A mata guarda cópia de tudo.', to: null },
+  { num: 'VIII', title: 'Sala das Artes de Guerra', guardian: '???', art: '[ lanças e escudos cruzados na parede ]', text: 'Táticas de quem defende o templo há gerações. Ainda sendo catalogadas.', to: null },
 ];
 
 // Duplicamos a lista pra criar o efeito de loop infinito sem "costura" visível.
@@ -18,49 +23,45 @@ const fauna = [
   { name: 'Borboleta', art: '[ enxame de borboletas azuis ]', text: 'Aparece onde um pergaminho foi usado. Sempre depois, nunca antes.' },
 ];
 
-// ===== Carrossel "Salas do templo": autoplay contínuo + arraste manual =====
+// ===== Carrossel "Salas do templo": autoplay via CSS animation + arraste manual =====
+// O giro contínuo é feito por @keyframes (transform: translateX) no <style>, não por JS —
+// assim ele sempre roda, sem depender de requestAnimationFrame ou de scrollLeft.
 const trackEl = ref(null);
-let rafId = null;
-let paused = false;
-let dragging = false;
+const dragging = ref(false);
 let dragStartX = 0;
-let dragStartScroll = 0;
+let dragStartOffset = 0;
 let dragMoved = false;
-const speedPxPerFrame = 0.6;
 
-function tick() {
-  const el = trackEl.value;
-  if (el && !paused && !dragging) {
-    el.scrollLeft += speedPxPerFrame;
-    const halfWidth = el.scrollWidth / 2;
-    if (el.scrollLeft >= halfWidth) {
-      el.scrollLeft -= halfWidth;
-    }
-  }
-  rafId = requestAnimationFrame(tick);
+function currentTranslateX(el) {
+  const matrix = new DOMMatrixReadOnly(getComputedStyle(el).transform);
+  return matrix.m41;
 }
 
 function onPointerDown(event) {
   const el = trackEl.value;
   if (!el) return;
-  dragging = true;
+  dragging.value = true;
   dragMoved = false;
   dragStartX = event.clientX;
-  dragStartScroll = el.scrollLeft;
+  dragStartOffset = currentTranslateX(el);
+  el.style.transform = `translateX(${dragStartOffset}px)`;
   el.setPointerCapture?.(event.pointerId);
 }
 
 function onPointerMove(event) {
-  if (!dragging) return;
+  if (!dragging.value) return;
   const el = trackEl.value;
   if (!el) return;
   const delta = event.clientX - dragStartX;
   if (Math.abs(delta) > 4) dragMoved = true;
-  el.scrollLeft = dragStartScroll - delta;
+  el.style.transform = `translateX(${dragStartOffset + delta}px)`;
 }
 
 function onPointerUp() {
-  dragging = false;
+  if (!dragging.value) return;
+  dragging.value = false;
+  const el = trackEl.value;
+  if (el) el.style.transform = '';
 }
 
 // Evita que o clique "vazado" de um arraste dispare a navegação do RouterLink.
@@ -70,17 +71,6 @@ function onCardClick(event) {
     dragMoved = false;
   }
 }
-
-onMounted(() => {
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduceMotion) {
-    rafId = requestAnimationFrame(tick);
-  }
-});
-
-onBeforeUnmount(() => {
-  if (rafId) cancelAnimationFrame(rafId);
-});
 </script>
 
 <template>
@@ -107,7 +97,7 @@ onBeforeUnmount(() => {
 
         <p class="hero-subtitle">
           Pedra ritual engolida pela mata. Nas paredes, entalhes que ainda respondem a quem os
-          toca — e quatro salas onde o compêndio deste mundo foi guardado.
+          toca — e oito salas onde o compêndio deste mundo foi guardado.
         </p>
 
         <div class="hero-buttons">
@@ -180,8 +170,8 @@ onBeforeUnmount(() => {
           <span class="section-chapter">Capítulo II</span>
         </div>
         <p class="body-text">
-          O compêndio está dividido entre quatro salas. Cada uma guarda um tipo de conhecimento —
-          e um animal que decide se você vai levá-lo embora.
+          O compêndio está dividido entre salas. Cada uma guarda um tipo de conhecimento — e um
+          animal que decide se você vai levá-lo embora. Algumas ainda estão seladas.
         </p>
         <p class="scroll-hint">→ arraste ou role para o lado</p>
       </div>
@@ -189,18 +179,19 @@ onBeforeUnmount(() => {
       <div
           ref="trackEl"
           class="rooms-track"
-          @mouseenter="paused = true"
-          @mouseleave="paused = false"
+          :class="{ 'is-dragging': dragging }"
           @pointerdown="onPointerDown"
           @pointermove="onPointerMove"
           @pointerup="onPointerUp"
           @pointerleave="onPointerUp"
       >
-        <RouterLink
+        <component
+            :is="room.to ? 'RouterLink' : 'div'"
             v-for="(room, i) in roomsLoop"
             :key="room.num + '-' + i"
-            :to="room.to"
+            :to="room.to || undefined"
             class="room-card"
+            :class="{ 'room-card-soon': !room.to }"
             @click="onCardClick"
         >
           <span class="room-card-band" aria-hidden="true"></span>
@@ -209,8 +200,9 @@ onBeforeUnmount(() => {
           <h3 class="room-card-title">{{ room.title }}</h3>
           <div class="room-card-guardian">Guardião: {{ room.guardian }}</div>
           <p class="room-card-text">{{ room.text }}</p>
-          <span class="room-card-cta">Abrir a sala</span>
-        </RouterLink>
+          <span v-if="room.to" class="room-card-cta">Abrir a sala</span>
+          <span v-else class="room-card-cta room-card-cta-soon">Em construção</span>
+        </component>
       </div>
     </section>
 
@@ -676,25 +668,42 @@ onBeforeUnmount(() => {
 }
 
 /* ===== SALAS (carrossel) ===== */
+@keyframes rooms-spin {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* roomsLoop duplica a lista, então 50% é exatamente um ciclo completo */
+    transform: translateX(-50%);
+  }
+}
+
 .rooms-track {
   margin-top: 10px;
   padding: 4px clamp(16px, 5vw, 64px) 22px;
   display: flex;
   gap: 22px;
-  overflow-x: auto;
-  scroll-behavior: auto;
+  overflow: hidden;
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
-  scrollbar-width: none;
+  width: max-content;
+  animation: rooms-spin 30s linear infinite;
 }
 
-.rooms-track::-webkit-scrollbar {
-  display: none;
+.rooms-track:hover,
+.rooms-track.is-dragging {
+  animation-play-state: paused;
 }
 
 .rooms-track:active {
   cursor: grabbing;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rooms-track {
+    animation: none;
+  }
 }
 
 .room-card {
@@ -788,6 +797,29 @@ onBeforeUnmount(() => {
   background: var(--tribal-red);
   border-color: var(--tribal-red);
   color: var(--bone);
+}
+
+/* ===== SALAS provisórias (sem rota ainda) ===== */
+.room-card-soon {
+  cursor: default;
+  border-style: dashed;
+  opacity: 0.72;
+}
+
+.room-card-soon:hover {
+  border-color: var(--tribal-gold);
+  background-color: #123020;
+}
+
+.room-card-cta-soon {
+  border-style: dashed;
+  color: var(--pale-green);
+}
+
+.room-card-soon:hover .room-card-cta-soon {
+  background: none;
+  border-color: var(--jungle-green);
+  color: var(--pale-green);
 }
 
 /* ===== FAUNA ===== */

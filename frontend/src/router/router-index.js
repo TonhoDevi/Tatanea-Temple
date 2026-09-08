@@ -15,8 +15,8 @@ const routes = [
   { path: '/talentos', name: 'talentos', component: CompendioTalentos },
   { path: '/alquimia', name: 'alquimia', component: CompendioAlquimia },
   { path: '/classes', name: 'classes', component: CompendioClasses },
-  { path: '/login', name: 'login', component: Login },
-  { path: '/registro', name: 'registro', component: Registro },
+  { path: '/login', name: 'login', component: Login, meta: { hideNavbar: true } },
+  { path: '/registro', name: 'registro', component: Registro, meta: { hideNavbar: true } },
   { path: '/personagens', name: 'personagens', component: MeusPersonagens, meta: { requerAuth: true } },
   { path: '/personagens/:id', name: 'ficha-personagem', component: FichaPersonagem, meta: { requerAuth: true } },
 ];
