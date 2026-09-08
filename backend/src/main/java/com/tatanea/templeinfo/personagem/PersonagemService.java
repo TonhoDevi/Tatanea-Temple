@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class PersonagemService {
 
-    private static final int LIMITE_PERSONAGENS_POR_USUARIO = 5;
-
     private final PersonagemRepository repository;
 
     public PersonagemService(PersonagemRepository repository) {
@@ -34,9 +32,6 @@ public class PersonagemService {
     }
 
     public PersonagemDetalheDto criar(String usuarioId, PersonagemRequestDto dto) {
-        if (repository.countByUsuarioId(usuarioId) >= LIMITE_PERSONAGENS_POR_USUARIO) {
-            throw new LimitePersonagensExcedidoException(LIMITE_PERSONAGENS_POR_USUARIO);
-        }
         Personagem p = new Personagem(usuarioId, dto.nome());
         aplicarCampos(p, dto);
         return paraDetalhe(repository.save(p));
