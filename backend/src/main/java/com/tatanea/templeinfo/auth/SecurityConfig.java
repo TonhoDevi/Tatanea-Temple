@@ -37,6 +37,7 @@ public class SecurityConfig {
                                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Acesso negado"))
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/racas/**", "/api/talentos/**",
                                 "/api/alquimia/**", "/api/classes/**").permitAll()
