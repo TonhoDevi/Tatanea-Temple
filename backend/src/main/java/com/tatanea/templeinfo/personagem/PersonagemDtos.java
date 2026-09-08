@@ -58,7 +58,7 @@ public class PersonagemDtos {
             String id,
             String nome,
             String tipo,
-            String racaId,
+            Long racaId,
             String classeId,
             int nivel,
             String imagemUrl,
@@ -72,7 +72,7 @@ public class PersonagemDtos {
             String nome,
             String tipo,
             String nomeJogador,
-            String racaId,
+            Long racaId,
             String classeId,
             int nivel,
             String imagemUrl,
@@ -123,7 +123,7 @@ public class PersonagemDtos {
             String tipo,
             @Size(max = 120, message = "nome do jogador não pode passar de 120 caracteres")
             String nomeJogador,
-            String racaId,
+            Long racaId,
             String classeId,
             int nivel,
             @Size(max = 300, message = "caminho da imagem inválido")

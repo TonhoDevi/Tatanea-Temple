@@ -18,7 +18,7 @@ CREATE TABLE personagens (
     nome                 VARCHAR(120) NOT NULL,
     tipo                 VARCHAR(20) NOT NULL DEFAULT 'dnd',
     nome_jogador         VARCHAR(120),
-    raca_id              VARCHAR(64) REFERENCES racas(id),
+    raca_id              BIGINT REFERENCES racas(id),
     classe_id            VARCHAR(64) REFERENCES classes(id),
     nivel                INT NOT NULL DEFAULT 1,
     imagem_url           VARCHAR(500),

@@ -1,6 +1,10 @@
+// ===== Raca.java =====
 package com.tatanea.templeinfo.raca;
 
+import com.tatanea.templeinfo.comum.Atributo;
+import com.tatanea.templeinfo.comum.TipoHabilidade;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,72 +13,139 @@ import java.util.List;
 public class Raca {
 
     @Id
-    @Column(length = 64)
-    private String id; // slug, ex: "anao-rochoso"
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true, length = 64)
+    private String slug;
 
     @Column(nullable = false, length = 120)
     private String nome;
 
-    @Column(length = 60)
-    private String categoria;
+    @Column(nullable = false, length = 20)
+    private CategoriaRaca categoria;
 
-    @Column(length = 60)
-    private String tamanho;
+    @Column(nullable = false)
+    private int deslocamento; // metros, base de caminhada
 
-    @Column(length = 60)
-    private String deslocamento;
-
-    @Column(name = "imagem_url")
-    private String imagemUrl;
+    @Column(nullable = false, length = 20)
+    private TamanhoRaca tamanho;
 
     @Column(columnDefinition = "TEXT")
-    private String descricao;
+    private String idiomas;
+
+    @Column(columnDefinition = "TEXT")
+    private String anatomia;
+
+    @Column(columnDefinition = "TEXT")
+    private String aparencia;
+
+    @Column(name = "nomes_raciais", columnDefinition = "TEXT")
+    private String nomesRaciais;
+
+    @Column(name = "tracos_culturais", columnDefinition = "TEXT")
+    private String tracosCulturais;
+
+    @Column(name = "criado_em", nullable = false)
+    private LocalDateTime criadoEm;
+
+    @Column(name = "atualizado_em", nullable = false)
+    private LocalDateTime atualizadoEm;
 
     @OneToMany(mappedBy = "raca", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordem ASC")
-    private List<RacaTraco> tracos = new ArrayList<>();
+    private List<RacaAtributo> atributos = new ArrayList<>();
 
     @OneToMany(mappedBy = "raca", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordem ASC")
-    private List<RacaHabilidade> habilidades = new ArrayList<>();
+    private List<RacaHabilidadeEspecial> habilidadesEspeciais = new ArrayList<>();
+
+    @OneToOne(mappedBy = "raca", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RacaAltura altura;
+
+    @OneToOne(mappedBy = "raca", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RacaPeso peso;
+
+    @OneToOne(mappedBy = "raca", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RacaIdade idade;
+
+    @OneToOne(mappedBy = "raca", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RacaImagem imagem;
 
     protected Raca() {
         // JPA
     }
 
-    public Raca(String id, String nome, String categoria, String tamanho, String deslocamento, String descricao) {
-        this.id = id;
+    public Raca(String slug, String nome, CategoriaRaca categoria, int deslocamento, TamanhoRaca tamanho) {
+        this.slug = slug;
         this.nome = nome;
         this.categoria = categoria;
-        this.tamanho = tamanho;
         this.deslocamento = deslocamento;
-        this.descricao = descricao;
+        this.tamanho = tamanho;
+        this.criadoEm = LocalDateTime.now();
+        this.atualizadoEm = LocalDateTime.now();
     }
 
-    public void adicionarTraco(String texto, int ordem) {
-        RacaTraco traco = new RacaTraco(this, texto, ordem);
-        this.tracos.add(traco);
+    public void tocarAtualizacao() {
+        this.atualizadoEm = LocalDateTime.now();
     }
 
-    public void adicionarHabilidade(String nome, String descricao, int ordem) {
-        RacaHabilidade habilidade = new RacaHabilidade(this, nome, descricao, ordem);
-        this.habilidades.add(habilidade);
+    public void adicionarAtributoFixo(Atributo atributo, int valor, int ordem) {
+        atributos.add(RacaAtributo.fixo(this, atributo, valor, ordem));
     }
 
-    public String getId() { return id; }
+    public void adicionarAtributoEscolha(int valor, int quantidadeEscolhas, int ordem) {
+        atributos.add(RacaAtributo.escolha(this, valor, quantidadeEscolhas, ordem));
+    }
+
+    public void adicionarHabilidadeEspecial(String nome, String descricao, TipoHabilidade tipo, int ordem) {
+        habilidadesEspeciais.add(new RacaHabilidadeEspecial(this, nome, descricao, tipo, ordem));
+    }
+
+    public void definirAltura(double valorMenor, double valorMedio, double valorMaior) {
+        this.altura = new RacaAltura(this, valorMenor, valorMedio, valorMaior);
+    }
+
+    public void definirPeso(double valorMenor, double valorMedio, double valorMaior) {
+        this.peso = new RacaPeso(this, valorMenor, valorMedio, valorMaior);
+    }
+
+    public void definirIdade(int idadeAdulta, int expectativaVida) {
+        this.idade = new RacaIdade(this, idadeAdulta, expectativaVida);
+    }
+
+    public void definirImagem(byte[] conteudo, String contentType) {
+        this.imagem = new RacaImagem(this, conteudo, contentType);
+    }
+
+    public Long getId() { return id; }
+    public String getSlug() { return slug; }
     public String getNome() { return nome; }
-    public String getCategoria() { return categoria; }
-    public String getTamanho() { return tamanho; }
-    public String getDeslocamento() { return deslocamento; }
-    public String getImagemUrl() { return imagemUrl; }
-    public String getDescricao() { return descricao; }
-    public List<RacaTraco> getTracos() { return tracos; }
-    public List<RacaHabilidade> getHabilidades() { return habilidades; }
+    public CategoriaRaca getCategoria() { return categoria; }
+    public int getDeslocamento() { return deslocamento; }
+    public TamanhoRaca getTamanho() { return tamanho; }
+    public String getIdiomas() { return idiomas; }
+    public String getAnatomia() { return anatomia; }
+    public String getAparencia() { return aparencia; }
+    public String getNomesRaciais() { return nomesRaciais; }
+    public String getTracosCulturais() { return tracosCulturais; }
+    public LocalDateTime getCriadoEm() { return criadoEm; }
+    public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
+    public List<RacaAtributo> getAtributos() { return atributos; }
+    public List<RacaHabilidadeEspecial> getHabilidadesEspeciais() { return habilidadesEspeciais; }
+    public RacaAltura getAltura() { return altura; }
+    public RacaPeso getPeso() { return peso; }
+    public RacaIdade getIdade() { return idade; }
+    public RacaImagem getImagem() { return imagem; }
 
+    public void setSlug(String slug) { this.slug = slug; }
     public void setNome(String nome) { this.nome = nome; }
-    public void setCategoria(String categoria) { this.categoria = categoria; }
-    public void setTamanho(String tamanho) { this.tamanho = tamanho; }
-    public void setDeslocamento(String deslocamento) { this.deslocamento = deslocamento; }
-    public void setImagemUrl(String imagemUrl) { this.imagemUrl = imagemUrl; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public void setCategoria(CategoriaRaca categoria) { this.categoria = categoria; }
+    public void setDeslocamento(int deslocamento) { this.deslocamento = deslocamento; }
+    public void setTamanho(TamanhoRaca tamanho) { this.tamanho = tamanho; }
+    public void setIdiomas(String idiomas) { this.idiomas = idiomas; }
+    public void setAnatomia(String anatomia) { this.anatomia = anatomia; }
+    public void setAparencia(String aparencia) { this.aparencia = aparencia; }
+    public void setNomesRaciais(String nomesRaciais) { this.nomesRaciais = nomesRaciais; }
+    public void setTracosCulturais(String tracosCulturais) { this.tracosCulturais = tracosCulturais; }
 }

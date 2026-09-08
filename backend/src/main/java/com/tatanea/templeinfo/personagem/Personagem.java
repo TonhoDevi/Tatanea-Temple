@@ -27,8 +27,8 @@ public class Personagem {
     @Column(name = "nome_jogador", length = 120)
     private String nomeJogador;
 
-    @Column(name = "raca_id", length = 64)
-    private String racaId;
+    @Column(name = "raca_id")
+    private Long racaId;
 
     @Column(name = "classe_id", length = 64)
     private String classeId;
@@ -173,8 +173,8 @@ public class Personagem {
     public void setTipo(String tipo) { this.tipo = tipo; }
     public String getNomeJogador() { return nomeJogador; }
     public void setNomeJogador(String nomeJogador) { this.nomeJogador = nomeJogador; }
-    public String getRacaId() { return racaId; }
-    public void setRacaId(String racaId) { this.racaId = racaId; }
+    public Long getRacaId() { return racaId; }
+    public void setRacaId(Long racaId) { this.racaId = racaId; }
     public String getClasseId() { return classeId; }
     public void setClasseId(String classeId) { this.classeId = classeId; }
     public int getNivel() { return nivel; }

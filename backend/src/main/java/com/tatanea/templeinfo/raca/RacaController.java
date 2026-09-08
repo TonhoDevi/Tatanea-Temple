@@ -3,6 +3,7 @@ package com.tatanea.templeinfo.raca;
 import com.tatanea.templeinfo.raca.RacaDtos.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +26,16 @@ public class RacaController {
     }
 
     @GetMapping("/{id}")
-    public RacaDetalheDto buscar(@PathVariable String id) {
+    public RacaDetalheDto buscar(@PathVariable Long id) {
         return racaService.buscarPorId(id);
+    }
+
+    @GetMapping("/{id}/imagem")
+    public ResponseEntity<byte[]> buscarImagem(@PathVariable Long id) {
+        RacaImagem imagem = racaService.buscarImagem(id);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(imagem.getContentType()))
+                .body(imagem.getConteudo());
     }
 
     @PostMapping
@@ -36,8 +45,13 @@ public class RacaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable String id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         racaService.excluir(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleCodigoInvalido(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
