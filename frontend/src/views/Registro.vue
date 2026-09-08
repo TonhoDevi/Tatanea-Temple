@@ -1,33 +1,89 @@
 <template>
-  <div class="auth-page">
-    <div class="auth-card">
-      <h1 class="auth-title">Criar Conta</h1>
+  <div class="acesso-page">
+    <div class="acesso-top-band" aria-hidden="true"></div>
 
-      <form @submit.prevent="registrar">
-        <div class="input-group">
-          <label class="input-label">Nome</label>
-          <input v-model="nome" type="text" required />
+    <header class="acesso-header">
+      <RouterLink to="/" class="acesso-back">← Templo de Tatânea</RouterLink>
+      <span class="acesso-kicker">Acesso</span>
+    </header>
+
+    <main class="acesso-main">
+      <div class="acesso-strip acesso-strip-left" aria-hidden="true"></div>
+      <div class="acesso-strip acesso-strip-right" aria-hidden="true"></div>
+
+      <div class="acesso-frame">
+        <span class="acesso-frame-inner" aria-hidden="true"></span>
+        <span class="acesso-frame-band acesso-frame-band-top" aria-hidden="true"></span>
+        <span class="acesso-frame-band acesso-frame-band-bottom" aria-hidden="true"></span>
+
+        <div class="acesso-body">
+          <div class="acesso-heading">
+            <p class="acesso-eyebrow">Templo de Tatânea</p>
+            <h1 class="acesso-title">Iniciação</h1>
+            <p class="acesso-sub">Toda conta começa com um nome dito em voz alta.</p>
+          </div>
+
+          <div class="acesso-tabs">
+            <RouterLink to="/login" class="acesso-tab">Entrar</RouterLink>
+            <span class="acesso-tab acesso-tab-active">Iniciação</span>
+          </div>
+
+          <form class="acesso-form" @submit.prevent="registrar">
+            <label class="acesso-field">
+              <span class="acesso-field-label">Nome de mesa</span>
+              <input v-model="nome" type="text" placeholder="como a mata vai te chamar" required />
+            </label>
+
+            <label class="acesso-field">
+              <span class="acesso-field-label">E-mail</span>
+              <input v-model="email" type="email" placeholder="voce@mesa.com" required />
+            </label>
+
+            <label class="acesso-field">
+              <span class="acesso-field-label">Senha ritual</span>
+              <input v-model="senha" type="password" placeholder="••••••••" required minlength="6" />
+            </label>
+
+            <label class="acesso-field">
+              <span class="acesso-field-label">Repetir senha</span>
+              <input v-model="confirmarSenha" type="password" placeholder="••••••••" required minlength="6" />
+            </label>
+
+            <label class="acesso-checkbox acesso-checkbox-terms">
+              <input v-model="aceitoPacto" type="checkbox" required />
+              <span>Aceito o pacto do templo e as erratas da mesa.</span>
+            </label>
+
+            <p v-if="erro" class="acesso-erro">{{ erro }}</p>
+
+            <button class="acesso-cta acesso-cta-register" type="submit" :disabled="carregando">
+              {{ carregando ? 'Gravando...' : 'Gravar marca' }}
+            </button>
+
+            <div class="acesso-divider" aria-hidden="true">
+              <span></span><i></i><span></span>
+            </div>
+
+            <p class="acesso-switch">
+              Já foi nomeado? <RouterLink to="/login">entrar no templo</RouterLink>
+            </p>
+          </form>
         </div>
-        <div class="input-group">
-          <label class="input-label">E-mail</label>
-          <input v-model="email" type="email" required />
-        </div>
-        <div class="input-group">
-          <label class="input-label">Senha</label>
-          <input v-model="senha" type="password" required minlength="6" />
-        </div>
+      </div>
 
-        <p v-if="erro" class="auth-erro">{{ erro }}</p>
+      <div class="acesso-art">[ folhagem cobrindo a base do pórtico ]</div>
+    </main>
 
-        <button class="btn btn-primary" type="submit" :disabled="carregando">
-          {{ carregando ? 'Criando...' : 'Criar Conta' }}
-        </button>
-      </form>
-
-      <p class="auth-link">
-        Já tem conta? <RouterLink to="/login">Entrar</RouterLink>
-      </p>
-    </div>
+    <footer class="acesso-footer">
+      <div class="acesso-footer-band" aria-hidden="true"></div>
+      <div class="acesso-footer-inner">
+        <span>Sistema homebrew para D&amp;D 5e.</span>
+        <span class="acesso-footer-links">
+          <a href="#" @click.prevent>Erratas</a>
+          <a href="#" @click.prevent>Mesa aberta</a>
+        </span>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -39,6 +95,8 @@ import { useAuthStore } from '../stores/authStore';
 const nome = ref('');
 const email = ref('');
 const senha = ref('');
+const confirmarSenha = ref('');
+const aceitoPacto = ref(false);
 const erro = ref(null);
 const carregando = ref(false);
 
@@ -47,6 +105,12 @@ const router = useRouter();
 
 async function registrar() {
   erro.value = null;
+
+  if (senha.value !== confirmarSenha.value) {
+    erro.value = 'As senhas não coincidem.';
+    return;
+  }
+
   carregando.value = true;
   try {
     await auth.registrar(email.value, senha.value, nome.value);
@@ -60,88 +124,389 @@ async function registrar() {
 </script>
 
 <style scoped>
-.auth-page {
-  min-height: 70vh;
+.acesso-page {
+  --jungle-void: #0b2013;
+  --jungle-darkest: #071a0f;
+  --jungle-dark: #0e2818;
+  --jungle-moss: #1a3d26;
+  --jungle-green: #2e7d4f;
+  --tribal-red: #b8362f;
+  --tribal-gold: #c9a227;
+  --tribal-yellow: #e8c14a;
+  --bone: #f2ede1;
+  --pale-green: #a8c4a2;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Crimson Text', Georgia, serif;
+  background-color: var(--jungle-void);
+  background-image: repeating-linear-gradient(112deg, rgba(46, 125, 79, 0.16) 0 3px, transparent 3px 13px),
+  repeating-linear-gradient(0deg, rgba(10, 28, 17, 0.5) 0 22px, transparent 22px 44px),
+  radial-gradient(120% 90% at 50% 6%, var(--jungle-moss) 0, var(--jungle-void) 62%, var(--jungle-darkest) 100%);
+  color: var(--bone);
+}
+
+.acesso-top-band {
+  height: 20px;
+  background-image: repeating-linear-gradient(
+      90deg,
+      var(--tribal-gold) 0 4px,
+      transparent 4px 10px,
+      var(--tribal-red) 10px 14px,
+      transparent 14px 26px
+  );
+  opacity: 0.8;
+}
+
+.acesso-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(16px, 4vw, 44px);
+}
+
+.acesso-back {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--tribal-gold);
+  text-decoration: none;
+}
+
+.acesso-back:hover {
+  color: var(--tribal-yellow);
+}
+
+.acesso-kicker {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--pale-green);
+}
+
+.acesso-main {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: 2rem 1rem;
+  gap: 26px;
+  padding: clamp(28px, 5vw, 70px) clamp(16px, 5vw, 48px);
 }
 
-.auth-card {
-  background: #201735;
-  border: 1px solid #4a3a6a;
-  border-radius: 12px;
-  padding: 2rem;
+.acesso-strip {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(20px, 6vw, 80px);
+  background-image: repeating-linear-gradient(0deg, rgba(46, 125, 79, 0.5) 0 2px, transparent 2px 16px),
+  repeating-linear-gradient(45deg, rgba(201, 162, 39, 0.16) 0 6px, transparent 6px 18px);
+  pointer-events: none;
+}
+
+.acesso-strip-left {
+  left: 0;
+}
+
+.acesso-strip-right {
+  right: 0;
+  background-image: repeating-linear-gradient(0deg, rgba(46, 125, 79, 0.5) 0 2px, transparent 2px 16px),
+  repeating-linear-gradient(-45deg, rgba(201, 162, 39, 0.16) 0 6px, transparent 6px 18px);
+}
+
+.acesso-frame {
+  position: relative;
+  z-index: 2;
   width: 100%;
-  max-width: 380px;
+  max-width: 460px;
+  padding: clamp(24px, 4vw, 36px) clamp(20px, 3.4vw, 30px);
+  border: 2px solid var(--tribal-gold);
+  background: rgba(9, 26, 16, 0.92);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
 }
 
-.auth-title {
-  font-family: 'Pirata One', cursive;
-  font-size: 2rem;
+.acesso-frame-inner {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(184, 54, 47, 0.7);
+  pointer-events: none;
+}
+
+.acesso-frame-band {
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  height: 9px;
+  background-image: repeating-linear-gradient(
+      90deg,
+      var(--tribal-gold) 0 8px,
+      var(--tribal-red) 8px 12px,
+      transparent 12px 24px
+  );
+}
+
+.acesso-frame-band-top {
+  top: -2px;
+}
+
+.acesso-frame-band-bottom {
+  bottom: -2px;
+}
+
+.acesso-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.acesso-heading {
   text-align: center;
-  color: #e8e0f5;
-  margin-bottom: 1.5rem;
 }
 
-.input-group {
-  margin-bottom: 1rem;
-}
-
-.input-label {
-  display: block;
+.acesso-eyebrow {
+  margin: 0;
   font-family: 'Cinzel', serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  color: #c9bce8;
-  margin-bottom: 0.3rem;
+  font-size: 10px;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--pale-green);
 }
 
-.input-group input {
-  width: 100%;
-  padding: 0.6rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid #5a4a7a;
-  background: #1a1330;
-  color: #e8e0f5;
-  box-sizing: border-box;
+.acesso-title {
+  margin: 8px 0 0;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 900;
+  font-size: clamp(28px, 6vw, 38px);
+  line-height: 1;
+  color: var(--bone);
 }
 
-.btn {
-  width: 100%;
-  padding: 0.7rem;
-  border-radius: 6px;
-  border: none;
+.acesso-sub {
+  margin: 10px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--pale-green);
+}
+
+.acesso-tabs {
+  display: flex;
+  border: 1px solid var(--jungle-green);
+}
+
+.acesso-tab {
+  flex: 1;
+  padding: 11px;
+  border: 0;
+  background: transparent;
+  color: var(--pale-green);
   font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
-  margin-top: 0.5rem;
 }
 
-.btn-primary {
-  background: #8a6ac0;
-  color: #fff;
+.acesso-tab:hover {
+  color: var(--tribal-yellow);
 }
 
-.btn-primary:disabled {
+.acesso-tab-active {
+  background: var(--jungle-green);
+  color: var(--bone);
+  cursor: default;
+}
+
+.acesso-tab-active:hover {
+  color: var(--bone);
+}
+
+.acesso-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.acesso-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.acesso-field-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tribal-gold);
+}
+
+.acesso-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  background: #123020;
+  border: 1px solid var(--jungle-green);
+  color: var(--bone);
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 17px;
+  outline: none;
+}
+
+.acesso-field input:focus {
+  border-color: var(--tribal-yellow);
+}
+
+.acesso-checkbox {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--pale-green);
+  cursor: pointer;
+}
+
+.acesso-checkbox input {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin-top: 3px;
+  accent-color: var(--tribal-gold);
+}
+
+.acesso-erro {
+  margin: 0;
+  font-size: 14px;
+  color: #e8837a;
+}
+
+.acesso-cta {
+  padding: 15px;
+  border: 1px solid var(--tribal-yellow);
+  color: var(--bone);
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.acesso-cta:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.auth-erro {
-  color: #e87070;
-  font-size: 0.85rem;
-  margin-bottom: 0.5rem;
+.acesso-cta-register {
+  background: var(--tribal-red);
 }
 
-.auth-link {
+.acesso-cta-register:hover:not(:disabled) {
+  background: var(--jungle-green);
+}
+
+.acesso-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acesso-divider span {
+  flex: 1;
+  height: 1px;
+  background: var(--jungle-green);
+}
+
+.acesso-divider i {
+  width: 9px;
+  height: 9px;
+  background: var(--tribal-red);
+  transform: rotate(45deg);
+}
+
+.acesso-switch {
+  margin: 0;
   text-align: center;
-  margin-top: 1rem;
-  font-size: 0.85rem;
-  color: #c9bce8;
+  font-size: 15px;
+  color: var(--pale-green);
 }
 
-.auth-link a {
-  color: #8a6ac0;
+.acesso-switch a {
+  color: var(--tribal-gold);
+  text-decoration: none;
+}
+
+.acesso-switch a:hover {
+  color: var(--tribal-yellow);
+}
+
+.acesso-art {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 460px;
+  height: 76px;
+  box-sizing: border-box;
+  border: 1px solid var(--jungle-green);
+  background-image: repeating-linear-gradient(45deg, rgba(46, 125, 79, 0.35) 0 6px, transparent 6px 14px);
+  display: flex;
+  align-items: flex-end;
+  padding: 9px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--pale-green);
+}
+
+.acesso-footer {
+  border-top: 1px solid var(--jungle-green);
+  background: var(--jungle-darkest);
+}
+
+.acesso-footer-band {
+  height: 22px;
+  background-image: repeating-linear-gradient(
+      90deg,
+      var(--tribal-gold) 0 5px,
+      transparent 5px 11px,
+      var(--tribal-red) 11px 16px,
+      transparent 16px 30px
+  ),
+  repeating-linear-gradient(0deg, rgba(46, 125, 79, 0.4) 0 2px, transparent 2px 8px);
+}
+
+.acesso-footer-inner {
+  padding: 16px clamp(16px, 4vw, 44px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 26px;
+  justify-content: space-between;
+  font-size: 15px;
+  color: var(--pale-green);
+}
+
+.acesso-footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.acesso-footer-links a {
+  color: var(--tribal-gold);
+  text-decoration: none;
+}
+
+.acesso-footer-links a:hover {
+  color: var(--tribal-yellow);
 }
 </style>
