@@ -65,6 +65,11 @@ public class PersonagemController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 
+    @ExceptionHandler(LimitePersonagensExcedidoException.class)
+    public ResponseEntity<String> handleLimiteExcedido(LimitePersonagensExcedidoException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
     // Dispara quando algum campo fura os limites do @Size/@NotBlank (ex: história com
     // mais de 5000 caracteres). Sem isso, o Spring devolveria um 400 genérico sem
     // dizer qual campo é o problema.
