@@ -11,6 +11,8 @@ CREATE TABLE racas (
     tamanho           VARCHAR(20)   NOT NULL                  -- mecânico (regras), não numérico
                           CHECK (tamanho IN ('miudo', 'pequeno', 'medio', 'grande', 'enorme')),
 
+    quote             VARCHAR(200),                           -- frase de efeito, exibida no topo da ficha
+
     idiomas           VARCHAR(5000),
 
     -- texto livre

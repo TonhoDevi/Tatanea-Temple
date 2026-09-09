@@ -42,6 +42,7 @@ public class RacaService {
     public RacaDetalheDto criar(RacaRequestDto request) {
         Raca raca = new Raca(request.slug(), request.nome(), CategoriaRaca.fromCodigo(request.categoria()),
                 request.deslocamento(), TamanhoRaca.fromCodigo(request.tamanho()));
+        raca.setQuote(request.quote());
         raca.setIdiomas(request.idiomas());
         raca.setAnatomia(request.anatomia());
         raca.setAparencia(request.aparencia());
