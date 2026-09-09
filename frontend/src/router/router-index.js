@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import SeletorRaca from '../components/compendio/SeletorRaca.vue';
+import CompendioRacas from '../components/compendio/CompendioRacas.vue';
+import DetalheRaca from '../components/compendio/DetalheRaca.vue';
 import CompendioTalentos from '../components/compendio/CompendioTalentos.vue';
 import CompendioAlquimia from '../components/compendio/CompendioAlquimia.vue';
 import CompendioClasses from '../components/compendio/CompendioClasses.vue';
@@ -11,7 +12,8 @@ import FichaPersonagem from '../views/FichaPersonagem.vue';
 
 const routes = [
   { path: '/', name: 'home', component: Home },
-  { path: '/racas', name: 'racas', component: SeletorRaca },
+  { path: '/racas', name: 'racas', component: CompendioRacas },
+  { path: '/racas/:id', name: 'raca-detalhe', component: DetalheRaca },
   { path: '/talentos', name: 'talentos', component: CompendioTalentos },
   { path: '/alquimia', name: 'alquimia', component: CompendioAlquimia },
   { path: '/classes', name: 'classes', component: CompendioClasses },
