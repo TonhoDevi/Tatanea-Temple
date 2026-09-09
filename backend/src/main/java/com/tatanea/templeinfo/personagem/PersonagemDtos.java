@@ -54,6 +54,21 @@ public class PersonagemDtos {
     public record TagDto(String tipo, String texto) {
     }
 
+    public record PersonagemTalentoDto(
+            Long talentoId,
+            String nome,
+            String descricao,
+            String atributoRecebido,
+            Integer valorAtributoRecebido
+    ) {
+    }
+
+    public record AdicionarTalentoRequestDto(
+            @jakarta.validation.constraints.NotNull(message = "talentoId é obrigatório")
+            Long talentoId
+    ) {
+    }
+
     public record PersonagemResumoDto(
             String id,
             String nome,
@@ -112,7 +127,8 @@ public class PersonagemDtos {
             List<HabilidadeDto> habilidades,
             List<MagiaDto> magias,
             List<UnidadeDto> unidades,
-            List<TagDto> tags
+            List<TagDto> tags,
+            List<PersonagemTalentoDto> talentos
     ) {
     }
 

@@ -10,8 +10,10 @@ CREATE TABLE classes (
     armas           VARCHAR(500),
     ferramentas     VARCHAR(255),
     resistencias    VARCHAR(255),
-    pericias        TEXT,
-    descricao       TEXT,
+    -- VARCHAR com limite (não TEXT ilimitado): evita que um payload gigante
+    -- vindo do cliente vire uma negação de serviço no banco.
+    pericias        VARCHAR(5000),
+    descricao       VARCHAR(5000),
     dificuldade     VARCHAR(40)
 );
 

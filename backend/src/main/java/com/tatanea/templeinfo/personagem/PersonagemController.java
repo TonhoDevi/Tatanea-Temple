@@ -1,5 +1,6 @@
 package com.tatanea.templeinfo.personagem;
 
+import com.tatanea.templeinfo.personagem.PersonagemDtos.AdicionarTalentoRequestDto;
 import com.tatanea.templeinfo.personagem.PersonagemDtos.PersonagemDetalheDto;
 import com.tatanea.templeinfo.personagem.PersonagemDtos.PersonagemRequestDto;
 import com.tatanea.templeinfo.personagem.PersonagemDtos.PersonagemResumoDto;
@@ -51,6 +52,18 @@ public class PersonagemController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/{id}/talentos")
+    public PersonagemDetalheDto adicionarTalento(
+            @PathVariable String id, @Valid @RequestBody AdicionarTalentoRequestDto dto, Authentication auth) {
+        return service.adicionarTalento(id, usuarioId(auth), dto.talentoId());
+    }
+
+    @DeleteMapping("/{id}/talentos/{talentoId}")
+    public PersonagemDetalheDto removerTalento(
+            @PathVariable String id, @PathVariable Long talentoId, Authentication auth) {
+        return service.removerTalento(id, usuarioId(auth), talentoId);
+    }
+
     private String usuarioId(Authentication auth) {
         return (String) auth.getPrincipal();
     }
@@ -68,6 +81,16 @@ public class PersonagemController {
     @ExceptionHandler(LimitePersonagensExcedidoException.class)
     public ResponseEntity<String> handleLimiteExcedido(LimitePersonagensExcedidoException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PreRequisitoTalentoNaoAtendidoException.class)
+    public ResponseEntity<String> handlePreRequisitoNaoAtendido(PreRequisitoTalentoNaoAtendidoException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(com.tatanea.templeinfo.talento.TalentoNaoEncontradoException.class)
+    public ResponseEntity<String> handleTalentoNaoEncontrado(com.tatanea.templeinfo.talento.TalentoNaoEncontradoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     // Dispara quando algum campo fura os limites do @Size/@NotBlank (ex: história com

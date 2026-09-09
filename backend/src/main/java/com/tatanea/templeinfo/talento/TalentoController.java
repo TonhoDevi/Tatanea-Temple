@@ -25,7 +25,7 @@ public class TalentoController {
     }
 
     @GetMapping("/{id}")
-    public TalentoDetalheDto buscar(@PathVariable String id) {
+    public TalentoDetalheDto buscar(@PathVariable Long id) {
         return talentoService.buscarPorId(id);
     }
 
@@ -36,8 +36,13 @@ public class TalentoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable String id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         talentoService.excluir(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleCodigoInvalido(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }

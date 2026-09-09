@@ -1,37 +1,65 @@
 package com.tatanea.templeinfo.talento;
 
 import jakarta.validation.constraints.NotBlank;
-import java.util.List;
+import jakarta.validation.constraints.Positive;
 
 public class TalentoDtos {
 
-    public record BeneficioDto(String texto, int ordem) {}
-
-    public record TalentoResumoDto(String id, String nome, String categoria, String icone) {
-        static TalentoResumoDto de(Talento t) {
-            return new TalentoResumoDto(t.getId(), t.getNome(), t.getCategoria(), t.getIcone());
-        }
-    }
-
-    public record TalentoDetalheDto(
-            String id, String nome, String categoria, String icone, String prereq,
-            String descricao, List<BeneficioDto> beneficios
+    /** Retorno resumido — usado na listagem. */
+    public record TalentoResumoDto(
+            Long id,
+            String slug,
+            String nome,
+            String icone,
+            String atributoRecebido
     ) {
-        static TalentoDetalheDto de(Talento t) {
-            return new TalentoDetalheDto(
-                    t.getId(), t.getNome(), t.getCategoria(), t.getIcone(), t.getPrereq(), t.getDescricao(),
-                    t.getBeneficios().stream().map(b -> new BeneficioDto(b.getTexto(), b.getOrdem())).toList()
+        static TalentoResumoDto de(Talento t) {
+            return new TalentoResumoDto(
+                    t.getId(), t.getSlug(), t.getNome(), t.getIcone(),
+                    t.getAtributoRecebido() == null ? null : t.getAtributoRecebido().getCodigo()
             );
         }
     }
 
-    public record TalentoRequestDto(
-            @NotBlank String id,
-            @NotBlank String nome,
-            String categoria,
+    /** Retorno completo — usado na tela de detalhe e na validação de pré-requisitos. */
+    public record TalentoDetalheDto(
+            Long id,
+            String slug,
+            String nome,
             String icone,
-            String prereq,
+            String historia,
             String descricao,
-            List<BeneficioDto> beneficios
+            String atributoRecebido,
+            Integer valorAtributoRecebido,
+            Long racaRequeridaId,
+            String racaRequeridaNome,
+            String atributoRequerido,
+            Integer valorMinimoAtributoRequerido
+    ) {
+        static TalentoDetalheDto de(Talento t) {
+            return new TalentoDetalheDto(
+                    t.getId(), t.getSlug(), t.getNome(), t.getIcone(), t.getHistoria(), t.getDescricao(),
+                    t.getAtributoRecebido() == null ? null : t.getAtributoRecebido().getCodigo(),
+                    t.getValorAtributoRecebido(),
+                    t.getRacaRequerida() == null ? null : t.getRacaRequerida().getId(),
+                    t.getRacaRequerida() == null ? null : t.getRacaRequerida().getNome(),
+                    t.getAtributoRequerido() == null ? null : t.getAtributoRequerido().getCodigo(),
+                    t.getValorMinimoAtributoRequerido()
+            );
+        }
+    }
+
+    /** Payload de criação (usado pelo compêndio administrativo, futuro). */
+    public record TalentoRequestDto(
+            @NotBlank String slug,
+            @NotBlank String nome,
+            String icone,
+            String historia,
+            String descricao,
+            String atributoRecebido,
+            Integer valorAtributoRecebido,
+            Long racaRequeridaId,
+            String atributoRequerido,
+            @Positive Integer valorMinimoAtributoRequerido
     ) {}
 }
