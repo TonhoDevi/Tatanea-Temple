@@ -16,4 +16,10 @@ export default {
     remover(id) {
         return http.delete(`/personagens/${id}`);
     },
+    adicionarTalento(id, talentoId) {
+        return http.post(`/personagens/${id}/talentos`, { talentoId }).then((res) => res.data);
+    },
+    removerTalento(id, talentoId) {
+        return http.delete(`/personagens/${id}/talentos/${talentoId}`).then((res) => res.data);
+    },
 };

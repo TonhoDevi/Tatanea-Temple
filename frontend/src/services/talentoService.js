@@ -4,7 +4,7 @@ const api = axios.create({ baseURL: '/api/talentos' });
 
 export default {
     listar() {
-        return api.get('/').then((res) => res.data);
+        return api.get('').then((res) => res.data);
     },
     buscarPorId(id) {
         return api.get(`/${id}`).then((res) => res.data);
