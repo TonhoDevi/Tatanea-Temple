@@ -52,12 +52,14 @@ public class RacaDtos {
             String nome,
             String categoria,
             String tamanho,
+            int quantidadeHabilidadesEspeciais,
             String imagemUrl
     ) {
         static RacaResumoDto de(Raca raca) {
             return new RacaResumoDto(
                     raca.getId(), raca.getSlug(), raca.getNome(),
                     raca.getCategoria().getCodigo(), raca.getTamanho().getCodigo(),
+                    raca.getHabilidadesEspeciais().size(),
                     raca.getImagem() == null ? null : "/api/racas/" + raca.getId() + "/imagem"
             );
         }
@@ -71,6 +73,7 @@ public class RacaDtos {
             String categoria,
             int deslocamento,
             String tamanho,
+            String quote,
             String idiomas,
             String anatomia,
             String aparencia,
@@ -86,7 +89,7 @@ public class RacaDtos {
         static RacaDetalheDto de(Raca raca) {
             return new RacaDetalheDto(
                     raca.getId(), raca.getSlug(), raca.getNome(), raca.getCategoria().getCodigo(),
-                    raca.getDeslocamento(), raca.getTamanho().getCodigo(),
+                    raca.getDeslocamento(), raca.getTamanho().getCodigo(), raca.getQuote(),
                     raca.getIdiomas(), raca.getAnatomia(), raca.getAparencia(),
                     raca.getNomesRaciais(), raca.getTracosCulturais(),
                     raca.getAtributos().stream().map(AtributoDto::de).toList(),
@@ -104,6 +107,7 @@ public class RacaDtos {
             @NotBlank String categoria,
             @Positive int deslocamento,
             @NotBlank String tamanho,
+            @Size(max = 200) String quote,
             @Size(max = 5000) String idiomas,
             @Size(max = 5000) String anatomia,
             @Size(max = 5000) String aparencia,

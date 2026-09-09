@@ -31,6 +31,9 @@ public class Raca {
     @Column(nullable = false, length = 20)
     private TamanhoRaca tamanho;
 
+    @Column(length = 200)
+    private String quote;
+
     @Column(columnDefinition = "TEXT")
     private String idiomas;
 
@@ -124,6 +127,7 @@ public class Raca {
     public CategoriaRaca getCategoria() { return categoria; }
     public int getDeslocamento() { return deslocamento; }
     public TamanhoRaca getTamanho() { return tamanho; }
+    public String getQuote() { return quote; }
     public String getIdiomas() { return idiomas; }
     public String getAnatomia() { return anatomia; }
     public String getAparencia() { return aparencia; }
@@ -143,6 +147,7 @@ public class Raca {
     public void setCategoria(CategoriaRaca categoria) { this.categoria = categoria; }
     public void setDeslocamento(int deslocamento) { this.deslocamento = deslocamento; }
     public void setTamanho(TamanhoRaca tamanho) { this.tamanho = tamanho; }
+    public void setQuote(String quote) { this.quote = quote; }
     public void setIdiomas(String idiomas) { this.idiomas = idiomas; }
     public void setAnatomia(String anatomia) { this.anatomia = anatomia; }
     public void setAparencia(String aparencia) { this.aparencia = aparencia; }
