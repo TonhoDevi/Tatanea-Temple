@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const rooms = [
   { num: 'I', title: 'Sala das Raças', guardian: 'onça-pintada', art: '[ nicho de pedra com totens de linhagem ]', text: 'Nove povos do interior da mata, cada um com um pacto diferente com a floresta.', to: '/racas' },
@@ -13,9 +13,6 @@ const rooms = [
   { num: 'VIII', title: 'Sala das Artes de Guerra', guardian: '???', art: '[ lanças e escudos cruzados na parede ]', text: 'Táticas de quem defende o templo há gerações. Ainda sendo catalogadas.', to: null },
 ];
 
-// Duplicamos a lista pra criar o efeito de loop infinito sem "costura" visível.
-const roomsLoop = [...rooms, ...rooms];
-
 const fauna = [
   { name: 'Onça', art: '[ onça entre raízes ]', text: 'Anda no escuro do templo e decide quem passa da entrada.' },
   { name: 'Arara', art: '[ arara em viga entalhada ]', text: 'Repete os nomes que ouviu — inclusive os que você não disse em voz alta.' },
@@ -23,53 +20,19 @@ const fauna = [
   { name: 'Borboleta', art: '[ enxame de borboletas azuis ]', text: 'Aparece onde um pergaminho foi usado. Sempre depois, nunca antes.' },
 ];
 
-// ===== Carrossel "Salas do templo": autoplay via CSS animation + arraste manual =====
-// O giro contínuo é feito por @keyframes (transform: translateX) no <style>, não por JS —
-// assim ele sempre roda, sem depender de requestAnimationFrame ou de scrollLeft.
-const trackEl = ref(null);
-const dragging = ref(false);
-let dragStartX = 0;
-let dragStartOffset = 0;
-let dragMoved = false;
+// ===== "Salas do templo": paginação manual de 3 em 3, sem giro automático =====
+const ROOMS_PER_PAGE = 3;
+const roomsTotalPages = Math.ceil(rooms.length / ROOMS_PER_PAGE);
+const roomsPage = ref(0);
 
-function currentTranslateX(el) {
-  const matrix = new DOMMatrixReadOnly(getComputedStyle(el).transform);
-  return matrix.m41;
-}
+const visibleRooms = computed(() => {
+  const start = roomsPage.value * ROOMS_PER_PAGE;
+  return rooms.slice(start, start + ROOMS_PER_PAGE);
+});
 
-function onPointerDown(event) {
-  const el = trackEl.value;
-  if (!el) return;
-  dragging.value = true;
-  dragMoved = false;
-  dragStartX = event.clientX;
-  dragStartOffset = currentTranslateX(el);
-  el.style.transform = `translateX(${dragStartOffset}px)`;
-  el.setPointerCapture?.(event.pointerId);
-}
-
-function onPointerMove(event) {
-  if (!dragging.value) return;
-  const el = trackEl.value;
-  if (!el) return;
-  const delta = event.clientX - dragStartX;
-  if (Math.abs(delta) > 4) dragMoved = true;
-  el.style.transform = `translateX(${dragStartOffset + delta}px)`;
-}
-
-function onPointerUp() {
-  if (!dragging.value) return;
-  dragging.value = false;
-  const el = trackEl.value;
-  if (el) el.style.transform = '';
-}
-
-// Evita que o clique "vazado" de um arraste dispare a navegação do RouterLink.
-function onCardClick(event) {
-  if (dragMoved) {
-    event.preventDefault();
-    dragMoved = false;
-  }
+function goToRoomsPage(page) {
+  if (page < 0 || page >= roomsTotalPages) return;
+  roomsPage.value = page;
 }
 </script>
 
@@ -173,36 +136,44 @@ function onCardClick(event) {
           O compêndio está dividido entre salas. Cada uma guarda um tipo de conhecimento — e um
           animal que decide se você vai levá-lo embora. Algumas ainda estão seladas.
         </p>
-        <p class="scroll-hint">→ arraste ou role para o lado</p>
       </div>
 
-      <div
-          ref="trackEl"
-          class="rooms-track"
-          :class="{ 'is-dragging': dragging }"
-          @pointerdown="onPointerDown"
-          @pointermove="onPointerMove"
-          @pointerup="onPointerUp"
-          @pointerleave="onPointerUp"
-      >
-        <component
-            :is="room.to ? 'RouterLink' : 'div'"
-            v-for="(room, i) in roomsLoop"
-            :key="room.num + '-' + i"
-            :to="room.to || undefined"
-            class="room-card"
-            :class="{ 'room-card-soon': !room.to }"
-            @click="onCardClick"
-        >
-          <span class="room-card-band" aria-hidden="true"></span>
-          <span class="room-card-num">{{ room.num }}</span>
-          <div class="art-placeholder room-card-art">{{ room.art }}</div>
-          <h3 class="room-card-title">{{ room.title }}</h3>
-          <div class="room-card-guardian">Guardião: {{ room.guardian }}</div>
-          <p class="room-card-text">{{ room.text }}</p>
-          <span v-if="room.to" class="room-card-cta">Abrir a sala</span>
-          <span v-else class="room-card-cta room-card-cta-soon">Em construção</span>
-        </component>
+      <div class="rooms-viewport">
+        <button
+            type="button"
+            class="rooms-nav rooms-nav-prev"
+            :disabled="roomsPage === 0"
+            aria-label="Salas anteriores"
+            @click="goToRoomsPage(roomsPage - 1)"
+        >‹</button>
+
+        <div class="rooms-track">
+          <component
+              :is="room.to ? 'RouterLink' : 'div'"
+              v-for="room in visibleRooms"
+              :key="room.num"
+              :to="room.to || undefined"
+              class="room-card"
+              :class="{ 'room-card-soon': !room.to }"
+          >
+            <span class="room-card-band" aria-hidden="true"></span>
+            <span class="room-card-num">{{ room.num }}</span>
+            <div class="art-placeholder room-card-art">{{ room.art }}</div>
+            <h3 class="room-card-title">{{ room.title }}</h3>
+            <div class="room-card-guardian">Guardião: {{ room.guardian }}</div>
+            <p class="room-card-text">{{ room.text }}</p>
+            <span v-if="room.to" class="room-card-cta">Abrir a sala</span>
+            <span v-else class="room-card-cta room-card-cta-soon">Em construção</span>
+          </component>
+        </div>
+
+        <button
+            type="button"
+            class="rooms-nav rooms-nav-next"
+            :disabled="roomsPage === roomsTotalPages - 1"
+            aria-label="Próximas salas"
+            @click="goToRoomsPage(roomsPage + 1)"
+        >›</button>
       </div>
     </section>
 
@@ -601,17 +572,6 @@ function onCardClick(event) {
   color: var(--tribal-yellow);
 }
 
-.scroll-hint {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--pale-green);
-  margin: 0;
-}
-
 /* ===== SOBRE O MUNDO ===== */
 .mundo-panel {
   display: grid;
@@ -667,48 +627,56 @@ function onCardClick(event) {
   color: var(--pale-green);
 }
 
-/* ===== SALAS (carrossel) ===== */
-@keyframes rooms-spin {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    /* roomsLoop duplica a lista, então 50% é exatamente um ciclo completo */
-    transform: translateX(-50%);
-  }
-}
-
-.rooms-track {
+/* ===== SALAS (paginação manual, 3 em 3) ===== */
+.rooms-viewport {
   margin-top: 10px;
   padding: 4px clamp(16px, 5vw, 64px) 22px;
   display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rooms-nav {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--tribal-gold);
+  background: rgba(9, 26, 16, 0.86);
+  color: var(--tribal-yellow);
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.rooms-nav:hover:not(:disabled) {
+  background: var(--tribal-red);
+  border-color: var(--tribal-red);
+  color: var(--bone);
+}
+
+.rooms-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.rooms-track {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 22px;
-  overflow: hidden;
-  cursor: grab;
-  touch-action: pan-y;
-  user-select: none;
-  width: max-content;
-  animation: rooms-spin 30s linear infinite;
-}
-
-.rooms-track:hover,
-.rooms-track.is-dragging {
-  animation-play-state: paused;
-}
-
-.rooms-track:active {
-  cursor: grabbing;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .rooms-track {
-    animation: none;
-  }
 }
 
 .room-card {
   position: relative;
-  flex: 0 0 min(420px, 86vw);
+  flex: 1 1 280px;
+  max-width: 380px;
   min-height: 560px;
   display: flex;
   flex-direction: column;
@@ -892,8 +860,19 @@ function onCardClick(event) {
     flex-direction: column;
   }
 
+  .rooms-viewport {
+    gap: 8px;
+  }
+
+  .rooms-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
   .room-card {
-    flex-basis: 86vw;
+    flex-basis: 100%;
+    max-width: none;
     min-height: 480px;
   }
 }
