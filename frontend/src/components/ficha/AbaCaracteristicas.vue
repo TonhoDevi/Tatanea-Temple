@@ -5,8 +5,8 @@
         <label class="fc-field">
           <span class="fc-mini-label">Raça</span>
           <select v-model="ficha.racaId" class="fc-select" @change="agendarSalvar">
-            <option value="" disabled>Selecione uma raça...</option>
-            <option v-for="raca in OPCOES_RACA" :key="raca" :value="raca">{{ raca }}</option>
+            <option :value="null" disabled>Selecione uma raça...</option>
+            <option v-for="raca in racasDisponiveis" :key="raca.id" :value="raca.id">{{ raca.nome }}</option>
           </select>
         </label>
         <label class="fc-field">
@@ -108,7 +108,7 @@
 import { useFichaPersonagem } from '../../composables/useFichaPersonagem';
 
 const {
-  ficha, novaTag, ATRIBUTOS, SKILLS, OPCOES_RACA, OPCOES_CLASSE,
+  ficha, novaTag, ATRIBUTOS, SKILLS, racasDisponiveis, OPCOES_CLASSE,
   agendarSalvar, salvaguardaDe, valorSalvaguarda, alternarSalvaguarda,
   alterarAtributo, formatarMod, periciaDe, valorPericia, valorPericiaPorNome,
   estadoPericia, alternarEstadoPericia, attrAbrev, adicionarTag, removerItem,

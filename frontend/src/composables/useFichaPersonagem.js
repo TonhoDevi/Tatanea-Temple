@@ -1,6 +1,8 @@
 import { ref, computed, inject, provide } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import personagemService from '../services/personagemService';
+import { racaService } from '../services/racaService';
+import talentoService from '../services/talentoService';
 
 export const FICHA_KEY = Symbol('ficha-personagem');
 
@@ -57,8 +59,7 @@ export const MOEDAS = [
 { chave: 'PL', label: 'PL', campo: 'moedaPl', glifo: 'Λ' },
 ];
 
-// Listas provisórias para os dropdowns de raça/classe (pode substituir por dados do backend/compêndio depois).
-export const OPCOES_RACA = ['Anão', 'Draconato', 'Elfo', 'Gnomo', 'Halfling', 'Humano', 'Meio-Elfo', 'Meio-Orc', 'Tiefling'];
+// Lista provisória pro dropdown de classe (compêndio de Classes ainda não foi remodelado).
 export const OPCOES_CLASSE = ['Bárbaro', 'Bardo', 'Bruxo', 'Clérigo', 'Druida', 'Feiticeiro', 'Guerreiro', 'Ladino', 'Mago', 'Monge', 'Paladino', 'Caçador'];
 
 /**
@@ -91,12 +92,31 @@ let proximoIdTesouro = 1;
 // em Personagem/PersonagemRequestDto/PersonagemDetalheDto pra isso deixar de ser local.
 const salvaguardas = ref([]);
 
-// Habilidades de raça e talentos — provisório, só no estado local (ainda não existe no backend).
+// Habilidades de raça — provisório, só no estado local (ainda não existe no backend).
 // "Habilidades de classe" continua usando ficha.habilidades, que já é salvo hoje.
-// TODO backend: criar listas próprias (ex: PersonagemHabilidadeRaca, PersonagemTalento) pra
-// essas duas deixarem de ser locais.
+// TODO backend: criar uma lista própria (ex: PersonagemHabilidadeRaca) pra isso deixar de ser local.
 const habilidadesRaca = ref([]);
-const talentos = ref([]);
+
+// Raças e talentos do compêndio real — carregados do backend em carregar().
+const racasDisponiveis = ref([]);
+const talentosDisponiveis = ref([]);
+const talentoSelecionado = ref('');
+const erroTalento = ref(null);
+
+async function adicionarTalentoNaFicha() {
+  erroTalento.value = null;
+  if (!talentoSelecionado.value) return;
+  try {
+    ficha.value = await personagemService.adicionarTalento(route.params.id, Number(talentoSelecionado.value));
+    talentoSelecionado.value = '';
+  } catch (e) {
+    erroTalento.value = e.response?.data || 'Não foi possível adicionar o talento.';
+  }
+}
+
+async function removerTalentoDaFicha(talentoId) {
+  ficha.value = await personagemService.removerTalento(route.params.id, talentoId);
+}
 
 // Sincronização de itens mágicos — provisório, só no estado local (ainda não existe no
 // backend). itemMagicoSync fica paralelo a ficha.itensMagicos (mesmo índice).
@@ -416,20 +436,24 @@ ficha.value = await personagemService.buscar(route.params.id);
 itemMagicoSync.value = ficha.value.itensMagicos.map(() => false);
 magiaExtras.value = ficha.value.magias.map(() => ({ tempoConjuracao: '', descricao: '' }));
 bonusProficiencia.value = Math.floor((ficha.value.nivel - 1) / 4) + 2;
+racasDisponiveis.value = await racaService.listar();
+talentosDisponiveis.value = await talentoService.listar();
 }
 
 const contexto = {
 // estado
 ficha, mostrarSalvo, novaTag, ajustePv, bonusProficiencia,
 detalhesFisicos, personalidade, tesouro, salvaguardas,
-habilidadesRaca, talentos, itemMagicoSync, limiteSincronizados,
+habilidadesRaca, itemMagicoSync, limiteSincronizados,
 slotsMagia, magiaExtras,
+racasDisponiveis, talentosDisponiveis, talentoSelecionado, erroTalento,
 // computed
 pvPct, somaTesouro,
 // constantes
-SKILLS, ATRIBUTOS, TABS, MOEDAS, OPCOES_RACA, OPCOES_CLASSE,
+SKILLS, ATRIBUTOS, TABS, MOEDAS, OPCOES_CLASSE,
 // funções
 modificador, formatarMod, attrAbrev,
+adicionarTalentoNaFicha, removerTalentoDaFicha,
 salvaguardaDe, valorSalvaguarda, alternarSalvaguarda,
 contarSincronizados, alternarSincronizado,
 adicionarTesouro, removerTesouro,
