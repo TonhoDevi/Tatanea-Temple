@@ -1,6 +1,9 @@
 package com.tatanea.templeinfo.personagem;
 
+import com.tatanea.templeinfo.comum.Atributo;
 import com.tatanea.templeinfo.personagem.PersonagemDtos.*;
+import com.tatanea.templeinfo.talento.Talento;
+import com.tatanea.templeinfo.talento.TalentoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +18,11 @@ public class PersonagemService {
     private static final int LIMITE_PERSONAGENS_POR_USUARIO = 5;
 
     private final PersonagemRepository repository;
+    private final TalentoRepository talentoRepository;
 
-    public PersonagemService(PersonagemRepository repository) {
+    public PersonagemService(PersonagemRepository repository, TalentoRepository talentoRepository) {
         this.repository = repository;
+        this.talentoRepository = talentoRepository;
     }
 
     @Transactional(readOnly = true)
@@ -52,6 +57,52 @@ public class PersonagemService {
     public void remover(String id, String usuarioId) {
         Personagem p = buscarEValidarDono(id, usuarioId);
         repository.delete(p);
+    }
+
+    public PersonagemDetalheDto adicionarTalento(String id, String usuarioId, Long talentoId) {
+        Personagem p = buscarEValidarDono(id, usuarioId);
+        Talento talento = talentoRepository.findById(talentoId)
+                .orElseThrow(() -> new com.tatanea.templeinfo.talento.TalentoNaoEncontradoException(talentoId));
+
+        if (p.temTalento(talentoId)) {
+            throw new PreRequisitoTalentoNaoAtendidoException("Esse personagem já tem o talento " + talento.getNome() + ".");
+        }
+        if (talento.getRacaRequerida() != null) {
+            if (p.getRacaId() == null || !p.getRacaId().equals(talento.getRacaRequerida().getId())) {
+                throw new PreRequisitoTalentoNaoAtendidoException(
+                        "Requer a raça " + talento.getRacaRequerida().getNome() + ".");
+            }
+        }
+        if (talento.getAtributoRequerido() != null) {
+            int valorAtual = valorAtributo(p, talento.getAtributoRequerido());
+            if (valorAtual < talento.getValorMinimoAtributoRequerido()) {
+                throw new PreRequisitoTalentoNaoAtendidoException(
+                        "Requer " + talento.getAtributoRequerido().getCodigo() + " "
+                                + talento.getValorMinimoAtributoRequerido() + " ou mais.");
+            }
+        }
+
+        p.adicionarTalento(talento);
+        p.tocarAtualizacao();
+        return paraDetalhe(repository.save(p));
+    }
+
+    public PersonagemDetalheDto removerTalento(String id, String usuarioId, Long talentoId) {
+        Personagem p = buscarEValidarDono(id, usuarioId);
+        p.removerTalento(talentoId);
+        p.tocarAtualizacao();
+        return paraDetalhe(repository.save(p));
+    }
+
+    private int valorAtributo(Personagem p, Atributo atributo) {
+        return switch (atributo) {
+            case FORCA -> p.getForca();
+            case DESTREZA -> p.getDestreza();
+            case CONSTITUICAO -> p.getConstituicao();
+            case INTELIGENCIA -> p.getInteligencia();
+            case SABEDORIA -> p.getSabedoria();
+            case CARISMA -> p.getCarisma();
+        };
     }
 
     private Personagem buscarEValidarDono(String id, String usuarioId) {
@@ -220,6 +271,16 @@ public class PersonagemService {
             tags.add(new TagDto(x.getTipo(), x.getTexto()));
         }
 
+        List<PersonagemTalentoDto> talentos = new ArrayList<>();
+        for (PersonagemTalento x : p.getTalentos()) {
+            Talento t = x.getTalento();
+            talentos.add(new PersonagemTalentoDto(
+                    t.getId(), t.getNome(), t.getDescricao(),
+                    t.getAtributoRecebido() == null ? null : t.getAtributoRecebido().getCodigo(),
+                    t.getValorAtributoRecebido()
+            ));
+        }
+
         return new PersonagemDetalheDto(
                 p.getId(), p.getNome(), p.getTipo(), p.getNomeJogador(), p.getRacaId(), p.getClasseId(),
                 p.getNivel(), p.getImagemUrl(),
@@ -230,7 +291,7 @@ public class PersonagemService {
                 p.getMoedaPc(), p.getMoedaPp(), p.getMoedaPo(), p.getMoedaPe(), p.getMoedaPl(),
                 p.getDeslocNadar(), p.getDeslocVoar(), p.getDeslocEscalar(), p.getSalto(),
                 p.getIdiomas(), p.getHistoria(), p.getAnotacoes(),
-                pericias, ataques, inventario, itensMagicos, habilidades, magias, unidades, tags
+                pericias, ataques, inventario, itensMagicos, habilidades, magias, unidades, tags, talentos
         );
     }
 }

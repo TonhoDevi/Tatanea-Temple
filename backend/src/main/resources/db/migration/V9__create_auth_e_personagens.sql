@@ -10,7 +10,7 @@ CREATE TABLE usuarios (
 );
 
 -- ============================================================
--- Núcleo do personagem
+-- Núcleo do personagem (ficha completa, bate com ddt-character-sheet.html)
 -- ============================================================
 CREATE TABLE personagens (
     id                   VARCHAR(36) PRIMARY KEY,
@@ -38,6 +38,27 @@ CREATE TABLE personagens (
     iniciativa_bonus     INT NOT NULL DEFAULT 0,
     inspiracao           BOOLEAN NOT NULL DEFAULT FALSE,
     dados_vida_gastos    INT NOT NULL DEFAULT 0,
+
+    antecedente          VARCHAR(120),
+    tendencia            VARCHAR(60),
+    ponto_heroico        BOOLEAN NOT NULL DEFAULT FALSE,
+
+    moeda_pc             INT NOT NULL DEFAULT 0,
+    moeda_pp             INT NOT NULL DEFAULT 0,
+    moeda_po             INT NOT NULL DEFAULT 0,
+    moeda_pe             INT NOT NULL DEFAULT 0,
+    moeda_pl             INT NOT NULL DEFAULT 0,
+
+    desloc_nadar         VARCHAR(20),
+    desloc_voar          VARCHAR(20),
+    desloc_escalar       VARCHAR(20),
+    salto                VARCHAR(20),
+
+    -- VARCHAR com limite (não TEXT ilimitado): evita que um payload gigante
+    -- vindo do cliente vire uma negação de serviço no banco.
+    idiomas              VARCHAR(5000),
+    historia             VARCHAR(5000),
+    anotacoes            VARCHAR(5000),
 
     criado_em            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     atualizado_em        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -136,8 +157,34 @@ CREATE TABLE personagem_unidades (
     personagem_id     VARCHAR(36) NOT NULL REFERENCES personagens(id) ON DELETE CASCADE,
     nome              VARCHAR(160) NOT NULL,
     tipo              VARCHAR(80),
-    dados_extra_json  TEXT,
+    dados_extra_json  VARCHAR(5000),
     ordem             INT NOT NULL DEFAULT 0
 );
 
 CREATE INDEX idx_personagem_unidades_personagem ON personagem_unidades(personagem_id);
+
+-- ============================================================
+-- Resistências e vulnerabilidades (tags unificadas, como no site atual)
+-- ============================================================
+CREATE TABLE personagem_tags (
+    id             BIGINT AUTO_INCREMENT PRIMARY KEY,
+    personagem_id  VARCHAR(36) NOT NULL REFERENCES personagens(id) ON DELETE CASCADE,
+    tipo           VARCHAR(20) NOT NULL,
+    texto          VARCHAR(120) NOT NULL,
+    ordem          INT NOT NULL DEFAULT 0
+);
+
+CREATE INDEX idx_personagem_tags_personagem ON personagem_tags(personagem_id);
+
+-- ============================================================
+-- Talentos escolhidos pelo personagem
+-- ============================================================
+CREATE TABLE personagem_talentos (
+    id             BIGINT AUTO_INCREMENT PRIMARY KEY,
+    personagem_id  VARCHAR(36) NOT NULL REFERENCES personagens(id) ON DELETE CASCADE,
+    talento_id     BIGINT NOT NULL REFERENCES talentos(id),
+    ordem          INT NOT NULL DEFAULT 0,
+    UNIQUE (personagem_id, talento_id)
+);
+
+CREATE INDEX idx_personagem_talentos_personagem ON personagem_talentos(personagem_id);

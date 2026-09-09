@@ -1,5 +1,6 @@
 package com.tatanea.templeinfo.personagem;
 
+import com.tatanea.templeinfo.talento.Talento;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -150,6 +151,10 @@ public class Personagem {
     @OrderBy("ordem ASC")
     private List<PersonagemTag> tags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "personagem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("ordem ASC")
+    private List<PersonagemTalento> talentos = new ArrayList<>();
+
     protected Personagem() {
     }
 
@@ -164,6 +169,20 @@ public class Personagem {
     public void tocarAtualizacao() {
         this.atualizadoEm = LocalDateTime.now();
     }
+
+    public void adicionarTalento(Talento talento) {
+        this.talentos.add(new PersonagemTalento(this, talento, talentos.size()));
+    }
+
+    public void removerTalento(Long talentoId) {
+        this.talentos.removeIf(pt -> pt.getTalento().getId().equals(talentoId));
+    }
+
+    public boolean temTalento(Long talentoId) {
+        return this.talentos.stream().anyMatch(pt -> pt.getTalento().getId().equals(talentoId));
+    }
+
+    public List<PersonagemTalento> getTalentos() { return talentos; }
 
     public String getId() { return id; }
     public String getUsuarioId() { return usuarioId; }
