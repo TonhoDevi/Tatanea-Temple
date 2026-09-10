@@ -44,12 +44,12 @@
         <div class="fc-box-title" style="margin: 0">Tesouro</div>
         <span class="fc-mini-label">{{ tesouro.length }} itens</span>
       </div>
-      <p class="fc-hint">Provisório — ainda só neste navegador, não é salvo com a ficha. Valores em peças de bronze.</p>
-      <div v-for="(b, i) in tesouro" :key="b.id" class="fc-list-row">
-        <input type="number" v-model.number="b.quantidade" placeholder="Qtd" class="fc-col-tiny" min="1" />
-        <input type="text" v-model="b.nome" placeholder="Nome" />
-        <input type="number" v-model.number="b.valorUnitario" placeholder="Valor" class="fc-col-tiny" min="0" />
-        <input type="text" v-model="b.descricao" placeholder="Descrição" />
+      <p class="fc-hint">Valores em peças de bronze.</p>
+      <div v-for="(b, i) in tesouro" :key="i" class="fc-list-row">
+        <input type="number" v-model.number="b.quantidade" placeholder="Qtd" class="fc-col-tiny" min="1" @input="agendarSalvar" />
+        <input type="text" v-model="b.nome" placeholder="Nome" @input="agendarSalvar" />
+        <input type="number" v-model.number="b.valorUnitario" placeholder="Valor" class="fc-col-tiny" min="0" @input="agendarSalvar" />
+        <input type="text" v-model="b.descricao" placeholder="Descrição" @input="agendarSalvar" />
         <button class="fc-btn-remove" @click="removerTesouro(i)">×</button>
       </div>
       <button class="fc-btn-add" @click="adicionarTesouro">+ Adicionar item de tesouro</button>
@@ -67,16 +67,15 @@
           <input type="number" class="fc-mini-number" v-model.number="limiteSincronizados" min="1" />
         </label>
       </div>
-      <p class="fc-hint">Sincronização — provisório, ainda só neste navegador, não é salvo com a ficha.</p>
       <div v-for="(item, i) in ficha.itensMagicos" :key="i" class="fc-list-row">
         <button
             type="button"
             class="fc-sync-mark"
-            :class="{ active: itemMagicoSync[i] }"
+            :class="{ active: item.sincronizado }"
             @click="alternarSincronizado(i)"
             title="Sincronizado"
         >
-          <span v-if="itemMagicoSync[i]">✓</span>
+          <span v-if="item.sincronizado">✓</span>
         </button>
         <input type="text" v-model="item.nome" placeholder="Nome" @input="agendarSalvar" />
         <input type="text" v-model="item.descricao" placeholder="Descrição" @input="agendarSalvar" />
@@ -91,7 +90,7 @@
 import { useFichaPersonagem } from '../../composables/useFichaPersonagem';
 
 const {
-  ficha, MOEDAS, tesouro, somaTesouro, itemMagicoSync, limiteSincronizados,
+  ficha, MOEDAS, tesouro, somaTesouro, limiteSincronizados,
   agendarSalvar, removerItem, adicionarInventario,
   adicionarTesouro, removerTesouro,
   contarSincronizados, alternarSincronizado,
@@ -111,13 +110,13 @@ const {
   flex-direction: column;
   gap: 8px;
   padding: 10px;
-  border: 1px solid var(--jungle-green);
+  border: 1px solid var(--border-gold);
   background: var(--jungle-void);
   min-width: 0;
 }
 
 .fc-coin-name-row {
-  border-bottom: 1px solid var(--jungle-green);
+  border-bottom: 1px solid var(--border-gold);
   padding-bottom: 6px;
 }
 
@@ -165,7 +164,7 @@ const {
 }
 
 .fc-coin-hept-po {
-  background: var(--tribal-yellow);
+  background: #e8c14a;
 }
 
 .fc-coin-hept-pl {
@@ -187,7 +186,7 @@ const {
   align-items: center;
   justify-content: center;
   background: var(--jungle-void);
-  border: 1px solid var(--jungle-green);
+  border: 1px solid var(--border-gold);
   color: var(--pale-green);
   font-size: 15px;
   cursor: pointer;
@@ -233,8 +232,8 @@ const {
   justify-content: space-between;
   align-items: center;
   padding: 10px 12px;
-  border: 1px solid var(--jungle-green);
-  background: #123020;
+  border: 1px solid var(--border-gold);
+  background: var(--panel-bg);
   font-family: 'Cinzel', serif;
   font-size: 11px;
   letter-spacing: 0.14em;
@@ -256,7 +255,7 @@ const {
   height: 35px;
   box-sizing: border-box;
   background: var(--jungle-void);
-  border: 1px solid var(--jungle-green);
+  border: 1px solid var(--border-gold);
   color: var(--bone);
   font-size: 15px;
   font-weight: 700;
@@ -269,8 +268,8 @@ const {
 }
 
 .fc-sync-mark.active {
-  background: #2a75d3;
-  border-color: #2a75d3;
-  box-shadow: 0 0 8px 2px rgba(42, 117, 211, 0.65);
+  background: var(--magic-color);
+  border-color: var(--magic-color);
+  box-shadow: 0 0 8px 2px color-mix(in srgb, var(--magic-color) 65%, transparent);
 }
 </style>

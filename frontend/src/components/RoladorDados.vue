@@ -112,18 +112,8 @@ defineEmits(['fechar']);
 
 <style scoped>
 .dado-overlay {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #c0405a;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
-  --dado-purple: #6b4fa0;
-  --dado-purple-light: #8f6fd0;
+  --dado-purple: var(--magic-color);
+  --dado-purple-light: color-mix(in srgb, var(--magic-color) 55%, white);
   --dado-teal: #2fa89a;
   --dado-blue: #2f7fd4;
   --dado-orange: #d9822b;
@@ -217,7 +207,7 @@ defineEmits(['fechar']);
   height: 30px;
   border-radius: 6px;
   border: 1px solid var(--jungle-green);
-  background: rgba(46, 125, 79, 0.18);
+  background: rgba(201, 111, 0, 0.18);
   color: var(--pale-green);
   font-size: 1.1rem;
   cursor: pointer;
@@ -227,7 +217,7 @@ defineEmits(['fechar']);
 }
 
 .qtd-btn:hover {
-  background: rgba(46, 125, 79, 0.35);
+  background: rgba(201, 111, 0, 0.35);
   border-color: var(--tribal-gold);
   color: var(--tribal-gold);
 }
@@ -394,7 +384,7 @@ defineEmits(['fechar']);
 
 .hex-result.max {
   background: linear-gradient(145deg, var(--tribal-yellow), var(--tribal-gold));
-  box-shadow: 0 0 16px rgba(232, 193, 74, 0.75);
+  box-shadow: 0 0 16px rgba(201, 111, 0, 0.75);
 }
 
 .hex-result.max .hex-result-shape {

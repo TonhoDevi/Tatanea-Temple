@@ -1,7 +1,8 @@
-import { ref, computed, inject, provide } from 'vue';
+import { ref, reactive, computed, inject, provide } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import personagemService from '../services/personagemService';
 import { racaService } from '../services/racaService';
+import classeService from '../services/classeService';
 import talentoService from '../services/talentoService';
 
 export const FICHA_KEY = Symbol('ficha-personagem');
@@ -33,6 +34,8 @@ export const SKILLS = [
 { name: 'Vigor', label: 'Vigor', attr: 'constituicao' },
 ];
 
+const TIPOS_HABILIDADE = { passiva: 'Passiva', uso_unico: 'Uso único', multiplos_usos: 'Múltiplos usos' };
+
 export const ATRIBUTOS = [
 { chave: 'forca', sigla: 'FOR', nome: 'Força' },
 { chave: 'destreza', sigla: 'DES', nome: 'Destreza' },
@@ -59,8 +62,12 @@ export const MOEDAS = [
 { chave: 'PL', label: 'PL', campo: 'moedaPl', glifo: 'Λ' },
 ];
 
-// Lista provisória pro dropdown de classe (compêndio de Classes ainda não foi remodelado).
-export const OPCOES_CLASSE = ['Bárbaro', 'Bardo', 'Bruxo', 'Clérigo', 'Druida', 'Feiticeiro', 'Guerreiro', 'Ladino', 'Mago', 'Monge', 'Paladino', 'Caçador'];
+export const TIPOS_DADO = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20'];
+
+export const TIPOS_DANO = [
+'Ácido', 'Concussão', 'Cortante', 'Eletricidade', 'Energia', 'Fogo', 'Frio',
+'Necrótico', 'Perfurante', 'Psíquico', 'Radiante', 'Trovejante', 'Veneno',
+];
 
 /**
 * Cria todo o estado + lógica da ficha e o disponibiliza via provide().
@@ -76,32 +83,90 @@ const novaTag = ref('');
 const ajustePv = ref(null);
 let timerSalvar = null;
 
-// Detalhes físicos e personalidade (aba Lore) — provisório, só no estado local.
-// TODO backend: criar campos "idade"/"altura"/"peso"/"caracteristicasFisicas" e
-// "tracos"/"ideais"/"vinculos"/"defeitos" em Personagem/PersonagemRequestDto/
-// PersonagemDetalheDto pra essas duas seções deixarem de ser locais.
-const detalhesFisicos = ref({ idade: '', altura: '', peso: '', caracteristicas: '' });
-const personalidade = ref({ tracos: '', ideais: '', vinculos: '', defeitos: '' });
+// Tesouro em blocos — persistido em ficha.tesouro.
+const tesouro = computed(() => ficha.value?.tesouro || []);
 
-// Tesouro em blocos — provisório, só no estado local (ainda não existe no backend).
-const tesouro = ref([]);
-let proximoIdTesouro = 1;
+// Salvaguardas (proficiência por atributo) — cada atributo tem seu próprio
+// campo boolean direto em Personagem (salvaguardaForca, salvaguardaDestreza...).
+const CAMPO_SALVAGUARDA = {
+  forca: 'salvaguardaForca',
+  destreza: 'salvaguardaDestreza',
+  constituicao: 'salvaguardaConstituicao',
+  inteligencia: 'salvaguardaInteligencia',
+  sabedoria: 'salvaguardaSabedoria',
+  carisma: 'salvaguardaCarisma',
+};
 
-// Salvaguardas (proficiência por atributo) — provisório, só no estado local.
-// TODO backend: criar campo real (ex: lista de atributos proficientes em salvaguarda)
-// em Personagem/PersonagemRequestDto/PersonagemDetalheDto pra isso deixar de ser local.
-const salvaguardas = ref([]);
-
-// Habilidades de raça — provisório, só no estado local (ainda não existe no backend).
-// "Habilidades de classe" continua usando ficha.habilidades, que já é salvo hoje.
-// TODO backend: criar uma lista própria (ex: PersonagemHabilidadeRaca) pra isso deixar de ser local.
-const habilidadesRaca = ref([]);
-
-// Raças e talentos do compêndio real — carregados do backend em carregar().
+// Raças, classes e talentos do compêndio real — carregados do backend em carregar().
 const racasDisponiveis = ref([]);
+const classesDisponiveis = ref([]);
 const talentosDisponiveis = ref([]);
 const talentoSelecionado = ref('');
 const erroTalento = ref(null);
+
+// Ficha completa da raça selecionada (com os atributos), pra somar o bônus
+// racial no cálculo dos atributos — carregada em carregar() e toda vez que a
+// raça muda.
+const racaDetalhe = ref(null);
+
+async function carregarRacaDetalhe() {
+  if (!ficha.value.racaId) {
+    racaDetalhe.value = null;
+    return;
+  }
+  racaDetalhe.value = await racaService.buscarPorId(ficha.value.racaId);
+}
+
+async function selecionarRaca() {
+  await carregarRacaDetalhe();
+  agendarSalvar();
+}
+
+// Compara idade/altura/peso digitados na aba Lore com os valores de
+// referência da raça escolhida (vindos do compêndio) e devolve uma
+// mensagem interpretativa pro jogador. Altura do personagem é digitada em
+// cm; a da raça vem em metros do compêndio, por isso a conversão *100.
+function categoriaIdade(idade, idadeRaca) {
+  const { idadeAdulta, expectativaVida } = idadeRaca;
+  if (idade < idadeAdulta * 0.3) return 'uma criança';
+  if (idade < idadeAdulta) return 'jovem';
+  if (idade < expectativaVida * 0.75) return 'um(a) adulto(a)';
+  return 'idoso(a)';
+}
+
+const mensagemIdade = computed(() => {
+  const idade = Number(ficha.value?.detalheIdade);
+  const idadeRaca = racaDetalhe.value?.idade;
+  if (!idade || !idadeRaca) return '';
+  return `Você é ${categoriaIdade(idade, idadeRaca)} para sua raça.`;
+});
+
+const mensagemAltura = computed(() => {
+  const alturaCm = Number(ficha.value?.detalheAltura);
+  const alturaRaca = racaDetalhe.value?.altura;
+  if (!alturaCm || !alturaRaca) return '';
+  if (alturaCm < alturaRaca.valorMenor * 100) return 'Você é baixo(a) para sua raça.';
+  if (alturaCm > alturaRaca.valorMaior * 100) return 'Você é alto(a) para sua raça.';
+  return 'Sua altura é típica para sua raça.';
+});
+
+const mensagemPeso = computed(() => {
+  const peso = Number(ficha.value?.detalhePeso);
+  const pesoRaca = racaDetalhe.value?.peso;
+  if (!peso || !pesoRaca) return '';
+  if (peso < pesoRaca.valorMenor) return 'Você é leve para sua raça.';
+  if (peso > pesoRaca.valorMaior) return 'Você é pesado(a) para sua raça.';
+  return 'Seu peso é típico para sua raça.';
+});
+
+// Habilidades especiais da raça selecionada — vêm direto do compêndio (via
+// racaDetalhe), então trocam automaticamente sempre que a raça muda. Não são
+// editáveis aqui: a fonte da verdade é o compêndio de raças.
+const habilidadesRaca = computed(() => racaDetalhe.value?.habilidadesEspeciais || []);
+
+function tipoHabilidadeLabel(codigo) {
+  return TIPOS_HABILIDADE[codigo] || codigo;
+}
 
 async function adicionarTalentoNaFicha() {
   erroTalento.value = null;
@@ -118,23 +183,209 @@ async function removerTalentoDaFicha(talentoId) {
   ficha.value = await personagemService.removerTalento(route.params.id, talentoId);
 }
 
-// Sincronização de itens mágicos — provisório, só no estado local (ainda não existe no
-// backend). itemMagicoSync fica paralelo a ficha.itensMagicos (mesmo índice).
-// TODO backend: criar campo "sincronizado" em PersonagemItemMagico/ItemMagicoDto e uma
-// regra de limite (hoje só validada no front) pra isso deixar de ser local.
-const itemMagicoSync = ref([]);
-const limiteSincronizados = ref(3);
+// ===== Bônus de atributo (raça + talento), aplicados matematicamente =====
+// Escolha de atributo pra bônus "à escolha" (de raça ou de talento) —
+// provisório, ainda só neste navegador (TODO backend: guardar a escolha de
+// fato). "tipo" ('raca' ou 'talento') + "id" evitam colisão de chave entre
+// os atributos de raça e os de cada talento.
+const escolhasAtributo = reactive({});
+const editandoEscolha = reactive({});
 
-// Slots de magia por nível e dados extras de cada magia (tempo de conjuração,
-// descrição) — provisório, só no estado local (ainda não existem no backend).
-// TODO backend: criar campos "tempoConjuracao"/"descricao" em PersonagemMagia/
-// MagiaDto e um registro de slots por nível pra isso deixar de ser local.
-const slotsMagia = ref({});
-const magiaExtras = ref([]);
+function chaveEscolha(tipo, id, atributoIndex, n) {
+  return `${tipo}-${id}-${atributoIndex}-${n}`;
+}
 
-// Bônus de proficiência: começa calculado a partir do nível, mas fica editável
-// manualmente (deixa de acompanhar o nível assim que a pessoa mexer no número).
-const bonusProficiencia = ref(2);
+function atributosFixos(atributos) {
+  return (atributos || []).filter((a) => a.atributo);
+}
+
+function atributosEscolha(atributos) {
+  return (atributos || []).filter((a) => !a.atributo);
+}
+
+function atributoNome(chave) {
+  return ATRIBUTOS.find((a) => a.chave === chave)?.nome || chave;
+}
+
+function opcoesParaSlot(tipo, id, atributoIndex, quantidadeEscolhas, nAtual) {
+  const escolhidos = [];
+  for (let n = 1; n <= quantidadeEscolhas; n++) {
+    if (n === nAtual) continue;
+    const v = escolhasAtributo[chaveEscolha(tipo, id, atributoIndex, n)];
+    if (v) escolhidos.push(v);
+  }
+  return ATRIBUTOS.filter((attr) => !escolhidos.includes(attr.chave));
+}
+
+function slotsEscolhidos(tipo, id, atributoIndex, quantidadeEscolhas) {
+  const out = [];
+  for (let n = 1; n <= quantidadeEscolhas; n++) {
+    const chave = chaveEscolha(tipo, id, atributoIndex, n);
+    if (escolhasAtributo[chave] && !editandoEscolha[chave]) out.push(n);
+  }
+  return out;
+}
+
+function slotsPendentes(tipo, id, atributoIndex, quantidadeEscolhas) {
+  const out = [];
+  for (let n = 1; n <= quantidadeEscolhas; n++) {
+    const chave = chaveEscolha(tipo, id, atributoIndex, n);
+    if (!escolhasAtributo[chave] || editandoEscolha[chave]) out.push(n);
+  }
+  return out;
+}
+
+// Soma os bônus de uma lista de AtributoDto (fixo ou à escolha) que batem
+// com o atributo pedido.
+function somarBonusAtributos(lista, tipo, id, chaveAtributo) {
+  let total = 0;
+  (lista || []).forEach((a, ai) => {
+    if (a.atributo === chaveAtributo) {
+      total += a.valor;
+    } else if (!a.atributo) {
+      for (let n = 1; n <= a.quantidadeEscolhas; n++) {
+        if (escolhasAtributo[chaveEscolha(tipo, id, ai, n)] === chaveAtributo) {
+          total += a.valor;
+        }
+      }
+    }
+  });
+  return total;
+}
+
+function bonusRacaAtributo(chaveAtributo) {
+  if (!racaDetalhe.value) return 0;
+  return somarBonusAtributos(racaDetalhe.value.atributos, 'raca', racaDetalhe.value.id, chaveAtributo);
+}
+
+function bonusTalentoAtributo(chaveAtributo) {
+  if (!ficha.value?.talentos) return 0;
+  return ficha.value.talentos.reduce(
+      (total, t) => total + somarBonusAtributos(t.atributos, 'talento', t.talentoId, chaveAtributo),
+      0
+  );
+}
+
+// Valor final do atributo: base + bônus de raça + bônus de talento, nunca
+// menor que 0.
+function valorTotalAtributo(chaveAtributo) {
+  const base = ficha.value[chaveAtributo] || 0;
+  return Math.max(0, base + bonusRacaAtributo(chaveAtributo) + bonusTalentoAtributo(chaveAtributo));
+}
+
+// Sincronização de itens mágicos — "sincronizado" fica direto em cada item
+// (PersonagemItemMagico/ItemMagicoDto); o limite é validado só no front.
+const limiteSincronizados = computed({
+  get: () => ficha.value?.limiteSincronizados ?? 3,
+  set: (v) => {
+    ficha.value.limiteSincronizados = v;
+    agendarSalvar();
+  },
+});
+
+// Slots de magia por nível — persistidos em ficha.slotsMagia (lista de
+// {nivel, total, restantes}). Tempo de conjuração/descrição de cada magia
+// ficam direto em cada PersonagemMagia (m.tempoConjuracao / m.descricao).
+function slotDe(nivel) {
+  let s = ficha.value.slotsMagia.find((x) => x.nivel === nivel);
+  if (!s) {
+    s = { nivel, total: 0, restantes: 0 };
+    ficha.value.slotsMagia.push(s);
+  }
+  return s;
+}
+
+// Bônus de proficiência: persistido em ficha.bonusProficiencia.
+const bonusProficiencia = computed({
+  get: () => ficha.value?.bonusProficiencia ?? 2,
+  set: (v) => {
+    ficha.value.bonusProficiencia = v;
+    agendarSalvar();
+  },
+});
+
+// Peças de armadura (CA) e modificadores de iniciativa — listas persistidas
+// em ficha.armaduraPecas / ficha.iniciativaModificadores; o que também
+// persiste em ficha.ca / ficha.iniciativaBonus é o total somado (mantido
+// sincronizado por sincronizarCa()/sincronizarIniciativa()).
+const armaduraPecas = computed(() => ficha.value?.armaduraPecas || []);
+const iniciativaModificadores = computed(() => ficha.value?.iniciativaModificadores || []);
+
+const caTotal = computed(() =>
+    armaduraPecas.value.reduce((soma, p) => soma + (Number(p.bonus) || 0), 0)
+);
+
+// Base da iniciativa é sempre a salvaguarda de Destreza (mesma lógica de
+// proficiência/atributo já usada nos cards de atributo) — os modificadores da
+// lista abaixo só somam em cima dela.
+const iniciativaBase = computed(() => valorSalvaguarda({ chave: 'destreza' }));
+const iniciativaTotal = computed(() =>
+    iniciativaBase.value + iniciativaModificadores.value.reduce((soma, m) => soma + (Number(m.bonus) || 0), 0)
+);
+
+// Bônus de magia: sempre atributo + proficiência (conjuração é sempre
+// proficiente, diferente do bônus de ataque comum), mais um extra manual
+// (item mágico, talento etc.) que soma tanto no ataque quanto na CD.
+const bonusMagiaBase = computed(() => {
+  if (!ficha.value || !ficha.value.atributoMagia) return 0;
+  return modificador(valorTotalAtributo(ficha.value.atributoMagia)) + bonusProficiencia.value;
+});
+const bonusMagiaTotal = computed(() => bonusMagiaBase.value + (Number(ficha.value?.bonusMagiaExtra) || 0));
+const cdMagiaTotal = computed(() => 8 + bonusMagiaTotal.value);
+
+function adicionarArmadura() {
+  ficha.value.armaduraPecas.push({ nome: '', bonus: 0 });
+  sincronizarCa();
+}
+
+function removerArmadura(indice) {
+  ficha.value.armaduraPecas.splice(indice, 1);
+  sincronizarCa();
+}
+
+function sincronizarCa() {
+  ficha.value.ca = caTotal.value;
+  agendarSalvar();
+}
+
+// Componentes de vida máxima (dado de vida, Constituição, talentos etc.) —
+// lista persistida em ficha.pvMaximoComponentes; ficha.pvMaximo guarda o
+// total somado, mantido em sincronizarPvMaximo().
+const pvMaximoComponentes = computed(() => ficha.value?.pvMaximoComponentes || []);
+
+const pvMaximoTotal = computed(() =>
+    pvMaximoComponentes.value.reduce((soma, c) => soma + (Number(c.bonus) || 0), 0)
+);
+
+function adicionarComponentePv() {
+  ficha.value.pvMaximoComponentes.push({ nome: '', bonus: 0 });
+  sincronizarPvMaximo();
+}
+
+function removerComponentePv(indice) {
+  ficha.value.pvMaximoComponentes.splice(indice, 1);
+  sincronizarPvMaximo();
+}
+
+function sincronizarPvMaximo() {
+  ficha.value.pvMaximo = pvMaximoTotal.value;
+  agendarSalvar();
+}
+
+function adicionarModificadorIniciativa() {
+  ficha.value.iniciativaModificadores.push({ nome: '', bonus: 0 });
+  sincronizarIniciativa();
+}
+
+function removerModificadorIniciativa(indice) {
+  ficha.value.iniciativaModificadores.splice(indice, 1);
+  sincronizarIniciativa();
+}
+
+function sincronizarIniciativa() {
+  ficha.value.iniciativaBonus = iniciativaTotal.value;
+  agendarSalvar();
+}
 
 const pvPct = computed(() => {
 if (!ficha.value || !ficha.value.pvMaximo) return 0;
@@ -158,49 +409,52 @@ return ATRIBUTOS.find((a) => a.chave === attr)?.sigla || attr;
 }
 
 function salvaguardaDe(chave) {
-let s = salvaguardas.value.find((x) => x.atributo === chave);
-if (!s) {
-s = { atributo: chave, proficiente: false };
-salvaguardas.value.push(s);
-}
-return s;
+const campo = CAMPO_SALVAGUARDA[chave];
+return {
+  atributo: chave,
+  get proficiente() { return !!ficha.value[campo]; },
+  set proficiente(v) { ficha.value[campo] = v; },
+};
 }
 
 function valorSalvaguarda(attr) {
 const s = salvaguardaDe(attr.chave);
-const mod = modificador(ficha.value[attr.chave]);
+const mod = modificador(valorTotalAtributo(attr.chave));
 return s.proficiente ? mod + bonusProficiencia.value : mod;
 }
 
 function alternarSalvaguarda(chave, valor) {
-salvaguardaDe(chave).proficiente = valor;
+ficha.value[CAMPO_SALVAGUARDA[chave]] = valor;
+agendarSalvar();
 }
 
 function contarSincronizados() {
-return itemMagicoSync.value.filter(Boolean).length;
+return (ficha.value?.itensMagicos || []).filter((i) => i.sincronizado).length;
 }
 
 function alternarSincronizado(indice) {
-const estaSincronizado = itemMagicoSync.value[indice];
-if (!estaSincronizado && contarSincronizados() >= limiteSincronizados.value) {
+const item = ficha.value.itensMagicos[indice];
+if (!item.sincronizado && contarSincronizados() >= limiteSincronizados.value) {
 alert(`Limite de ${limiteSincronizados.value} itens sincronizados atingido.`);
 return;
 }
-itemMagicoSync.value[indice] = !estaSincronizado;
+item.sincronizado = !item.sincronizado;
+agendarSalvar();
 }
 
 function adicionarTesouro() {
-tesouro.value.push({
-id: proximoIdTesouro++,
+ficha.value.tesouro.push({
 quantidade: 1,
 nome: '',
 descricao: '',
 valorUnitario: 0,
 });
+agendarSalvar();
 }
 
 function removerTesouro(indice) {
-tesouro.value.splice(indice, 1);
+ficha.value.tesouro.splice(indice, 1);
+agendarSalvar();
 }
 
 function periciaDe(nome) {
@@ -214,7 +468,7 @@ return p;
 
 function valorPericia(skill) {
 const p = periciaDe(skill.name);
-const mod = modificador(ficha.value[skill.attr]);
+const mod = modificador(valorTotalAtributo(skill.attr));
 let bonus = 0;
 if (p.expertise) bonus = bonusProficiencia.value * 2;
 else if (p.proficiente) bonus = bonusProficiencia.value;
@@ -253,7 +507,14 @@ agendarSalvar();
 }
 
 function alterarAtributo(chave, delta) {
-ficha.value[chave] = Math.max(1, Math.min(30, ficha.value[chave] + delta));
+ficha.value[chave] = Math.max(0, Math.min(30, ficha.value[chave] + delta));
+agendarSalvar();
+}
+
+// Atributos não podem ficar negativos — usado no @input do número digitado
+// à mão (o stepper já usa alterarAtributo, que aplica o mesmo piso).
+function clamparAtributo(chave) {
+ficha.value[chave] = Math.max(0, Math.min(30, ficha.value[chave] || 0));
 agendarSalvar();
 }
 
@@ -297,7 +558,40 @@ agendarSalvar();
 }
 
 function adicionarAtaque() {
-ficha.value.ataques.push({ nome: '', bonusAtaque: '', dano: '', tipoDano: '' });
+ficha.value.ataques.push({
+nome: '', bonusAtributo: null, bonusProficiente: false, bonusExtra: 0,
+danos: [{ quantidade: 1, dado: 'd6', bonus: 0, tipoDano: null }], descricao: '',
+});
+}
+
+function acertoAtaqueTotal(a) {
+let total = Number(a.bonusExtra) || 0;
+if (a.bonusAtributo) total += modificador(valorTotalAtributo(a.bonusAtributo));
+if (a.bonusProficiente) total += bonusProficiencia.value;
+return total;
+}
+
+function danoTexto(d) {
+const qtd = d.quantidade || 1;
+const dado = d.dado || 'd6';
+const bonus = Number(d.bonus) || 0;
+if (!bonus) return `${qtd}${dado}`;
+return `${qtd}${dado}${bonus > 0 ? '+' : ''}${bonus}`;
+}
+
+function danoAtaqueResumo(a) {
+if (!a.danos || !a.danos.length) return '—';
+return a.danos.map(danoTexto).join(' + ');
+}
+
+function adicionarDano(a) {
+a.danos.push({ quantidade: 1, dado: 'd6', bonus: 0, tipoDano: null });
+agendarSalvar();
+}
+
+function removerDano(a, indice) {
+a.danos.splice(indice, 1);
+agendarSalvar();
 }
 
 function adicionarInventario() {
@@ -305,13 +599,12 @@ ficha.value.inventario.push({ nome: '', quantidade: 1, peso: null, descricao: ''
 }
 
 function adicionarItemMagico() {
-ficha.value.itensMagicos.push({ nome: '', descricao: '' });
-itemMagicoSync.value.push(false);
+ficha.value.itensMagicos.push({ nome: '', descricao: '', sincronizado: false });
+agendarSalvar();
 }
 
 function removerItemMagico(indice) {
 ficha.value.itensMagicos.splice(indice, 1);
-itemMagicoSync.value.splice(indice, 1);
 agendarSalvar();
 }
 
@@ -334,28 +627,14 @@ function magiasPorNivel(nivel) {
 return ficha.value.magias.filter((m) => m.nivel === nivel);
 }
 
-function slotDe(nivel) {
-if (!slotsMagia.value[nivel]) slotsMagia.value[nivel] = { total: 0, restantes: 0 };
-return slotsMagia.value[nivel];
-}
-
-function extraDe(magia) {
-const idx = ficha.value.magias.indexOf(magia);
-if (!magiaExtras.value[idx]) magiaExtras.value[idx] = { tempoConjuracao: '', descricao: '' };
-return magiaExtras.value[idx];
-}
-
 function adicionarMagia(nivel) {
-ficha.value.magias.push({ nivel, nome: '', preparada: false });
-magiaExtras.value.push({ tempoConjuracao: '', descricao: '' });
+ficha.value.magias.push({ nivel, nome: '', preparada: false, tempoConjuracao: '', descricao: '' });
+agendarSalvar();
 }
 
 function removerMagia(magia) {
 const idx = ficha.value.magias.indexOf(magia);
-if (idx >= 0) {
-removerItem(ficha.value.magias, idx);
-magiaExtras.value.splice(idx, 1);
-}
+if (idx >= 0) removerItem(ficha.value.magias, idx);
 }
 
 function agendarSalvar() {
@@ -433,38 +712,48 @@ leitor.readAsText(arquivo);
 
 async function carregar() {
 ficha.value = await personagemService.buscar(route.params.id);
-itemMagicoSync.value = ficha.value.itensMagicos.map(() => false);
-magiaExtras.value = ficha.value.magias.map(() => ({ tempoConjuracao: '', descricao: '' }));
-bonusProficiencia.value = Math.floor((ficha.value.nivel - 1) / 4) + 2;
 racasDisponiveis.value = await racaService.listar();
+classesDisponiveis.value = await classeService.listar();
 talentosDisponiveis.value = await talentoService.listar();
+await carregarRacaDetalhe();
+// Realinha o total de iniciativa exibido/salvo com a base + modificadores
+// carregados (não agenda salvar, só corrige um eventual total desatualizado).
+ficha.value.iniciativaBonus = iniciativaTotal.value;
 }
 
 const contexto = {
 // estado
 ficha, mostrarSalvo, novaTag, ajustePv, bonusProficiencia,
-detalhesFisicos, personalidade, tesouro, salvaguardas,
-habilidadesRaca, itemMagicoSync, limiteSincronizados,
-slotsMagia, magiaExtras,
-racasDisponiveis, talentosDisponiveis, talentoSelecionado, erroTalento,
+tesouro, habilidadesRaca, limiteSincronizados,
+racasDisponiveis, classesDisponiveis, talentosDisponiveis, talentoSelecionado, erroTalento,
+racaDetalhe, escolhasAtributo, editandoEscolha,
+armaduraPecas, iniciativaModificadores, pvMaximoComponentes,
 // computed
-pvPct, somaTesouro,
+pvPct, somaTesouro, caTotal, iniciativaTotal, iniciativaBase, pvMaximoTotal,
+bonusMagiaBase, bonusMagiaTotal, cdMagiaTotal,
+mensagemIdade, mensagemAltura, mensagemPeso,
 // constantes
-SKILLS, ATRIBUTOS, TABS, MOEDAS, OPCOES_CLASSE,
+SKILLS, ATRIBUTOS, TABS, MOEDAS, TIPOS_DADO, TIPOS_DANO,
 // funções
 modificador, formatarMod, attrAbrev,
-adicionarTalentoNaFicha, removerTalentoDaFicha,
+adicionarTalentoNaFicha, removerTalentoDaFicha, selecionarRaca,
+atributosFixos, atributosEscolha, atributoNome, tipoHabilidadeLabel,
+chaveEscolha, opcoesParaSlot, slotsEscolhidos, slotsPendentes,
+bonusRacaAtributo, bonusTalentoAtributo, valorTotalAtributo,
+adicionarArmadura, removerArmadura, sincronizarCa,
+adicionarComponentePv, removerComponentePv, sincronizarPvMaximo,
+adicionarModificadorIniciativa, removerModificadorIniciativa, sincronizarIniciativa,
 salvaguardaDe, valorSalvaguarda, alternarSalvaguarda,
 contarSincronizados, alternarSincronizado,
 adicionarTesouro, removerTesouro,
 periciaDe, valorPericia, valorPericiaPorNome, estadoPericia, alternarEstadoPericia,
-alterar, alterarAtributo,
+alterar, alterarAtributo, clamparAtributo,
 aplicarDano, aplicarVidaTemp, aplicarCura,
 alternarBooleano, removerItem,
-adicionarAtaque, adicionarInventario,
+adicionarAtaque, acertoAtaqueTotal, danoTexto, danoAtaqueResumo, adicionarDano, removerDano, adicionarInventario,
 adicionarItemMagico, removerItemMagico,
 adicionarHabilidade, adicionarUnidade, adicionarTag,
-magiasPorNivel, slotDe, extraDe, adicionarMagia, removerMagia,
+magiasPorNivel, slotDe, adicionarMagia, removerMagia,
 agendarSalvar, salvarAgora, excluir,
 selecionarImagem, removerImagem,
 exportarJSON, importarJSON,

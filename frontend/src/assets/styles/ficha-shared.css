@@ -1,19 +1,47 @@
 .ficha-page {
-    --jungle-void: #0b2013;
-    --jungle-darkest: #071a0f;
-    --jungle-dark: #0e2818;
-    --jungle-moss: #1a3d26;
-    --jungle-green: #2e7d4f;
-    --tribal-red: #b8362f;
-    --tribal-gold: #c9a227;
-    --tribal-yellow: #e8c14a;
-    --bone: #f2ede1;
-    --pale-green: #a8c4a2;
+    /* ===== Design Tokens — "Templo Ancestral & Musgo Ritual" ===== */
+    --bg-main: #0a140e;
+    --bg-card: #122419;
+    --bg-sub: #1a3324;
+    --text-main: #f1e8d0;
+    --text-muted: #9ab0a1;
+    --border-color: rgba(212, 163, 89, 0.35);
+    --accent-color: #38e07b;
+    --accent-title: #d4a359;
+    /* A paleta nova não tem um tom "arcano" próprio — o guia usa o dourado
+       (fundo do subcard + texto âmbar) pro botão "+ magia", então reaproveito
+       --accent-title aqui em vez de inventar uma cor fora da paleta. */
+    --magic-color: var(--accent-title);
+    --btn-damage-bg: #8c3b2b;
+    --btn-damage-text: #f6ded7;
+    --btn-heal-bg: #236e47;
+    --btn-heal-text: #dcfce7;
+    --btn-temp-bg: var(--bg-sub);
+    --btn-temp-text: var(--accent-title);
+
+    /* Aliases de compatibilidade — o resto da ficha referencia estes nomes;
+       apontando-os para os tokens acima, toda a árvore se atualiza de uma
+       vez só, sem precisar tocar em cada var(--jungle-*)/var(--tribal-*)
+       espalhado pelas abas. --tribal-gold/--tribal-yellow apontam para
+       --accent-title (âmbar), nunca para --accent-color (verde de foco), para
+       respeitar a regra de uso restrito do verde ("apenas focos de ação"). */
+    --jungle-void: var(--bg-sub);
+    --jungle-darkest: var(--bg-sub);
+    --jungle-dark: var(--bg-main);
+    --jungle-moss: color-mix(in srgb, var(--bg-card) 70%, white);
+    --jungle-green: var(--accent-title);
+    --tribal-red: var(--btn-damage-bg);
+    --tribal-gold: var(--accent-title);
+    --tribal-yellow: var(--accent-title);
+    --bone: var(--text-main);
+    --pale-green: var(--text-muted);
+    --border-gold: var(--border-color);
+    --panel-bg: var(--bg-card);
 
     min-height: 70vh;
     font-family: 'Crimson Text', Georgia, serif;
-    background: var(--jungle-dark);
-    color: var(--bone);
+    background: var(--bg-main);
+    color: var(--text-main);
 }
 
 .save-indicator {
@@ -24,6 +52,7 @@
     padding: 8px 16px;
     background: var(--jungle-green);
     border: 1px solid var(--tribal-yellow);
+    border-radius: 6px;
     color: var(--bone);
     font-family: 'Cinzel', serif;
     font-size: 11px;
@@ -65,8 +94,9 @@
 
 /* ===== Blocos genéricos ===== */
 .fc-box {
-    border: 1px solid var(--jungle-green);
-    background: #123020;
+    border: 1px solid var(--border-gold);
+    background: var(--panel-bg);
+    border-radius: 6px;
     padding: 12px;
     display: flex;
     flex-direction: column;
@@ -112,16 +142,18 @@ textarea {
     box-sizing: border-box;
     padding: 8px 10px;
     background: var(--jungle-void);
-    border: 1px solid var(--jungle-green);
+    border: 1px solid var(--border-gold);
+    border-radius: 6px;
     color: var(--bone);
     font-family: 'Crimson Text', Georgia, serif;
     font-size: 15px;
     outline: none;
+    transition: border-color 0.2s ease;
 }
 
 input:focus,
 textarea:focus {
-    border-color: var(--tribal-yellow);
+    border-color: var(--accent-color);
 }
 
 textarea {
@@ -134,17 +166,19 @@ textarea {
     box-sizing: border-box;
     padding: 8px 10px;
     background: var(--jungle-void);
-    border: 1px solid var(--jungle-green);
+    border: 1px solid var(--border-gold);
+    border-radius: 6px;
     color: var(--bone);
     font-family: 'Crimson Text', Georgia, serif;
     font-size: 15px;
     outline: none;
     cursor: pointer;
     appearance: none;
+    transition: border-color 0.2s ease;
 }
 
 .fc-select:focus {
-    border-color: var(--tribal-yellow);
+    border-color: var(--accent-color);
 }
 
 .fc-field {
@@ -176,7 +210,8 @@ textarea {
 .fc-btn {
     padding: 8px 12px;
     background: var(--jungle-green);
-    border: 1px solid var(--tribal-gold);
+    border: 1px solid var(--border-gold);
+    border-radius: 6px;
     color: var(--bone);
     font-family: 'Cinzel', serif;
     font-weight: 600;
@@ -186,11 +221,11 @@ textarea {
     text-decoration: none;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: filter 0.2s ease;
 }
 
 .fc-btn:hover:not(:disabled) {
-    background: var(--tribal-red);
+    filter: brightness(1.15);
 }
 
 .fc-btn:disabled {
@@ -203,12 +238,13 @@ textarea {
     box-sizing: border-box;
     background: transparent;
     color: var(--pale-green);
-    border-color: var(--jungle-green);
+    border-color: var(--border-gold);
 }
 
 .fc-btn-block:hover {
     background: var(--jungle-moss);
     color: var(--bone);
+    filter: none;
 }
 
 .fc-btn-danger {
@@ -219,19 +255,22 @@ textarea {
 
 .fc-btn-danger:hover {
     background: var(--tribal-red);
+    filter: none;
 }
 
 .fc-btn-add {
     padding: 8px;
     text-align: center;
     background: transparent;
-    border: 1px dashed var(--jungle-green);
+    border: 1px dashed var(--border-gold);
+    border-radius: 6px;
     color: var(--pale-green);
     font-family: 'Cinzel', serif;
     font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .fc-btn-add:hover {
@@ -251,8 +290,10 @@ textarea {
     height: 28px;
     background: transparent;
     border: 1px solid var(--tribal-red);
+    border-radius: 6px;
     color: var(--bone);
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .fc-btn-remove:hover {
@@ -263,7 +304,9 @@ textarea {
     flex: 1;
     display: flex;
     align-items: stretch;
-    border: 1px solid var(--jungle-green);
+    border: 1px solid var(--border-gold);
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 .qty-btn {
@@ -274,6 +317,7 @@ textarea {
     color: var(--bone);
     cursor: pointer;
     font-size: 14px;
+    transition: background-color 0.2s ease;
 }
 
 .qty-btn:hover {
@@ -284,6 +328,7 @@ textarea {
     flex: 1;
     min-width: 0;
     border: none;
+    border-radius: 0;
     text-align: center;
     padding: 4px;
 }
@@ -300,7 +345,9 @@ textarea {
 .fc-tabs {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid var(--jungle-green);
+    border: 1px solid var(--border-gold);
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 .fc-tab {
@@ -309,7 +356,7 @@ textarea {
     padding: 11px 8px;
     background: transparent;
     border: none;
-    border-right: 1px solid var(--jungle-green);
+    border-right: 1px solid var(--border-gold);
     color: var(--pale-green);
     font-family: 'Cinzel', serif;
     font-weight: 600;
@@ -317,6 +364,7 @@ textarea {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .fc-tab:last-child {
@@ -376,11 +424,26 @@ textarea {
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
     z-index: 200;
+    transition: filter 0.2s ease;
+}
+
+.btn-dados-flutuante:hover {
+    filter: brightness(1.15);
 }
 
 /* ===== Responsivo ===== */
 @media (max-width: 900px) {
     .ficha-layout {
         flex-direction: column;
+    }
+}
+
+/* Em telas de desktop, a ficha nasce no mesmo tamanho de quando o usuário dá
+   zoom manual de 133% no navegador — o `zoom` (diferente de transform:scale)
+   recalcula o layout de verdade, então sidebar sticky e o botão flutuante de
+   dados continuam se comportando certo. */
+@media (min-width: 901px) {
+    .ficha-page {
+        zoom: 1.33;
     }
 }

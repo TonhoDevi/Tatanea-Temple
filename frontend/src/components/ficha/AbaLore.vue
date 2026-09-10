@@ -24,28 +24,31 @@
 
       <div class="fc-detalhes-col">
         <div class="fc-box-title">Detalhes físicos</div>
-        <div class="fc-field-grid">
+        <div class="fc-detalhes-fisicos-campos">
           <label class="fc-field">
             <span class="fc-mini-label">Idade</span>
-            <input type="text" v-model="detalhesFisicos.idade" />
+            <input type="number" min="0" v-model.number="ficha.detalheIdade" @input="agendarSalvar" />
+            <span v-if="mensagemIdade" class="fc-fisico-msg">{{ mensagemIdade }}</span>
           </label>
           <label class="fc-field">
-            <span class="fc-mini-label">Altura</span>
-            <input type="text" v-model="detalhesFisicos.altura" />
+            <span class="fc-mini-label">Altura (cm)</span>
+            <input type="number" min="0" v-model.number="ficha.detalheAltura" @input="agendarSalvar" />
+            <span v-if="mensagemAltura" class="fc-fisico-msg">{{ mensagemAltura }}</span>
           </label>
           <label class="fc-field">
-            <span class="fc-mini-label">Peso</span>
-            <input type="text" v-model="detalhesFisicos.peso" />
+            <span class="fc-mini-label">Peso (kg)</span>
+            <input type="number" min="0" v-model.number="ficha.detalhePeso" @input="agendarSalvar" />
+            <span v-if="mensagemPeso" class="fc-fisico-msg">{{ mensagemPeso }}</span>
           </label>
         </div>
         <label class="fc-field">
           <span class="fc-mini-label">Características</span>
           <textarea
-              v-model="detalhesFisicos.caracteristicas"
+              v-model="ficha.detalheCaracteristicas"
               placeholder="Aparência, marcas distintivas..."
+              @input="agendarSalvar"
           ></textarea>
         </label>
-        <p class="fc-hint">Detalhes físicos — provisório, ainda só neste navegador, não é salvo com a ficha.</p>
       </div>
     </div>
 
@@ -55,38 +58,19 @@
       <div class="fc-field-grid-2">
         <label class="fc-field">
           <span class="fc-mini-label">Traços</span>
-          <textarea v-model="personalidade.tracos"></textarea>
+          <textarea v-model="ficha.personalidadeTracos" @input="agendarSalvar"></textarea>
         </label>
         <label class="fc-field">
           <span class="fc-mini-label">Ideais</span>
-          <textarea v-model="personalidade.ideais"></textarea>
+          <textarea v-model="ficha.personalidadeIdeais" @input="agendarSalvar"></textarea>
         </label>
         <label class="fc-field">
           <span class="fc-mini-label">Vínculos</span>
-          <textarea v-model="personalidade.vinculos"></textarea>
+          <textarea v-model="ficha.personalidadeVinculos" @input="agendarSalvar"></textarea>
         </label>
         <label class="fc-field">
           <span class="fc-mini-label">Defeitos</span>
-          <textarea v-model="personalidade.defeitos"></textarea>
-        </label>
-      </div>
-      <p class="fc-hint">Personalidade — provisório, ainda só neste navegador, não é salvo com a ficha.</p>
-    </div>
-
-    <div class="fc-box">
-      <div class="fc-box-title">Identidade</div>
-      <div class="fc-field-grid">
-        <label class="fc-field">
-          <span class="fc-mini-label">Jogador</span>
-          <input type="text" v-model="ficha.nomeJogador" @input="agendarSalvar" />
-        </label>
-        <label class="fc-field">
-          <span class="fc-mini-label">Antecedente</span>
-          <input type="text" v-model="ficha.antecedente" @input="agendarSalvar" />
-        </label>
-        <label class="fc-field">
-          <span class="fc-mini-label">Tendência</span>
-          <input type="text" v-model="ficha.tendencia" @input="agendarSalvar" />
+          <textarea v-model="ficha.personalidadeDefeitos" @input="agendarSalvar"></textarea>
         </label>
       </div>
     </div>
@@ -117,13 +101,28 @@
 import { useFichaPersonagem } from '../../composables/useFichaPersonagem';
 
 const {
-  ficha, detalhesFisicos, personalidade,
+  ficha,
+  mensagemIdade, mensagemAltura, mensagemPeso,
   agendarSalvar, removerItem, adicionarUnidade,
   selecionarImagem, removerImagem,
 } = useFichaPersonagem();
 </script>
 
 <style scoped>
+.fc-detalhes-fisicos-campos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fc-fisico-msg {
+  font-family: 'Crimson Text', Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--accent-title);
+  margin-top: 2px;
+}
+
 .fc-lore-top {
   display: grid;
   grid-template-columns: minmax(220px, 300px) 1fr;
@@ -146,10 +145,8 @@ const {
   justify-content: center;
   gap: 10px;
   aspect-ratio: 3 / 4;
-  border: 2px dashed rgba(46, 125, 79, 0.7);
-  background:
-      repeating-linear-gradient(45deg, rgba(46, 125, 79, 0.28) 0 6px, transparent 6px 14px),
-      var(--jungle-void);
+  border: 2px dashed var(--border-gold);
+  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-sub) 100%);
   cursor: pointer;
   overflow: hidden;
   transition: border-color 0.2s ease;
