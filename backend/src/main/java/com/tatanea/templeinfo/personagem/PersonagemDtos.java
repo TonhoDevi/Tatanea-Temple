@@ -14,7 +14,18 @@ public class PersonagemDtos {
     public record PericiaDto(String pericia, boolean proficiente, boolean expertise) {
     }
 
-    public record AtaqueDto(String nome, String bonusAtaque, String dano, String tipoDano) {
+    public record AtaqueDanoDto(int quantidade, String dado, int bonus, String tipoDano) {
+    }
+
+    public record AtaqueDto(
+            String nome,
+            String bonusAtributo,
+            boolean bonusProficiente,
+            int bonusExtra,
+            List<AtaqueDanoDto> danos,
+            @Size(max = 1000, message = "descrição do ataque não pode passar de 1000 caracteres")
+            String descricao
+    ) {
     }
 
     public record ItemInventarioDto(
@@ -29,7 +40,8 @@ public class PersonagemDtos {
     public record ItemMagicoDto(
             String nome,
             @Size(max = 5000, message = "descrição não pode passar de 5000 caracteres")
-            String descricao
+            String descricao,
+            boolean sincronizado
     ) {
     }
 
@@ -40,7 +52,29 @@ public class PersonagemDtos {
     ) {
     }
 
-    public record MagiaDto(int nivel, String nome, boolean preparada) {
+    public record MagiaDto(
+            int nivel,
+            String nome,
+            boolean preparada,
+            String tempoConjuracao,
+            @Size(max = 2000, message = "descrição da magia não pode passar de 2000 caracteres")
+            String descricao
+    ) {
+    }
+
+    public record ArmaduraPecaDto(String nome, int bonus) {
+    }
+
+    public record IniciativaModificadorDto(String nome, int bonus) {
+    }
+
+    public record TesouroItemDto(String nome, int quantidade, double valorUnitario, String descricao) {
+    }
+
+    public record PvMaximoComponenteDto(String nome, int bonus) {
+    }
+
+    public record SlotMagiaDto(int nivel, int total, int restantes) {
     }
 
     public record UnidadeDto(
@@ -58,8 +92,7 @@ public class PersonagemDtos {
             Long talentoId,
             String nome,
             String descricao,
-            String atributoRecebido,
-            Integer valorAtributoRecebido
+            List<com.tatanea.templeinfo.talento.TalentoDtos.AtributoDto> atributos
     ) {
     }
 
@@ -103,6 +136,8 @@ public class PersonagemDtos {
             int ca,
             String deslocamento,
             int iniciativaBonus,
+            String atributoMagia,
+            int bonusMagiaExtra,
             boolean inspiracao,
             int dadosVidaGastos,
             String antecedente,
@@ -120,6 +155,22 @@ public class PersonagemDtos {
             String idiomas,
             String historia,
             String anotacoes,
+            int bonusProficiencia,
+            int limiteSincronizados,
+            Integer detalheIdade,
+            Integer detalheAltura,
+            Integer detalhePeso,
+            String detalheCaracteristicas,
+            String personalidadeTracos,
+            String personalidadeIdeais,
+            String personalidadeVinculos,
+            String personalidadeDefeitos,
+            boolean salvaguardaForca,
+            boolean salvaguardaDestreza,
+            boolean salvaguardaConstituicao,
+            boolean salvaguardaInteligencia,
+            boolean salvaguardaSabedoria,
+            boolean salvaguardaCarisma,
             List<PericiaDto> pericias,
             List<AtaqueDto> ataques,
             List<ItemInventarioDto> inventario,
@@ -128,7 +179,12 @@ public class PersonagemDtos {
             List<MagiaDto> magias,
             List<UnidadeDto> unidades,
             List<TagDto> tags,
-            List<PersonagemTalentoDto> talentos
+            List<PersonagemTalentoDto> talentos,
+            List<ArmaduraPecaDto> armaduraPecas,
+            List<IniciativaModificadorDto> iniciativaModificadores,
+            List<TesouroItemDto> tesouro,
+            List<PvMaximoComponenteDto> pvMaximoComponentes,
+            List<SlotMagiaDto> slotsMagia
     ) {
     }
 
@@ -156,6 +212,8 @@ public class PersonagemDtos {
             int ca,
             String deslocamento,
             int iniciativaBonus,
+            String atributoMagia,
+            int bonusMagiaExtra,
             boolean inspiracao,
             int dadosVidaGastos,
             String antecedente,
@@ -176,6 +234,27 @@ public class PersonagemDtos {
             String historia,
             @Size(max = 5000, message = "anotações não podem passar de 5000 caracteres")
             String anotacoes,
+            int bonusProficiencia,
+            int limiteSincronizados,
+            Integer detalheIdade,
+            Integer detalheAltura,
+            Integer detalhePeso,
+            @Size(max = 2000, message = "características físicas não podem passar de 2000 caracteres")
+            String detalheCaracteristicas,
+            @Size(max = 2000, message = "traços não podem passar de 2000 caracteres")
+            String personalidadeTracos,
+            @Size(max = 2000, message = "ideais não podem passar de 2000 caracteres")
+            String personalidadeIdeais,
+            @Size(max = 2000, message = "vínculos não podem passar de 2000 caracteres")
+            String personalidadeVinculos,
+            @Size(max = 2000, message = "defeitos não podem passar de 2000 caracteres")
+            String personalidadeDefeitos,
+            boolean salvaguardaForca,
+            boolean salvaguardaDestreza,
+            boolean salvaguardaConstituicao,
+            boolean salvaguardaInteligencia,
+            boolean salvaguardaSabedoria,
+            boolean salvaguardaCarisma,
             List<PericiaDto> pericias,
             List<@Valid AtaqueDto> ataques,
             List<@Valid ItemInventarioDto> inventario,
@@ -183,7 +262,12 @@ public class PersonagemDtos {
             List<@Valid HabilidadeDto> habilidades,
             List<MagiaDto> magias,
             List<@Valid UnidadeDto> unidades,
-            List<TagDto> tags
+            List<TagDto> tags,
+            List<ArmaduraPecaDto> armaduraPecas,
+            List<IniciativaModificadorDto> iniciativaModificadores,
+            List<TesouroItemDto> tesouro,
+            List<PvMaximoComponenteDto> pvMaximoComponentes,
+            List<SlotMagiaDto> slotsMagia
     ) {
     }
 }

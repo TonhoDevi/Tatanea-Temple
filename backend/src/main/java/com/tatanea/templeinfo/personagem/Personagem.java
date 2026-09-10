@@ -64,6 +64,12 @@ public class Personagem {
     @Column(name = "iniciativa_bonus")
     private int iniciativaBonus;
 
+    @Column(name = "atributo_magia", length = 20)
+    private String atributoMagia;
+
+    @Column(name = "bonus_magia_extra")
+    private int bonusMagiaExtra;
+
     private boolean inspiracao;
 
     @Column(name = "dados_vida_gastos")
@@ -114,6 +120,54 @@ public class Personagem {
     @Column(length = 5000)
     private String anotacoes;
 
+    @Column(name = "bonus_proficiencia")
+    private int bonusProficiencia = 2;
+
+    @Column(name = "limite_sincronizados")
+    private int limiteSincronizados = 3;
+
+    @Column(name = "detalhe_idade")
+    private Integer detalheIdade;
+
+    @Column(name = "detalhe_altura")
+    private Integer detalheAltura;
+
+    @Column(name = "detalhe_peso")
+    private Integer detalhePeso;
+
+    @Column(name = "detalhe_caracteristicas", length = 2000)
+    private String detalheCaracteristicas;
+
+    @Column(name = "personalidade_tracos", length = 2000)
+    private String personalidadeTracos;
+
+    @Column(name = "personalidade_ideais", length = 2000)
+    private String personalidadeIdeais;
+
+    @Column(name = "personalidade_vinculos", length = 2000)
+    private String personalidadeVinculos;
+
+    @Column(name = "personalidade_defeitos", length = 2000)
+    private String personalidadeDefeitos;
+
+    @Column(name = "salvaguarda_forca")
+    private boolean salvaguardaForca;
+
+    @Column(name = "salvaguarda_destreza")
+    private boolean salvaguardaDestreza;
+
+    @Column(name = "salvaguarda_constituicao")
+    private boolean salvaguardaConstituicao;
+
+    @Column(name = "salvaguarda_inteligencia")
+    private boolean salvaguardaInteligencia;
+
+    @Column(name = "salvaguarda_sabedoria")
+    private boolean salvaguardaSabedoria;
+
+    @Column(name = "salvaguarda_carisma")
+    private boolean salvaguardaCarisma;
+
     @Column(name = "criado_em", nullable = false)
     private LocalDateTime criadoEm;
 
@@ -154,6 +208,26 @@ public class Personagem {
     @OneToMany(mappedBy = "personagem", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordem ASC")
     private List<PersonagemTalento> talentos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personagem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("ordem ASC")
+    private List<PersonagemArmaduraPeca> armaduraPecas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personagem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("ordem ASC")
+    private List<PersonagemIniciativaModificador> iniciativaModificadores = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personagem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("ordem ASC")
+    private List<PersonagemTesouroItem> tesouro = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personagem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("ordem ASC")
+    private List<PersonagemPvMaximoComponente> pvMaximoComponentes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personagem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("nivel ASC")
+    private List<PersonagemSlotMagia> slotsMagia = new ArrayList<>();
 
     protected Personagem() {
     }
@@ -224,6 +298,10 @@ public class Personagem {
     public void setDeslocamento(String deslocamento) { this.deslocamento = deslocamento; }
     public int getIniciativaBonus() { return iniciativaBonus; }
     public void setIniciativaBonus(int iniciativaBonus) { this.iniciativaBonus = iniciativaBonus; }
+    public String getAtributoMagia() { return atributoMagia; }
+    public void setAtributoMagia(String atributoMagia) { this.atributoMagia = atributoMagia; }
+    public int getBonusMagiaExtra() { return bonusMagiaExtra; }
+    public void setBonusMagiaExtra(int bonusMagiaExtra) { this.bonusMagiaExtra = bonusMagiaExtra; }
     public boolean isInspiracao() { return inspiracao; }
     public void setInspiracao(boolean inspiracao) { this.inspiracao = inspiracao; }
     public int getDadosVidaGastos() { return dadosVidaGastos; }
@@ -258,6 +336,38 @@ public class Personagem {
     public void setHistoria(String historia) { this.historia = historia; }
     public String getAnotacoes() { return anotacoes; }
     public void setAnotacoes(String anotacoes) { this.anotacoes = anotacoes; }
+    public int getBonusProficiencia() { return bonusProficiencia; }
+    public void setBonusProficiencia(int bonusProficiencia) { this.bonusProficiencia = bonusProficiencia; }
+    public int getLimiteSincronizados() { return limiteSincronizados; }
+    public void setLimiteSincronizados(int limiteSincronizados) { this.limiteSincronizados = limiteSincronizados; }
+    public Integer getDetalheIdade() { return detalheIdade; }
+    public void setDetalheIdade(Integer detalheIdade) { this.detalheIdade = detalheIdade; }
+    public Integer getDetalheAltura() { return detalheAltura; }
+    public void setDetalheAltura(Integer detalheAltura) { this.detalheAltura = detalheAltura; }
+    public Integer getDetalhePeso() { return detalhePeso; }
+    public void setDetalhePeso(Integer detalhePeso) { this.detalhePeso = detalhePeso; }
+    public String getDetalheCaracteristicas() { return detalheCaracteristicas; }
+    public void setDetalheCaracteristicas(String detalheCaracteristicas) { this.detalheCaracteristicas = detalheCaracteristicas; }
+    public String getPersonalidadeTracos() { return personalidadeTracos; }
+    public void setPersonalidadeTracos(String personalidadeTracos) { this.personalidadeTracos = personalidadeTracos; }
+    public String getPersonalidadeIdeais() { return personalidadeIdeais; }
+    public void setPersonalidadeIdeais(String personalidadeIdeais) { this.personalidadeIdeais = personalidadeIdeais; }
+    public String getPersonalidadeVinculos() { return personalidadeVinculos; }
+    public void setPersonalidadeVinculos(String personalidadeVinculos) { this.personalidadeVinculos = personalidadeVinculos; }
+    public String getPersonalidadeDefeitos() { return personalidadeDefeitos; }
+    public void setPersonalidadeDefeitos(String personalidadeDefeitos) { this.personalidadeDefeitos = personalidadeDefeitos; }
+    public boolean isSalvaguardaForca() { return salvaguardaForca; }
+    public void setSalvaguardaForca(boolean salvaguardaForca) { this.salvaguardaForca = salvaguardaForca; }
+    public boolean isSalvaguardaDestreza() { return salvaguardaDestreza; }
+    public void setSalvaguardaDestreza(boolean salvaguardaDestreza) { this.salvaguardaDestreza = salvaguardaDestreza; }
+    public boolean isSalvaguardaConstituicao() { return salvaguardaConstituicao; }
+    public void setSalvaguardaConstituicao(boolean salvaguardaConstituicao) { this.salvaguardaConstituicao = salvaguardaConstituicao; }
+    public boolean isSalvaguardaInteligencia() { return salvaguardaInteligencia; }
+    public void setSalvaguardaInteligencia(boolean salvaguardaInteligencia) { this.salvaguardaInteligencia = salvaguardaInteligencia; }
+    public boolean isSalvaguardaSabedoria() { return salvaguardaSabedoria; }
+    public void setSalvaguardaSabedoria(boolean salvaguardaSabedoria) { this.salvaguardaSabedoria = salvaguardaSabedoria; }
+    public boolean isSalvaguardaCarisma() { return salvaguardaCarisma; }
+    public void setSalvaguardaCarisma(boolean salvaguardaCarisma) { this.salvaguardaCarisma = salvaguardaCarisma; }
     public LocalDateTime getCriadoEm() { return criadoEm; }
     public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
 
@@ -269,4 +379,9 @@ public class Personagem {
     public List<PersonagemMagia> getMagias() { return magias; }
     public List<PersonagemUnidade> getUnidades() { return unidades; }
     public List<PersonagemTag> getTags() { return tags; }
+    public List<PersonagemArmaduraPeca> getArmaduraPecas() { return armaduraPecas; }
+    public List<PersonagemIniciativaModificador> getIniciativaModificadores() { return iniciativaModificadores; }
+    public List<PersonagemTesouroItem> getTesouro() { return tesouro; }
+    public List<PersonagemPvMaximoComponente> getPvMaximoComponentes() { return pvMaximoComponentes; }
+    public List<PersonagemSlotMagia> getSlotsMagia() { return slotsMagia; }
 }

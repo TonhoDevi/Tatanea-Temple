@@ -3,8 +3,8 @@ package com.tatanea.templeinfo.personagem;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "personagem_itens_magicos")
-public class PersonagemItemMagico {
+@Table(name = "personagem_armadura_pecas")
+public class PersonagemArmaduraPeca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,24 +14,20 @@ public class PersonagemItemMagico {
     @JoinColumn(name = "personagem_id", nullable = false)
     private Personagem personagem;
 
-    @Column(nullable = false, length = 160)
+    @Column(length = 120)
     private String nome;
 
-    @Column(length = 1000)
-    private String descricao;
-
-    private boolean sincronizado;
+    private int bonus;
 
     private int ordem;
 
-    protected PersonagemItemMagico() {
+    protected PersonagemArmaduraPeca() {
     }
 
-    public PersonagemItemMagico(Personagem personagem, String nome, String descricao, boolean sincronizado, int ordem) {
+    public PersonagemArmaduraPeca(Personagem personagem, String nome, int bonus, int ordem) {
         this.personagem = personagem;
         this.nome = nome;
-        this.descricao = descricao;
-        this.sincronizado = sincronizado;
+        this.bonus = bonus;
         this.ordem = ordem;
     }
 
@@ -39,10 +35,8 @@ public class PersonagemItemMagico {
     public Personagem getPersonagem() { return personagem; }
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
-    public boolean isSincronizado() { return sincronizado; }
-    public void setSincronizado(boolean sincronizado) { this.sincronizado = sincronizado; }
+    public int getBonus() { return bonus; }
+    public void setBonus(int bonus) { this.bonus = bonus; }
     public int getOrdem() { return ordem; }
     public void setOrdem(int ordem) { this.ordem = ordem; }
 }

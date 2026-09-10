@@ -67,12 +67,6 @@ public class PersonagemService {
         if (p.temTalento(talentoId)) {
             throw new PreRequisitoTalentoNaoAtendidoException("Esse personagem já tem o talento " + talento.getNome() + ".");
         }
-        if (talento.getRacaRequerida() != null) {
-            if (p.getRacaId() == null || !p.getRacaId().equals(talento.getRacaRequerida().getId())) {
-                throw new PreRequisitoTalentoNaoAtendidoException(
-                        "Requer a raça " + talento.getRacaRequerida().getNome() + ".");
-            }
-        }
         if (talento.getAtributoRequerido() != null) {
             int valorAtual = valorAtributo(p, talento.getAtributoRequerido());
             if (valorAtual < talento.getValorMinimoAtributoRequerido()) {
@@ -134,6 +128,8 @@ public class PersonagemService {
         p.setCa(dto.ca());
         p.setDeslocamento(dto.deslocamento());
         p.setIniciativaBonus(dto.iniciativaBonus());
+        p.setAtributoMagia(dto.atributoMagia());
+        p.setBonusMagiaExtra(dto.bonusMagiaExtra());
         p.setInspiracao(dto.inspiracao());
         p.setDadosVidaGastos(dto.dadosVidaGastos());
         p.setAntecedente(dto.antecedente());
@@ -151,6 +147,22 @@ public class PersonagemService {
         p.setIdiomas(dto.idiomas());
         p.setHistoria(dto.historia());
         p.setAnotacoes(dto.anotacoes());
+        p.setBonusProficiencia(dto.bonusProficiencia());
+        p.setLimiteSincronizados(dto.limiteSincronizados());
+        p.setDetalheIdade(dto.detalheIdade());
+        p.setDetalheAltura(dto.detalheAltura());
+        p.setDetalhePeso(dto.detalhePeso());
+        p.setDetalheCaracteristicas(dto.detalheCaracteristicas());
+        p.setPersonalidadeTracos(dto.personalidadeTracos());
+        p.setPersonalidadeIdeais(dto.personalidadeIdeais());
+        p.setPersonalidadeVinculos(dto.personalidadeVinculos());
+        p.setPersonalidadeDefeitos(dto.personalidadeDefeitos());
+        p.setSalvaguardaForca(dto.salvaguardaForca());
+        p.setSalvaguardaDestreza(dto.salvaguardaDestreza());
+        p.setSalvaguardaConstituicao(dto.salvaguardaConstituicao());
+        p.setSalvaguardaInteligencia(dto.salvaguardaInteligencia());
+        p.setSalvaguardaSabedoria(dto.salvaguardaSabedoria());
+        p.setSalvaguardaCarisma(dto.salvaguardaCarisma());
 
         p.getPericias().clear();
         if (dto.pericias() != null) {
@@ -164,7 +176,16 @@ public class PersonagemService {
             List<AtaqueDto> lista = dto.ataques();
             for (int i = 0; i < lista.size(); i++) {
                 AtaqueDto d = lista.get(i);
-                p.getAtaques().add(new PersonagemAtaque(p, d.nome(), d.bonusAtaque(), d.dano(), d.tipoDano(), i));
+                List<AtaqueDano> danos = new ArrayList<>();
+                if (d.danos() != null) {
+                    for (AtaqueDanoDto dd : d.danos()) {
+                        danos.add(new AtaqueDano(dd.quantidade(), dd.dado(), dd.bonus(), dd.tipoDano()));
+                    }
+                }
+                p.getAtaques().add(new PersonagemAtaque(
+                        p, d.nome(), d.bonusAtributo(), d.bonusProficiente(), d.bonusExtra(),
+                        danos, d.descricao(), i
+                ));
             }
         }
 
@@ -182,7 +203,7 @@ public class PersonagemService {
             List<ItemMagicoDto> lista = dto.itensMagicos();
             for (int i = 0; i < lista.size(); i++) {
                 ItemMagicoDto d = lista.get(i);
-                p.getItensMagicos().add(new PersonagemItemMagico(p, d.nome(), d.descricao(), i));
+                p.getItensMagicos().add(new PersonagemItemMagico(p, d.nome(), d.descricao(), d.sincronizado(), i));
             }
         }
 
@@ -200,7 +221,7 @@ public class PersonagemService {
             List<MagiaDto> lista = dto.magias();
             for (int i = 0; i < lista.size(); i++) {
                 MagiaDto d = lista.get(i);
-                p.getMagias().add(new PersonagemMagia(p, d.nivel(), d.nome(), d.preparada(), i));
+                p.getMagias().add(new PersonagemMagia(p, d.nivel(), d.nome(), d.preparada(), d.tempoConjuracao(), d.descricao(), i));
             }
         }
 
@@ -221,6 +242,49 @@ public class PersonagemService {
                 p.getTags().add(new PersonagemTag(p, d.tipo(), d.texto(), i));
             }
         }
+
+        p.getArmaduraPecas().clear();
+        if (dto.armaduraPecas() != null) {
+            List<ArmaduraPecaDto> lista = dto.armaduraPecas();
+            for (int i = 0; i < lista.size(); i++) {
+                ArmaduraPecaDto d = lista.get(i);
+                p.getArmaduraPecas().add(new PersonagemArmaduraPeca(p, d.nome(), d.bonus(), i));
+            }
+        }
+
+        p.getIniciativaModificadores().clear();
+        if (dto.iniciativaModificadores() != null) {
+            List<IniciativaModificadorDto> lista = dto.iniciativaModificadores();
+            for (int i = 0; i < lista.size(); i++) {
+                IniciativaModificadorDto d = lista.get(i);
+                p.getIniciativaModificadores().add(new PersonagemIniciativaModificador(p, d.nome(), d.bonus(), i));
+            }
+        }
+
+        p.getTesouro().clear();
+        if (dto.tesouro() != null) {
+            List<TesouroItemDto> lista = dto.tesouro();
+            for (int i = 0; i < lista.size(); i++) {
+                TesouroItemDto d = lista.get(i);
+                p.getTesouro().add(new PersonagemTesouroItem(p, d.nome(), d.quantidade(), d.valorUnitario(), d.descricao(), i));
+            }
+        }
+
+        p.getPvMaximoComponentes().clear();
+        if (dto.pvMaximoComponentes() != null) {
+            List<PvMaximoComponenteDto> lista = dto.pvMaximoComponentes();
+            for (int i = 0; i < lista.size(); i++) {
+                PvMaximoComponenteDto d = lista.get(i);
+                p.getPvMaximoComponentes().add(new PersonagemPvMaximoComponente(p, d.nome(), d.bonus(), i));
+            }
+        }
+
+        p.getSlotsMagia().clear();
+        if (dto.slotsMagia() != null) {
+            for (SlotMagiaDto d : dto.slotsMagia()) {
+                p.getSlotsMagia().add(new PersonagemSlotMagia(p, d.nivel(), d.total(), d.restantes()));
+            }
+        }
     }
 
     private PersonagemResumoDto paraResumo(Personagem p) {
@@ -238,7 +302,14 @@ public class PersonagemService {
 
         List<AtaqueDto> ataques = new ArrayList<>();
         for (PersonagemAtaque x : p.getAtaques()) {
-            ataques.add(new AtaqueDto(x.getNome(), x.getBonusAtaque(), x.getDano(), x.getTipoDano()));
+            List<AtaqueDanoDto> danos = new ArrayList<>();
+            for (AtaqueDano d : x.getDanos()) {
+                danos.add(new AtaqueDanoDto(d.getQuantidade(), d.getDado(), d.getBonus(), d.getTipoDano()));
+            }
+            ataques.add(new AtaqueDto(
+                    x.getNome(), x.getBonusAtributo(), x.isBonusProficiente(), x.getBonusExtra(),
+                    danos, x.getDescricao()
+            ));
         }
 
         List<ItemInventarioDto> inventario = new ArrayList<>();
@@ -248,7 +319,7 @@ public class PersonagemService {
 
         List<ItemMagicoDto> itensMagicos = new ArrayList<>();
         for (PersonagemItemMagico x : p.getItensMagicos()) {
-            itensMagicos.add(new ItemMagicoDto(x.getNome(), x.getDescricao()));
+            itensMagicos.add(new ItemMagicoDto(x.getNome(), x.getDescricao(), x.isSincronizado()));
         }
 
         List<HabilidadeDto> habilidades = new ArrayList<>();
@@ -258,7 +329,7 @@ public class PersonagemService {
 
         List<MagiaDto> magias = new ArrayList<>();
         for (PersonagemMagia x : p.getMagias()) {
-            magias.add(new MagiaDto(x.getNivel(), x.getNome(), x.isPreparada()));
+            magias.add(new MagiaDto(x.getNivel(), x.getNome(), x.isPreparada(), x.getTempoConjuracao(), x.getDescricao()));
         }
 
         List<UnidadeDto> unidades = new ArrayList<>();
@@ -276,9 +347,33 @@ public class PersonagemService {
             Talento t = x.getTalento();
             talentos.add(new PersonagemTalentoDto(
                     t.getId(), t.getNome(), t.getDescricao(),
-                    t.getAtributoRecebido() == null ? null : t.getAtributoRecebido().getCodigo(),
-                    t.getValorAtributoRecebido()
+                    t.getAtributos().stream().map(com.tatanea.templeinfo.talento.TalentoDtos.AtributoDto::de).toList()
             ));
+        }
+
+        List<ArmaduraPecaDto> armaduraPecas = new ArrayList<>();
+        for (PersonagemArmaduraPeca x : p.getArmaduraPecas()) {
+            armaduraPecas.add(new ArmaduraPecaDto(x.getNome(), x.getBonus()));
+        }
+
+        List<IniciativaModificadorDto> iniciativaModificadores = new ArrayList<>();
+        for (PersonagemIniciativaModificador x : p.getIniciativaModificadores()) {
+            iniciativaModificadores.add(new IniciativaModificadorDto(x.getNome(), x.getBonus()));
+        }
+
+        List<TesouroItemDto> tesouro = new ArrayList<>();
+        for (PersonagemTesouroItem x : p.getTesouro()) {
+            tesouro.add(new TesouroItemDto(x.getNome(), x.getQuantidade(), x.getValorUnitario(), x.getDescricao()));
+        }
+
+        List<PvMaximoComponenteDto> pvMaximoComponentes = new ArrayList<>();
+        for (PersonagemPvMaximoComponente x : p.getPvMaximoComponentes()) {
+            pvMaximoComponentes.add(new PvMaximoComponenteDto(x.getNome(), x.getBonus()));
+        }
+
+        List<SlotMagiaDto> slotsMagia = new ArrayList<>();
+        for (PersonagemSlotMagia x : p.getSlotsMagia()) {
+            slotsMagia.add(new SlotMagiaDto(x.getNivel(), x.getTotal(), x.getRestantes()));
         }
 
         return new PersonagemDetalheDto(
@@ -286,12 +381,18 @@ public class PersonagemService {
                 p.getNivel(), p.getImagemUrl(),
                 p.getForca(), p.getDestreza(), p.getConstituicao(), p.getInteligencia(), p.getSabedoria(), p.getCarisma(),
                 p.getPvAtual(), p.getPvMaximo(), p.getPvTemporario(), p.getCa(), p.getDeslocamento(),
-                p.getIniciativaBonus(), p.isInspiracao(), p.getDadosVidaGastos(),
+                p.getIniciativaBonus(), p.getAtributoMagia(), p.getBonusMagiaExtra(), p.isInspiracao(), p.getDadosVidaGastos(),
                 p.getAntecedente(), p.getTendencia(), p.isPontoHeroico(),
                 p.getMoedaPc(), p.getMoedaPp(), p.getMoedaPo(), p.getMoedaPe(), p.getMoedaPl(),
                 p.getDeslocNadar(), p.getDeslocVoar(), p.getDeslocEscalar(), p.getSalto(),
                 p.getIdiomas(), p.getHistoria(), p.getAnotacoes(),
-                pericias, ataques, inventario, itensMagicos, habilidades, magias, unidades, tags, talentos
+                p.getBonusProficiencia(), p.getLimiteSincronizados(),
+                p.getDetalheIdade(), p.getDetalheAltura(), p.getDetalhePeso(), p.getDetalheCaracteristicas(),
+                p.getPersonalidadeTracos(), p.getPersonalidadeIdeais(), p.getPersonalidadeVinculos(), p.getPersonalidadeDefeitos(),
+                p.isSalvaguardaForca(), p.isSalvaguardaDestreza(), p.isSalvaguardaConstituicao(),
+                p.isSalvaguardaInteligencia(), p.isSalvaguardaSabedoria(), p.isSalvaguardaCarisma(),
+                pericias, ataques, inventario, itensMagicos, habilidades, magias, unidades, tags, talentos,
+                armaduraPecas, iniciativaModificadores, tesouro, pvMaximoComponentes, slotsMagia
         );
     }
 }
