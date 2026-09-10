@@ -3,6 +3,9 @@ import Home from '../views/Home.vue';
 import CompendioRacas from '../components/compendio/CompendioRacas.vue';
 import DetalheRaca from '../components/compendio/DetalheRaca.vue';
 import CompendioTalentos from '../components/compendio/CompendioTalentos.vue';
+import DetalheTalento from '../components/compendio/DetalheTalento.vue';
+import CompendioTalentosRaciais from '../components/compendio/CompendioTalentosRaciais.vue';
+import DetalheTalentoRacial from '../components/compendio/DetalheTalentoRacial.vue';
 import CompendioAlquimia from '../components/compendio/CompendioAlquimia.vue';
 import CompendioClasses from '../components/compendio/CompendioClasses.vue';
 import Login from '../views/Login.vue';
@@ -15,6 +18,9 @@ const routes = [
   { path: '/racas', name: 'racas', component: CompendioRacas },
   { path: '/racas/:id', name: 'raca-detalhe', component: DetalheRaca },
   { path: '/talentos', name: 'talentos', component: CompendioTalentos },
+  { path: '/talentos/:id', name: 'talento-detalhe', component: DetalheTalento },
+  { path: '/talentos-raciais', name: 'talentos-raciais', component: CompendioTalentosRaciais },
+  { path: '/talentos-raciais/:id', name: 'talento-racial-detalhe', component: DetalheTalentoRacial },
   { path: '/alquimia', name: 'alquimia', component: CompendioAlquimia },
   { path: '/classes', name: 'classes', component: CompendioClasses },
   { path: '/login', name: 'login', component: Login, meta: { hideNavbar: true } },

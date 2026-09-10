@@ -121,6 +121,25 @@
             <p class="dr-texto-corpo">{{ txt.corpo }}</p>
           </div>
 
+          <div class="dr-section" v-if="talentosRaciais.length">
+            <div class="dr-section-title-row">
+              <h2 class="dr-section-title">Talentos Raciais</h2>
+              <span class="dr-title-line"></span>
+            </div>
+            <div class="dr-talento-lista">
+              <button
+                  class="dr-talento-item"
+                  v-for="t in talentosRaciais"
+                  :key="t.id"
+                  @click="abrirTalentoRacial(t)"
+              >
+                <span class="dr-talento-icone">{{ t.icone || '◆' }}</span>
+                <span class="dr-talento-nome">{{ t.nome }}</span>
+                <span class="dr-talento-nivel">Nível {{ t.nivelMinimo }}</span>
+              </button>
+            </div>
+          </div>
+
           <div class="dr-rodape">
             <button class="dr-voltar-final" @click="voltar">← Voltar ao compêndio</button>
           </div>
@@ -134,6 +153,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { racaService } from '../../services/racaService';
+import talentoRacialService from '../../services/talentoRacialService';
 
 const CAT_SING = { global: 'Global', tribal: 'Tribal', mistica: 'Mística', sobrenatural: 'Sobrenatural' };
 const TAM = { miudo: 'Miúdo', pequeno: 'Pequeno', medio: 'Médio', grande: 'Grande', enorme: 'Enorme' };
@@ -150,6 +170,7 @@ const raca = ref(null);
 const carregando = ref(true);
 const erro = ref(null);
 const habilidadesAbertas = ref({});
+const talentosRaciais = ref([]);
 
 function fmtM(v) {
   return String(v).replace('.', ',') + ' m';
@@ -203,13 +224,27 @@ function voltar() {
   router.push('/racas');
 }
 
+function abrirTalentoRacial(talento) {
+  router.push(`/talentos-raciais/${talento.id}`);
+}
+
 onMounted(async () => {
   try {
     raca.value = await racaService.buscarPorId(route.params.id);
   } catch (e) {
     erro.value = 'Não foi possível carregar essa raça.';
-  } finally {
     carregando.value = false;
+    return;
+  }
+  carregando.value = false;
+
+  try {
+    const todos = await talentoRacialService.listar();
+    talentosRaciais.value = todos
+        .filter((t) => String(t.racaId) === String(raca.value.id))
+        .sort((a, b) => a.nivelMinimo - b.nivelMinimo);
+  } catch (e) {
+    // Lista de talentos raciais é complementar — não bloqueia a página da raça.
   }
 });
 </script>
@@ -605,6 +640,61 @@ onMounted(async () => {
   font-size: 17px;
   line-height: 1.65;
   color: var(--bone);
+}
+
+.dr-talento-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dr-talento-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  padding: 15px 18px;
+  border: 1px solid var(--jungle-green);
+  background: #123020;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  min-width: 0;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+.dr-talento-item:hover {
+  background: #163a26;
+  border-color: var(--tribal-yellow);
+}
+
+.dr-talento-icone {
+  flex: none;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.dr-talento-nome {
+  flex: 1;
+  min-width: 0;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--bone);
+}
+
+.dr-talento-nivel {
+  flex: none;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: 1px solid var(--tribal-gold);
+  color: var(--tribal-yellow);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
 }
 
 .dr-texto-corpo {

@@ -11,8 +11,8 @@
           Marcas ganhas no corpo. Cada talento deixa cicatriz, tinta ou dívida.
         </p>
         <div class="ct-tabs">
-          <router-link to="/talentos" class="ct-tab ct-tab-ativo">Talentos Comuns</router-link>
-          <router-link to="/talentos-raciais" class="ct-tab">Talentos Raciais</router-link>
+          <router-link to="/talentos" class="ct-tab">Talentos Comuns</router-link>
+          <router-link to="/talentos-raciais" class="ct-tab ct-tab-ativo">Talentos Raciais</router-link>
         </div>
       </div>
     </section>
@@ -28,6 +28,14 @@
         </div>
 
         <div class="ct-subfilter">
+          <span class="ct-subfilter-label">Raça</span>
+          <select v-model="racaSelecionada" class="ct-select">
+            <option value="">Todas as raças</option>
+            <option v-for="r in racasDisponiveis" :key="r.id" :value="r.id">{{ r.nome }}</option>
+          </select>
+        </div>
+
+        <div class="ct-subfilter">
           <span class="ct-subfilter-label">Ordenar por</span>
           <div class="ct-row ct-row-wrap">
             <button
@@ -39,22 +47,6 @@
             >
               <span class="ct-pill-btn-fill" v-if="ordem === ord.id"></span>
               <span class="ct-pill-btn-label">{{ ord.label }}</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="ct-subfilter">
-          <span class="ct-subfilter-label">Pré-requisito</span>
-          <div class="ct-row ct-row-wrap">
-            <button
-                v-for="pr in PRE_REQUISITOS"
-                :key="pr.id"
-                class="ct-pill-btn ct-pill-btn-green"
-                :class="{ 'ct-pill-btn-ativo': preRequisito === pr.id }"
-                @click="preRequisito = pr.id"
-            >
-              <span class="ct-pill-btn-fill" v-if="preRequisito === pr.id"></span>
-              <span class="ct-pill-btn-label">{{ pr.label }}</span>
             </button>
           </div>
         </div>
@@ -88,6 +80,7 @@
 
             <span class="ct-card-info">
               <span class="ct-card-nome">{{ t.nome }}</span>
+              <span class="ct-card-requisito-badge">{{ t.racaNome }} · nível {{ t.nivelMinimo }}</span>
               <span class="ct-card-bonus-row" v-if="t.atributos && t.atributos.length">
                 <span v-for="(a, i) in t.atributos" :key="i" class="ct-card-bonus-badge">
                   +{{ a.atributo ? (ATR_ABREV[a.atributo] || a.atributo) : 'ESCOLHA' }}
@@ -99,7 +92,7 @@
         </div>
 
         <p v-if="!carregando && !erro && listaFiltrada.length === 0" class="ct-vazio">
-          Nenhum talento carrega esses sinais.
+          Nenhum talento racial carrega esses sinais.
         </p>
       </div>
     </section>
@@ -109,7 +102,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import talentoService from '../../services/talentoService';
+import talentoRacialService from '../../services/talentoRacialService';
+import { racaService } from '../../services/racaService';
 
 const ATR_ABREV = {
   forca: 'FOR', destreza: 'DES', constituicao: 'CON',
@@ -117,28 +111,24 @@ const ATR_ABREV = {
 };
 const ORDENS = [
   { id: 'az', label: 'A → Z' },
-  { id: 'bonus', label: 'Com bônus primeiro' },
-];
-const PRE_REQUISITOS = [
-  { id: 'todos', label: 'Todos' },
-  { id: 'com', label: 'Com pré-requisito' },
-  { id: 'sem', label: 'Sem pré-requisito' },
+  { id: 'nivel', label: 'Nível mínimo' },
 ];
 
 const router = useRouter();
 
 const talentos = ref([]);
+const racasDisponiveis = ref([]);
 const carregando = ref(true);
 const erro = ref(null);
 
 const busca = ref('');
+const racaSelecionada = ref('');
 const ordem = ref('az');
-const preRequisito = ref('todos');
 
 function limparFiltros() {
   busca.value = '';
+  racaSelecionada.value = '';
   ordem.value = 'az';
-  preRequisito.value = 'todos';
 }
 
 const listaFiltrada = computed(() => {
@@ -146,35 +136,39 @@ const listaFiltrada = computed(() => {
   return talentos.value
       .filter((t) => {
         if (q && !t.nome.toLowerCase().includes(q)) return false;
-        if (preRequisito.value === 'com' && !t.temPreRequisito) return false;
-        if (preRequisito.value === 'sem' && t.temPreRequisito) return false;
+        if (racaSelecionada.value && String(t.racaId) !== String(racaSelecionada.value)) return false;
         return true;
       })
       .sort((a, b) => {
-        if (ordem.value === 'bonus') {
-          const bonusA = a.atributos?.length ? 1 : 0;
-          const bonusB = b.atributos?.length ? 1 : 0;
-          if (bonusA !== bonusB) return bonusB - bonusA;
+        if (ordem.value === 'nivel') {
+          if (a.nivelMinimo !== b.nivelMinimo) return a.nivelMinimo - b.nivelMinimo;
         }
         return a.nome.localeCompare(b.nome, 'pt');
       });
 });
 
 const resultadoLabel = computed(
-    () => `Mostrando ${listaFiltrada.value.length} de ${talentos.value.length} talentos`
+    () => `Mostrando ${listaFiltrada.value.length} de ${talentos.value.length} talentos raciais`
 );
 
 function abrir(talento) {
-  router.push(`/talentos/${talento.id}`);
+  router.push(`/talentos-raciais/${talento.id}`);
 }
 
 onMounted(async () => {
   try {
-    talentos.value = await talentoService.listar();
+    talentos.value = await talentoRacialService.listar();
   } catch (e) {
-    erro.value = 'Não foi possível carregar o compêndio de talentos.';
+    erro.value = 'Não foi possível carregar o compêndio de talentos raciais.';
   } finally {
     carregando.value = false;
+  }
+
+  try {
+    const todas = await racaService.listar();
+    racasDisponiveis.value = [...todas].sort((a, b) => a.nome.localeCompare(b.nome, 'pt'));
+  } catch (e) {
+    // Filtro de raça é complementar — não bloqueia a listagem de talentos.
   }
 });
 </script>
@@ -298,6 +292,29 @@ onMounted(async () => {
   gap: 16px;
 }
 
+.ct-select {
+  align-self: flex-start;
+  min-width: 220px;
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  padding: 10px 14px;
+  border: 1px solid var(--jungle-green);
+  background: var(--jungle-darkest);
+  color: var(--bone);
+  clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+}
+
+.ct-select:hover,
+.ct-select:focus {
+  border-color: var(--tribal-yellow);
+  outline: none;
+}
+
+.ct-select option {
+  background: var(--jungle-dark);
+  color: var(--bone);
+}
+
 .ct-row {
   display: flex;
   gap: 12px;
@@ -386,7 +403,6 @@ onMounted(async () => {
 }
 
 .ct-pill-btn-gold { border: 1px solid var(--tribal-gold); }
-.ct-pill-btn-green { border: 1px solid var(--jungle-green); }
 
 .ct-pill-btn-fill {
   position: absolute;
@@ -524,6 +540,15 @@ onMounted(async () => {
   font-size: 18px;
   line-height: 1.2;
   color: var(--bone);
+}
+
+.ct-card-requisito-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pale-green);
 }
 
 .ct-card-bonus-row {
