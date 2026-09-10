@@ -1,14 +1,15 @@
-package com.tatanea.templeinfo.talento;
+package com.tatanea.templeinfo.talentoracial;
 
 import com.tatanea.templeinfo.comum.Atributo;
+import com.tatanea.templeinfo.raca.Raca;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "talentos")
-public class Talento {
+@Table(name = "talentos_raciais")
+public class TalentoRacial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,43 +31,41 @@ public class Talento {
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
-    // Pré-requisito — talentos normais só têm o de atributo (o de raça é exclusivo
-    // dos talentos raciais, que ficam num compêndio à parte).
-    @Column(name = "atributo_requerido", length = 20)
-    private Atributo atributoRequerido;
+    // Pré-requisitos — sempre os dois: talento racial é praticamente biológico,
+    // então é preso à raça dona e só se manifesta a partir de um nível mínimo.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "raca_id", nullable = false)
+    private Raca raca;
 
-    @Column(name = "valor_minimo_atributo_requerido")
-    private Integer valorMinimoAtributoRequerido;
+    @Column(name = "nivel_minimo", nullable = false)
+    private int nivelMinimo;
 
-    // Bônus de atributo recebido ao pegar o talento — mesma estrutura de RacaAtributo
-    // (fixo ou à escolha), pra poder ser exibido como cards destacados, e não só texto.
-    @OneToMany(mappedBy = "talento", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Bônus de atributo recebido ao pegar o talento — mesma estrutura de TalentoAtributo/RacaAtributo.
+    @OneToMany(mappedBy = "talentoRacial", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordem ASC")
-    private List<TalentoAtributo> atributos = new ArrayList<>();
+    private List<TalentoRacialAtributo> atributos = new ArrayList<>();
 
-    protected Talento() {
+    protected TalentoRacial() {
         // JPA
     }
 
-    public Talento(String slug, String nome, String icone, String historia, String descricao) {
+    public TalentoRacial(String slug, String nome, String icone, String historia, String descricao,
+                          Raca raca, int nivelMinimo) {
         this.slug = slug;
         this.nome = nome;
         this.icone = icone;
         this.historia = historia;
         this.descricao = descricao;
+        this.raca = raca;
+        this.nivelMinimo = nivelMinimo;
     }
 
     public void adicionarAtributoFixo(Atributo atributo, int valor, int ordem) {
-        atributos.add(TalentoAtributo.fixo(this, atributo, valor, ordem));
+        atributos.add(TalentoRacialAtributo.fixo(this, atributo, valor, ordem));
     }
 
     public void adicionarAtributoEscolha(int valor, int quantidadeEscolhas, int ordem) {
-        atributos.add(TalentoAtributo.escolha(this, valor, quantidadeEscolhas, ordem));
-    }
-
-    public void definirPreRequisitoAtributo(Atributo atributo, int valorMinimo) {
-        this.atributoRequerido = atributo;
-        this.valorMinimoAtributoRequerido = valorMinimo;
+        atributos.add(TalentoRacialAtributo.escolha(this, valor, quantidadeEscolhas, ordem));
     }
 
     public Long getId() { return id; }
@@ -75,9 +74,9 @@ public class Talento {
     public String getIcone() { return icone; }
     public String getHistoria() { return historia; }
     public String getDescricao() { return descricao; }
-    public Atributo getAtributoRequerido() { return atributoRequerido; }
-    public Integer getValorMinimoAtributoRequerido() { return valorMinimoAtributoRequerido; }
-    public List<TalentoAtributo> getAtributos() { return atributos; }
+    public Raca getRaca() { return raca; }
+    public int getNivelMinimo() { return nivelMinimo; }
+    public List<TalentoRacialAtributo> getAtributos() { return atributos; }
 
     public void setSlug(String slug) { this.slug = slug; }
     public void setNome(String nome) { this.nome = nome; }

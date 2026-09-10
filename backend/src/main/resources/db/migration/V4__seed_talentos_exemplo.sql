@@ -3,8 +3,8 @@
 -- descrição, já que o novo esquema não tem uma tabela própria pra benefícios).
 -- Pré-requisitos em texto livre que casam com "Atributo N ou maior" viram pré-requisito
 -- estruturado (atributo_requerido); os demais (proficiência, "X ou Y", etc.) continuam
--- só como texto no início da descrição, já que o novo esquema só suporta raça e um único
--- atributo como pré-requisito.
+-- só como texto no início da descrição, já que o novo esquema só suporta um único
+-- atributo como pré-requisito de talento normal.
 
 INSERT INTO talentos (slug, nome, icone, descricao, atributo_requerido, valor_minimo_atributo_requerido)
 VALUES ('adepto-marcial', 'Adepto Marcial', '⚔️', 'Treinamento marcial avançado que permite realizar manobras de combate especiais do arquétipo Mestre de Batalha.
@@ -681,9 +681,46 @@ Benefícios:
 - Após conjurar uma magia de 1º nível ou superior, recebe +1 na CA até o início do próximo turno.
 - Se a magia exigir concentração, o bônus aumenta para +2 até o início do seu próximo turno.', NULL, NULL);
 
--- Talento extra de demonstração: exercita raça + atributo combinados (E) como
--- pré-requisito, caso que nenhum dos 91 talentos portados acima usa.
-INSERT INTO talentos (slug, nome, icone, descricao, atributo_recebido, valor_atributo_recebido, raca_requerida_id, atributo_requerido, valor_minimo_atributo_requerido)
+-- Segundo talento de demonstração: exercita o bônus "à escolha" (igual
+-- raca_atributos), caso que nenhum outro talento acima usa.
+INSERT INTO talentos (slug, nome, icone, descricao)
+VALUES (
+    'aprimoramento-versatil',
+    'Aprimoramento Versátil',
+    '🎯',
+    'Seu treinamento não segue um único caminho — você aprimora a si mesmo onde mais precisa.
+
+Benefícios:
+- Aumenta um atributo à sua escolha em +1 (máx. 20).'
+);
+
+INSERT INTO talento_atributos (talento_id, atributo, valor, quantidade_escolhas, ordem)
+VALUES ((SELECT id FROM talentos WHERE slug = 'aprimoramento-versatil'), NULL, 1, 1, 0);
+
+-- Terceiro talento de demonstração: exercita mais de um bônus "fixo" no mesmo
+-- talento (dois atributos diferentes, cada um com seu próprio valor).
+INSERT INTO talentos (slug, nome, icone, descricao)
+VALUES (
+    'presenca-marcante',
+    'Presença Marcante',
+    '👑',
+    'Sua palavra pesa e sua calma impõe respeito — poucos sustentam seu olhar por muito tempo.
+
+Benefícios:
+- Vantagem em testes de Persuasão e Intimidação contra criaturas que já te viram em combate.'
+);
+
+INSERT INTO talento_atributos (talento_id, atributo, valor, quantidade_escolhas, ordem)
+VALUES
+    ((SELECT id FROM talentos WHERE slug = 'presenca-marcante'), 'carisma', 2, NULL, 0),
+    ((SELECT id FROM talentos WHERE slug = 'presenca-marcante'), 'sabedoria', 1, NULL, 1);
+
+-- ===== Seed de demonstração: talentos raciais =====
+-- Diferente do talento normal, aqui raça e nível mínimo são sempre obrigatórios
+-- (não há pré-requisito de atributo). Só há 'humano' seedado em racas por enquanto,
+-- então os dois exemplos abaixo usam essa raça.
+
+INSERT INTO talentos_raciais (slug, nome, icone, descricao, raca_id, nivel_minimo)
 VALUES (
     'sangue-de-tatanea',
     'Sangue de Tatânea',
@@ -693,7 +730,29 @@ VALUES (
 Benefícios:
 - Você ganha resistência a dano de veneno e vantagem em testes de resistência contra doenças.
 - Uma vez por descanso longo, pode estabilizar automaticamente ao cair a 0 pontos de vida.',
-    'sabedoria', 1,
     (SELECT id FROM racas WHERE slug = 'humano'),
-    'constituicao', 12
+    1
 );
+
+-- Bônus de atributo do talento acima: exercita o caso "fixo".
+INSERT INTO talento_racial_atributos (talento_racial_id, atributo, valor, quantidade_escolhas, ordem)
+VALUES ((SELECT id FROM talentos_raciais WHERE slug = 'sangue-de-tatanea'), 'sabedoria', 1, NULL, 0);
+
+-- Segundo talento racial de demonstração: exercita o bônus "à escolha" e um
+-- nível mínimo mais alto, caso que o exemplo acima não usa.
+INSERT INTO talentos_raciais (slug, nome, icone, descricao, raca_id, nivel_minimo)
+VALUES (
+    'instinto-do-templo',
+    'Instinto do Templo',
+    '🦉',
+    'Quem cresce entre os totens do templo aprende a ler seus sinais antes mesmo de entender por quê.
+
+Benefícios:
+- Vantagem em testes de resistência contra ser Amedrontado enquanto estiver a até 9 m de uma estrutura do templo.
+- Uma vez por descanso longo, pode repetir um teste de Sobrevivência ou Percepção falho.',
+    (SELECT id FROM racas WHERE slug = 'humano'),
+    5
+);
+
+INSERT INTO talento_racial_atributos (talento_racial_id, atributo, valor, quantidade_escolhas, ordem)
+VALUES ((SELECT id FROM talentos_raciais WHERE slug = 'instinto-do-templo'), NULL, 1, 1, 0);

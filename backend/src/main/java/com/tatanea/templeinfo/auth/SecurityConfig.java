@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/racas/**", "/api/talentos/**",
+                        .requestMatchers("/api/racas/**", "/api/talentos/**", "/api/talentos-raciais/**",
                                 "/api/alquimia/**", "/api/classes/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()

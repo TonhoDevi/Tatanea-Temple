@@ -1,9 +1,6 @@
 package com.tatanea.templeinfo.talento;
 
 import com.tatanea.templeinfo.comum.Atributo;
-import com.tatanea.templeinfo.raca.Raca;
-import com.tatanea.templeinfo.raca.RacaNaoEncontradaException;
-import com.tatanea.templeinfo.raca.RacaRepository;
 import com.tatanea.templeinfo.talento.TalentoDtos.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +12,9 @@ import java.util.List;
 public class TalentoService {
 
     private final TalentoRepository talentoRepository;
-    private final RacaRepository racaRepository;
 
-    public TalentoService(TalentoRepository talentoRepository, RacaRepository racaRepository) {
+    public TalentoService(TalentoRepository talentoRepository) {
         this.talentoRepository = talentoRepository;
-        this.racaRepository = racaRepository;
     }
 
     public List<TalentoResumoDto> listarTodos() {
@@ -39,14 +34,14 @@ public class TalentoService {
         Talento talento = new Talento(request.slug(), request.nome(), request.icone(),
                 request.historia(), request.descricao());
 
-        if (request.atributoRecebido() != null) {
-            talento.definirAtributoRecebido(
-                    Atributo.fromCodigo(request.atributoRecebido()), request.valorAtributoRecebido());
-        }
-        if (request.racaRequeridaId() != null) {
-            Raca raca = racaRepository.findById(request.racaRequeridaId())
-                    .orElseThrow(() -> new RacaNaoEncontradaException(request.racaRequeridaId()));
-            talento.definirPreRequisitoRaca(raca);
+        if (request.atributos() != null) {
+            request.atributos().forEach(a -> {
+                if (a.atributo() != null) {
+                    talento.adicionarAtributoFixo(Atributo.fromCodigo(a.atributo()), a.valor(), a.ordem());
+                } else {
+                    talento.adicionarAtributoEscolha(a.valor(), a.quantidadeEscolhas(), a.ordem());
+                }
+            });
         }
         if (request.atributoRequerido() != null) {
             talento.definirPreRequisitoAtributo(
