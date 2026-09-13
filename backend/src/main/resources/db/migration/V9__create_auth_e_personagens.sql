@@ -36,7 +36,7 @@ CREATE TABLE personagens (
     pv_maximo            INT NOT NULL DEFAULT 0,
     pv_temporario        INT NOT NULL DEFAULT 0,
     ca                   INT NOT NULL DEFAULT 10,
-    deslocamento         DECIMAL(6,2),
+    deslocamento         DOUBLE PRECISION,
     iniciativa_bonus     INT NOT NULL DEFAULT 0,
     atributo_magia       VARCHAR(20),
     bonus_magia_extra    INT NOT NULL DEFAULT 0,
@@ -55,10 +55,10 @@ CREATE TABLE personagens (
 
     -- Todos os campos de deslocamento (inclusive salto) ficam em metros; o
     -- front converte para pés/quadrados na exibição.
-    desloc_nadar         DECIMAL(6,2),
-    desloc_voar          DECIMAL(6,2),
-    desloc_escalar       DECIMAL(6,2),
-    salto                DECIMAL(6,2),
+    desloc_nadar         DOUBLE PRECISION,
+    desloc_voar          DOUBLE PRECISION,
+    desloc_escalar       DOUBLE PRECISION,
+    salto                DOUBLE PRECISION,
 
     -- VARCHAR com limite (não TEXT ilimitado): evita que um payload gigante
     -- vindo do cliente vire uma negação de serviço no banco.

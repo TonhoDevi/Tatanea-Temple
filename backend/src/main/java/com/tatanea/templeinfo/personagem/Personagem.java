@@ -62,7 +62,6 @@ public class Personagem {
 
     private int ca = 10;
 
-    @Column(columnDefinition = "DECIMAL(6,2)")
     private Double deslocamento;
 
     @Column(name = "iniciativa_bonus")
@@ -103,16 +102,15 @@ public class Personagem {
     @Column(name = "moeda_pl")
     private int moedaPl;
 
-    @Column(name = "desloc_nadar", columnDefinition = "DECIMAL(6,2)")
+    @Column(name = "desloc_nadar")
     private Double deslocNadar;
 
-    @Column(name = "desloc_voar", columnDefinition = "DECIMAL(6,2)")
+    @Column(name = "desloc_voar")
     private Double deslocVoar;
 
-    @Column(name = "desloc_escalar", columnDefinition = "DECIMAL(6,2)")
+    @Column(name = "desloc_escalar")
     private Double deslocEscalar;
 
-    @Column(columnDefinition = "DECIMAL(6,2)")
     private Double salto;
 
     @Column(length = 5000)
