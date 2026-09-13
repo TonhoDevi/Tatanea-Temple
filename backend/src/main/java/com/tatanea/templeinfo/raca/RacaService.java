@@ -6,7 +6,9 @@ import com.tatanea.templeinfo.raca.RacaDtos.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,7 +21,10 @@ public class RacaService {
     }
 
     public List<RacaResumoDto> listarTodas() {
-        return racaRepository.findAll().stream().map(RacaResumoDto::de).toList();
+        Set<Long> idsComImagem = new HashSet<>(racaRepository.buscarIdsComImagem());
+        return racaRepository.findAllComHabilidades().stream()
+                .map(raca -> RacaResumoDto.de(raca, idsComImagem.contains(raca.getId())))
+                .toList();
     }
 
     public RacaDetalheDto buscarPorId(Long id) {
