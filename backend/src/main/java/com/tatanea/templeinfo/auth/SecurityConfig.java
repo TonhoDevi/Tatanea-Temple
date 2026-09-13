@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,6 +28,21 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    // Autenticação é 100% manual via JwtAuthFilter (lê o Authorization: Bearer
+    // e seta o SecurityContext direto) -- nunca chama loadUserByUsername.
+    // Sem ESSE bean, o Spring Boot registra um UserDetailsService próprio com
+    // um usuário "user" e senha aleatória (impressa no log a cada start),
+    // porque SecurityAutoConfiguration importa UserDetailsServiceAutoConfiguration
+    // direto via @Import -- spring.autoconfigure.exclude não tem efeito nesse
+    // caso, só declarar o bean satisfaz o @ConditionalOnMissingBean que evita
+    // essa auto-configuração.
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            throw new UsernameNotFoundException("Autenticação é via JWT; UserDetailsService não é usado.");
+        };
     }
 
     @Bean
