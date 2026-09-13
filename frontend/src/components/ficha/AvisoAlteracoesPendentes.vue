@@ -40,7 +40,9 @@ const { avisoSairAberto, salvarESair, sairSemSalvar, continuarEditando } = useFi
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 400;
+  /* Mesmo motivo do RoladorDados.vue: precisa ficar acima da Navbar
+     (position:sticky, z-index:1000 em Navbar.vue). */
+  z-index: 1100;
   padding: 1rem;
   font-family: 'Crimson Text', Georgia, serif;
 }

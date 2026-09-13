@@ -208,7 +208,10 @@ defineEmits(['fechar']);
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 300;
+  /* Precisa ficar acima da Navbar (position:sticky, z-index:1000 em
+     Navbar.vue) -- com 300 o topo do modal (onde fica o botão de fechar)
+     ficava coberto por ela. */
+  z-index: 1100;
   /* Overlay não centraliza mais via flex: numa tela baixa (celular deitado,
      ou muitos resultados de dado abertos de uma vez), align-items:center
      cortava o topo do modal sem nenhum jeito de rolar até lá. Em vez disso o
