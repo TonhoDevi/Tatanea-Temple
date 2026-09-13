@@ -487,4 +487,25 @@ onMounted(() => {
   color: var(--pale-green);
 }
 
+/* ===== Responsivo — cabeçalho enxuto ===== */
+@media (max-width: 700px) {
+  .cc-hero {
+    padding: 24px 16px 16px;
+  }
+
+  .cc-hero-title {
+    font-size: 22px;
+  }
+
+  .cc-dashed-line,
+  .cc-hero-tag {
+    display: none;
+  }
+
+  .cc-btn-pergaminhos {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+}
+
 </style>

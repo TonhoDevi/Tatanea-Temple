@@ -772,4 +772,45 @@ onMounted(() => {
   font-size: 18px;
   color: var(--pale-green);
 }
+
+/* ===== Responsivo — cabeçalho enxuto, só busca por nome ===== */
+@media (max-width: 700px) {
+  .cr-hero {
+    padding: 24px 16px 16px;
+  }
+
+  .cr-hero-title {
+    font-size: 22px;
+  }
+
+  .cr-dashed-line,
+  .cr-hero-tag {
+    display: none;
+  }
+
+  .cr-btn-pergaminhos {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  /* A barra de filtro grudava no topo ao rolar (position: sticky) e, com a
+     grade de categorias + 2 subfiltros abertos, chegava a ocupar a maior
+     parte da tela — daí a sensação de "cabeçalho gigante seguindo o
+     scroll". No celular ela some do fluxo normal (deixa de ser sticky) e só
+     a busca por nome + "Limpar filtros" continuam visíveis; categoria,
+     ordenação e tamanho ficam reservados pra tela grande. */
+  .cr-filterbar {
+    position: static;
+  }
+
+  .cr-filterbar-inner {
+    padding: 14px 16px;
+  }
+
+  .cr-cat-label,
+  .cr-cat-grid,
+  .cr-subfilter {
+    display: none;
+  }
+}
 </style>

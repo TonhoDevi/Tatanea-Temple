@@ -753,4 +753,37 @@ onMounted(() => {
   border-bottom: 1px solid var(--tribal-gold);
   padding-bottom: 0.3rem;
 }
+
+/* ===== Responsivo — cabeçalho enxuto, só busca por nome ===== */
+@media (max-width: 700px) {
+  .ca-hero {
+    padding: 24px 16px 16px;
+  }
+
+  .ca-hero-title {
+    font-size: 22px;
+  }
+
+  .ca-dashed-line,
+  .ca-hero-tag {
+    display: none;
+  }
+
+  .ca-btn-pergaminhos {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  .ca-filterbar {
+    position: static;
+  }
+
+  .ca-filterbar-inner {
+    padding: 14px 16px;
+  }
+
+  .ca-subfilter {
+    display: none;
+  }
+}
 </style>

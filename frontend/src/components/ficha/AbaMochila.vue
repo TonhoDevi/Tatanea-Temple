@@ -105,6 +105,15 @@ const {
   gap: 6px;
 }
 
+/* 5 colunas fixas ficavam pequenas demais pro nome + par de botões de cada
+   moeda num celular (~65px por coluna); deixa a grade fluida abaixo de
+   700px, então 5 moedas viram 2-3 por linha em vez de espremidas numa só. */
+@media (max-width: 700px) {
+  .fc-coin-grid {
+    grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  }
+}
+
 .fc-coin-card {
   display: flex;
   flex-direction: column;

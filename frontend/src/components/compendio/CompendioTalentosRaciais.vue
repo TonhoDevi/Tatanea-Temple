@@ -577,4 +577,36 @@ onMounted(() => {
   font-size: 18px;
   color: var(--pale-green);
 }
+
+/* ===== Responsivo — cabeçalho enxuto, só busca por nome ===== */
+@media (max-width: 700px) {
+  .ct-hero {
+    padding: 24px 16px 16px;
+  }
+
+  .ct-hero-title {
+    font-size: 22px;
+  }
+
+  .ct-dashed-line,
+  .ct-hero-tag {
+    display: none;
+  }
+
+  .ct-tabs {
+    flex-wrap: wrap;
+  }
+
+  .ct-filterbar {
+    position: static;
+  }
+
+  .ct-filterbar-inner {
+    padding: 14px 16px;
+  }
+
+  .ct-subfilter {
+    display: none;
+  }
+}
 </style>

@@ -616,4 +616,45 @@ onMounted(() => {
   font-size: 18px;
   color: var(--pale-green);
 }
+
+/* ===== Responsivo — cabeçalho enxuto, só busca por nome ===== */
+@media (max-width: 700px) {
+  .ct-hero {
+    padding: 24px 16px 16px;
+  }
+
+  .ct-hero-title {
+    font-size: 22px;
+  }
+
+  .ct-dashed-line,
+  .ct-hero-tag {
+    display: none;
+  }
+
+  .ct-btn-pergaminhos {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  .ct-tabs {
+    flex-wrap: wrap;
+  }
+
+  /* Mesmo raciocínio do Compêndio de Raças: a barra sticky com 2
+     subfiltros abertos dominava a tela ao rolar. No celular ela sai do
+     fluxo (deixa de ser sticky) e só sobra a busca por nome + "Limpar
+     filtros". */
+  .ct-filterbar {
+    position: static;
+  }
+
+  .ct-filterbar-inner {
+    padding: 14px 16px;
+  }
+
+  .ct-subfilter {
+    display: none;
+  }
+}
 </style>
