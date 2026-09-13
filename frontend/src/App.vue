@@ -9,6 +9,10 @@ const route = useRoute();
   <Navbar v-if="!route.meta.hideNavbar" />
 
   <main>
-    <RouterView />
+    <RouterView v-slot="{ Component, route: r }">
+      <keep-alive :include="['MeusPersonagens', 'FichaPersonagem']" :max="6">
+        <component :is="Component" :key="r.fullPath" />
+      </keep-alive>
+    </RouterView>
   </main>
 </template>

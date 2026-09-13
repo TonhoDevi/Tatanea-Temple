@@ -135,7 +135,7 @@
 <script setup>
 import { ref, computed, onMounted, markRaw } from 'vue';
 import { useRoute } from 'vue-router';
-import classeService from '../../services/classeService';
+import { useClasseStore } from '../../stores/classeStore';
 import ClassePaginaLayout from './classes/ClassePaginaLayout.vue';
 import CacadorPagina from './classes/CacadorPagina.vue';
 import LadinoPagina from './classes/LadinoPagina.vue';
@@ -170,6 +170,7 @@ const PAGINAS_DEDICADAS = {
 };
 
 const route = useRoute();
+const classeStore = useClasseStore();
 
 const paginaDedicada = computed(() => PAGINAS_DEDICADAS[route.params.id] || null);
 
@@ -205,7 +206,7 @@ const habilidades = computed(() => (classe.value?.caracteristicas || []).filter(
 onMounted(async () => {
   if (paginaDedicada.value) return;
   try {
-    classe.value = await classeService.buscarPorId(route.params.id);
+    classe.value = await classeStore.buscarDetalhe(route.params.id);
   } catch (e) {
     erro.value = 'Não foi possível carregar essa classe.';
   } finally {

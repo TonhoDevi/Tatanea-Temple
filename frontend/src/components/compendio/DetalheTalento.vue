@@ -84,7 +84,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import talentoService from '../../services/talentoService';
+import { useTalentoStore } from '../../stores/talentoStore';
 
 const ATR = {
   forca: 'Força', destreza: 'Destreza', constituicao: 'Constituição',
@@ -93,6 +93,7 @@ const ATR = {
 
 const route = useRoute();
 const router = useRouter();
+const talentoStore = useTalentoStore();
 
 const talento = ref(null);
 const carregando = ref(true);
@@ -123,7 +124,7 @@ function voltar() {
 
 onMounted(async () => {
   try {
-    talento.value = await talentoService.buscarPorId(route.params.id);
+    talento.value = await talentoStore.buscarDetalhe(route.params.id);
   } catch (e) {
     erro.value = 'Não foi possível carregar esse talento.';
   } finally {

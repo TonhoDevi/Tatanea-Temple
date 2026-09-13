@@ -101,9 +101,10 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import talentoRacialService from '../../services/talentoRacialService';
-import { racaService } from '../../services/racaService';
+import { useTalentoRacialStore } from '../../stores/talentoRacialStore';
+import { useRacaStore } from '../../stores/racaStore';
 
 const ATR_ABREV = {
   forca: 'FOR', destreza: 'DES', constituicao: 'CON',
@@ -116,10 +117,13 @@ const ORDENS = [
 
 const router = useRouter();
 
-const talentos = ref([]);
-const racasDisponiveis = ref([]);
-const carregando = ref(true);
-const erro = ref(null);
+const talentoRacialStore = useTalentoRacialStore();
+const racaStore = useRacaStore();
+const { lista: talentos, carregando, erro } = storeToRefs(talentoRacialStore);
+
+const racasDisponiveis = computed(() =>
+    [...racaStore.lista].sort((a, b) => a.nome.localeCompare(b.nome, 'pt'))
+);
 
 const busca = ref('');
 const racaSelecionada = ref('');
@@ -155,21 +159,11 @@ function abrir(talento) {
   router.push(`/talentos-raciais/${talento.id}`);
 }
 
-onMounted(async () => {
-  try {
-    talentos.value = await talentoRacialService.listar();
-  } catch (e) {
-    erro.value = 'Não foi possível carregar o compêndio de talentos raciais.';
-  } finally {
-    carregando.value = false;
-  }
-
-  try {
-    const todas = await racaService.listar();
-    racasDisponiveis.value = [...todas].sort((a, b) => a.nome.localeCompare(b.nome, 'pt'));
-  } catch (e) {
-    // Filtro de raça é complementar — não bloqueia a listagem de talentos.
-  }
+onMounted(() => {
+  talentoRacialStore.carregarLista();
+  // Filtro de raça é complementar — a store já isola o próprio erro
+  // internamente, então isso nunca bloqueia a listagem de talentos.
+  racaStore.carregarLista();
 });
 </script>
 

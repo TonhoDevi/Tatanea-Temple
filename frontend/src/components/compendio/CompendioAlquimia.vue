@@ -149,21 +149,21 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import alquimiaService from '../../services/alquimiaService';
+import { storeToRefs } from 'pinia';
+import { useAlquimiaStore } from '../../stores/alquimiaStore';
 
 const ORDENS = [
   { id: 'az', label: 'A → Z' },
   { id: 'raridade', label: 'Por raridade' },
 ];
 
-const essencias = ref([]);
-const pocoes = ref([]);
+const alquimiaStore = useAlquimiaStore();
+const { essencias, pocoes, carregando, erro } = storeToRefs(alquimiaStore);
+
 const mostrarArquivos = ref(false);
 const busca = ref('');
 const ordem = ref('az');
 const raridadeSelecionada = ref('todas');
-const carregando = ref(true);
-const erro = ref(null);
 const detalhe = ref(null);
 
 // Ordem canônica de raridade (não alfabética) — qualquer valor fora dessa
@@ -214,24 +214,9 @@ const resultadoLabel = computed(
     () => `Mostrando ${pocoesFiltradas.value.length} de ${pocoes.value.length} poções`
 );
 
-async function carregar() {
-  carregando.value = true;
-  erro.value = null;
-  try {
-    [essencias.value, pocoes.value] = await Promise.all([
-      alquimiaService.listarEssencias(),
-      alquimiaService.listarPocoes(),
-    ]);
-  } catch (e) {
-    erro.value = 'Não foi possível carregar a alquimia.';
-  } finally {
-    carregando.value = false;
-  }
-}
-
 async function abrirDetalhe(id) {
   try {
-    detalhe.value = await alquimiaService.buscarPocaoPorId(id);
+    detalhe.value = await alquimiaStore.buscarDetalhePocao(id);
   } catch (e) {
     erro.value = 'Não foi possível carregar os detalhes da poção.';
   }
@@ -241,7 +226,9 @@ function fecharDetalhe() {
   detalhe.value = null;
 }
 
-onMounted(carregar);
+onMounted(() => {
+  alquimiaStore.carregarLista();
+});
 </script>
 
 <style scoped>

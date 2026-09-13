@@ -90,6 +90,8 @@
 import { ref, computed, onMounted } from 'vue';
 import personagemService from '../services/personagemService';
 
+defineOptions({ name: 'MeusPersonagens' });
+
 const MAX_FICHAS = 5;
 
 const personagens = ref([]);

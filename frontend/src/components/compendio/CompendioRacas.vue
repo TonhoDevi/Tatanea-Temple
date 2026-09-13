@@ -145,8 +145,9 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { racaService } from '../../services/racaService';
+import { useRacaStore } from '../../stores/racaStore';
 
 const CAT = { global: 'Globais', tribal: 'Tribais', mistica: 'Místicas', sobrenatural: 'Sobrenaturais' };
 const CAT_SING = { global: 'Global', tribal: 'Tribal', mistica: 'Mística', sobrenatural: 'Sobrenatural' };
@@ -160,9 +161,8 @@ const ORDENS = [
 
 const router = useRouter();
 
-const racas = ref([]);
-const carregando = ref(true);
-const erro = ref(null);
+const racaStore = useRacaStore();
+const { lista: racas, carregando, erro } = storeToRefs(racaStore);
 
 const mostrarArquivos = ref(false);
 const busca = ref('');
@@ -227,14 +227,8 @@ function abrir(raca) {
   router.push(`/racas/${raca.id}`);
 }
 
-onMounted(async () => {
-  try {
-    racas.value = await racaService.listar();
-  } catch (e) {
-    erro.value = 'Não foi possível carregar o compêndio de raças.';
-  } finally {
-    carregando.value = false;
-  }
+onMounted(() => {
+  racaStore.carregarLista();
 });
 </script>
 

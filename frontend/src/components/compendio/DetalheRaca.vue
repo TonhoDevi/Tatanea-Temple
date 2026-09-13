@@ -152,8 +152,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { racaService } from '../../services/racaService';
-import talentoRacialService from '../../services/talentoRacialService';
+import { useRacaStore } from '../../stores/racaStore';
+import { useTalentoRacialStore } from '../../stores/talentoRacialStore';
 
 const CAT_SING = { global: 'Global', tribal: 'Tribal', mistica: 'Mística', sobrenatural: 'Sobrenatural' };
 const TAM = { miudo: 'Miúdo', pequeno: 'Pequeno', medio: 'Médio', grande: 'Grande', enorme: 'Enorme' };
@@ -165,6 +165,8 @@ const ATR = {
 
 const route = useRoute();
 const router = useRouter();
+const racaStore = useRacaStore();
+const talentoRacialStore = useTalentoRacialStore();
 
 const raca = ref(null);
 const carregando = ref(true);
@@ -230,7 +232,7 @@ function abrirTalentoRacial(talento) {
 
 onMounted(async () => {
   try {
-    raca.value = await racaService.buscarPorId(route.params.id);
+    raca.value = await racaStore.buscarDetalhe(route.params.id);
   } catch (e) {
     erro.value = 'Não foi possível carregar essa raça.';
     carregando.value = false;
@@ -239,8 +241,8 @@ onMounted(async () => {
   carregando.value = false;
 
   try {
-    const todos = await talentoRacialService.listar();
-    talentosRaciais.value = todos
+    await talentoRacialStore.carregarLista();
+    talentosRaciais.value = talentoRacialStore.lista
         .filter((t) => String(t.racaId) === String(raca.value.id))
         .sort((a, b) => a.nivelMinimo - b.nivelMinimo);
   } catch (e) {

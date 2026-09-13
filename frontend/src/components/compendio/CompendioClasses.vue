@@ -92,8 +92,9 @@
 
 <script setup>
 import { ref, computed, onMounted, markRaw } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import classeService from '../../services/classeService';
+import { useClasseStore } from '../../stores/classeStore';
 import IconeGrupoNatural from './icones/IconeGrupoNatural.vue';
 import IconeGrupoArcano from './icones/IconeGrupoArcano.vue';
 import IconeGrupoDivino from './icones/IconeGrupoDivino.vue';
@@ -101,10 +102,9 @@ import IconeGrupoMarcial from './icones/IconeGrupoMarcial.vue';
 
 const router = useRouter();
 
-const classes = ref([]);
+const classeStore = useClasseStore();
+const { lista: classes, carregando, erro } = storeToRefs(classeStore);
 const mostrarArquivos = ref(false);
-const carregando = ref(true);
-const erro = ref(null);
 
 // São só 13 classes (talvez +3/4 no futuro) — não justifica busca nem
 // ordenação. O único agrupamento que faz sentido pro jogador é por tipo de
@@ -137,23 +137,13 @@ const gruposComClasses = computed(() => {
   return grupos.filter((g) => g.classes.length > 0);
 });
 
-async function carregar() {
-  carregando.value = true;
-  erro.value = null;
-  try {
-    classes.value = await classeService.listar();
-  } catch (e) {
-    erro.value = 'Não foi possível carregar as classes.';
-  } finally {
-    carregando.value = false;
-  }
-}
-
 function abrir(classe) {
   router.push(`/classes/${classe.id}`);
 }
 
-onMounted(carregar);
+onMounted(() => {
+  classeStore.carregarLista();
+});
 </script>
 
 <style scoped>

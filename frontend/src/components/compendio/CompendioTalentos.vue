@@ -121,8 +121,9 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import talentoService from '../../services/talentoService';
+import { useTalentoStore } from '../../stores/talentoStore';
 
 const ATR_ABREV = {
   forca: 'FOR', destreza: 'DES', constituicao: 'CON',
@@ -140,9 +141,8 @@ const PRE_REQUISITOS = [
 
 const router = useRouter();
 
-const talentos = ref([]);
-const carregando = ref(true);
-const erro = ref(null);
+const talentoStore = useTalentoStore();
+const { lista: talentos, carregando, erro } = storeToRefs(talentoStore);
 
 const mostrarArquivos = ref(false);
 const busca = ref('');
@@ -182,14 +182,8 @@ function abrir(talento) {
   router.push(`/talentos/${talento.id}`);
 }
 
-onMounted(async () => {
-  try {
-    talentos.value = await talentoService.listar();
-  } catch (e) {
-    erro.value = 'Não foi possível carregar o compêndio de talentos.';
-  } finally {
-    carregando.value = false;
-  }
+onMounted(() => {
+  talentoStore.carregarLista();
 });
 </script>
 

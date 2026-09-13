@@ -87,7 +87,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import talentoRacialService from '../../services/talentoRacialService';
+import { useTalentoRacialStore } from '../../stores/talentoRacialStore';
 
 const ATR = {
   forca: 'Força', destreza: 'Destreza', constituicao: 'Constituição',
@@ -96,6 +96,7 @@ const ATR = {
 
 const route = useRoute();
 const router = useRouter();
+const talentoRacialStore = useTalentoRacialStore();
 
 const talento = ref(null);
 const carregando = ref(true);
@@ -124,7 +125,7 @@ function abrirRaca() {
 
 onMounted(async () => {
   try {
-    talento.value = await talentoRacialService.buscarPorId(route.params.id);
+    talento.value = await talentoRacialStore.buscarDetalhe(route.params.id);
   } catch (e) {
     erro.value = 'Não foi possível carregar esse talento.';
   } finally {

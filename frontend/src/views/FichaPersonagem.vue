@@ -41,6 +41,8 @@ import AbaMochila from '../components/ficha/AbaMochila.vue';
 import AbaLore from '../components/ficha/AbaLore.vue';
 import { criarFichaPersonagem, TABS } from '../composables/useFichaPersonagem';
 
+defineOptions({ name: 'FichaPersonagem' });
+
 const rolagemAberta = ref(false);
 const abaAtiva = ref('acoes');
 
