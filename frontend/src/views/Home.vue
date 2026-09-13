@@ -1,23 +1,107 @@
 <script setup>
 import { ref, computed } from 'vue';
 
-const rooms = [
-  { num: 'I', title: 'Sala das Raças', guardian: 'onça-pintada', art: '[ nicho de pedra com totens de linhagem ]', text: 'Nove povos do interior da mata, cada um com um pacto diferente com a floresta.', to: '/racas' },
-  { num: 'II', title: 'Sala das Classes', guardian: 'arara-vermelha', art: '[ armas e adornos pendurados na parede ]', text: 'Caminhos de combate e de reza — inclusive os que a mata ensina sem pedir permissão.', to: '/classes' },
-  { num: 'III', title: 'Sala dos Talentos', guardian: 'sapo venenoso', art: '[ entalhes geométricos em sequência ]', text: 'Marcas ganhas no corpo. Cada talento deixa cicatriz, tinta ou dívida.', to: '/talentos' },
-  { num: 'IV', title: 'Sala da Alquimia', guardian: 'cobra-jararaca', art: '[ potes de barro, resinas, flores secas ]', text: 'Venenos, resinas e curas feitas com o que só cresce sob o dossel fechado.', to: '/alquimia' },
-  // Salas provisórias — ainda sem rota/página própria.
-  { num: 'V', title: 'Sala das Magias', guardian: '???', art: '[ pergaminhos flutuando sobre um braseiro ]', text: 'Feitiços que a mata sussurra pra quem sabe escutar. Sala ainda selada.', to: null },
-  { num: 'VI', title: 'Sala do Bestiário', guardian: '???', art: '[ ossadas e peles penduradas no teto ]', text: 'Registro de tudo que já tentou atravessar o templo — e não conseguiu.', to: null },
-  { num: 'VII', title: 'Sala dos Antecedentes', guardian: '???', art: '[ retratos entalhados na pedra ]', text: 'Quem você era antes de entrar aqui. A mata guarda cópia de tudo.', to: null },
-  { num: 'VIII', title: 'Sala das Artes de Guerra', guardian: '???', art: '[ lanças e escudos cruzados na parede ]', text: 'Táticas de quem defende o templo há gerações. Ainda sendo catalogadas.', to: null },
-];
+// Ícones SVG dos cards de compêndio: sigilos abstratos, no mesmo espírito
+// dos ícones de grupo do Compêndio de Classes (ver
+// components/compendio/icones/IconeGrupo*.vue) — anel de círculos + raios
+// em cruz + 4 pontos cardeais como moldura comum, com um glifo central
+// diferente por sala em vez de uma ilustração literal do que a sala guarda.
+const moldura = (corPonto) =>
+  '<circle cx="32" cy="32" r="27" stroke="var(--tribal-gold)" stroke-width="1.6" opacity="0.5"/>' +
+  '<circle cx="32" cy="32" r="19" stroke="var(--tribal-gold)" stroke-width="1" opacity="0.3"/>' +
+  '<path d="M59 32 L54 32 M32 5 L32 10 M5 32 L10 32 M32 59 L32 54 M50.9 13.1 L47.6 16.4 M13.1 13.1 L16.4 16.4 M13.1 50.9 L16.4 47.6 M50.9 50.9 L47.6 47.6" stroke="var(--tribal-gold)" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/>' +
+  `<circle cx="32" cy="8" r="1.6" fill="${corPonto}"/><circle cx="56" cy="32" r="1.6" fill="${corPonto}"/><circle cx="32" cy="56" r="1.6" fill="${corPonto}"/><circle cx="8" cy="32" r="1.6" fill="${corPonto}"/>`;
 
-const fauna = [
-  { name: 'Onça', art: '[ onça entre raízes ]', text: 'Anda no escuro do templo e decide quem passa da entrada.' },
-  { name: 'Arara', art: '[ arara em viga entalhada ]', text: 'Repete os nomes que ouviu — inclusive os que você não disse em voz alta.' },
-  { name: 'Sapo', art: '[ sapo em folha molhada ]', text: 'Pele de aviso: quem entende a cor sai vivo da Sala dos Talentos.' },
-  { name: 'Borboleta', art: '[ enxame de borboletas azuis ]', text: 'Aparece onde um pergaminho foi usado. Sempre depois, nunca antes.' },
+const svgSigilo = (glifo) =>
+  '<svg viewBox="0 0 64 64" width="160" height="160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + glifo + '</svg>';
+
+// Raças — marcas de linhagem: três gerações empilhadas, cada uma mais nova.
+const iconeRacas = svgSigilo(
+  moldura('var(--tribal-red)') +
+  '<path d="M32 20 L38 30 L26 30 Z" fill="var(--jungle-dark)" stroke="var(--tribal-gold)" stroke-width="1.8" stroke-linejoin="round"/>' +
+  '<path d="M32 28 L40 40 L24 40 Z" fill="var(--jungle-dark)" stroke="var(--tribal-gold)" stroke-width="1.8" stroke-linejoin="round" opacity="0.85"/>' +
+  '<path d="M32 36 L42 50 L22 50 Z" fill="var(--jungle-dark)" stroke="var(--tribal-gold)" stroke-width="1.8" stroke-linejoin="round" opacity="0.7"/>' +
+  '<circle cx="32" cy="20" r="2" fill="var(--tribal-red)"/>'
+);
+
+// Classes — disciplina: lâminas cruzadas abstraídas num X com núcleo losangular.
+const iconeClasses = svgSigilo(
+  moldura('var(--tribal-yellow)') +
+  '<path d="M20 20 L44 44 M44 20 L20 44" stroke="var(--tribal-gold)" stroke-width="2.4" stroke-linecap="round"/>' +
+  '<path d="M32 25 L39 32 L32 39 L25 32 Z" fill="var(--tribal-yellow)"/>' +
+  '<circle cx="20" cy="20" r="1.6" fill="var(--tribal-yellow)"/><circle cx="44" cy="20" r="1.6" fill="var(--tribal-yellow)"/><circle cx="20" cy="44" r="1.6" fill="var(--tribal-yellow)"/><circle cx="44" cy="44" r="1.6" fill="var(--tribal-yellow)"/>'
+);
+
+// Talentos — constelação de marcas: três pontos ligados, um traço por talento adquirido.
+const iconeTalentos = svgSigilo(
+  moldura('var(--tribal-red)') +
+  '<path d="M32 22 L44 42 L20 42 Z" stroke="var(--tribal-gold)" stroke-width="1.6" stroke-linejoin="round" fill="none" opacity="0.8"/>' +
+  '<circle cx="32" cy="22" r="2.4" fill="var(--tribal-red)"/><circle cx="44" cy="42" r="2.4" fill="var(--tribal-red)"/><circle cx="20" cy="42" r="2.4" fill="var(--tribal-red)"/>' +
+  '<circle cx="32" cy="35" r="1.6" fill="var(--tribal-yellow)"/>'
+);
+
+// Alquimia — glifo clássico de transmutação: círculo e triângulo sobrepostos.
+const iconeAlquimia = svgSigilo(
+  moldura('var(--jungle-green)') +
+  '<circle cx="32" cy="30" r="10" stroke="var(--jungle-green)" stroke-width="1.8" opacity="0.85"/>' +
+  '<path d="M32 18 L42 38 L22 38 Z" stroke="var(--tribal-gold)" stroke-width="1.8" stroke-linejoin="round" fill="none"/>' +
+  '<circle cx="32" cy="30" r="2" fill="var(--jungle-green)"/>'
+);
+
+// Magias — círculo rúnico: octograma traçado por um losango e um quadrado sobrepostos.
+const iconeMagias = svgSigilo(
+  moldura('var(--tribal-yellow)') +
+  '<path d="M32 18 L46 32 L32 46 L18 32 Z" stroke="var(--tribal-yellow)" stroke-width="1.6" stroke-linejoin="round" fill="none" opacity="0.85"/>' +
+  '<path d="M22.1 22.1 L41.9 22.1 L41.9 41.9 L22.1 41.9 Z" stroke="var(--tribal-yellow)" stroke-width="1.6" stroke-linejoin="round" fill="none" opacity="0.85"/>' +
+  '<circle cx="32" cy="32" r="2" fill="var(--tribal-yellow)"/>'
+);
+
+// Bestiário — três garras convergindo a um ponto, com uma presa abaixo.
+const iconeBestiario = svgSigilo(
+  moldura('var(--tribal-red)') +
+  '<path d="M20 20 Q28 30 32 32" stroke="var(--tribal-red)" stroke-width="2.2" stroke-linecap="round" fill="none"/>' +
+  '<path d="M32 16 Q32 26 32 32" stroke="var(--tribal-red)" stroke-width="2.2" stroke-linecap="round" fill="none"/>' +
+  '<path d="M44 20 Q36 30 32 32" stroke="var(--tribal-red)" stroke-width="2.2" stroke-linecap="round" fill="none"/>' +
+  '<path d="M28 40 L32 46 L36 40 Z" fill="var(--tribal-red)" opacity="0.85"/>' +
+  '<circle cx="32" cy="32" r="2.2" fill="var(--tribal-yellow)"/>'
+);
+
+// Antecedentes — espiral de caminho: uma trajetória que se enrola sobre si mesma.
+const iconeAntecedentes = svgSigilo(
+  moldura('var(--tribal-yellow)') +
+  '<path d="M32 22 a10 10 0 1 1 -7 3" stroke="var(--tribal-gold)" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.85"/>' +
+  '<path d="M25 25 a6 6 0 1 0 8 -2" stroke="var(--tribal-gold)" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.6"/>' +
+  '<circle cx="32" cy="32" r="2" fill="var(--tribal-yellow)"/>'
+);
+
+// Artes de Guerra — brasão hexagonal com diagonais cruzadas.
+const iconeArtesDeGuerra = svgSigilo(
+  moldura('var(--tribal-red)') +
+  '<path d="M32 18 L44 25 L44 39 L32 46 L20 39 L20 25 Z" stroke="var(--tribal-gold)" stroke-width="1.8" stroke-linejoin="round" fill="rgba(196,158,74,0.08)"/>' +
+  '<path d="M20 25 L44 39 M44 25 L20 39" stroke="var(--tribal-red)" stroke-width="1.8" stroke-linecap="round"/>' +
+  '<circle cx="32" cy="32" r="2" fill="var(--tribal-red)"/>'
+);
+
+// Contos — olho de conhecimento revelado: pálpebra dupla em torno de uma íris.
+const iconeContos = svgSigilo(
+  moldura('var(--jungle-green)') +
+  '<path d="M18 32 Q32 20 46 32 Q32 44 18 32 Z" stroke="var(--jungle-green)" stroke-width="1.8" stroke-linejoin="round" fill="rgba(35,110,71,0.12)"/>' +
+  '<circle cx="32" cy="32" r="4" stroke="var(--tribal-yellow)" stroke-width="1.6" fill="none"/>' +
+  '<circle cx="32" cy="32" r="1.6" fill="var(--tribal-yellow)"/>' +
+  '<path d="M32 24 L32 18 M32 46 L32 40" stroke="var(--jungle-green)" stroke-width="1.4" opacity="0.6"/>'
+);
+
+const rooms = [
+  { num: 'I', title: 'Sala das Raças', guardian: 'onça-pintada', art: '[ nicho de pedra com totens de linhagem ]', icon: iconeRacas, text: 'Todas as raças e sub-raças jogáveis, com atributos, deslocamento, tamanho e habilidades especiais completos.', to: '/racas' },
+  { num: 'II', title: 'Sala das Classes', guardian: 'arara-vermelha', art: '[ armas e adornos pendurados na parede ]', icon: iconeClasses, text: 'Classes e subclasses com progressão de nível, proficiências e características detalhadas.', to: '/classes' },
+  { num: 'III', title: 'Sala dos Talentos', guardian: 'sapo venenoso', art: '[ entalhes geométricos em sequência ]', icon: iconeTalentos, text: 'Talentos comuns e raciais com pré-requisitos, bônus de atributo e benefícios mecânicos completos.', to: '/talentos' },
+  { num: 'IV', title: 'Sala da Alquimia', guardian: 'cobra-jararaca', art: '[ potes de barro, resinas, flores secas ]', icon: iconeAlquimia, text: 'Poções, venenos e itens alquímicos com efeito, custo e raridade documentados.', to: '/alquimia' },
+  // Salas provisórias — ainda sem rota/página própria.
+  { num: 'V', title: 'Sala das Magias', guardian: '???', art: '[ pergaminhos flutuando sobre um braseiro ]', icon: iconeMagias, text: 'Lista de magias por classe e círculo, com alcance, duração e componentes. Em construção.', to: null },
+  { num: 'VI', title: 'Sala do Bestiário', guardian: '???', art: '[ ossadas e peles penduradas no teto ]', icon: iconeBestiario, text: 'Criaturas e monstros com estatísticas de combate completas. Em construção.', to: null },
+  { num: 'VII', title: 'Sala dos Antecedentes', guardian: '???', art: '[ retratos entalhados na pedra ]', icon: iconeAntecedentes, text: 'Antecedentes de personagem com perícias, equipamento inicial e características. Em construção.', to: null },
+  { num: 'VIII', title: 'Sala das Artes de Guerra', guardian: '???', art: '[ lanças e escudos cruzados na parede ]', icon: iconeArtesDeGuerra, text: 'Táticas e regras de combate em grupo. Em construção.', to: null },
+  { num: 'IX', title: 'Sala dos Contos', guardian: '???', art: '[ pergaminhos históricos empilhados ]', icon: iconeContos, text: 'Contos, lendas e a história dos povos de Tatânea. Em construção.', to: null },
 ];
 
 // ===== "Salas do templo": paginação manual de 3 em 3, sem giro automático =====
@@ -41,13 +125,16 @@ function goToRoomsPage(page) {
     <!-- HERO -->
     <section class="hero">
       <div class="hero-strip hero-strip-top" aria-hidden="true"></div>
-      <div class="hero-strip hero-strip-side hero-strip-left" aria-hidden="true"></div>
-      <div class="hero-strip hero-strip-side hero-strip-right" aria-hidden="true"></div>
 
       <div class="hero-frame">
-        <span class="hero-frame-inner" aria-hidden="true"></span>
-        <span class="hero-frame-band hero-frame-band-top" aria-hidden="true"></span>
-        <span class="hero-frame-band hero-frame-band-bottom" aria-hidden="true"></span>
+        <span class="hero-frame-corner hero-frame-corner-tl" aria-hidden="true"></span>
+        <span class="hero-frame-corner hero-frame-corner-tr" aria-hidden="true"></span>
+        <span class="hero-frame-corner hero-frame-corner-bl" aria-hidden="true"></span>
+        <span class="hero-frame-corner hero-frame-corner-br" aria-hidden="true"></span>
+        <span class="hero-frame-bracket hero-frame-bracket-tl" aria-hidden="true"></span>
+        <span class="hero-frame-bracket hero-frame-bracket-tr" aria-hidden="true"></span>
+        <span class="hero-frame-bracket hero-frame-bracket-bl" aria-hidden="true"></span>
+        <span class="hero-frame-bracket hero-frame-bracket-br" aria-hidden="true"></span>
 
         <p class="hero-eyebrow">Homebrew D&amp;D 5<span class="lowercase">e</span></p>
         <h1 class="hero-title">Templo de<br /><span class="hero-title-accent">Tatânea</span></h1>
@@ -59,21 +146,22 @@ function goToRoomsPage(page) {
         </div>
 
         <p class="hero-subtitle">
-          Pedra ritual engolida pela mata. Nas paredes, entalhes que ainda respondem a quem os
-          toca — e oito salas onde o compêndio deste mundo foi guardado.
+          Pela Glória de Tatânea. Alma incandecente da nação guerreira!
         </p>
 
         <div class="hero-buttons">
           <a href="#salas" class="btn btn-solid">Entrar no templo</a>
-          <a href="#acervo" class="btn btn-outline">Compêndio</a>
+          <a href="#salas" class="btn btn-outline">Compêndio</a>
         </div>
       </div>
 
+      <!-- Arte do hero removida temporariamente pro lançamento — restaurar quando houver imagens finais:
       <div class="hero-art-row">
         <div class="art-placeholder">[ folhagem — canto inferior esq. ]</div>
         <div class="art-placeholder">[ onça na penumbra ]</div>
         <div class="art-placeholder">[ arara / penas ]</div>
       </div>
+      -->
     </section>
 
     <!-- SOBRE O MUNDO -->
@@ -88,39 +176,41 @@ function goToRoomsPage(page) {
         <div class="mundo-panel">
           <div class="mundo-col">
             <p class="lead-text">
-              Tatânea não foi construída sobre a floresta: foi construída
-              <em class="highlight">com</em> ela. As lajes crescem onde as raízes decidem, e o
-              mapa do templo muda conforme a mata avança sobre a pedra. Quem entra segue a
-              vegetação, não a planta.
+              O Templo de Tatânea é o compêndio homebrew da mesa: raças, classes, talentos e
+              itens documentados e prontos pra jogar, organizados por sala.
             </p>
             <p class="body-text">
-              Os povos que o ergueram deixaram entalhes geométricos em cada viga — registro de
-              linhagens, pactos e dívidas. Aventureiros chamam de decoração. Os guardiões chamam
-              de contrato.
+              Não é só o material básico do 5e — aqui tem regras novas, classes remodeladas,
+              talentos próprios, mecânicas inéditas e muito mais, feitos especialmente pra essa
+              mesa.
             </p>
+            <div class="tag-row">
+              <span class="tag">Regras novas</span>
+              <span class="tag">Classes remodeladas</span>
+              <span class="tag">Talentos próprios</span>
+              <span class="tag">Mecânicas inéditas</span>
+            </div>
           </div>
 
           <div class="mundo-col">
             <p class="body-text muted">
-              A mata devolve o que se leva, sempre em outra moeda: um caminho aberto hoje é um
-              corredor fechado na volta, e o silêncio dos bichos vale mais que qualquer aviso
-              escrito na pedra.
+              Além do compêndio, o templo guarda ferramentas pra jogar: ficha de personagem,
+              rolador de dados e login pra salvar seus personagens entre sessões.
             </p>
-            <blockquote class="quote">
-              “Toda pedra aqui tem nome. Pisar sem pedir licença é pisar em alguém.”
-              <span class="quote-author">— guardiã do pórtico norte</span>
-            </blockquote>
             <div class="tag-row">
-              <span class="tag">Selva densa</span>
-              <span class="tag">Ritual vivo</span>
-              <span class="tag">Ouro e pedra</span>
+              <span class="tag">Ficha de personagem</span>
+              <span class="tag">Rolador de dados</span>
+              <span class="tag">Login e contas</span>
+              <span class="tag">Sempre em expansão</span>
             </div>
           </div>
         </div>
 
+        <!-- Faixa full-bleed removida temporariamente pro lançamento — restaurar quando houver imagem final:
         <div class="art-placeholder art-placeholder-wide">
           [ faixa full-bleed — dossel da floresta visto de baixo ]
         </div>
+        -->
       </div>
     </section>
 
@@ -133,8 +223,8 @@ function goToRoomsPage(page) {
           <span class="section-chapter">Capítulo II</span>
         </div>
         <p class="body-text">
-          O compêndio está dividido entre salas. Cada uma guarda um tipo de conhecimento — e um
-          animal que decide se você vai levá-lo embora. Algumas ainda estão seladas.
+          Cada sala reúne um compêndio completo. Abra qualquer uma pra ver a lista cheia, com
+          todos os detalhes prontos pra mesa. Algumas ainda estão em construção.
         </p>
       </div>
 
@@ -158,7 +248,8 @@ function goToRoomsPage(page) {
           >
             <span class="room-card-band" aria-hidden="true"></span>
             <span class="room-card-num">{{ room.num }}</span>
-            <div class="art-placeholder room-card-art">{{ room.art }}</div>
+            <!-- Arte final do card entra aqui depois (ver `room.art`); por enquanto é um ícone SVG provisório. -->
+            <div class="room-card-icon" v-html="room.icon"></div>
             <h3 class="room-card-title">{{ room.title }}</h3>
             <div class="room-card-guardian">Guardião: {{ room.guardian }}</div>
             <p class="room-card-text">{{ room.text }}</p>
@@ -177,48 +268,31 @@ function goToRoomsPage(page) {
       </div>
     </section>
 
-    <!-- GUARDIÕES -->
-    <section id="guardioes" class="section">
+    <!-- CONTOS -->
+    <section id="contos" class="section section-darkest">
       <div class="section-inner">
         <div class="section-heading">
-          <h2 class="section-title">A fauna que guarda o lugar</h2>
+          <h2 class="section-title">Sala dos Contos</h2>
           <span class="section-rule" aria-hidden="true"></span>
           <span class="section-chapter">Capítulo III</span>
-        </div>
-
-        <div class="fauna-grid">
-          <div v-for="f in fauna" :key="f.name" class="fauna-card">
-            <div class="art-placeholder fauna-card-art">{{ f.art }}</div>
-            <div class="fauna-card-name">{{ f.name }}</div>
-            <p class="fauna-card-text">{{ f.text }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ACERVO -->
-    <section id="acervo" class="section section-darkest">
-      <div class="section-inner">
-        <div class="section-heading">
-          <h2 class="section-title">Artefatos &amp; pergaminhos</h2>
-          <span class="section-rule" aria-hidden="true"></span>
-          <span class="section-chapter">Capítulo IV</span>
         </div>
 
         <div class="acervo-panel">
           <div class="acervo-col">
             <p class="lead-text">
-              Os pergaminhos do templo não são consumíveis: são empréstimos. Cada uso registra
-              uma dívida no entalhe da sala — e a mata cobra no momento em que menos convém.
+              Os contos e a história completa de Tatânea — origem dos povos, geografia e os
+              eventos que moldaram o mundo — vão ganhar uma sala própria.
             </p>
             <p class="body-text muted">
-              Machados de pedra-do-rio, tinta de urucum ritual, resina da árvore-mãe, máscaras
-              que calam quem as veste: o acervo completo, com raridade e o preço que cada peça
-              cobra.
+              Por enquanto os contos vivem espalhados nas descrições de cada raça e classe. Essa
+              sala vai reunir tudo num só lugar.
             </p>
-            <RouterLink to="/alquimia" class="btn btn-danger">Ver tabela</RouterLink>
+            <span class="btn btn-outline btn-soon">Em construção</span>
           </div>
+          <!-- Arte da sala dos contos fica pra depois, quando houver imagem final:
           <div class="art-placeholder acervo-art">[ pergaminho aberto + borboletas ]</div>
+          -->
+
         </div>
       </div>
     </section>
@@ -229,17 +303,21 @@ function goToRoomsPage(page) {
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap');
 
 .temple {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --jungle-green-soft: rgba(46, 125, 79, 0.35);
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --jungle-green-soft: rgba(35, 110, 71, 0.35);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
+
+  /* Linha ondulada reutilizável (rio/serpente) — recolorida via
+     background-color + mask em cada uso, no lugar das faixas retas. */
+  --wave-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10'%3E%3Cpath d='M0 5 Q10 0 20 5 T40 5' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
 
   background: var(--jungle-dark);
   color: var(--bone);
@@ -262,8 +340,7 @@ function goToRoomsPage(page) {
   gap: 30px;
   padding: clamp(48px, 8vw, 110px) clamp(16px, 5vw, 64px);
   background-color: var(--jungle-void);
-  background-image: repeating-linear-gradient(112deg, rgba(46, 125, 79, 0.16) 0 3px, transparent 3px 13px),
-  repeating-linear-gradient(0deg, rgba(10, 28, 17, 0.55) 0 22px, transparent 22px 44px),
+  background-image: repeating-linear-gradient(0deg, rgba(10, 28, 17, 0.55) 0 22px, transparent 22px 44px),
   radial-gradient(120% 90% at 50% 10%, var(--jungle-moss) 0, var(--jungle-void) 62%, var(--jungle-darkest) 100%);
   border-bottom: 1px solid var(--jungle-green);
 }
@@ -276,33 +353,15 @@ function goToRoomsPage(page) {
   top: 0;
   left: 0;
   right: 0;
-  height: 26px;
-  background-image: repeating-linear-gradient(
-      90deg,
-      var(--tribal-gold) 0 4px,
-      transparent 4px 10px,
-      var(--tribal-red) 10px 14px,
-      transparent 14px 26px
-  );
-  opacity: 0.75;
-}
-
-.hero-strip-side {
-  top: 0;
-  bottom: 0;
-  width: clamp(28px, 7vw, 86px);
-  background-image: repeating-linear-gradient(0deg, rgba(46, 125, 79, 0.5) 0 2px, transparent 2px 16px),
-  repeating-linear-gradient(45deg, rgba(201, 162, 39, 0.18) 0 6px, transparent 6px 18px);
-}
-
-.hero-strip-left {
-  left: 0;
-}
-
-.hero-strip-right {
-  right: 0;
-  background-image: repeating-linear-gradient(0deg, rgba(46, 125, 79, 0.5) 0 2px, transparent 2px 16px),
-  repeating-linear-gradient(-45deg, rgba(201, 162, 39, 0.18) 0 6px, transparent 6px 18px);
+  height: 10px;
+  background-color: var(--tribal-gold);
+  -webkit-mask-image: var(--wave-mask);
+  mask-image: var(--wave-mask);
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 40px 10px;
+  mask-size: 40px 10px;
+  opacity: 0.85;
 }
 
 .hero-frame {
@@ -311,39 +370,37 @@ function goToRoomsPage(page) {
   max-width: 760px;
   width: 100%;
   padding: clamp(22px, 4vw, 44px);
-  border: 2px solid var(--tribal-gold);
+  border: 3px solid var(--tribal-gold);
   background: rgba(9, 26, 16, 0.86);
   box-shadow: 0 0 0 1px var(--jungle-dark) inset, 0 24px 70px rgba(0, 0, 0, 0.5);
   text-align: center;
 }
 
-.hero-frame-inner {
+/* Cantos no mesmo estilo dos cards de categoria do Compêndio de Raças:
+   losango dourado por fora do quadro + moldura verde em L por dentro. */
+.hero-frame-corner {
   position: absolute;
-  inset: 8px;
-  border: 1px solid rgba(184, 54, 47, 0.7);
-  pointer-events: none;
+  width: 14px;
+  height: 14px;
+  background: var(--tribal-gold);
+  transform: rotate(45deg);
 }
 
-.hero-frame-band {
+.hero-frame-corner-tl { top: -9px; left: -9px; }
+.hero-frame-corner-tr { top: -9px; right: -9px; }
+.hero-frame-corner-bl { bottom: -9px; left: -9px; }
+.hero-frame-corner-br { bottom: -9px; right: -9px; }
+
+.hero-frame-bracket {
   position: absolute;
-  left: -2px;
-  right: -2px;
-  height: 10px;
-  background-image: repeating-linear-gradient(
-      90deg,
-      var(--tribal-gold) 0 8px,
-      var(--tribal-red) 8px 12px,
-      transparent 12px 24px
-  );
+  width: 18px;
+  height: 18px;
 }
 
-.hero-frame-band-top {
-  top: -2px;
-}
-
-.hero-frame-band-bottom {
-  bottom: -2px;
-}
+.hero-frame-bracket-tl { top: 5px; left: 5px; border-top: 2px solid var(--jungle-green); border-left: 2px solid var(--jungle-green); }
+.hero-frame-bracket-tr { top: 5px; right: 5px; border-top: 2px solid var(--jungle-green); border-right: 2px solid var(--jungle-green); }
+.hero-frame-bracket-bl { bottom: 5px; left: 5px; border-bottom: 2px solid var(--jungle-green); border-left: 2px solid var(--jungle-green); }
+.hero-frame-bracket-br { bottom: 5px; right: 5px; border-bottom: 2px solid var(--jungle-green); border-right: 2px solid var(--jungle-green); }
 
 .hero-eyebrow {
   font-family: 'Cinzel', serif;
@@ -441,18 +498,15 @@ function goToRoomsPage(page) {
   color: var(--tribal-yellow);
 }
 
-.btn-danger {
-  font-weight: 700;
+.btn-soon,
+.btn-soon:hover {
   font-size: 11px;
   padding: 12px 22px;
-  background: var(--tribal-red);
-  color: var(--bone);
-  border: 1px solid var(--tribal-yellow);
   align-self: flex-start;
-}
-
-.btn-danger:hover {
-  background: var(--jungle-green);
+  border-style: dashed;
+  border-color: var(--pale-green);
+  color: var(--pale-green);
+  cursor: default;
 }
 
 .hero-art-row {
@@ -469,7 +523,6 @@ function goToRoomsPage(page) {
 /* ===== PLACEHOLDER DE ARTE ===== */
 .art-placeholder {
   border: 1px solid var(--jungle-green);
-  background-image: repeating-linear-gradient(45deg, rgba(46, 125, 79, 0.35) 0 6px, transparent 6px 14px);
   display: flex;
   align-items: flex-end;
   padding: 8px;
@@ -487,14 +540,13 @@ function goToRoomsPage(page) {
 
 .art-placeholder-wide {
   height: 132px;
-  background-image: repeating-linear-gradient(-45deg, rgba(46, 125, 79, 0.32) 0 7px, transparent 7px 16px);
 }
 
 /* ===== SEÇÕES ===== */
 .section {
   padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 64px);
   background: var(--jungle-dark);
-  border-bottom: 1px solid rgba(46, 125, 79, 0.5);
+  border-bottom: 1px solid rgba(35, 110, 71, 0.5);
 }
 
 .section-dark {
@@ -538,8 +590,14 @@ function goToRoomsPage(page) {
 .section-rule {
   flex: 1;
   min-width: 60px;
-  height: 1px;
-  background: repeating-linear-gradient(90deg, var(--jungle-green) 0 6px, transparent 6px 12px);
+  height: 6px;
+  background-color: var(--jungle-green);
+  -webkit-mask-image: var(--wave-mask);
+  mask-image: var(--wave-mask);
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 24px 6px;
+  mask-size: 24px 6px;
 }
 
 .section-chapter {
@@ -587,28 +645,6 @@ function goToRoomsPage(page) {
   flex-direction: column;
   gap: 16px;
   min-width: 0;
-}
-
-.quote {
-  margin: 0;
-  padding: 14px 18px;
-  border: 1px solid var(--tribal-gold);
-  background: rgba(11, 32, 19, 0.6);
-  font-style: italic;
-  font-size: clamp(15px, 1.8vw, 18px);
-  line-height: 1.6;
-  color: var(--bone);
-}
-
-.quote-author {
-  display: block;
-  margin-top: 8px;
-  font-style: normal;
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--pale-green);
 }
 
 .tag-row {
@@ -684,8 +720,7 @@ function goToRoomsPage(page) {
   gap: 14px;
   padding: 26px;
   border: 1px solid var(--tribal-gold);
-  background-color: #123020;
-  background-image: repeating-linear-gradient(90deg, rgba(46, 125, 79, 0.28) 0 4px, transparent 4px 12px);
+  background-color: var(--bg-card);
   text-decoration: none;
   color: inherit;
   transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -693,7 +728,7 @@ function goToRoomsPage(page) {
 
 .room-card:hover {
   border-color: var(--tribal-yellow);
-  background-color: #163a26;
+  background-color: var(--jungle-moss);
 }
 
 .room-card-band {
@@ -702,12 +737,13 @@ function goToRoomsPage(page) {
   left: 0;
   right: 0;
   height: 8px;
-  background-image: repeating-linear-gradient(
-      90deg,
-      var(--tribal-gold) 0 6px,
-      var(--tribal-red) 6px 10px,
-      transparent 10px 20px
-  );
+  background-color: var(--tribal-gold);
+  -webkit-mask-image: var(--wave-mask);
+  mask-image: var(--wave-mask);
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 32px 8px;
+  mask-size: 32px 8px;
 }
 
 .room-card-num {
@@ -724,6 +760,21 @@ function goToRoomsPage(page) {
   flex: 1;
   margin-top: 26px;
   height: auto;
+}
+
+/* Ícone SVG provisório no lugar da arte do card (ver `room.icon` no script). */
+.room-card-icon {
+  flex: 1;
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+
+.room-card-icon :deep(svg) {
+  width: clamp(140px, 22vw, 200px);
+  height: clamp(140px, 22vw, 200px);
 }
 
 .room-card-title {
@@ -776,7 +827,7 @@ function goToRoomsPage(page) {
 
 .room-card-soon:hover {
   border-color: var(--tribal-gold);
-  background-color: #123020;
+  background-color: var(--bg-card);
 }
 
 .room-card-cta-soon {
@@ -787,43 +838,6 @@ function goToRoomsPage(page) {
 .room-card-soon:hover .room-card-cta-soon {
   background: none;
   border-color: var(--jungle-green);
-  color: var(--pale-green);
-}
-
-/* ===== FAUNA ===== */
-.fauna-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 18px;
-}
-
-.fauna-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 14px;
-  background: var(--jungle-moss);
-  border-top: 3px solid var(--tribal-gold);
-  min-width: 0;
-}
-
-.fauna-card-art {
-  height: 150px;
-}
-
-.fauna-card-name {
-  font-family: 'Cinzel', serif;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--bone);
-}
-
-.fauna-card-text {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.5;
   color: var(--pale-green);
 }
 
@@ -851,7 +865,7 @@ function goToRoomsPage(page) {
   flex: 0 1 260px;
   min-width: 0;
   min-height: 280px;
-  border-color: rgba(168, 196, 162, 0.4);
+  border-color: rgba(154, 176, 161, 0.4);
 }
 
 /* ===== RESPONSIVO ===== */

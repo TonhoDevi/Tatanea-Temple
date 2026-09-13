@@ -7,14 +7,27 @@
           <span class="cr-dashed-line"></span>
           <span class="cr-hero-tag">Sala I</span>
         </div>
-        <p class="cr-hero-text">
-          Nove povos do interior da mata, cada um com um pacto diferente com a floresta.
-          Cada ficha traz a linhagem, o corpo e a dívida que aquele povo carrega.
+        <div class="cr-hero-text-row">
+          <p class="cr-hero-text">
+            Nove povos do interior da mata, cada um com um pacto diferente com a floresta.
+            Cada ficha traz a linhagem, o corpo e a dívida que aquele povo carrega.
+          </p>
+          <button type="button" class="cr-btn-pergaminhos" @click="mostrarArquivos = !mostrarArquivos">
+            {{ mostrarArquivos ? '← Voltar' : 'Pergaminhos' }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section v-if="mostrarArquivos" class="cr-arquivos">
+      <div class="cr-arquivos-inner">
+        <p class="cr-arquivos-texto">
+          Os arquivos da Sala das Raças ainda estão sendo transcritos.
         </p>
       </div>
     </section>
 
-    <div class="cr-filterbar">
+    <div v-if="!mostrarArquivos" class="cr-filterbar">
       <div class="cr-filterbar-inner">
         <div class="cr-cat-label">
           <span class="cr-cat-bullet"></span>
@@ -85,7 +98,7 @@
       </div>
     </div>
 
-    <section class="cr-results">
+    <section v-if="!mostrarArquivos" class="cr-results">
       <div class="cr-results-inner">
         <p v-if="!carregando && !erro" class="cr-results-label">{{ resultadoLabel }}</p>
 
@@ -151,6 +164,7 @@ const racas = ref([]);
 const carregando = ref(true);
 const erro = ref(null);
 
+const mostrarArquivos = ref(false);
 const busca = ref('');
 const categoriasSelecionadas = ref([]);
 const tamanhosSelecionados = ref([]);
@@ -226,17 +240,17 @@ onMounted(async () => {
 
 <style scoped>
 .cr-page {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-card: #123020;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-card: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
 
   background: var(--jungle-dark);
   color: var(--bone);
@@ -293,6 +307,56 @@ onMounted(async () => {
   font-size: clamp(15px, 1.8vw, 18px);
   line-height: 1.7;
   color: var(--bone);
+}
+
+.cr-hero-text-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.cr-btn-pergaminhos {
+  flex: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 18px 40px;
+  background: transparent;
+  border: 2px solid var(--tribal-gold);
+  color: var(--tribal-yellow);
+  cursor: pointer;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cr-btn-pergaminhos:hover {
+  background: var(--tribal-gold);
+  color: var(--jungle-darkest);
+}
+
+.cr-arquivos {
+  padding: 40px clamp(16px, 5vw, 64px) clamp(56px, 8vw, 96px);
+  background: var(--jungle-void);
+}
+
+.cr-arquivos-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+}
+
+.cr-arquivos-texto {
+  margin: 0;
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.9;
+  color: var(--bone);
+  white-space: pre-line;
 }
 
 .cr-filterbar {
@@ -368,7 +432,7 @@ onMounted(async () => {
 .cr-cat-btn-fill {
   position: absolute;
   inset: 0;
-  background: var(--tribal-red);
+  background: var(--accent-glow);
 }
 
 .cr-corner {
@@ -581,7 +645,7 @@ onMounted(async () => {
 }
 
 .cr-card:hover {
-  filter: drop-shadow(0 0 12px rgba(232, 193, 74, 0.35));
+  filter: drop-shadow(0 0 12px rgba(212, 163, 89, 0.35));
 }
 
 .cr-card-frame-1 {
@@ -603,7 +667,7 @@ onMounted(async () => {
 .cr-card-frame-3 {
   position: absolute;
   inset: 7px;
-  background: rgba(46, 125, 79, 0.75);
+  background: rgba(35, 110, 71, 0.75);
   pointer-events: none;
   clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
 }
@@ -634,7 +698,6 @@ onMounted(async () => {
   flex: 0 0 104px;
   height: 132px;
   border: 1px solid var(--jungle-green);
-  background-image: repeating-linear-gradient(45deg, rgba(46, 125, 79, 0.35) 0 6px, transparent 6px 14px);
   display: flex;
   align-items: flex-end;
   padding: 6px;

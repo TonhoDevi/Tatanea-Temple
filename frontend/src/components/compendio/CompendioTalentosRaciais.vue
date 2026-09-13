@@ -175,17 +175,17 @@ onMounted(async () => {
 
 <style scoped>
 .ct-page {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-card: #123020;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-card: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
 
   background: var(--jungle-dark);
   color: var(--bone);
@@ -471,7 +471,7 @@ onMounted(async () => {
 }
 
 .ct-card:hover {
-  filter: drop-shadow(0 0 12px rgba(232, 193, 74, 0.35));
+  filter: drop-shadow(0 0 12px rgba(212, 163, 89, 0.35));
 }
 
 .ct-card-frame-1 {
@@ -493,7 +493,7 @@ onMounted(async () => {
 .ct-card-frame-3 {
   position: absolute;
   inset: 7px;
-  background: rgba(46, 125, 79, 0.75);
+  background: rgba(35, 110, 71, 0.75);
   pointer-events: none;
   clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
 }

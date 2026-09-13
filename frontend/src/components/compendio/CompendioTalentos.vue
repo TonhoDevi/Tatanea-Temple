@@ -7,9 +7,14 @@
           <span class="ct-dashed-line"></span>
           <span class="ct-hero-tag">Sala III</span>
         </div>
-        <p class="ct-hero-text">
-          Marcas ganhas no corpo. Cada talento deixa cicatriz, tinta ou dívida.
-        </p>
+        <div class="ct-hero-text-row">
+          <p class="ct-hero-text">
+            Marcas ganhas no corpo. Cada talento deixa cicatriz, tinta ou dívida.
+          </p>
+          <button type="button" class="ct-btn-pergaminhos" @click="mostrarArquivos = !mostrarArquivos">
+            {{ mostrarArquivos ? '← Voltar' : 'Pergaminhos' }}
+          </button>
+        </div>
         <div class="ct-tabs">
           <router-link to="/talentos" class="ct-tab ct-tab-ativo">Talentos Comuns</router-link>
           <router-link to="/talentos-raciais" class="ct-tab">Talentos Raciais</router-link>
@@ -17,7 +22,15 @@
       </div>
     </section>
 
-    <div class="ct-filterbar">
+    <section v-if="mostrarArquivos" class="ct-arquivos">
+      <div class="ct-arquivos-inner">
+        <p class="ct-arquivos-texto">
+          Os arquivos da Sala dos Talentos ainda estão sendo transcritos.
+        </p>
+      </div>
+    </section>
+
+    <div v-if="!mostrarArquivos" class="ct-filterbar">
       <div class="ct-filterbar-inner">
         <div class="ct-row">
           <div class="ct-search">
@@ -61,7 +74,7 @@
       </div>
     </div>
 
-    <section class="ct-results">
+    <section v-if="!mostrarArquivos" class="ct-results">
       <div class="ct-results-inner">
         <p v-if="!carregando && !erro" class="ct-results-label">{{ resultadoLabel }}</p>
 
@@ -131,6 +144,7 @@ const talentos = ref([]);
 const carregando = ref(true);
 const erro = ref(null);
 
+const mostrarArquivos = ref(false);
 const busca = ref('');
 const ordem = ref('az');
 const preRequisito = ref('todos');
@@ -181,17 +195,17 @@ onMounted(async () => {
 
 <style scoped>
 .ct-page {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-card: #123020;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-card: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
 
   background: var(--jungle-dark);
   color: var(--bone);
@@ -248,6 +262,56 @@ onMounted(async () => {
   font-size: clamp(15px, 1.8vw, 18px);
   line-height: 1.7;
   color: var(--bone);
+}
+
+.ct-hero-text-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ct-btn-pergaminhos {
+  flex: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 18px 40px;
+  background: transparent;
+  border: 2px solid var(--tribal-gold);
+  color: var(--tribal-yellow);
+  cursor: pointer;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.ct-btn-pergaminhos:hover {
+  background: var(--tribal-gold);
+  color: var(--jungle-darkest);
+}
+
+.ct-arquivos {
+  padding: 40px clamp(16px, 5vw, 64px) clamp(56px, 8vw, 96px);
+  background: var(--jungle-void);
+}
+
+.ct-arquivos-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+}
+
+.ct-arquivos-texto {
+  margin: 0;
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.9;
+  color: var(--bone);
+  white-space: pre-line;
 }
 
 .ct-tabs {
@@ -455,7 +519,7 @@ onMounted(async () => {
 }
 
 .ct-card:hover {
-  filter: drop-shadow(0 0 12px rgba(232, 193, 74, 0.35));
+  filter: drop-shadow(0 0 12px rgba(212, 163, 89, 0.35));
 }
 
 .ct-card-frame-1 {
@@ -477,7 +541,7 @@ onMounted(async () => {
 .ct-card-frame-3 {
   position: absolute;
   inset: 7px;
-  background: rgba(46, 125, 79, 0.75);
+  background: rgba(35, 110, 71, 0.75);
   pointer-events: none;
   clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
 }

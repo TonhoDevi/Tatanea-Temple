@@ -134,16 +134,16 @@ onMounted(async () => {
 
 <style scoped>
 .dt-page {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
 
   background: var(--jungle-dark);
   color: var(--bone);
@@ -210,7 +210,6 @@ onMounted(async () => {
   min-width: 0;
   min-height: 220px;
   border: 1px solid var(--jungle-green);
-  background-image: repeating-linear-gradient(45deg, rgba(46, 125, 79, 0.35) 0 6px, transparent 6px 14px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -320,7 +319,7 @@ onMounted(async () => {
 .dt-body {
   padding: clamp(32px, 5vw, 64px) clamp(16px, 5vw, 64px);
   background: var(--jungle-void);
-  border-top: 1px solid rgba(46, 125, 79, 0.5);
+  border-top: 1px solid rgba(35, 110, 71, 0.5);
 }
 
 .dt-body-inner {
@@ -416,7 +415,7 @@ onMounted(async () => {
   display: flex;
   justify-content: flex-start;
   padding-top: 8px;
-  border-top: 1px solid rgba(46, 125, 79, 0.5);
+  border-top: 1px solid rgba(35, 110, 71, 0.5);
 }
 
 .dt-voltar-final {

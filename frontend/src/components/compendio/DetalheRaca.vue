@@ -251,16 +251,16 @@ onMounted(async () => {
 
 <style scoped>
 .dr-page {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
 
   background: var(--jungle-dark);
   color: var(--bone);
@@ -327,7 +327,6 @@ onMounted(async () => {
   min-width: 0;
   min-height: 360px;
   border: 1px solid var(--jungle-green);
-  background-image: repeating-linear-gradient(45deg, rgba(46, 125, 79, 0.35) 0 6px, transparent 6px 14px);
   display: flex;
   align-items: flex-end;
   padding: 10px;
@@ -403,7 +402,7 @@ onMounted(async () => {
   margin: 0;
   padding: 14px 18px;
   border-left: 3px solid var(--tribal-gold);
-  background: rgba(11, 32, 19, 0.6);
+  background: rgba(10, 20, 14, 0.6);
   font-style: italic;
   font-size: clamp(15px, 1.8vw, 18px);
   line-height: 1.6;
@@ -459,7 +458,7 @@ onMounted(async () => {
 .dr-body {
   padding: clamp(32px, 5vw, 64px) clamp(16px, 5vw, 64px);
   background: var(--jungle-void);
-  border-top: 1px solid rgba(46, 125, 79, 0.5);
+  border-top: 1px solid rgba(35, 110, 71, 0.5);
 }
 
 .dr-body-inner {
@@ -582,7 +581,7 @@ onMounted(async () => {
 
 .dr-hab-item {
   border: 1px solid var(--jungle-green);
-  background: #123020;
+  background: var(--bg-card);
   min-width: 0;
   clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
 }
@@ -602,7 +601,7 @@ onMounted(async () => {
 }
 
 .dr-hab-cabecalho:hover {
-  background: #163a26;
+  background: var(--jungle-moss);
 }
 
 .dr-hab-seta {
@@ -656,7 +655,7 @@ onMounted(async () => {
   text-align: left;
   padding: 15px 18px;
   border: 1px solid var(--jungle-green);
-  background: #123020;
+  background: var(--bg-card);
   color: inherit;
   font: inherit;
   cursor: pointer;
@@ -665,7 +664,7 @@ onMounted(async () => {
 }
 
 .dr-talento-item:hover {
-  background: #163a26;
+  background: var(--jungle-moss);
   border-color: var(--tribal-yellow);
 }
 
@@ -709,7 +708,7 @@ onMounted(async () => {
   display: flex;
   justify-content: flex-start;
   padding-top: 8px;
-  border-top: 1px solid rgba(46, 125, 79, 0.5);
+  border-top: 1px solid rgba(35, 110, 71, 0.5);
 }
 
 .dr-voltar-final {

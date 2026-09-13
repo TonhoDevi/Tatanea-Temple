@@ -46,9 +46,17 @@ onMounted(() => store.carregarRacas())
 
 <style scoped>
 .seletor-raca {
+  --jungle-void: var(--bg-deep);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+
   font-family: 'Crimson Text', serif;
-  color: #e8e0d0;
-  background: #0b0b12;
+  color: var(--bone);
+  background: var(--jungle-void);
   min-height: 100vh;
   padding: 2rem;
 }
@@ -66,8 +74,8 @@ h1 {
 }
 
 .card-raca {
-  background: #1a1a26;
-  border: 1px solid #4a3f6b;
+  background: var(--jungle-dark);
+  border: 1px solid var(--tribal-gold);
   border-radius: 8px;
   padding: 1rem;
   color: inherit;
@@ -77,16 +85,16 @@ h1 {
 }
 
 .card-raca:hover {
-  border-color: #8a6fd6;
+  border-color: var(--tribal-yellow);
 }
 
 .detalhe-raca {
   margin-top: 2rem;
-  border-top: 1px solid #4a3f6b;
+  border-top: 1px solid var(--tribal-gold);
   padding-top: 1.5rem;
 }
 
 .erro {
-  color: #d66a6a;
+  color: var(--tribal-red);
 }
 </style>
