@@ -108,9 +108,9 @@ Sobe em `http://localhost:5173` e já aponta para a API local em `http://localho
 
 ## ☁️ Implantação (em andamento)
 
-Arquitetura de produção, com custo zero:
+Arquitetura de produção, com custo zero e sem cartão de crédito:
 - **Frontend** hospedado na [Vercel](https://vercel.com/).
-- **Backend** rodando em Docker numa VM "Always Free" da [Oracle Cloud](https://cloud.oracle.com/), atrás de um Caddy com HTTPS automático.
+- **Backend** rodando em Docker no [Render](https://render.com/) (free tier).
 - **Banco de dados** PostgreSQL hospedado no [Supabase](https://supabase.com/).
 
 Passo a passo completo em [`DEPLOY.md`](./DEPLOY.md). Nenhum ambiente de produção está no ar ainda — o projeto roda hoje apenas localmente.
