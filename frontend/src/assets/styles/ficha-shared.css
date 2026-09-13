@@ -442,6 +442,23 @@ textarea {
     .ficha-layout {
         flex-direction: column;
     }
+
+    /* Cada aba fica como uma coluna centralizada em vez de esticar borda a
+       borda — em telas intermediárias (tablet/phone deitado) isso evita
+       linhas de texto absurdamente longas; em telas estreitas de verdade
+       (< 640px) não muda nada visualmente, já que a coluna já ocupa toda a
+       largura disponível mesmo com o teto de 640px. */
+    .fc-panel {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+
+    .fc-tabs {
+        max-width: 640px;
+        margin: 0 auto;
+        width: 100%;
+    }
 }
 
 /* Em telas de desktop, a ficha nasce no mesmo tamanho de quando o usuário dá

@@ -165,7 +165,32 @@ const classeNomeAtual = computed(
   .ficha-sidebar {
     flex: none;
     width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
     position: static;
+  }
+
+  /* O retrato em aspect-ratio 3/4 esticado a 100% de largura ficava enorme
+     (até ~375x500px num celular comum) e empurrava toda a ficha pra baixo
+     antes mesmo de mostrar as abas. Limitado e centralizado aqui; os campos
+     de identidade (Raça/Classe/Nível/Bônus/Jogador/Antecedente/Tendência)
+     viram um grid de 2 colunas pra ocupar bem menos altura — só o retrato,
+     nome e resumo de nível/classe (3 primeiros filhos) continuam ocupando a
+     largura toda. */
+  .fc-identity {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+  }
+
+  .fc-identity > :nth-child(-n+3) {
+    grid-column: 1 / -1;
+  }
+
+  .fc-portrait {
+    width: auto;
+    max-width: 160px;
+    margin: 0 auto;
   }
 }
 </style>

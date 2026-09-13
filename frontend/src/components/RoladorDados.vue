@@ -208,11 +208,15 @@ defineEmits(['fechar']);
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 300;
-  padding: 1rem;
+  /* Overlay não centraliza mais via flex: numa tela baixa (celular deitado,
+     ou muitos resultados de dado abertos de uma vez), align-items:center
+     cortava o topo do modal sem nenhum jeito de rolar até lá. Em vez disso o
+     overlay inteiro rola (overflow-y:auto) e o modal se centra sozinho via
+     margin:0 auto — mesmo padrão já usado no modal de detalhe de poção
+     (CompendioAlquimia.vue .modal-conteudo). */
+  overflow-y: auto;
+  padding: clamp(1rem, 4vh, 3rem) 1rem;
   font-family: 'Crimson Text', Georgia, serif;
 }
 
@@ -223,6 +227,7 @@ defineEmits(['fechar']);
   padding: 2rem 1.6rem 1.6rem;
   width: 100%;
   max-width: 520px;
+  margin: 0 auto;
   color: var(--bone);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
 }

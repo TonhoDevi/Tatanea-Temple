@@ -61,7 +61,7 @@
             <span class="cr-search-tag">BUSCA</span>
             <input type="text" v-model="busca" placeholder="nome da raça…" class="cr-search-input" />
           </div>
-          <button class="cr-btn-limpar" @click="limparFiltros">Limpar filtros</button>
+          <button class="cr-btn-limpar" @click="limparFiltros" title="Limpar filtros" aria-label="Limpar filtros">✕</button>
         </div>
 
         <div class="cr-subfilter">
@@ -525,21 +525,26 @@ onMounted(() => {
 }
 
 .cr-btn-limpar {
-  font-family: 'Cinzel', serif;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 13px 20px;
-  background: transparent;
+  line-height: 1;
+  background: var(--tribal-red);
   border: 1px solid var(--tribal-red);
-  color: var(--bone);
+  color: #000;
   cursor: pointer;
   clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+  transition: filter 0.2s ease;
 }
 
 .cr-btn-limpar:hover {
-  background: var(--tribal-red);
+  filter: brightness(1.15);
 }
 
 .cr-subfilter {
@@ -771,5 +776,46 @@ onMounted(() => {
   font-style: italic;
   font-size: 18px;
   color: var(--pale-green);
+}
+
+/* ===== Responsivo — cabeçalho enxuto, só busca por nome ===== */
+@media (max-width: 700px) {
+  .cr-hero {
+    padding: 24px 16px 16px;
+  }
+
+  .cr-hero-title {
+    font-size: 22px;
+  }
+
+  .cr-dashed-line,
+  .cr-hero-tag {
+    display: none;
+  }
+
+  .cr-btn-pergaminhos {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  /* A barra de filtro grudava no topo ao rolar (position: sticky) e, com a
+     grade de categorias + 2 subfiltros abertos, chegava a ocupar a maior
+     parte da tela — daí a sensação de "cabeçalho gigante seguindo o
+     scroll". No celular ela some do fluxo normal (deixa de ser sticky) e só
+     a busca por nome + "Limpar filtros" continuam visíveis; categoria,
+     ordenação e tamanho ficam reservados pra tela grande. */
+  .cr-filterbar {
+    position: static;
+  }
+
+  .cr-filterbar-inner {
+    padding: 14px 16px;
+  }
+
+  .cr-cat-label,
+  .cr-cat-grid,
+  .cr-subfilter {
+    display: none;
+  }
 }
 </style>

@@ -24,7 +24,7 @@
             <span class="ct-search-tag">BUSCA</span>
             <input type="text" v-model="busca" placeholder="nome do talento…" class="ct-search-input" />
           </div>
-          <button class="ct-btn-limpar" @click="limparFiltros">Limpar filtros</button>
+          <button class="ct-btn-limpar" @click="limparFiltros" title="Limpar filtros" aria-label="Limpar filtros">✕</button>
         </div>
 
         <div class="ct-subfilter">
@@ -350,21 +350,26 @@ onMounted(() => {
 }
 
 .ct-btn-limpar {
-  font-family: 'Cinzel', serif;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 13px 20px;
-  background: transparent;
+  line-height: 1;
+  background: var(--tribal-red);
   border: 1px solid var(--tribal-red);
-  color: var(--bone);
+  color: #000;
   cursor: pointer;
   clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+  transition: filter 0.2s ease;
 }
 
 .ct-btn-limpar:hover {
-  background: var(--tribal-red);
+  filter: brightness(1.15);
 }
 
 .ct-subfilter {
@@ -576,5 +581,37 @@ onMounted(() => {
   font-style: italic;
   font-size: 18px;
   color: var(--pale-green);
+}
+
+/* ===== Responsivo — cabeçalho enxuto, só busca por nome ===== */
+@media (max-width: 700px) {
+  .ct-hero {
+    padding: 24px 16px 16px;
+  }
+
+  .ct-hero-title {
+    font-size: 22px;
+  }
+
+  .ct-dashed-line,
+  .ct-hero-tag {
+    display: none;
+  }
+
+  .ct-tabs {
+    flex-wrap: wrap;
+  }
+
+  .ct-filterbar {
+    position: static;
+  }
+
+  .ct-filterbar-inner {
+    padding: 14px 16px;
+  }
+
+  .ct-subfilter {
+    display: none;
+  }
 }
 </style>

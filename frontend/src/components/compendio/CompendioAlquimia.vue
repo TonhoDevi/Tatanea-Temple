@@ -46,7 +46,7 @@
             <span class="ca-search-tag">BUSCA</span>
             <input type="text" v-model="busca" placeholder="nome da poção…" class="ca-search-input" />
           </div>
-          <button class="ca-btn-limpar" @click="limparFiltros">Limpar filtros</button>
+          <button class="ca-btn-limpar" @click="limparFiltros" title="Limpar filtros" aria-label="Limpar filtros">✕</button>
         </div>
 
         <div class="ca-subfilter">
@@ -463,21 +463,26 @@ onMounted(() => {
 }
 
 .ca-btn-limpar {
-  font-family: 'Cinzel', serif;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 13px 20px;
-  background: transparent;
+  line-height: 1;
+  background: var(--tribal-red);
   border: 1px solid var(--tribal-red);
-  color: var(--bone);
+  color: #000;
   cursor: pointer;
   clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+  transition: filter 0.2s ease;
 }
 
 .ca-btn-limpar:hover {
-  background: var(--tribal-red);
+  filter: brightness(1.15);
 }
 
 .ca-subfilter {
@@ -752,5 +757,38 @@ onMounted(() => {
   margin-bottom: 0.5rem;
   border-bottom: 1px solid var(--tribal-gold);
   padding-bottom: 0.3rem;
+}
+
+/* ===== Responsivo — cabeçalho enxuto, só busca por nome ===== */
+@media (max-width: 700px) {
+  .ca-hero {
+    padding: 24px 16px 16px;
+  }
+
+  .ca-hero-title {
+    font-size: 22px;
+  }
+
+  .ca-dashed-line,
+  .ca-hero-tag {
+    display: none;
+  }
+
+  .ca-btn-pergaminhos {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  .ca-filterbar {
+    position: static;
+  }
+
+  .ca-filterbar-inner {
+    padding: 14px 16px;
+  }
+
+  .ca-subfilter {
+    display: none;
+  }
 }
 </style>
