@@ -10,7 +10,26 @@ public class ClasseDtos {
     private ClasseDtos() {
     }
 
-    public record SubclasseDto(String nome, String icone, String descricao) {
+    // tipo: "HABILIDADE" (própria da classe, ganha em `nivel`), "FUNDAMENTO"
+    // (regra fixa de toda classe — Pontos de Vida, Proficiências,
+    // Equipamento, Incrementos — nivel fica nulo) ou "CONJURACAO" (regras
+    // de conjuração de magia da classe, só existe pra quem tem magia).
+    public record CaracteristicaDto(String titulo, String corpo, String tipo, Integer nivel) {
+    }
+
+    public record SubclasseCaracteristicaDto(String titulo, String corpo, Integer nivel) {
+    }
+
+    public record NivelDto(int nivel, String bonusProficiencia, String caracteristicas) {
+    }
+
+    public record SubclasseDto(
+            String nome,
+            String icone,
+            String introTexto,
+            String magiasTexto,
+            List<SubclasseCaracteristicaDto> caracteristicas
+    ) {
     }
 
     public record ClasseResumoDto(
@@ -32,17 +51,13 @@ public class ClasseDtos {
             String icone,
             String cor,
             String dadoDeVida,
-            String atributoChave,
-            String armadura,
-            String armas,
-            String ferramentas,
-            String resistencias,
-            String pericias,
-            String descricao,
             String dificuldade,
+            String descricaoIntro,
+            String tabelasTextoBruto,
             List<String> papeis,
-            List<SubclasseDto> subclasses,
-            List<String> habilidadesDestaque
+            List<NivelDto> niveis,
+            List<CaracteristicaDto> caracteristicas,
+            List<SubclasseDto> subclasses
     ) {
     }
 
@@ -58,23 +73,13 @@ public class ClasseDtos {
             String icone,
             String cor,
             String dadoDeVida,
-            String atributoChave,
-            @Size(max = 255, message = "armadura não pode passar de 255 caracteres")
-            String armadura,
-            @Size(max = 500, message = "armas não podem passar de 500 caracteres")
-            String armas,
-            @Size(max = 255, message = "ferramentas não podem passar de 255 caracteres")
-            String ferramentas,
-            @Size(max = 255, message = "resistências não podem passar de 255 caracteres")
-            String resistencias,
-            @Size(max = 5000, message = "perícias não podem passar de 5000 caracteres")
-            String pericias,
-            @Size(max = 5000, message = "descrição não pode passar de 5000 caracteres")
-            String descricao,
             String dificuldade,
+            String descricaoIntro,
+            String tabelasTextoBruto,
             List<String> papeis,
-            List<SubclasseDto> subclasses,
-            List<String> habilidadesDestaque
+            List<NivelDto> niveis,
+            List<CaracteristicaDto> caracteristicas,
+            List<SubclasseDto> subclasses
     ) {
     }
 }
