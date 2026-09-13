@@ -69,6 +69,12 @@
     transform: translateY(0);
 }
 
+.save-indicator-pendente {
+    background: var(--bg-card);
+    border-color: var(--tribal-yellow);
+    color: var(--tribal-yellow);
+}
+
 .loading-state {
     text-align: center;
     padding: 3rem;

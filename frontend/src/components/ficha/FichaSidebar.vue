@@ -52,6 +52,14 @@
 
     <div class="fc-box">
       <RouterLink class="fc-btn fc-btn-block" to="/personagens">← Meus personagens</RouterLink>
+      <button
+          class="fc-btn fc-btn-block fc-btn-salvar"
+          :class="{ 'fc-btn-pendente': houveAlteracao }"
+          :disabled="!houveAlteracao"
+          @click="salvarAgora"
+      >
+        {{ houveAlteracao ? 'Salvar progresso' : 'Tudo salvo' }}
+      </button>
       <button class="fc-btn fc-btn-block" @click="exportarJSON">Exportar JSON</button>
       <button class="fc-btn fc-btn-block" @click="$refs.importInput.click()">Importar JSON</button>
       <input ref="importInput" type="file" accept=".json" style="display:none" @change="importarJSON" />
@@ -65,8 +73,8 @@ import { computed } from 'vue';
 import { useFichaPersonagem } from '../../composables/useFichaPersonagem';
 
 const {
-  ficha, bonusProficiencia, racasDisponiveis, classesDisponiveis,
-  agendarSalvar, alterar, selecionarRaca,
+  ficha, bonusProficiencia, racasDisponiveis, classesDisponiveis, houveAlteracao,
+  agendarSalvar, alterar, selecionarRaca, salvarAgora,
   exportarJSON, importarJSON, excluir,
 } = useFichaPersonagem();
 
@@ -140,6 +148,17 @@ const classeNomeAtual = computed(
 .fc-mini-number-plain::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.fc-btn-salvar.fc-btn-pendente {
+  border-color: var(--tribal-gold);
+  color: var(--tribal-gold);
+  background: rgba(212, 163, 89, 0.1);
+}
+
+.fc-btn-salvar.fc-btn-pendente:hover {
+  background: var(--tribal-gold);
+  color: var(--jungle-void);
 }
 
 @media (max-width: 900px) {
