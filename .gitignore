@@ -1,9 +1,8 @@
-# Local Supabase config
-js/shared/supabase-config.local.js
-
 # Environment files
 .env
 .env.*
+!.env.example
+!**/.env.example
 *.local
 
 # OS files
@@ -11,3 +10,4 @@ js/shared/supabase-config.local.js
 backend/target/
 .idea/
 frontend/node_modules/
+frontend/dist/
