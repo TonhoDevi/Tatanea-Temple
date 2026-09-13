@@ -27,7 +27,11 @@ Nenhum passo aqui te cobra nada dentro dos limites gratuitos de cada serviço.
      maioria das plataformas free tier (Render incluso) não tem saída IPv6 —
      a conexão falha silenciosamente. O pooler (Supavisor) tem um host
      compatível com IPv4.
-   - `DB_URL`: `jdbc:postgresql://<host-do-pooler>.pooler.supabase.com:6543/postgres`
+   - `DB_URL`: `jdbc:postgresql://<host-do-pooler>.pooler.supabase.com:6543/postgres?prepareThreshold=0`
+     — o `prepareThreshold=0` é obrigatório: sem ele o driver JDBC quebra com
+     `prepared statement "S_1" already exists` assim que o Hikari reutiliza
+     uma conexão, porque o pooler roda em modo *transaction* (não guarda
+     prepared statements entre requisições).
    - `DB_USER`: `postgres.<referência-do-projeto>` (não é só `postgres` — inclui o ref)
    - `DB_PASSWORD`: a senha que você definiu (ou resetou)
 4. Não precisa criar tabelas manualmente — o Flyway cria o schema sozinho no primeiro start do backend (mesma coisa que já acontece hoje com o H2 local).
