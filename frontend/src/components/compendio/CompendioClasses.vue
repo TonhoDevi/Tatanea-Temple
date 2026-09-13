@@ -1,124 +1,140 @@
 <template>
   <div class="compendio-classes">
-    <h1 class="titulo-pagina">Compêndio de Classes</h1>
-
-    <div class="filtros">
-      <input
-          v-model="busca"
-          type="text"
-          class="input-busca"
-          placeholder="Buscar classe..."
-      />
-    </div>
-
-    <p class="resultados-bar">
-      Mostrando <strong>{{ classesFiltradas.length }}</strong> de
-      <strong>{{ classes.length }}</strong> classes
-    </p>
-
-    <div v-if="carregando" class="carregando">Carregando classes...</div>
-    <div v-else-if="erro" class="erro">{{ erro }}</div>
-
-    <div v-else class="grid-classes">
-      <button
-          v-for="c in classesFiltradas"
-          :key="c.id"
-          class="card-classe"
-          :style="{ '--cls-cor': c.cor, borderLeftColor: c.cor }"
-          @click="abrirDetalhe(c.id)"
-      >
-        <div class="card-header">
-          <span class="icone">{{ c.icone }}</span>
-          <div>
-            <h2 class="nome">{{ c.nome }}</h2>
-            <span class="subtitulo">{{ c.subtitulo }}</span>
-          </div>
+    <section class="cc-hero">
+      <div class="cc-hero-inner">
+        <div class="cc-hero-title-row">
+          <h1 class="cc-hero-title">Compêndio de Classes</h1>
+          <span class="cc-dashed-line"></span>
+          <span class="cc-hero-tag">Sala II</span>
         </div>
-        <div class="stats">
-          <span class="pill">{{ c.dadoDeVida }} / nível</span>
-          <span class="pill">{{ c.dificuldade }}</span>
-        </div>
-        <div class="papeis">
-          <span v-for="p in c.papeis" :key="p" class="role-pill">{{ p }}</span>
-        </div>
-      </button>
-    </div>
-
-    <div v-if="detalhe" class="modal-overlay" @click.self="fecharDetalhe">
-      <div class="modal-conteudo">
-        <button class="fechar" @click="fecharDetalhe">×</button>
-        <div class="modal-header">
-          <span class="icone-grande">{{ detalhe.icone }}</span>
-          <div>
-            <h2>{{ detalhe.nome }}</h2>
-            <span class="subtitulo">{{ detalhe.subtitulo }}</span>
-          </div>
-        </div>
-
-        <p class="descricao">{{ detalhe.descricao }}</p>
-
-        <div class="grid-info">
-          <div><strong>Dado de Vida:</strong> {{ detalhe.dadoDeVida }}</div>
-          <div><strong>Atributo Chave:</strong> {{ detalhe.atributoChave }}</div>
-          <div><strong>Armadura:</strong> {{ detalhe.armadura }}</div>
-          <div><strong>Armas:</strong> {{ detalhe.armas }}</div>
-          <div><strong>Ferramentas:</strong> {{ detalhe.ferramentas }}</div>
-          <div><strong>Resistências:</strong> {{ detalhe.resistencias }}</div>
-        </div>
-
-        <div class="secao">
-          <h3>Perícias</h3>
-          <p>{{ detalhe.pericias }}</p>
-        </div>
-
-        <div class="secao">
-          <h3>Papéis</h3>
-          <div class="papeis">
-            <span v-for="p in detalhe.papeis" :key="p" class="role-pill">{{ p }}</span>
-          </div>
-        </div>
-
-        <div class="secao">
-          <h3>Habilidades em Destaque</h3>
-          <ul>
-            <li v-for="h in detalhe.habilidadesDestaque" :key="h">{{ h }}</li>
-          </ul>
-        </div>
-
-        <div class="secao">
-          <h3>Subclasses</h3>
-          <div class="subclasses">
-            <div v-for="s in detalhe.subclasses" :key="s.nome" class="subclasse">
-              <span class="icone">{{ s.icone }}</span>
-              <div>
-                <strong>{{ s.nome }}</strong>
-                <p>{{ s.descricao }}</p>
-              </div>
-            </div>
-          </div>
+        <div class="cc-hero-text-row">
+          <p class="cc-hero-text">
+            Caminhos de combate e de reza — inclusive os que a mata ensina sem pedir permissão.
+          </p>
+          <button type="button" class="cc-btn-pergaminhos" @click="mostrarArquivos = !mostrarArquivos">
+            {{ mostrarArquivos ? '← Voltar' : 'Pergaminhos' }}
+          </button>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section v-if="mostrarArquivos" class="cc-arquivos">
+      <div class="cc-arquivos-inner">
+        <p class="cc-arquivos-texto">
+          Os arquivos da Sala das Classes ainda estão sendo transcritos.
+        </p>
+      </div>
+    </section>
+
+    <section v-if="!mostrarArquivos" class="cc-results">
+      <div class="cc-results-inner">
+        <p v-if="carregando" class="cc-status">Carregando compêndio…</p>
+        <p v-else-if="erro" class="cc-status cc-status-erro">{{ erro }}</p>
+
+        <template v-else>
+          <div class="cc-grupo" v-for="grupo in gruposComClasses" :key="grupo.id">
+            <div class="cc-grupo-emblema">
+              <div class="cc-grupo-icone-semicirculo" v-if="grupo.icone">
+                <span class="cc-grupo-icone">
+                  <component :is="grupo.icone" />
+                </span>
+              </div>
+
+              <div class="cc-grupo-linha-row">
+                <span class="cc-grupo-linha"></span>
+                <div class="cc-grupo-nome-retangulo">
+                  <span class="cc-grupo-retangulo-circulo cc-grupo-retangulo-circulo-tl"></span>
+                  <span class="cc-grupo-retangulo-circulo cc-grupo-retangulo-circulo-tr"></span>
+                  <span class="cc-grupo-retangulo-circulo cc-grupo-retangulo-circulo-bl"></span>
+                  <span class="cc-grupo-retangulo-circulo cc-grupo-retangulo-circulo-br"></span>
+                  <span class="cc-grupo-rotulo">{{ grupo.titulo }}</span>
+                </div>
+                <span class="cc-grupo-linha"></span>
+              </div>
+            </div>
+
+            <div class="cc-grid">
+              <button
+                  v-for="c in grupo.classes"
+                  :key="c.id"
+                  class="cc-card"
+                  :style="{ '--cls-cor': c.cor }"
+                  @click="abrir(c)"
+              >
+                <span class="cc-card-frame-1"></span>
+                <span class="cc-card-frame-2"></span>
+                <span class="cc-card-frame-3"></span>
+                <span class="cc-card-frame-4"></span>
+                <span class="cc-card-diamond cc-card-diamond-top"></span>
+                <span class="cc-card-diamond cc-card-diamond-bottom"></span>
+                <span class="cc-card-diamond cc-card-diamond-left"></span>
+                <span class="cc-card-diamond cc-card-diamond-right"></span>
+
+                <span class="cc-card-icone">{{ c.icone || '◆' }}</span>
+
+                <span class="cc-card-info">
+                  <span class="cc-card-nome">{{ c.nome }}</span>
+                  <span class="subtitulo">{{ c.subtitulo }}</span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <p v-if="classes.length === 0" class="cc-vazio">
+            Nenhuma classe cadastrada ainda.
+          </p>
+        </template>
+      </div>
+    </section>
+
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, markRaw } from 'vue';
+import { useRouter } from 'vue-router';
 import classeService from '../../services/classeService';
+import IconeGrupoNatural from './icones/IconeGrupoNatural.vue';
+import IconeGrupoArcano from './icones/IconeGrupoArcano.vue';
+import IconeGrupoDivino from './icones/IconeGrupoDivino.vue';
+import IconeGrupoMarcial from './icones/IconeGrupoMarcial.vue';
+
+const router = useRouter();
 
 const classes = ref([]);
-const busca = ref('');
+const mostrarArquivos = ref(false);
 const carregando = ref(true);
 const erro = ref(null);
-const detalhe = ref(null);
 
-const classesFiltradas = computed(() => {
-  const termo = busca.value.toLowerCase().trim();
-  if (!termo) return classes.value;
-  return classes.value.filter(c => {
-    const alvo = [c.nome, c.dificuldade, ...(c.papeis || [])].join(' ').toLowerCase();
-    return alvo.includes(termo);
+// São só 13 classes (talvez +3/4 no futuro) — não justifica busca nem
+// ordenação. O único agrupamento que faz sentido pro jogador é por tipo de
+// magia, decidido pelo usuário; fixo aqui em vez de vir do backend porque é
+// taxonomia da classe, não um dado que muda com frequência.
+const GRUPOS_MAGIA = [
+  { id: 'natural', titulo: 'Naturais', icone: markRaw(IconeGrupoNatural), ids: ['caçador', 'druida'] },
+  { id: 'arcano', titulo: 'Arcanos', icone: markRaw(IconeGrupoArcano), ids: ['mago', 'feiticeiro', 'bardo'] },
+  { id: 'divino', titulo: 'Divinos', icone: markRaw(IconeGrupoDivino), ids: ['clérigo', 'bruxo', 'paladino'] },
+  { id: 'marcial', titulo: 'Marciais', icone: markRaw(IconeGrupoMarcial), ids: ['guerreiro', 'bárbaro', 'monge', 'ladino'] },
+];
+
+const gruposComClasses = computed(() => {
+  const porId = new Map(classes.value.map((c) => [c.id, c]));
+  const usados = new Set();
+
+  const grupos = GRUPOS_MAGIA.map((g) => {
+    const classesDoGrupo = g.ids.map((id) => porId.get(id)).filter(Boolean);
+    classesDoGrupo.forEach((c) => usados.add(c.id));
+    return { id: g.id, titulo: g.titulo, icone: g.icone, classes: classesDoGrupo };
   });
+
+  // Classe nova que ainda não entrou em nenhum grupo acima não devia
+  // simplesmente sumir da lista — cai aqui até alguém decidir seu tipo.
+  const restantes = classes.value.filter((c) => !usados.has(c.id));
+  if (restantes.length) {
+    grupos.push({ id: 'outras', titulo: 'Outras', classes: restantes });
+  }
+
+  return grupos.filter((g) => g.classes.length > 0);
 });
 
 async function carregar() {
@@ -133,16 +149,8 @@ async function carregar() {
   }
 }
 
-async function abrirDetalhe(id) {
-  try {
-    detalhe.value = await classeService.buscarPorId(id);
-  } catch (e) {
-    erro.value = 'Não foi possível carregar os detalhes da classe.';
-  }
-}
-
-function fecharDetalhe() {
-  detalhe.value = null;
+function abrir(classe) {
+  router.push(`/classes/${classe.id}`);
 }
 
 onMounted(carregar);
@@ -150,80 +158,123 @@ onMounted(carregar);
 
 <style scoped>
 .compendio-classes {
-  max-width: 1100px;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-card: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
+
+  background: var(--jungle-void);
+  color: var(--bone);
+  min-height: 100vh;
+}
+
+/* ===== Hero — padronizado com o Compêndio de Talentos/Raças ===== */
+.cc-hero {
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 5vw, 64px) 24px;
+  background: var(--jungle-dark);
+}
+
+.cc-hero-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
-  color: var(--cs-texto, #e8e0f5);
-}
-
-.titulo-pagina {
-  font-family: 'Pirata One', cursive;
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.filtros {
   display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.input-busca {
-  width: 100%;
-  max-width: 400px;
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #5a4a7a;
-  background: #1a1330;
-  color: #e8e0f5;
-}
-
-.resultados-bar {
-  text-align: center;
-  opacity: 0.8;
-  margin-bottom: 1.5rem;
-}
-
-.grid-classes {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.2rem;
-}
-
-.card-classe {
-  text-align: left;
-  background: #201735;
-  border: 1px solid #4a3a6a;
-  border-left: 4px solid var(--cls-cor, #8a6ac0);
-  border-radius: 10px;
-  padding: 1rem;
-  cursor: pointer;
-  color: inherit;
-  font: inherit;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.card-classe:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-.card-header {
+.cc-hero-title-row {
   display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  margin-bottom: 0.75rem;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.icone {
-  font-size: 1.8rem;
-}
-
-.nome {
-  font-family: 'Cinzel', serif;
+.cc-hero-title {
   margin: 0;
-  font-size: 1.2rem;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 44px);
+  color: var(--tribal-yellow);
+}
+
+.cc-dashed-line {
+  flex: 1;
+  min-width: 60px;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--jungle-green) 0 6px, transparent 6px 12px);
+}
+
+.cc-hero-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--pale-green);
+}
+
+.cc-hero-text {
+  margin: 0;
+  max-width: 70ch;
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.7;
+  color: var(--bone);
+}
+
+.cc-hero-text-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.cc-btn-pergaminhos {
+  flex: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 18px 40px;
+  background: transparent;
+  border: 2px solid var(--tribal-gold);
+  color: var(--tribal-yellow);
+  cursor: pointer;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cc-btn-pergaminhos:hover {
+  background: var(--tribal-gold);
+  color: var(--jungle-darkest);
+}
+
+.cc-arquivos {
+  padding: 40px clamp(16px, 5vw, 64px) clamp(56px, 8vw, 96px);
+  background: var(--jungle-void);
+}
+
+.cc-arquivos-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+}
+
+.cc-arquivos-texto {
+  margin: 0;
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.9;
+  color: var(--bone);
+  white-space: pre-line;
 }
 
 .subtitulo {
@@ -231,117 +282,219 @@ onMounted(carregar);
   opacity: 0.7;
 }
 
-.stats {
+/* ===== Resultados / mostruário — padronizado com o Compêndio de Talentos/Alquimia ===== */
+.cc-results {
+  padding: 28px clamp(16px, 5vw, 64px) clamp(56px, 8vw, 96px);
+  background: var(--jungle-void);
+}
+
+.cc-results-inner {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  gap: 40px;
 }
 
-.pill,
-.role-pill {
-  background: #362a54;
-  border-radius: 999px;
-  padding: 0.2rem 0.7rem;
-  font-size: 0.75rem;
-}
-
-.papeis {
+.cc-grupo {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.carregando,
-.erro {
-  text-align: center;
-  padding: 2rem;
+/* Emblema do grupo — um selo só, sem peças soltas: um semicírculo com o
+   ícone do tipo de magia colado direto (mesma largura, sem linha de
+   junção) num retângulo com um círculo em cada vértice, onde mora o nome. */
+.cc-grupo-emblema {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+.cc-grupo-linha-row {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cc-grupo-linha {
+  flex: 1;
+  height: 1px;
+  background: var(--jungle-green);
+}
+
+.cc-grupo-icone-semicirculo {
+  position: relative;
+  width: 150px;
+  height: 75px;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  border: 3px solid var(--tribal-gold);
+  border-bottom: none;
+  background: var(--jungle-dark);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+  overflow: hidden;
+}
+
+.cc-grupo-icone {
+  flex: none;
+  width: 62px;
+  height: 62px;
+}
+
+.cc-grupo-nome-retangulo {
+  position: relative;
+  width: 150px;
+  padding: 10px 8px;
+  border: 3px solid var(--tribal-gold);
+  border-top: none;
+  background: var(--jungle-dark);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  z-index: 100;
 }
 
-.modal-conteudo {
-  background: #1a1330;
-  border: 1px solid #4a3a6a;
-  border-radius: 12px;
-  padding: 2rem;
-  max-width: 640px;
-  width: 100%;
-  max-height: 85vh;
-  overflow-y: auto;
-  position: relative;
-}
-
-.fechar {
+.cc-grupo-retangulo-circulo {
   position: absolute;
-  top: 0.75rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: #e8e0f5;
-  font-size: 1.5rem;
-  cursor: pointer;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tribal-gold);
 }
 
-.modal-header {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  margin-bottom: 1rem;
+.cc-grupo-retangulo-circulo-tl { top: -4px; left: -4px; }
+.cc-grupo-retangulo-circulo-tr { top: -4px; right: -4px; }
+.cc-grupo-retangulo-circulo-bl { bottom: -4px; left: -4px; }
+.cc-grupo-retangulo-circulo-br { bottom: -4px; right: -4px; }
+
+.cc-grupo-rotulo {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(12px, 1.5vw, 15px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+  white-space: nowrap;
 }
 
-.icone-grande {
-  font-size: 2.5rem;
+.cc-status {
+  margin: 0;
+  padding: 60px 0;
+  text-align: center;
+  font-size: 17px;
+  color: var(--pale-green);
 }
 
-.descricao {
-  margin-bottom: 1rem;
-  line-height: 1.5;
+.cc-status-erro {
+  color: var(--tribal-red);
 }
 
-.grid-info {
+.cc-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
+  justify-content: center;
+  gap: 18px;
 }
 
-.secao {
-  margin-top: 1.2rem;
-}
-
-.secao h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid #4a3a6a;
-  padding-bottom: 0.3rem;
-}
-
-.subclasses {
+.cc-card {
+  position: relative;
+  overflow: visible;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 26px 18px;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  min-width: 0;
 }
 
-.subclasse {
+.cc-card:hover {
+  filter: drop-shadow(0 0 12px rgba(212, 163, 89, 0.35));
+}
+
+.cc-card-frame-1 {
+  position: absolute;
+  inset: 0;
+  background: var(--tribal-gold);
+  pointer-events: none;
+  clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+}
+
+.cc-card-frame-2 {
+  position: absolute;
+  inset: 2px;
+  background: var(--jungle-card);
+  pointer-events: none;
+  clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
+}
+
+.cc-card-frame-3 {
+  position: absolute;
+  inset: 7px;
+  background: color-mix(in srgb, var(--cls-cor, var(--jungle-green)) 75%, transparent);
+  pointer-events: none;
+  clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
+}
+
+.cc-card-frame-4 {
+  position: absolute;
+  inset: 8px;
+  background: var(--jungle-card);
+  pointer-events: none;
+  clip-path: polygon(13px 0, calc(100% - 13px) 0, 100% 13px, 100% calc(100% - 13px), calc(100% - 13px) 100%, 13px 100%, 0 calc(100% - 13px), 0 13px);
+}
+
+.cc-card-diamond {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  background: var(--tribal-gold);
+  pointer-events: none;
+}
+
+.cc-card-diamond-top { top: 0; left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
+.cc-card-diamond-bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%) rotate(45deg); }
+.cc-card-diamond-left { left: 0; top: 50%; transform: translate(-50%, -50%) rotate(45deg); }
+.cc-card-diamond-right { right: 0; top: 50%; transform: translate(50%, -50%) rotate(45deg); }
+
+.cc-card-icone {
+  position: relative;
+  font-size: 40px;
+  line-height: 1;
+}
+
+.cc-card-info {
+  position: relative;
   display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
-.subclasse p {
-  margin: 0.2rem 0 0;
-  font-size: 0.85rem;
-  opacity: 0.85;
+.cc-card-nome {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--bone);
 }
+
+.cc-vazio {
+  margin: 0;
+  padding: 60px 0;
+  text-align: center;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--pale-green);
+}
+
 </style>

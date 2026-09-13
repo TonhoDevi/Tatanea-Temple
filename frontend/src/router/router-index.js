@@ -8,6 +8,7 @@ import CompendioTalentosRaciais from '../components/compendio/CompendioTalentosR
 import DetalheTalentoRacial from '../components/compendio/DetalheTalentoRacial.vue';
 import CompendioAlquimia from '../components/compendio/CompendioAlquimia.vue';
 import CompendioClasses from '../components/compendio/CompendioClasses.vue';
+import DetalheClasse from '../components/compendio/DetalheClasse.vue';
 import Login from '../views/Login.vue';
 import Registro from '../views/Registro.vue';
 import MeusPersonagens from '../views/MeusPersonagens.vue';
@@ -23,6 +24,7 @@ const routes = [
   { path: '/talentos-raciais/:id', name: 'talento-racial-detalhe', component: DetalheTalentoRacial },
   { path: '/alquimia', name: 'alquimia', component: CompendioAlquimia },
   { path: '/classes', name: 'classes', component: CompendioClasses },
+  { path: '/classes/:id', name: 'classe-detalhe', component: DetalheClasse },
   { path: '/login', name: 'login', component: Login, meta: { hideNavbar: true } },
   { path: '/registro', name: 'registro', component: Registro, meta: { hideNavbar: true } },
   { path: '/personagens', name: 'personagens', component: MeusPersonagens, meta: { requerAuth: true } },

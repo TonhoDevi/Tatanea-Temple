@@ -1,0 +1,1377 @@
+/* ========================================
+   COMPÊNDIO DE CLASSES — visual compartilhado
+   Usado pela casca (ClassePaginaLayout) e por toda página de classe
+   (genérica ou dedicada) — global e não-scoped de propósito, pra nenhuma
+   página precisar duplicar essas regras (Regra de Ouro nº4 do theme.css).
+======================================== */
+.dc-page {
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
+
+  background: var(--jungle-dark);
+  color: var(--bone);
+  font-family: 'Crimson Text', Georgia, serif;
+  min-height: 100vh;
+}
+
+.dc-status {
+  padding: 80px 0;
+  text-align: center;
+  font-size: 17px;
+  color: var(--pale-green);
+}
+
+.dc-status-erro {
+  color: var(--tribal-red);
+}
+
+.dc-top {
+  padding: clamp(28px, 4vw, 48px) clamp(16px, 5vw, 64px) 0;
+  background: var(--jungle-dark);
+}
+
+.dc-top-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.dc-voltar {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid var(--pale-green);
+  color: var(--bone);
+  cursor: pointer;
+  clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+}
+
+.dc-voltar:hover {
+  border-color: var(--tribal-yellow);
+  color: var(--tribal-yellow);
+}
+
+.dc-hero {
+  padding: clamp(24px, 4vw, 44px) clamp(16px, 5vw, 64px);
+  background: var(--jungle-dark);
+}
+
+.dc-hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(22px, 3.4vw, 44px);
+  align-items: start;
+}
+
+.dc-retrato {
+  position: relative;
+  min-width: 0;
+  min-height: 220px;
+  border: 1px solid var(--jungle-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(28px 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%, 0 28px);
+  background: var(--jungle-moss);
+}
+
+.dc-retrato-icone {
+  font-size: 88px;
+  line-height: 1;
+}
+
+.dc-hero-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dc-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--pale-green);
+}
+
+.dc-nome {
+  margin: 0;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(34px, 5.4vw, 58px);
+  line-height: 1.05;
+  color: var(--bone);
+  text-transform: uppercase;
+}
+
+.dc-hr-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dc-hr-line {
+  height: 1px;
+  flex: 1;
+  background: var(--jungle-green);
+}
+
+.dc-hr-line-fixed {
+  flex: none;
+  width: min(120px, 22vw);
+}
+
+.dc-hr-diamond {
+  width: 10px;
+  height: 10px;
+  background: var(--tribal-red);
+  transform: rotate(45deg);
+}
+
+.dc-quote {
+  margin: 0;
+  padding: 14px 18px;
+  border-left: 3px solid var(--tribal-gold);
+  background: rgba(10, 20, 14, 0.6);
+  font-style: italic;
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.6;
+  color: var(--bone);
+}
+
+.dc-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.dc-categoria-bloco {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 28px;
+  border: 3px solid var(--tribal-gold);
+  background: var(--jungle-moss);
+}
+
+.dc-categoria-bloco-menor {
+  padding: 18px 22px;
+}
+
+.dc-categoria-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--tribal-gold);
+  transform: rotate(45deg);
+}
+
+.dc-categoria-corner-tl { top: -8px; left: -8px; }
+.dc-categoria-corner-tr { top: -8px; right: -8px; }
+.dc-categoria-corner-bl { bottom: -8px; left: -8px; }
+.dc-categoria-corner-br { bottom: -8px; right: -8px; }
+
+.dc-categoria-bracket {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.dc-categoria-bracket-tl { top: 4px; left: 4px; border-top: 2px solid var(--jungle-green); border-left: 2px solid var(--jungle-green); }
+.dc-categoria-bracket-tr { top: 4px; right: 4px; border-top: 2px solid var(--jungle-green); border-right: 2px solid var(--jungle-green); }
+.dc-categoria-bracket-bl { bottom: 4px; left: 4px; border-bottom: 2px solid var(--jungle-green); border-left: 2px solid var(--jungle-green); }
+.dc-categoria-bracket-br { bottom: 4px; right: 4px; border-bottom: 2px solid var(--jungle-green); border-right: 2px solid var(--jungle-green); }
+
+.dc-categoria-valor {
+  position: relative;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+  text-align: center;
+}
+
+.dc-papeis-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dc-papel-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid var(--jungle-green);
+  color: var(--pale-green);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+}
+
+.dc-body {
+  padding: clamp(32px, 5vw, 64px) clamp(16px, 5vw, 64px);
+  background: var(--jungle-void);
+  border-top: 1px solid rgba(35, 110, 71, 0.5);
+}
+
+.dc-body-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.dc-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.dc-section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dc-section-title {
+  margin: 0;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2.6vw, 30px);
+  color: var(--tribal-yellow);
+}
+
+.dc-title-line {
+  flex: 1;
+  min-width: 40px;
+  height: 1px;
+  background: var(--jungle-green);
+}
+
+.dc-descricao-colunas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dc-descricao-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dc-subtitulo {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+}
+
+.dc-texto-corpo {
+  margin: 0;
+  max-width: 78ch;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--bone);
+  white-space: pre-line;
+}
+
+@media (min-width: 900px) {
+  .dc-descricao-colunas {
+    display: block;
+    column-count: 2;
+    column-gap: 48px;
+    column-rule: 1px solid rgba(35, 110, 71, 0.35);
+  }
+
+  .dc-descricao-bloco {
+    display: block;
+  }
+
+  .dc-subtitulo {
+    break-after: avoid;
+    margin-bottom: 16px;
+  }
+
+  .dc-descricao-colunas .dc-texto-corpo {
+    max-width: none;
+    break-inside: avoid;
+    margin-bottom: 16px;
+  }
+}
+
+.dc-tabela-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--jungle-green);
+}
+
+.dc-tabela-niveis {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.dc-tabela-niveis th {
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--jungle-moss);
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+  border-bottom: 2px solid var(--tribal-gold);
+}
+
+.dc-tabela-niveis td {
+  padding: 9px 14px;
+  border-bottom: 1px solid rgba(35, 110, 71, 0.35);
+  vertical-align: top;
+}
+
+.dc-tabela-niveis tr:last-child td {
+  border-bottom: none;
+}
+
+.dc-tabela-nivel {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  color: var(--tribal-yellow);
+  white-space: nowrap;
+}
+
+.dc-tabela-bonus {
+  text-align: center;
+  white-space: nowrap;
+  color: var(--pale-green);
+}
+
+/* Cabeçalho de qualquer coluna que não seja Nível/Características — essas
+   duas ficam alinhadas à esquerda (padrão do th), todo o resto centralizado. */
+.dc-th-centro {
+  text-align: center;
+}
+
+.dc-tabela-carac {
+  color: var(--bone);
+}
+
+.dc-fundamentos-nota {
+  margin: 0;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--pale-green);
+}
+
+.dc-fundamentos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.dc-fundamento {
+  padding: 18px 20px;
+  border: 1px solid var(--tribal-gold);
+  border-left: 3px solid var(--tribal-gold);
+  background: var(--jungle-moss);
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  min-width: 0;
+}
+
+.dc-fundamento-largo {
+  grid-column: 1 / -1;
+}
+
+.dc-fundamento-titulo {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+  margin-bottom: 8px;
+}
+
+.dc-fundamento-corpo {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--bone);
+  white-space: pre-line;
+}
+
+/* Cards de fundamento com ícone lateral (Incremento no Valor de
+   Habilidade, Talento) — conteúdo à esquerda, ícone fixo à direita,
+   mesma lógica de .dc-prof-linha-com-icone aplicada a .dc-fundamento. */
+.dc-fundamento-com-icone {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.dc-fundamento-conteudo {
+  flex: 1;
+  min-width: 0;
+}
+
+.dc-fundamento-icone {
+  flex: none;
+  align-self: center;
+  width: 88px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .dc-fundamento-com-icone {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dc-fundamento-icone {
+    align-self: center;
+  }
+}
+
+/* Ficha de Vida — dado + fórmulas de PV como leitura rápida de dados,
+   não como parágrafo corrido. */
+.dc-vida-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 22px;
+  border: 1px solid var(--tribal-gold);
+  border-left: 3px solid var(--tribal-gold);
+  background: var(--jungle-moss);
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+/* Caixa completa (sem corte de canto) e ornamentada — mesma linguagem de
+   moldura usada nos badges de destaque do cabeçalho (canto em diamante +
+   friso em "L"), só que ampliada e centralizada no bloco por ser o dado
+   mais importante da seção. */
+.dc-vida-dado {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: none;
+  width: 120px;
+  height: 120px;
+  padding: 16px;
+  border: 3px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+}
+
+.dc-vida-dado-valor {
+  font-weight: 700;
+  font-size: 34px;
+  color: var(--tribal-yellow);
+  line-height: 1;
+}
+
+.dc-vida-dado-prefixo {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+}
+
+/* O valor numérico do dado ganha uma fonte à parte, simples e de traço
+   quadrado — pra se destacar do "d" sem soar decorativo demais. */
+.dc-vida-dado-numero {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 1.05em;
+  margin-left: 2px;
+}
+
+.dc-vida-dado-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pale-green);
+  text-align: center;
+}
+
+.dc-vida-stats {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.dc-vida-icone {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dc-icone-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dc-vida-stat {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+}
+
+.dc-vida-stat-label {
+  flex: none;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+}
+
+.dc-vida-stat-valor {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--bone);
+}
+
+/* Proficiências — uma linha por categoria, itens como chips em vez de
+   texto corrido, pra bater o olho no que importa na hora de criar o personagem. */
+.dc-prof-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dc-prof-linha {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 18px;
+  border: 1px solid rgba(35, 110, 71, 0.5);
+  background: rgba(10, 20, 14, 0.35);
+}
+
+.dc-prof-titulo {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+}
+
+/* Linhas com ícone lateral (Testes de Resistência, Perícias) ficam em
+   linha — conteúdo à esquerda ocupando o espaço livre, ícone fixo à
+   direita — em vez do empilhamento vertical padrão de .dc-prof-linha. */
+.dc-prof-linha-com-icone {
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.dc-prof-linha-conteudo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dc-prof-icone {
+  flex: none;
+  align-self: center;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .dc-prof-linha-com-icone {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dc-prof-icone {
+    align-self: center;
+  }
+}
+
+.dc-prof-nota {
+  color: var(--pale-green);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.dc-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Modificador pontual — centraliza uma linha de chips específica (ex.: os
+   três tipos de magia) sem afetar as demais, que ficam alinhadas à
+   esquerda por padrão. */
+.dc-chip-row-centro {
+  justify-content: center;
+}
+
+/* Selos de atributo (Testes de Resistência) — esticam pra preencher toda a
+   largura do bloco (em vez de ficar pequenos e sobrando vazio ao redor).
+   Mais ornamentados que um chip simples (diamante nos quatro cantos +
+   friso interno), mas mais simples que o Dado de Vida: sem os frisos em
+   "L" nem a caixa avulsa, por ser um selo de apoio, não o protagonista
+   do bloco. */
+.dc-atributo-selos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.dc-atributo-selo {
+  position: relative;
+  display: flex;
+  flex: 1 1 110px;
+  min-width: 110px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px 12px;
+  border: 2px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+}
+
+.dc-atributo-selo::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(196, 158, 74, 0.35);
+  pointer-events: none;
+}
+
+.dc-atributo-selo-corner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: var(--tribal-gold);
+  transform: rotate(45deg);
+}
+
+.dc-atributo-selo-corner-tl { top: -5px; left: -5px; }
+.dc-atributo-selo-corner-tr { top: -5px; right: -5px; }
+.dc-atributo-selo-corner-bl { bottom: -5px; left: -5px; }
+.dc-atributo-selo-corner-br { bottom: -5px; right: -5px; }
+
+.dc-atributo-sigla {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 0.06em;
+  color: var(--tribal-yellow);
+}
+
+.dc-atributo-nome {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pale-green);
+  text-align: center;
+}
+
+/* Opções de subclasse dentro do card "Conclave" — selo com o mesmo anel
+   de canto dos selos de atributo, ícone da subclasse em destaque e nome
+   embaixo, em vez de uma lista de texto corrido. */
+.dc-subclasse-opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.dc-subclasse-opcao {
+  position: relative;
+  flex: 1 1 150px;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 12px;
+  border: 2px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+}
+
+.dc-subclasse-opcao-icone {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.dc-subclasse-opcao-nome {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+  text-align: center;
+}
+
+/* Subgrupos dentro de uma linha de proficiência (ex.: Armadura/Armas/
+   Ferramentas agrupados sob "Proficiências de Equipamento"). */
+.dc-prof-subgrupos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.dc-prof-subgrupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+}
+
+.dc-prof-subtitulo {
+  flex: none;
+  min-width: 96px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pale-green);
+}
+
+.dc-chip {
+  font-size: 13px;
+  padding: 5px 12px;
+  border: 1px solid var(--jungle-green);
+  background: var(--jungle-dark);
+  color: var(--bone);
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+}
+
+/* Corrente de níveis (ex.: Talento) — cada nível é um nó circular, ligado
+   ao próximo por um cordão, formando uma linha do tempo em vez de uma
+   lista solta de chips. */
+.dc-niveis-corrente {
+  display: flex;
+  align-items: center;
+  margin: 4px 0 2px;
+  overflow-x: auto;
+}
+
+.dc-niveis-corrente-no {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.dc-niveis-corrente-cordao {
+  width: 22px;
+  height: 2px;
+  background: var(--tribal-gold);
+  flex: none;
+}
+
+.dc-niveis-corrente-circulo {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--tribal-yellow);
+}
+
+/* Equipamento inicial — escolhas (a)/(b) como chips ligados por "ou". */
+.dc-equip-card {
+  padding: 18px 20px;
+  border: 1px solid var(--tribal-gold);
+  border-left: 3px solid var(--tribal-gold);
+  background: var(--jungle-moss);
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.dc-equip-conteudo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dc-equip-icone {
+  flex: none;
+  align-self: center;
+  width: 84px;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .dc-equip-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dc-equip-icone {
+    align-self: center;
+  }
+}
+
+.dc-equip-titulo {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+}
+
+.dc-equip-intro {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--pale-green);
+}
+
+.dc-equip-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dc-equip-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.dc-equip-ou {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--pale-green);
+}
+
+.dc-hab-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dc-hab-item {
+  border: 1px solid var(--jungle-green);
+  background: var(--bg-card);
+  min-width: 0;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+.dc-hab-cabecalho {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  padding: 15px 18px;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.dc-hab-cabecalho:hover {
+  background: var(--jungle-moss);
+}
+
+.dc-hab-seta {
+  color: var(--tribal-yellow);
+  font-size: 15px;
+  width: 14px;
+  flex: none;
+}
+
+.dc-hab-nivel {
+  flex: none;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pale-green);
+  border: 1px solid var(--jungle-green);
+  padding: 3px 8px;
+}
+
+.dc-hab-nome {
+  flex: 1;
+  min-width: 0;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--bone);
+}
+
+.dc-hab-descricao {
+  margin: 0;
+  padding: 0 18px 18px 46px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--bone);
+  white-space: pre-line;
+}
+
+/* Listas de benefícios embutidas no texto de uma característica (ex.:
+   "Enquanto marcada, você ganha os seguintes benefícios:") ganham um
+   bloco próprio por item — cantinho recuado, tingido, com marcador em
+   losango dourado — em vez de um "•" solto na mesma cor do texto. */
+.dc-hab-descricao ul {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dc-hab-descricao li {
+  position: relative;
+  padding: 9px 16px 9px 26px;
+  background: rgba(10, 20, 14, 0.4);
+  border-left: 2px solid var(--tribal-gold);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.dc-hab-descricao li::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 16px;
+  width: 6px;
+  height: 6px;
+  background: var(--tribal-yellow);
+  transform: rotate(45deg);
+}
+
+/* Princípios/tenets de uma subclasse (ex.: os juramentos do Paladino) —
+   mesmo tratamento visual das listas de benefício em .dc-hab-descricao,
+   só que fora de uma característica expansível, logo abaixo do texto de
+   introdução da subclasse. */
+.dc-principios {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dc-principios li {
+  position: relative;
+  padding: 9px 16px 9px 26px;
+  background: rgba(10, 20, 14, 0.4);
+  border-left: 2px solid var(--tribal-gold);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--bone);
+}
+
+.dc-principios li::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 16px;
+  width: 6px;
+  height: 6px;
+  background: var(--tribal-yellow);
+  transform: rotate(45deg);
+}
+
+/* Termo de jogo grifado dentro do texto de uma habilidade (ex.: AÇÃO
+   BÔNUS, VANTAGEM, DESCANSO CURTO, o nome de outra habilidade) — sempre
+   em caixa alta via text-transform, então a string de origem continua
+   digitada normalmente. */
+.dc-termo {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--tribal-yellow);
+  letter-spacing: 0.02em;
+}
+
+/* Subtítulos em negrito preservados do texto original (ex.: "Arquearia.",
+   "Maldição de Ansiedade.") — presentes em qualquer corpo de texto da
+   página de classe, dedicada ou genérica. */
+.dc-hab-descricao strong,
+.dc-texto-corpo strong,
+.dc-fundamento-corpo strong,
+.dc-magias-texto strong,
+.dc-vida-stat-valor strong {
+  color: var(--tribal-yellow);
+  font-weight: 700;
+}
+
+/* Quando uma característica é melhor lida em tabela do que em prosa
+   (ex.: Território de Caça, uma escolha entre vários terrenos), a tabela
+   fica alinhada com o resto do corpo expandido. */
+.dc-hab-tabela {
+  padding: 0 18px 18px 46px;
+}
+
+.dc-subclasse {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  margin-bottom: 8px;
+  border: 1px solid var(--tribal-gold);
+  background: rgba(10, 20, 14, 0.4);
+}
+
+.dc-subclasse-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Moldura do ícone da subclasse — mesmo anel de canto dos selos de
+   atributo, pra dar ao cabeçalho de cada subclasse o mesmo acabamento
+   ornamentado usado no resto da página, em vez de um emoji solto. */
+.dc-subclasse-icone-moldura {
+  position: relative;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+}
+
+.dc-subclasse-icone {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.dc-subclasse-nome {
+  margin: 0;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(18px, 2.2vw, 24px);
+  color: var(--tribal-yellow);
+}
+
+.dc-magias-box {
+  padding: 12px 16px;
+  background: var(--jungle-moss);
+  border-left: 3px solid var(--tribal-gold);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.dc-magias-titulo {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+  margin-bottom: 4px;
+}
+
+.dc-magias-texto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--bone);
+  white-space: pre-line;
+}
+
+/* Página dedicada do Caçador: magias por nível em tabela (Nível do
+   Caçador / Magia) em vez da caixa de texto corrido acima — que continua
+   existindo pro fallback genérico das classes ainda sem página própria. */
+.dc-magias-tabela {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dc-hint {
+  margin: 0;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--pale-green);
+}
+
+.dc-tabela-bruta {
+  margin: 0;
+  padding: 18px;
+  background: var(--jungle-moss);
+  border: 1px solid var(--jungle-green);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--pale-green);
+  white-space: pre-wrap;
+  overflow-x: auto;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.dc-rodape {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 8px;
+  border-top: 1px solid rgba(35, 110, 71, 0.5);
+}
+
+.dc-voltar-final {
+  margin-top: 24px;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 14px 24px;
+  background: var(--tribal-red);
+  border: 1px solid var(--tribal-yellow);
+  color: var(--bone);
+  cursor: pointer;
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+
+.dc-voltar-final:hover {
+  background: var(--jungle-green);
+}
+
+/* Par de cards da Conjuração — retângulos completos (sem corte de canto),
+   com um pequeno anel em cada canto e uma fivela ligando os dois cards no
+   meio do espaço entre eles, como se fossem duas metades de um mesmo
+   conjunto. O conector só faz sentido lado a lado; em telas estreitas os
+   cards empilham e ele some. */
+.dc-conjuracao-par {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.dc-conjuracao-par::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 2px;
+  background: var(--tribal-gold);
+  transform: translate(-50%, -50%);
+}
+
+.dc-conjuracao-par::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--tribal-gold);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+@media (max-width: 560px) {
+  .dc-conjuracao-par::before,
+  .dc-conjuracao-par::after {
+    display: none;
+  }
+}
+
+/* Retângulo completo (sem o corte de canto padrão de .dc-fundamento) com
+   um pequeno anel dourado marcando cada um dos quatro cantos — por isso a
+   borda esquerda mais grossa de .dc-fundamento (pensada pro card cortado)
+   é nivelada às outras três aqui. */
+.dc-fundamento-retangular {
+  position: relative;
+  clip-path: none;
+  border-right-width: 3px;
+}
+
+.dc-fundamento-corner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--tribal-gold);
+  border-radius: 50%;
+  background: var(--jungle-void);
+}
+
+.dc-fundamento-corner-tl { top: -5px; left: -5px; }
+.dc-fundamento-corner-tr { top: -5px; right: -5px; }
+.dc-fundamento-corner-bl { bottom: -5px; left: -5px; }
+.dc-fundamento-corner-br { bottom: -5px; right: -5px; }
+
+/* Conjuração — classificação do conjurador (ex.: "Meio Conjurador") como
+   selo de destaque, reaproveitando o mesmo diamante de canto dos selos de
+   atributo. */
+.dc-conjuracao-tipo-linha {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.dc-conjuracao-tipo-prefixo {
+  font-style: italic;
+  font-size: 16px;
+  color: var(--bone);
+}
+
+.dc-conjuracao-tipo {
+  position: relative;
+  display: inline-flex;
+  padding: 8px 20px;
+  border: 2px solid var(--tribal-gold);
+  background: var(--jungle-dark);
+}
+
+.dc-conjuracao-tipo-texto {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+  white-space: nowrap;
+}
+
+/* Os três tipos de magia (Natural/Divina/Arcana) — o tipo do Caçador fica
+   em destaque, os outros dois ficam esmaecidos, deixando claro qual se
+   aplica sem esconder as outras opções que existem no jogo. */
+.dc-chip-tipo-magia {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.dc-chip-tipo-magia-ativo {
+  border-color: var(--tribal-gold);
+  background: var(--tribal-gold);
+  color: var(--jungle-void);
+}
+
+.dc-chip-tipo-magia-inativo {
+  opacity: 0.4;
+}
+
+.dc-atributo-magia-rotulo {
+  display: block;
+  margin-top: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pale-green);
+  text-align: center;
+}
+
+/* Nome do atributo de conjuração como título central, ladeado por linhas —
+   mesma linguagem do friso sob o nome da classe no cabeçalho. */
+.dc-atributo-magia-linha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 8px 0 4px;
+}
+
+.dc-atributo-magia-nome {
+  flex: none;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 28px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tribal-yellow);
+}
+
+.dc-formula-nota {
+  margin: 6px 0 0;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--bone);
+  opacity: 0.55;
+}
+
+@media (max-width: 700px) {
+  .dc-hero-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Em telas de desktop, toda página de classe nasce no mesmo tamanho de
+   quando o usuário dá zoom manual de 133% no navegador — mesma técnica da
+   ficha de personagem (`.ficha-page`). O `zoom` (diferente de
+   transform:scale) recalcula o layout de verdade, então isso é padrão pra
+   todas as páginas de classe, dedicadas ou genéricas. */
+@media (min-width: 901px) {
+  .dc-page {
+    zoom: 1.33;
+  }
+}
