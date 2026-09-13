@@ -1,5 +1,6 @@
-import { ref, reactive, computed, inject, provide } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ref, reactive, computed, inject, provide, onMounted, onBeforeUnmount } from 'vue';
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
+import http from '../services/http';
 import personagemService from '../services/personagemService';
 import { racaService } from '../services/racaService';
 import classeService from '../services/classeService';
@@ -731,6 +732,84 @@ mostrarSalvo.value = true;
 setTimeout(() => (mostrarSalvo.value = false), 1500);
 }
 
+// ===== Aviso de saída com alterações pendentes =====
+// Salvar demora até ~17s (Render + Supabase em regiões diferentes), então
+// não faz sentido travar o jogador na tela esperando a resposta só pra poder
+// sair. avisoSairAberto controla o popup customizado (AvisoAlteracoesPendentes.vue);
+// abrirAvisoSaida() devolve uma Promise que o guard de rota do router usa pra
+// decidir se deixa a navegação continuar.
+const avisoSairAberto = ref(false);
+let resolverAvisoSaida = null;
+
+function abrirAvisoSaida() {
+return new Promise((resolve) => {
+  avisoSairAberto.value = true;
+  resolverAvisoSaida = resolve;
+});
+}
+
+function fecharAvisoSaida(permiteSair) {
+avisoSairAberto.value = false;
+const resolver = resolverAvisoSaida;
+resolverAvisoSaida = null;
+resolver?.(permiteSair);
+}
+
+// Dispara o salvamento sem esperar a resposta do backend — a navegação
+// libera na hora, e o PUT continua rodando em segundo plano (a instância da
+// ficha continua viva no cache do keep-alive, então o retorno da promise
+// ainda atualiza mostrarSalvo/ficha normalmente quando chegar).
+function salvarESair() {
+salvarAgora().catch((e) => console.error('Falha ao salvar a ficha em segundo plano:', e));
+fecharAvisoSaida(true);
+}
+
+function sairSemSalvar() {
+fecharAvisoSaida(true);
+}
+
+function continuarEditando() {
+fecharAvisoSaida(false);
+}
+
+onBeforeRouteLeave(() => {
+if (!houveAlteracao.value) return true;
+return abrirAvisoSaida();
+});
+
+// Fechar a aba/atualizar a página não passa pelo router — não tem como
+// mostrar um popup customizado aqui, todo navegador bloqueia UI própria
+// dentro de beforeunload. Ainda assim tentamos mandar a ficha com
+// fetch(..., { keepalive: true }), que sobrevive ao descarregamento da
+// página (dentro de um limite de payload de uns 64KB) — diferente do axios
+// normal, que seria cancelado na hora. O aviso nativo do navegador continua
+// aparecendo como rede de segurança, já que o keepalive não é garantido
+// (fichas com imagem embutida em base64 podem passar do limite).
+function tentarSalvarAoFechar(evento) {
+if (!houveAlteracao.value) return;
+normalizarDeslocamento();
+try {
+  const token = localStorage.getItem('tatanea_token');
+  fetch(`${http.defaults.baseURL}/personagens/${route.params.id}`, {
+    method: 'PUT',
+    keepalive: true,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(ficha.value),
+  });
+} catch (e) {
+  // Payload grande demais pro limite do keepalive, ou navegador sem
+  // suporte — nada mais a fazer aqui além do aviso nativo abaixo.
+}
+evento.preventDefault();
+evento.returnValue = '';
+}
+
+onMounted(() => window.addEventListener('beforeunload', tentarSalvarAoFechar));
+onBeforeUnmount(() => window.removeEventListener('beforeunload', tentarSalvarAoFechar));
+
 async function excluir() {
 if (!confirm('Excluir esse personagem? Essa ação não pode ser desfeita.')) return;
 await personagemService.remover(route.params.id);
@@ -813,7 +892,7 @@ ficha.value.iniciativaBonus = iniciativaTotal.value;
 
 const contexto = {
 // estado
-ficha, mostrarSalvo, houveAlteracao, novaTag, ajustePv, bonusProficiencia,
+ficha, mostrarSalvo, houveAlteracao, avisoSairAberto, novaTag, ajustePv, bonusProficiencia,
 tesouro, habilidadesRaca, limiteSincronizados,
 racasDisponiveis, classesDisponiveis, talentosDisponiveis, talentoSelecionado, erroTalento,
 racaDetalhe, editandoEscolha,
@@ -845,6 +924,7 @@ adicionarItemMagico, removerItemMagico,
 adicionarHabilidade, adicionarUnidade, adicionarTag,
 magiasPorNivel, slotDe, adicionarMagia, removerMagia,
 agendarSalvar, salvarAgora, excluir,
+salvarESair, sairSemSalvar, continuarEditando,
 selecionarImagem, removerImagem,
 exportarJSON, importarJSON,
 carregar,
