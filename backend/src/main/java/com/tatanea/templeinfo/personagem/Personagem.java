@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -37,8 +39,10 @@ public class Personagem {
     @Column(nullable = false)
     private int nivel = 1;
 
-    @Column(name = "imagem_url", length = 300)
-    private String imagemUrl;
+    // Imagem embutida como data URI (base64) — não há upload/armazenamento de
+    // arquivo separado, então o valor já vem pronto pra virar <img src>.
+    @Column(name = "imagem_dados", columnDefinition = "TEXT")
+    private String imagemDados;
 
     private int forca = 10;
     private int destreza = 10;
@@ -58,8 +62,8 @@ public class Personagem {
 
     private int ca = 10;
 
-    @Column(length = 20)
-    private String deslocamento;
+    @Column(columnDefinition = "DECIMAL(6,2)")
+    private Double deslocamento;
 
     @Column(name = "iniciativa_bonus")
     private int iniciativaBonus;
@@ -99,17 +103,17 @@ public class Personagem {
     @Column(name = "moeda_pl")
     private int moedaPl;
 
-    @Column(name = "desloc_nadar", length = 20)
-    private String deslocNadar;
+    @Column(name = "desloc_nadar", columnDefinition = "DECIMAL(6,2)")
+    private Double deslocNadar;
 
-    @Column(name = "desloc_voar", length = 20)
-    private String deslocVoar;
+    @Column(name = "desloc_voar", columnDefinition = "DECIMAL(6,2)")
+    private Double deslocVoar;
 
-    @Column(name = "desloc_escalar", length = 20)
-    private String deslocEscalar;
+    @Column(name = "desloc_escalar", columnDefinition = "DECIMAL(6,2)")
+    private Double deslocEscalar;
 
-    @Column(length = 20)
-    private String salto;
+    @Column(columnDefinition = "DECIMAL(6,2)")
+    private Double salto;
 
     @Column(length = 5000)
     private String idiomas;
@@ -229,6 +233,15 @@ public class Personagem {
     @OrderBy("nivel ASC")
     private List<PersonagemSlotMagia> slotsMagia = new ArrayList<>();
 
+    // Escolha de atributo pra bônus "à escolha" (de raça ou de talento) — chave
+    // no formato "raca-<racaId>-<atributoIndex>-<n>" ou "talento-<talentoId>-<atributoIndex>-<n>",
+    // valor é a chave do atributo escolhido (ex.: "forca").
+    @ElementCollection
+    @CollectionTable(name = "personagem_escolhas_atributo", joinColumns = @JoinColumn(name = "personagem_id"))
+    @MapKeyColumn(name = "chave", length = 40)
+    @Column(name = "atributo", length = 20)
+    private Map<String, String> escolhasAtributo = new HashMap<>();
+
     protected Personagem() {
     }
 
@@ -272,8 +285,8 @@ public class Personagem {
     public void setClasseId(String classeId) { this.classeId = classeId; }
     public int getNivel() { return nivel; }
     public void setNivel(int nivel) { this.nivel = nivel; }
-    public String getImagemUrl() { return imagemUrl; }
-    public void setImagemUrl(String imagemUrl) { this.imagemUrl = imagemUrl; }
+    public String getImagemDados() { return imagemDados; }
+    public void setImagemDados(String imagemDados) { this.imagemDados = imagemDados; }
     public int getForca() { return forca; }
     public void setForca(int forca) { this.forca = forca; }
     public int getDestreza() { return destreza; }
@@ -294,8 +307,8 @@ public class Personagem {
     public void setPvTemporario(int pvTemporario) { this.pvTemporario = pvTemporario; }
     public int getCa() { return ca; }
     public void setCa(int ca) { this.ca = ca; }
-    public String getDeslocamento() { return deslocamento; }
-    public void setDeslocamento(String deslocamento) { this.deslocamento = deslocamento; }
+    public Double getDeslocamento() { return deslocamento; }
+    public void setDeslocamento(Double deslocamento) { this.deslocamento = deslocamento; }
     public int getIniciativaBonus() { return iniciativaBonus; }
     public void setIniciativaBonus(int iniciativaBonus) { this.iniciativaBonus = iniciativaBonus; }
     public String getAtributoMagia() { return atributoMagia; }
@@ -322,14 +335,14 @@ public class Personagem {
     public void setMoedaPe(int moedaPe) { this.moedaPe = moedaPe; }
     public int getMoedaPl() { return moedaPl; }
     public void setMoedaPl(int moedaPl) { this.moedaPl = moedaPl; }
-    public String getDeslocNadar() { return deslocNadar; }
-    public void setDeslocNadar(String deslocNadar) { this.deslocNadar = deslocNadar; }
-    public String getDeslocVoar() { return deslocVoar; }
-    public void setDeslocVoar(String deslocVoar) { this.deslocVoar = deslocVoar; }
-    public String getDeslocEscalar() { return deslocEscalar; }
-    public void setDeslocEscalar(String deslocEscalar) { this.deslocEscalar = deslocEscalar; }
-    public String getSalto() { return salto; }
-    public void setSalto(String salto) { this.salto = salto; }
+    public Double getDeslocNadar() { return deslocNadar; }
+    public void setDeslocNadar(Double deslocNadar) { this.deslocNadar = deslocNadar; }
+    public Double getDeslocVoar() { return deslocVoar; }
+    public void setDeslocVoar(Double deslocVoar) { this.deslocVoar = deslocVoar; }
+    public Double getDeslocEscalar() { return deslocEscalar; }
+    public void setDeslocEscalar(Double deslocEscalar) { this.deslocEscalar = deslocEscalar; }
+    public Double getSalto() { return salto; }
+    public void setSalto(Double salto) { this.salto = salto; }
     public String getIdiomas() { return idiomas; }
     public void setIdiomas(String idiomas) { this.idiomas = idiomas; }
     public String getHistoria() { return historia; }
@@ -384,4 +397,5 @@ public class Personagem {
     public List<PersonagemTesouroItem> getTesouro() { return tesouro; }
     public List<PersonagemPvMaximoComponente> getPvMaximoComponentes() { return pvMaximoComponentes; }
     public List<PersonagemSlotMagia> getSlotsMagia() { return slotsMagia; }
+    public Map<String, String> getEscolhasAtributo() { return escolhasAtributo; }
 }

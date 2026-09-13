@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
+import java.util.Map;
 
 public class PersonagemDtos {
 
@@ -109,7 +110,7 @@ public class PersonagemDtos {
             Long racaId,
             String classeId,
             int nivel,
-            String imagemUrl,
+            String imagemDados,
             int pvAtual,
             int pvMaximo
     ) {
@@ -123,7 +124,7 @@ public class PersonagemDtos {
             Long racaId,
             String classeId,
             int nivel,
-            String imagemUrl,
+            String imagemDados,
             int forca,
             int destreza,
             int constituicao,
@@ -134,7 +135,7 @@ public class PersonagemDtos {
             int pvMaximo,
             int pvTemporario,
             int ca,
-            String deslocamento,
+            Double deslocamento,
             int iniciativaBonus,
             String atributoMagia,
             int bonusMagiaExtra,
@@ -148,10 +149,10 @@ public class PersonagemDtos {
             int moedaPo,
             int moedaPe,
             int moedaPl,
-            String deslocNadar,
-            String deslocVoar,
-            String deslocEscalar,
-            String salto,
+            Double deslocNadar,
+            Double deslocVoar,
+            Double deslocEscalar,
+            Double salto,
             String idiomas,
             String historia,
             String anotacoes,
@@ -184,7 +185,8 @@ public class PersonagemDtos {
             List<IniciativaModificadorDto> iniciativaModificadores,
             List<TesouroItemDto> tesouro,
             List<PvMaximoComponenteDto> pvMaximoComponentes,
-            List<SlotMagiaDto> slotsMagia
+            List<SlotMagiaDto> slotsMagia,
+            Map<String, String> escolhasAtributo
     ) {
     }
 
@@ -198,8 +200,8 @@ public class PersonagemDtos {
             Long racaId,
             String classeId,
             int nivel,
-            @Size(max = 300, message = "caminho da imagem inválido")
-            String imagemUrl,
+            @Size(max = 2_900_000, message = "imagem muito grande")
+            String imagemDados,
             int forca,
             int destreza,
             int constituicao,
@@ -210,7 +212,7 @@ public class PersonagemDtos {
             int pvMaximo,
             int pvTemporario,
             int ca,
-            String deslocamento,
+            Double deslocamento,
             int iniciativaBonus,
             String atributoMagia,
             int bonusMagiaExtra,
@@ -224,10 +226,10 @@ public class PersonagemDtos {
             int moedaPo,
             int moedaPe,
             int moedaPl,
-            String deslocNadar,
-            String deslocVoar,
-            String deslocEscalar,
-            String salto,
+            Double deslocNadar,
+            Double deslocVoar,
+            Double deslocEscalar,
+            Double salto,
             @Size(max = 5000, message = "idiomas não pode passar de 5000 caracteres")
             String idiomas,
             @Size(max = 5000, message = "história não pode passar de 5000 caracteres")
@@ -267,7 +269,8 @@ public class PersonagemDtos {
             List<IniciativaModificadorDto> iniciativaModificadores,
             List<TesouroItemDto> tesouro,
             List<PvMaximoComponenteDto> pvMaximoComponentes,
-            List<SlotMagiaDto> slotsMagia
+            List<SlotMagiaDto> slotsMagia,
+            Map<String, String> escolhasAtributo
     ) {
     }
 }

@@ -115,7 +115,7 @@ public class PersonagemService {
         p.setRacaId(dto.racaId());
         p.setClasseId(dto.classeId());
         p.setNivel(dto.nivel());
-        p.setImagemUrl(dto.imagemUrl());
+        p.setImagemDados(dto.imagemDados());
         p.setForca(dto.forca());
         p.setDestreza(dto.destreza());
         p.setConstituicao(dto.constituicao());
@@ -285,12 +285,21 @@ public class PersonagemService {
                 p.getSlotsMagia().add(new PersonagemSlotMagia(p, d.nivel(), d.total(), d.restantes()));
             }
         }
+
+        p.getEscolhasAtributo().clear();
+        if (dto.escolhasAtributo() != null) {
+            dto.escolhasAtributo().forEach((chave, atributo) -> {
+                if (chave != null && !chave.isBlank() && atributo != null && !atributo.isBlank()) {
+                    p.getEscolhasAtributo().put(chave, atributo);
+                }
+            });
+        }
     }
 
     private PersonagemResumoDto paraResumo(Personagem p) {
         return new PersonagemResumoDto(
                 p.getId(), p.getNome(), p.getTipo(), p.getRacaId(), p.getClasseId(),
-                p.getNivel(), p.getImagemUrl(), p.getPvAtual(), p.getPvMaximo()
+                p.getNivel(), p.getImagemDados(), p.getPvAtual(), p.getPvMaximo()
         );
     }
 
@@ -378,7 +387,7 @@ public class PersonagemService {
 
         return new PersonagemDetalheDto(
                 p.getId(), p.getNome(), p.getTipo(), p.getNomeJogador(), p.getRacaId(), p.getClasseId(),
-                p.getNivel(), p.getImagemUrl(),
+                p.getNivel(), p.getImagemDados(),
                 p.getForca(), p.getDestreza(), p.getConstituicao(), p.getInteligencia(), p.getSabedoria(), p.getCarisma(),
                 p.getPvAtual(), p.getPvMaximo(), p.getPvTemporario(), p.getCa(), p.getDeslocamento(),
                 p.getIniciativaBonus(), p.getAtributoMagia(), p.getBonusMagiaExtra(), p.isInspiracao(), p.getDadosVidaGastos(),
@@ -392,7 +401,8 @@ public class PersonagemService {
                 p.isSalvaguardaForca(), p.isSalvaguardaDestreza(), p.isSalvaguardaConstituicao(),
                 p.isSalvaguardaInteligencia(), p.isSalvaguardaSabedoria(), p.isSalvaguardaCarisma(),
                 pericias, ataques, inventario, itensMagicos, habilidades, magias, unidades, tags, talentos,
-                armaduraPecas, iniciativaModificadores, tesouro, pvMaximoComponentes, slotsMagia
+                armaduraPecas, iniciativaModificadores, tesouro, pvMaximoComponentes, slotsMagia,
+                new java.util.HashMap<>(p.getEscolhasAtributo())
         );
     }
 }

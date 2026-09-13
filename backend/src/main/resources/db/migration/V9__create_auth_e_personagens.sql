@@ -21,7 +21,9 @@ CREATE TABLE personagens (
     raca_id              BIGINT REFERENCES racas(id),
     classe_id            VARCHAR(64) REFERENCES classes(id),
     nivel                INT NOT NULL DEFAULT 1,
-    imagem_url           VARCHAR(500),
+    -- Imagem embutida como data URI (base64), não uma URL externa — não há
+    -- upload/storage de arquivo separado, o valor já vem pronto pra <img src>.
+    imagem_dados         TEXT,
 
     forca                INT NOT NULL DEFAULT 10,
     destreza             INT NOT NULL DEFAULT 10,
@@ -34,7 +36,7 @@ CREATE TABLE personagens (
     pv_maximo            INT NOT NULL DEFAULT 0,
     pv_temporario        INT NOT NULL DEFAULT 0,
     ca                   INT NOT NULL DEFAULT 10,
-    deslocamento         VARCHAR(20),
+    deslocamento         DECIMAL(6,2),
     iniciativa_bonus     INT NOT NULL DEFAULT 0,
     atributo_magia       VARCHAR(20),
     bonus_magia_extra    INT NOT NULL DEFAULT 0,
@@ -51,10 +53,12 @@ CREATE TABLE personagens (
     moeda_pe             INT NOT NULL DEFAULT 0,
     moeda_pl             INT NOT NULL DEFAULT 0,
 
-    desloc_nadar         VARCHAR(20),
-    desloc_voar          VARCHAR(20),
-    desloc_escalar       VARCHAR(20),
-    salto                VARCHAR(20),
+    -- Todos os campos de deslocamento (inclusive salto) ficam em metros; o
+    -- front converte para pés/quadrados na exibição.
+    desloc_nadar         DECIMAL(6,2),
+    desloc_voar          DECIMAL(6,2),
+    desloc_escalar       DECIMAL(6,2),
+    salto                DECIMAL(6,2),
 
     -- VARCHAR com limite (não TEXT ilimitado): evita que um payload gigante
     -- vindo do cliente vire uma negação de serviço no banco.
@@ -287,3 +291,13 @@ CREATE TABLE personagem_slots_magia (
 );
 
 CREATE INDEX idx_personagem_slots_magia_personagem ON personagem_slots_magia(personagem_id);
+
+-- ============================================================
+-- Escolha de atributo pra bônus "à escolha" (de raça ou de talento)
+-- ============================================================
+CREATE TABLE personagem_escolhas_atributo (
+    personagem_id  VARCHAR(36) NOT NULL REFERENCES personagens(id) ON DELETE CASCADE,
+    chave          VARCHAR(40) NOT NULL,
+    atributo       VARCHAR(20) NOT NULL,
+    PRIMARY KEY (personagem_id, chave)
+);
