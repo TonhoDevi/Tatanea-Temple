@@ -122,7 +122,7 @@
             <span class="cr-card-diamond cr-card-diamond-right"></span>
 
             <span class="cr-card-retrato">
-              <img v-if="raca.imagemUrl" :src="raca.imagemUrl" :alt="raca.nome" class="cr-card-retrato-img" />
+              <img v-if="raca.imagemUrl" :src="raca.imagemUrl" :alt="raca.nome" class="cr-card-retrato-img" loading="lazy" />
               <span v-else class="cr-card-retrato-placeholder">[ retrato ]</span>
             </span>
 

@@ -45,6 +45,10 @@ public class RacaService {
         return raca.getImagem();
     }
 
+    public RacaImagemRepository.Metadata buscarMetadataImagem(Long id) {
+        return racaImagemRepository.encontrarMetadata(id).orElseThrow(() -> new RacaNaoEncontradaException(id));
+    }
+
     private Raca buscarEntidade(Long id) {
         return racaRepository.findById(id).orElseThrow(() -> new RacaNaoEncontradaException(id));
     }
