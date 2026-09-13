@@ -19,47 +19,62 @@
         <div class="ra-acerto">
           <div class="ra-acerto-dados">
             <span
-                v-for="(v, di) in resultado.d20s"
+                v-for="(v, di) in d20Preview"
                 :key="di"
                 class="ra-d20"
                 :class="{
-                  'ra-d20-descartado': resultado.d20s.length > 1 && di !== resultado.d20UsadoIndice,
-                  'ra-critico': di === resultado.d20UsadoIndice && v === 20,
-                  'ra-critfalho': di === resultado.d20UsadoIndice && v === 1,
+                  'ra-d20-girando': di >= d20Revelados,
+                  'ra-d20-assentado': di < d20Revelados,
+                  'ra-d20-descartado': mostrarAcerto && resultado.d20s.length > 1 && di !== resultado.d20UsadoIndice,
+                  'ra-critico': mostrarAcerto && di === resultado.d20UsadoIndice && v === 20,
+                  'ra-critfalho': mostrarAcerto && di === resultado.d20UsadoIndice && v === 1,
                 }"
             >{{ v }}</span>
           </div>
 
-          <span class="ra-acerto-divisor"></span>
+          <template v-if="mostrarAcerto">
+            <span class="ra-acerto-divisor"></span>
 
-          <div class="ra-acerto-bonus">{{ formatarMod(resultado.acertoBonus) }}</div>
+            <div class="ra-acerto-bonus">{{ formatarMod(resultado.acertoBonus) }}</div>
 
-          <span class="ra-acerto-divisor"></span>
+            <span class="ra-acerto-divisor"></span>
 
-          <div class="ra-acerto-total">
-            <span class="ra-acerto-total-label">Total</span>
-            <span class="ra-acerto-total-valor">{{ resultado.acertoTotal }}</span>
-          </div>
+            <div class="ra-acerto-total">
+              <span class="ra-acerto-total-label">Total</span>
+              <span class="ra-acerto-total-valor">{{ resultado.acertoTotal }}</span>
+            </div>
+          </template>
         </div>
 
-        <p v-if="resultado.critico" class="ra-aviso ra-aviso-critico">Acerto crítico!</p>
-        <p v-if="resultado.critFalho" class="ra-aviso ra-aviso-critfalho">Falha crítica!</p>
+        <p v-if="mostrarAcerto && resultado.critico" class="ra-aviso ra-aviso-critico">Acerto crítico!</p>
+        <p v-if="mostrarAcerto && resultado.critFalho" class="ra-aviso ra-aviso-critfalho">Falha crítica!</p>
 
-        <div v-if="resultado.danos.length" class="ra-danos">
+        <div v-if="mostrarAcerto && resultado.danos.length" class="ra-danos">
           <div v-for="(d, di) in resultado.danos" :key="di" class="ra-dano-linha">
             <span class="ra-dano-tipo">{{ d.tipoDano || 'Dano' }}</span>
-            <span class="ra-dano-formula">{{ d.quantidade }}{{ d.dado }} ({{ d.rolagens.join(' + ') }}){{ d.bonus ? formatarMod(d.bonus) : '' }}</span>
-            <span class="ra-dano-valor">{{ d.subtotal }}</span>
+            <div class="ra-dano-dados">
+              <span
+                  v-for="(v, ri) in dadosDaLinha(di)"
+                  :key="ri"
+                  class="ra-dano-dado"
+                  :class="{
+                    'ra-dano-dado-girando': resultado.danoOffsets[di] + ri >= danoRevelados,
+                    'ra-dano-dado-assentado': resultado.danoOffsets[di] + ri < danoRevelados,
+                  }"
+              >{{ v }}</span>
+              <span v-if="d.bonus" class="ra-dano-bonus-inline">{{ formatarMod(d.bonus) }}</span>
+            </div>
+            <span v-if="linhaDeDanoCompleta(di)" class="ra-dano-valor">{{ d.subtotal }}</span>
           </div>
-          <div class="ra-dano-total">
+          <div v-if="mostrarDanoTotal" class="ra-dano-total">
             <span class="ra-dano-total-label">Dano total</span>
             <span class="ra-dano-total-valor">{{ resultado.danoTotal }}</span>
           </div>
         </div>
 
         <div class="ra-acoes">
-          <button class="ra-btn-rolar" @click="rolar">⚅ Rolar novamente</button>
-          <button class="ra-btn-trocar" @click="modo = null">Trocar modo</button>
+          <button class="ra-btn-rolar" :disabled="rolando" @click="rolar">⚅ Rolar novamente</button>
+          <button class="ra-btn-trocar" :disabled="rolando" @click="trocarModo">Trocar modo</button>
         </div>
       </div>
     </div>
@@ -67,7 +82,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeUnmount } from 'vue';
 
 const props = defineProps({
   ataque: { type: Object, required: true },
@@ -79,6 +94,27 @@ const MODO_LABEL = { normal: 'Rolagem normal', vantagem: 'Vantagem', desvantagem
 
 const modo = ref(null);
 const resultado = ref(null);
+
+// Mesma lógica de animação do Lançador de Dados (RoladorDados.vue): os dados
+// ainda não revelados ficam sorteando valores a cada tick do intervalo; ao
+// serem revelados, travam no valor final em sequência. Aqui em duas fases —
+// primeiro o(s) d20 de acerto assentam e revelam o total, só então os dados
+// de dano começam a girar e assentar por sua vez.
+const rolando = ref(false);
+const d20Preview = ref([]);
+const d20Revelados = ref(0);
+const mostrarAcerto = ref(false);
+const danoPreview = ref([]);
+const danoRevelados = ref(0);
+const mostrarDanoTotal = ref(false);
+
+let intervalIds = [];
+let timeoutIds = [];
+
+function limparTimers() {
+  intervalIds.splice(0).forEach(clearInterval);
+  timeoutIds.splice(0).forEach(clearTimeout);
+}
 
 function rolarDado(faces) {
   return Math.floor(Math.random() * faces) + 1;
@@ -93,31 +129,143 @@ function escolherModo(m) {
   rolar();
 }
 
-function rolar() {
-  const d20s = modo.value === 'normal' ? [rolarDado(20)] : [rolarDado(20), rolarDado(20)];
-  const alvo = modo.value === 'desvantagem' ? Math.min(...d20s) : Math.max(...d20s);
-  const d20UsadoIndice = d20s.indexOf(alvo);
+function trocarModo() {
+  limparTimers();
+  rolando.value = false;
+  mostrarAcerto.value = false;
+  mostrarDanoTotal.value = false;
+  resultado.value = null;
+  modo.value = null;
+}
 
-  const danos = (props.ataque.danos || []).map((d) => {
+function dadosDaLinha(di) {
+  if (!resultado.value) return [];
+  const offset = resultado.value.danoOffsets[di];
+  const qtd = resultado.value.danos[di].rolagens.length;
+  return danoPreview.value.slice(offset, offset + qtd);
+}
+
+function linhaDeDanoCompleta(di) {
+  if (!resultado.value) return false;
+  const offset = resultado.value.danoOffsets[di];
+  const qtd = resultado.value.danos[di].rolagens.length;
+  return offset + qtd <= danoRevelados.value;
+}
+
+function iniciarAnimacaoDano(danosFinal, offsets, total) {
+  const flatFinal = [];
+  const flatFaces = [];
+  danosFinal.forEach((d) => {
+    d.rolagens.forEach((v) => {
+      flatFinal.push(v);
+      flatFaces.push(d.faces);
+    });
+  });
+
+  danoPreview.value = flatFaces.map((faces) => rolarDado(faces));
+  danoRevelados.value = 0;
+
+  const danoInterval = setInterval(() => {
+    danoPreview.value = danoPreview.value.map((v, i) => (i < danoRevelados.value ? v : rolarDado(flatFaces[i])));
+  }, 65);
+  intervalIds.push(danoInterval);
+
+  const giroBaseDano = 380 + Math.random() * 180;
+  const atrasoDano = 75;
+
+  flatFinal.forEach((valor, i) => {
+    const id = setTimeout(() => {
+      danoRevelados.value = i + 1;
+      danoPreview.value = danoPreview.value.map((v, idx) => (idx === i ? valor : v));
+
+      if (i === flatFinal.length - 1) {
+        clearInterval(danoInterval);
+        const idFinal = setTimeout(() => {
+          mostrarDanoTotal.value = true;
+          rolando.value = false;
+        }, 200);
+        timeoutIds.push(idFinal);
+      }
+    }, giroBaseDano + i * atrasoDano);
+    timeoutIds.push(id);
+  });
+}
+
+function rolar() {
+  limparTimers();
+  rolando.value = true;
+  mostrarAcerto.value = false;
+  mostrarDanoTotal.value = false;
+
+  const d20sFinal = modo.value === 'normal' ? [rolarDado(20)] : [rolarDado(20), rolarDado(20)];
+  const alvo = modo.value === 'desvantagem' ? Math.min(...d20sFinal) : Math.max(...d20sFinal);
+  const d20UsadoIndice = d20sFinal.indexOf(alvo);
+
+  const danosFinal = (props.ataque.danos || []).map((d) => {
     const faces = Number((d.dado || 'd6').replace('d', '')) || 6;
     const quantidade = d.quantidade || 1;
     const rolagens = Array.from({ length: quantidade }, () => rolarDado(faces));
     const bonus = Number(d.bonus) || 0;
     const subtotal = rolagens.reduce((soma, v) => soma + v, 0) + bonus;
-    return { quantidade, dado: d.dado || 'd6', bonus, rolagens, subtotal, tipoDano: d.tipoDano };
+    return { quantidade, dado: d.dado || 'd6', bonus, rolagens, subtotal, tipoDano: d.tipoDano, faces };
   });
 
+  let offset = 0;
+  const offsets = danosFinal.map((d) => {
+    const o = offset;
+    offset += d.rolagens.length;
+    return o;
+  });
+  const totalDanoDados = offset;
+
   resultado.value = {
-    d20s,
+    d20s: d20sFinal,
     d20UsadoIndice,
     acertoBonus: props.acertoBonus,
     acertoTotal: alvo + props.acertoBonus,
     critico: alvo === 20,
     critFalho: alvo === 1,
-    danos,
-    danoTotal: danos.reduce((soma, d) => soma + d.subtotal, 0),
+    danos: danosFinal,
+    danoOffsets: offsets,
+    danoTotal: danosFinal.reduce((soma, d) => soma + d.subtotal, 0),
   };
+
+  // ---- fase 1: d20(s) de acerto ----
+  d20Preview.value = d20sFinal.map(() => rolarDado(20));
+  d20Revelados.value = 0;
+
+  const d20Interval = setInterval(() => {
+    d20Preview.value = d20Preview.value.map((v, i) => (i < d20Revelados.value ? v : rolarDado(20)));
+  }, 65);
+  intervalIds.push(d20Interval);
+
+  const giroBaseAcerto = 420 + Math.random() * 200;
+  const atrasoAcerto = 110;
+
+  d20sFinal.forEach((valor, i) => {
+    const id = setTimeout(() => {
+      d20Revelados.value = i + 1;
+      d20Preview.value = d20Preview.value.map((v, idx) => (idx === i ? valor : v));
+
+      if (i === d20sFinal.length - 1) {
+        clearInterval(d20Interval);
+        const idAcerto = setTimeout(() => {
+          mostrarAcerto.value = true;
+          // ---- fase 2: dados de dano, só depois do acerto assentar ----
+          if (totalDanoDados > 0) {
+            iniciarAnimacaoDano(danosFinal, offsets, totalDanoDados);
+          } else {
+            rolando.value = false;
+          }
+        }, 220);
+        timeoutIds.push(idAcerto);
+      }
+    }, giroBaseAcerto + i * atrasoAcerto);
+    timeoutIds.push(id);
+  });
 }
+
+onBeforeUnmount(limparTimers);
 </script>
 
 <style scoped>
@@ -271,24 +419,47 @@ function rolar() {
 }
 
 .ra-d20 {
+  --d20-roxo: #8b5cf6;
+  --d20-roxo-clara: #b18cfa;
+
   display: flex;
   align-items: center;
   justify-content: center;
   width: 64px;
   height: 64px;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: linear-gradient(145deg, color-mix(in srgb, var(--magic-color) 55%, white), var(--magic-color));
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  background: linear-gradient(145deg, var(--d20-roxo-clara), var(--d20-roxo));
   font-family: 'Cinzel', serif;
   font-weight: 700;
   font-size: 1.8rem;
   color: var(--bone);
-  box-shadow: 0 0 18px rgba(107, 79, 160, 0.6);
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.6);
 }
 
 .ra-d20-descartado {
   background: color-mix(in srgb, var(--bg-sub) 70%, black);
   opacity: 0.45;
   box-shadow: none;
+}
+
+/* Mesma animação "gira, depois assenta" do Lançador de Dados. */
+.ra-d20-girando {
+  animation: ra-girando 0.13s ease-in-out infinite;
+}
+
+.ra-d20-assentado {
+  animation: ra-assenta 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes ra-girando {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.55; transform: translateY(-2px); }
+}
+
+@keyframes ra-assenta {
+  0% { transform: scale(1.4) rotate(-8deg); }
+  60% { transform: scale(0.94) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
 .ra-d20.ra-critico {
@@ -365,7 +536,7 @@ function rolar() {
 
 .ra-dano-linha {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 0.6rem;
 }
@@ -379,12 +550,42 @@ function rolar() {
   color: var(--pale-green);
 }
 
-.ra-dano-formula {
+.ra-dano-dados {
   flex: 1;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.ra-dano-dado {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: var(--jungle-moss);
+  border: 1px solid var(--jungle-green);
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--bone);
+}
+
+.ra-dano-dado-girando {
+  animation: ra-girando 0.13s ease-in-out infinite;
+  color: var(--pale-green);
+}
+
+.ra-dano-dado-assentado {
+  animation: ra-assenta 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ra-dano-bonus-inline {
+  font-family: 'Cinzel', serif;
   font-size: 0.8rem;
   color: var(--pale-green);
-  opacity: 0.85;
 }
 
 .ra-dano-valor {

@@ -69,6 +69,27 @@ export const TIPOS_DANO = [
 'Necrótico', 'Perfurante', 'Psíquico', 'Radiante', 'Trovejante', 'Veneno',
 ];
 
+// Limites de itens por lista de cards — evita que a ficha cresça sem
+// controle no banco. Vida máxima, conhecidos e magias têm limites próprios,
+// maiores que o padrão; todo o resto usa LIMITE_CARD_PADRAO.
+const LIMITE_CARD_PADRAO = 15;
+const LIMITE_VIDA_MAXIMA_COMPONENTES = 30;
+const LIMITE_CONHECIDOS = 40;
+const LIMITE_MAGIAS_POR_GRAU = 50;
+
+// Campos de deslocamento — o backend só aceita número (metros). Fichas
+// antigas (de antes da unidade M/ft/square existir) podem ter texto livre
+// salvo nesses campos (ex.: "9 m", "30 ft", "-"); extraímos só a parte
+// numérica pra nunca mandar uma string crua pro backend e quebrar o salvamento.
+const CAMPOS_DESLOCAMENTO_CHAVES = ['deslocamento', 'deslocNadar', 'deslocVoar', 'deslocEscalar', 'salto'];
+
+function paraMetrosOuNulo(valor) {
+if (valor === null || valor === undefined || valor === '') return null;
+if (typeof valor === 'number') return Number.isFinite(valor) ? valor : null;
+const match = String(valor).replace(',', '.').match(/-?\d+(\.\d+)?/);
+return match ? Number(match[0]) : null;
+}
+
 /**
 * Cria todo o estado + lógica da ficha e o disponibiliza via provide().
 * Chamado UMA VEZ no componente raiz (views/FichaPersonagem.vue).
@@ -185,10 +206,10 @@ async function removerTalentoDaFicha(talentoId) {
 
 // ===== Bônus de atributo (raça + talento), aplicados matematicamente =====
 // Escolha de atributo pra bônus "à escolha" (de raça ou de talento) —
-// provisório, ainda só neste navegador (TODO backend: guardar a escolha de
-// fato). "tipo" ('raca' ou 'talento') + "id" evitam colisão de chave entre
-// os atributos de raça e os de cada talento.
-const escolhasAtributo = reactive({});
+// persistida em ficha.escolhasAtributo (Map<chave, atributo>). "tipo" ('raca'
+// ou 'talento') + "id" evitam colisão de chave entre os atributos de raça e
+// os de cada talento. editandoEscolha é só estado efêmero de UI (qual slot
+// está com o <select> aberto pra trocar a escolha) e não é persistido.
 const editandoEscolha = reactive({});
 
 function chaveEscolha(tipo, id, atributoIndex, n) {
@@ -211,7 +232,7 @@ function opcoesParaSlot(tipo, id, atributoIndex, quantidadeEscolhas, nAtual) {
   const escolhidos = [];
   for (let n = 1; n <= quantidadeEscolhas; n++) {
     if (n === nAtual) continue;
-    const v = escolhasAtributo[chaveEscolha(tipo, id, atributoIndex, n)];
+    const v = ficha.value.escolhasAtributo[chaveEscolha(tipo, id, atributoIndex, n)];
     if (v) escolhidos.push(v);
   }
   return ATRIBUTOS.filter((attr) => !escolhidos.includes(attr.chave));
@@ -221,7 +242,7 @@ function slotsEscolhidos(tipo, id, atributoIndex, quantidadeEscolhas) {
   const out = [];
   for (let n = 1; n <= quantidadeEscolhas; n++) {
     const chave = chaveEscolha(tipo, id, atributoIndex, n);
-    if (escolhasAtributo[chave] && !editandoEscolha[chave]) out.push(n);
+    if (ficha.value.escolhasAtributo[chave] && !editandoEscolha[chave]) out.push(n);
   }
   return out;
 }
@@ -230,7 +251,7 @@ function slotsPendentes(tipo, id, atributoIndex, quantidadeEscolhas) {
   const out = [];
   for (let n = 1; n <= quantidadeEscolhas; n++) {
     const chave = chaveEscolha(tipo, id, atributoIndex, n);
-    if (!escolhasAtributo[chave] || editandoEscolha[chave]) out.push(n);
+    if (!ficha.value.escolhasAtributo[chave] || editandoEscolha[chave]) out.push(n);
   }
   return out;
 }
@@ -244,7 +265,7 @@ function somarBonusAtributos(lista, tipo, id, chaveAtributo) {
       total += a.valor;
     } else if (!a.atributo) {
       for (let n = 1; n <= a.quantidadeEscolhas; n++) {
-        if (escolhasAtributo[chaveEscolha(tipo, id, ai, n)] === chaveAtributo) {
+        if (ficha.value.escolhasAtributo[chaveEscolha(tipo, id, ai, n)] === chaveAtributo) {
           total += a.valor;
         }
       }
@@ -334,6 +355,10 @@ const bonusMagiaTotal = computed(() => bonusMagiaBase.value + (Number(ficha.valu
 const cdMagiaTotal = computed(() => 8 + bonusMagiaTotal.value);
 
 function adicionarArmadura() {
+  if (ficha.value.armaduraPecas.length >= LIMITE_CARD_PADRAO) {
+    alert(`Limite de ${LIMITE_CARD_PADRAO} peças de armadura atingido.`);
+    return;
+  }
   ficha.value.armaduraPecas.push({ nome: '', bonus: 0 });
   sincronizarCa();
 }
@@ -358,6 +383,10 @@ const pvMaximoTotal = computed(() =>
 );
 
 function adicionarComponentePv() {
+  if (ficha.value.pvMaximoComponentes.length >= LIMITE_VIDA_MAXIMA_COMPONENTES) {
+    alert(`Limite de ${LIMITE_VIDA_MAXIMA_COMPONENTES} componentes de vida máxima atingido.`);
+    return;
+  }
   ficha.value.pvMaximoComponentes.push({ nome: '', bonus: 0 });
   sincronizarPvMaximo();
 }
@@ -373,6 +402,10 @@ function sincronizarPvMaximo() {
 }
 
 function adicionarModificadorIniciativa() {
+  if (ficha.value.iniciativaModificadores.length >= LIMITE_CARD_PADRAO) {
+    alert(`Limite de ${LIMITE_CARD_PADRAO} modificadores de iniciativa atingido.`);
+    return;
+  }
   ficha.value.iniciativaModificadores.push({ nome: '', bonus: 0 });
   sincronizarIniciativa();
 }
@@ -443,6 +476,10 @@ agendarSalvar();
 }
 
 function adicionarTesouro() {
+if (ficha.value.tesouro.length >= LIMITE_CARD_PADRAO) {
+alert(`Limite de ${LIMITE_CARD_PADRAO} itens de tesouro atingido.`);
+return;
+}
 ficha.value.tesouro.push({
 quantidade: 1,
 nome: '',
@@ -558,6 +595,10 @@ agendarSalvar();
 }
 
 function adicionarAtaque() {
+if (ficha.value.ataques.length >= LIMITE_CARD_PADRAO) {
+alert(`Limite de ${LIMITE_CARD_PADRAO} ataques atingido.`);
+return;
+}
 ficha.value.ataques.push({
 nome: '', bonusAtributo: null, bonusProficiente: false, bonusExtra: 0,
 danos: [{ quantidade: 1, dado: 'd6', bonus: 0, tipoDano: null }], descricao: '',
@@ -585,6 +626,10 @@ return a.danos.map(danoTexto).join(' + ');
 }
 
 function adicionarDano(a) {
+if (a.danos.length >= LIMITE_CARD_PADRAO) {
+alert(`Limite de ${LIMITE_CARD_PADRAO} dados de dano por ataque atingido.`);
+return;
+}
 a.danos.push({ quantidade: 1, dado: 'd6', bonus: 0, tipoDano: null });
 agendarSalvar();
 }
@@ -595,10 +640,18 @@ agendarSalvar();
 }
 
 function adicionarInventario() {
+if (ficha.value.inventario.length >= LIMITE_CARD_PADRAO) {
+alert(`Limite de ${LIMITE_CARD_PADRAO} itens de inventário atingido.`);
+return;
+}
 ficha.value.inventario.push({ nome: '', quantidade: 1, peso: null, descricao: '' });
 }
 
 function adicionarItemMagico() {
+if (ficha.value.itensMagicos.length >= LIMITE_CARD_PADRAO) {
+alert(`Limite de ${LIMITE_CARD_PADRAO} itens mágicos atingido.`);
+return;
+}
 ficha.value.itensMagicos.push({ nome: '', descricao: '', sincronizado: false });
 agendarSalvar();
 }
@@ -609,15 +662,27 @@ agendarSalvar();
 }
 
 function adicionarHabilidade() {
+if (ficha.value.habilidades.length >= LIMITE_CARD_PADRAO) {
+alert(`Limite de ${LIMITE_CARD_PADRAO} habilidades de classe atingido.`);
+return;
+}
 ficha.value.habilidades.push({ nome: '', descricao: '' });
 }
 
 function adicionarUnidade() {
+if (ficha.value.unidades.length >= LIMITE_CONHECIDOS) {
+alert(`Limite de ${LIMITE_CONHECIDOS} conhecidos atingido.`);
+return;
+}
 ficha.value.unidades.push({ nome: '', tipo: '', dadosExtraJson: null });
 }
 
 function adicionarTag(tipo) {
 if (!novaTag.value.trim()) return;
+if (ficha.value.tags.length >= LIMITE_CARD_PADRAO) {
+alert(`Limite de ${LIMITE_CARD_PADRAO} resistências/vulnerabilidades atingido.`);
+return;
+}
 ficha.value.tags.push({ tipo, texto: novaTag.value.trim() });
 novaTag.value = '';
 agendarSalvar();
@@ -628,6 +693,10 @@ return ficha.value.magias.filter((m) => m.nivel === nivel);
 }
 
 function adicionarMagia(nivel) {
+if (magiasPorNivel(nivel).length >= LIMITE_MAGIAS_POR_GRAU) {
+alert(`Limite de ${LIMITE_MAGIAS_POR_GRAU} magias por grau atingido.`);
+return;
+}
 ficha.value.magias.push({ nivel, nome: '', preparada: false, tempoConjuracao: '', descricao: '' });
 agendarSalvar();
 }
@@ -642,7 +711,14 @@ clearTimeout(timerSalvar);
 timerSalvar = setTimeout(salvarAgora, 1200);
 }
 
+function normalizarDeslocamento() {
+CAMPOS_DESLOCAMENTO_CHAVES.forEach((chave) => {
+ficha.value[chave] = paraMetrosOuNulo(ficha.value[chave]);
+});
+}
+
 async function salvarAgora() {
+normalizarDeslocamento();
 const atualizado = await personagemService.atualizar(route.params.id, ficha.value);
 ficha.value = atualizado;
 mostrarSalvo.value = true;
@@ -655,7 +731,10 @@ await personagemService.remover(route.params.id);
 router.push('/personagens');
 }
 
-async function selecionarImagem(evento) {
+// Não há upload/storage de arquivo no backend: a imagem é convertida pra
+// data URI (base64) aqui mesmo e salva direto em ficha.imagemDados, junto
+// com o resto da ficha, pelo autosave normal.
+function selecionarImagem(evento) {
 const arquivo = evento.target.files[0];
 if (!arquivo) return;
 if (arquivo.size > 2 * 1024 * 1024) {
@@ -663,18 +742,18 @@ alert('Imagem muito grande (máximo 2MB). Escolha uma imagem menor.');
 evento.target.value = '';
 return;
 }
-try {
-const { url } = await personagemService.enviarImagem(route.params.id, arquivo);
-ficha.value.imagemUrl = url;
-} catch (e) {
-alert(e.response?.data || 'Não foi possível enviar a imagem.');
-} finally {
+const leitor = new FileReader();
+leitor.onload = () => {
+ficha.value.imagemDados = leitor.result;
+agendarSalvar();
+};
+leitor.onerror = () => alert('Não foi possível ler a imagem.');
+leitor.readAsDataURL(arquivo);
 evento.target.value = '';
-}
 }
 
 function removerImagem() {
-ficha.value.imagemUrl = null;
+ficha.value.imagemDados = null;
 agendarSalvar();
 }
 
@@ -712,6 +791,8 @@ leitor.readAsText(arquivo);
 
 async function carregar() {
 ficha.value = await personagemService.buscar(route.params.id);
+normalizarDeslocamento();
+if (!ficha.value.escolhasAtributo) ficha.value.escolhasAtributo = {};
 racasDisponiveis.value = await racaService.listar();
 classesDisponiveis.value = await classeService.listar();
 talentosDisponiveis.value = await talentoService.listar();
@@ -726,7 +807,7 @@ const contexto = {
 ficha, mostrarSalvo, novaTag, ajustePv, bonusProficiencia,
 tesouro, habilidadesRaca, limiteSincronizados,
 racasDisponiveis, classesDisponiveis, talentosDisponiveis, talentoSelecionado, erroTalento,
-racaDetalhe, escolhasAtributo, editandoEscolha,
+racaDetalhe, editandoEscolha,
 armaduraPecas, iniciativaModificadores, pvMaximoComponentes,
 // computed
 pvPct, somaTesouro, caTotal, iniciativaTotal, iniciativaBase, pvMaximoTotal,

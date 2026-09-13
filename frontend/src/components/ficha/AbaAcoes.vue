@@ -196,28 +196,31 @@
     </div>
 
     <div class="fc-box">
-      <div class="fc-desloc-row">
+      <div class="fc-desloc-header">
         <span class="fc-desloc-titulo">Deslocamento</span>
-        <label class="fc-desloc-chip" :class="{ 'fc-desloc-chip-set': ficha.deslocamento }">
-          <span class="fc-desloc-chip-label">Andar</span>
-          <input type="text" v-model="ficha.deslocamento" @input="agendarSalvar" placeholder="—" />
-        </label>
-        <label class="fc-desloc-chip" :class="{ 'fc-desloc-chip-set': ficha.deslocNadar }">
-          <span class="fc-desloc-chip-label">Nadar</span>
-          <input type="text" v-model="ficha.deslocNadar" @input="agendarSalvar" placeholder="—" />
-        </label>
-        <label class="fc-desloc-chip" :class="{ 'fc-desloc-chip-set': ficha.deslocVoar }">
-          <span class="fc-desloc-chip-label">Voar</span>
-          <input type="text" v-model="ficha.deslocVoar" @input="agendarSalvar" placeholder="—" />
-        </label>
-        <label class="fc-desloc-chip" :class="{ 'fc-desloc-chip-set': ficha.deslocEscalar }">
-          <span class="fc-desloc-chip-label">Escalar</span>
-          <input type="text" v-model="ficha.deslocEscalar" @input="agendarSalvar" placeholder="—" />
-        </label>
-        <label class="fc-desloc-chip" :class="{ 'fc-desloc-chip-set': ficha.salto }">
-          <span class="fc-desloc-chip-label">Salto</span>
-          <input type="text" v-model="ficha.salto" @input="agendarSalvar" placeholder="—" />
-        </label>
+        <div class="fc-desloc-unidade-grupo">
+          <span class="fc-desloc-unidade-label">Unidade de Medida</span>
+          <select v-model="unidadeDeslocamento" class="fc-select fc-desloc-unidade">
+            <option v-for="u in UNIDADES_DESLOCAMENTO" :key="u.chave" :value="u.chave">{{ u.label }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="fc-desloc-linha">
+        <template v-for="(campo, i) in CAMPOS_DESLOCAMENTO" :key="campo.chave">
+          <span class="fc-desloc-item">
+            <span class="fc-desloc-nome">{{ campo.label }}</span>
+            <input
+                type="text"
+                inputmode="decimal"
+                class="fc-desloc-input"
+                :value="deslocDisplay[campo.chave]"
+                @input="onDeslocInput(campo.chave, $event)"
+                placeholder="—"
+            />
+            <span class="fc-desloc-sufixo">{{ unidadeLabelAtual }}</span>
+          </span>
+          <span v-if="i < CAMPOS_DESLOCAMENTO.length - 1" class="fc-desloc-separador">|</span>
+        </template>
       </div>
     </div>
 
@@ -231,7 +234,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { useFichaPersonagem } from '../../composables/useFichaPersonagem';
 import RolagemAtaque from './RolagemAtaque.vue';
 
@@ -251,6 +254,77 @@ const pvTempPct = computed(() => {
   const espacoLivre = Math.max(0, 100 - pvPct.value);
   return Math.max(0, Math.min(espacoLivre, Math.round((ficha.value.pvTemporario / ficha.value.pvMaximo) * 100)));
 });
+
+// ===== Deslocamento — persistido sempre em metros; a unidade escolhida aqui
+// (M / ft / square) só controla a exibição/edição no front. =====
+const CAMPOS_DESLOCAMENTO = [
+  { chave: 'deslocamento', label: 'Andar' },
+  { chave: 'deslocNadar', label: 'Nadar' },
+  { chave: 'deslocVoar', label: 'Voar' },
+  { chave: 'deslocEscalar', label: 'Escalar' },
+  { chave: 'salto', label: 'Salto' },
+];
+
+const UNIDADES_DESLOCAMENTO = [
+  { chave: 'm', label: 'M' },
+  { chave: 'ft', label: 'ft' },
+  { chave: 'square', label: 'square' },
+];
+
+// Conversão de jogo (não a real 0,3048 m/ft): 1 quadrado = 1,5 m = 5 pés.
+const FT_POR_METRO = 10 / 3;
+const METROS_POR_QUADRADO = 1.5;
+
+const unidadeDeslocamento = ref('m');
+const deslocDisplay = reactive({});
+
+const unidadeLabelAtual = computed(() =>
+    UNIDADES_DESLOCAMENTO.find((u) => u.chave === unidadeDeslocamento.value)?.label || '',
+);
+
+function arredondar(valor) {
+  return Math.round(valor * 100) / 100;
+}
+
+function metrosParaUnidade(metros, unidade) {
+  if (unidade === 'ft') return metros * FT_POR_METRO;
+  if (unidade === 'square') return metros / METROS_POR_QUADRADO;
+  return metros;
+}
+
+function unidadeParaMetros(valor, unidade) {
+  if (unidade === 'ft') return valor / FT_POR_METRO;
+  if (unidade === 'square') return valor * METROS_POR_QUADRADO;
+  return valor;
+}
+
+function sincronizarDeslocDisplay() {
+  if (!ficha.value) return;
+  CAMPOS_DESLOCAMENTO.forEach((campo) => {
+    const metros = ficha.value[campo.chave];
+    deslocDisplay[campo.chave] = metros === null || metros === undefined
+        ? ''
+        : String(arredondar(metrosParaUnidade(Number(metros), unidadeDeslocamento.value)));
+  });
+}
+
+watch(() => ficha.value, sincronizarDeslocDisplay, { immediate: true });
+watch(unidadeDeslocamento, sincronizarDeslocDisplay);
+
+// Só aceita dígitos e um separador decimal (vírgula é normalizada pra ponto).
+function onDeslocInput(chave, evento) {
+  let bruto = evento.target.value.replace(',', '.').replace(/[^0-9.]/g, '');
+  const partes = bruto.split('.');
+  if (partes.length > 2) bruto = partes[0] + '.' + partes.slice(1).join('');
+  deslocDisplay[chave] = bruto;
+  evento.target.value = bruto;
+
+  const numero = bruto === '' || bruto === '.' ? null : Number(bruto);
+  ficha.value[chave] = numero === null || Number.isNaN(numero)
+      ? null
+      : arredondar(unidadeParaMetros(numero, unidadeDeslocamento.value));
+  agendarSalvar();
+}
 </script>
 
 <style scoped>
@@ -899,64 +973,100 @@ const pvTempPct = computed(() => {
   line-height: 1;
 }
 
-/* ===== Deslocamento — fileira de chips, padrão da ficha ===== */
-.fc-desloc-row {
+/* ===== Deslocamento — cabeçalho com título à esquerda e unidade à direita;
+   abaixo, uma linha só com "nome [input] sufixo" por campo, separados por | ===== */
+.fc-desloc-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
 .fc-desloc-titulo {
   font-family: 'Cinzel', serif;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--tribal-gold);
-  margin-right: 4px;
 }
 
-.fc-desloc-chip {
-  display: inline-flex;
+.fc-desloc-unidade-grupo {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  border: 1px solid var(--border-gold);
-  border-radius: 6px;
-  background: var(--jungle-void);
-  padding: 6px 10px;
-  cursor: text;
+  gap: 10px;
 }
 
-.fc-desloc-chip-set {
-  border-color: var(--tribal-yellow);
-}
-
-.fc-desloc-chip-label {
+.fc-desloc-unidade-label {
   font-family: 'Crimson Text', Georgia, serif;
-  font-size: 12px;
-  color: var(--pale-green);
-}
-
-.fc-desloc-chip-set .fc-desloc-chip-label {
+  font-weight: 500;
+  font-size: 16px;
   color: var(--bone);
 }
 
-.fc-desloc-chip input {
-  width: 48px;
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
+/* Largura fixa (cabe "square", a maior opção) pra trocar de unidade não
+   redimensionar o select e empurrar o resto do cabeçalho. */
+select.fc-desloc-unidade {
+  flex: none;
+  width: 100px;
+  padding: 6px 24px 6px 10px;
+  font-size: 15px;
+}
+
+.fc-desloc-linha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  row-gap: 12px;
+}
+
+.fc-desloc-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fc-desloc-nome {
   font-family: 'Crimson Text', Georgia, serif;
-  font-size: 12px;
-  color: var(--pale-green) !important;
+  font-size: 16px;
+  color: var(--pale-green);
 }
 
-.fc-desloc-chip-set input {
-  color: var(--bone) !important;
+.fc-desloc-input {
+  width: 70px;
+  flex: none;
+  box-sizing: border-box;
+  text-align: center;
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  background: var(--jungle-void);
+  padding: 8px 6px;
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 16px;
+  color: var(--bone);
 }
 
-.fc-desloc-chip input:focus {
+.fc-desloc-input:focus {
   outline: none;
+  border-color: var(--tribal-yellow);
+}
+
+/* Largura fixa (cabe "square") pra trocar de unidade não empurrar o próximo
+   item da linha — só o texto muda, o espaço reservado fica igual. */
+.fc-desloc-sufixo {
+  flex: none;
+  width: 56px;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: var(--tribal-gold);
+}
+
+.fc-desloc-separador {
+  color: var(--border-color);
+  font-size: 18px;
 }
 </style>

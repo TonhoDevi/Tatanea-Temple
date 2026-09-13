@@ -48,7 +48,7 @@
                 title="Clique para mudar a escolha"
                 @click="editandoEscolha[chaveEscolha('talento', t.talentoId, ai, n)] = true"
             >
-              +{{ a.valor }} {{ atributoNome(escolhasAtributo[chaveEscolha('talento', t.talentoId, ai, n)]) }}
+              +{{ a.valor }} {{ atributoNome(ficha.escolhasAtributo[chaveEscolha('talento', t.talentoId, ai, n)]) }}
             </button>
           </div>
 
@@ -62,9 +62,9 @@
               <label class="fc-escolha-slot" v-for="n in slotsPendentes('talento', t.talentoId, ai, a.quantidadeEscolhas)" :key="n">
                 <span class="fc-escolha-slot-num">{{ n }}º</span>
                 <select
-                    v-model="escolhasAtributo[chaveEscolha('talento', t.talentoId, ai, n)]"
+                    v-model="ficha.escolhasAtributo[chaveEscolha('talento', t.talentoId, ai, n)]"
                     class="fc-select"
-                    @change="editandoEscolha[chaveEscolha('talento', t.talentoId, ai, n)] = false"
+                    @change="editandoEscolha[chaveEscolha('talento', t.talentoId, ai, n)] = false; agendarSalvar()"
                 >
                   <option value="">Selecione...</option>
                   <option
@@ -75,7 +75,6 @@
                 </select>
               </label>
             </div>
-            <p class="fc-hint">Provisório — a escolha ainda não é salva com a ficha.</p>
           </div>
         </template>
 
@@ -103,7 +102,7 @@ const {
   agendarSalvar, removerItem, adicionarHabilidade,
   adicionarTalentoNaFicha, removerTalentoDaFicha,
   atributosFixos, atributosEscolha, atributoNome, tipoHabilidadeLabel,
-  escolhasAtributo, editandoEscolha, chaveEscolha, opcoesParaSlot,
+  editandoEscolha, chaveEscolha, opcoesParaSlot,
   slotsEscolhidos, slotsPendentes,
 } = useFichaPersonagem();
 </script>

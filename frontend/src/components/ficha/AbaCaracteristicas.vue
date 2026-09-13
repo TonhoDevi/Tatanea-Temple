@@ -22,7 +22,7 @@
               title="Clique para mudar a escolha"
               @click="editandoEscolha[chaveEscolha('raca', racaDetalhe.id, ai, n)] = true"
           >
-            +{{ a.valor }} {{ atributoNome(escolhasAtributo[chaveEscolha('raca', racaDetalhe.id, ai, n)]) }}
+            +{{ a.valor }} {{ atributoNome(ficha.escolhasAtributo[chaveEscolha('raca', racaDetalhe.id, ai, n)]) }}
           </button>
         </div>
 
@@ -36,9 +36,9 @@
             <label class="fc-escolha-slot" v-for="n in slotsPendentes('raca', racaDetalhe.id, ai, a.quantidadeEscolhas)" :key="n">
               <span class="fc-escolha-slot-num">{{ n }}º</span>
               <select
-                  v-model="escolhasAtributo[chaveEscolha('raca', racaDetalhe.id, ai, n)]"
+                  v-model="ficha.escolhasAtributo[chaveEscolha('raca', racaDetalhe.id, ai, n)]"
                   class="fc-select"
-                  @change="editandoEscolha[chaveEscolha('raca', racaDetalhe.id, ai, n)] = false"
+                  @change="editandoEscolha[chaveEscolha('raca', racaDetalhe.id, ai, n)] = false; agendarSalvar()"
               >
                 <option value="">Selecione...</option>
                 <option
@@ -51,8 +51,6 @@
           </div>
         </div>
       </template>
-
-      <p class="fc-hint">Provisório — a escolha ainda não é salva com a ficha.</p>
     </div>
 
     <div class="fc-combate-row">
@@ -225,7 +223,7 @@ const {
   periciaDe, valorPericia, valorPericiaPorNome,
   estadoPericia, alternarEstadoPericia, attrAbrev, adicionarTag, removerItem,
   racaDetalhe, atributosFixos, atributosEscolha, atributoNome,
-  escolhasAtributo, editandoEscolha, chaveEscolha, opcoesParaSlot,
+  editandoEscolha, chaveEscolha, opcoesParaSlot,
   slotsEscolhidos, slotsPendentes,
   armaduraPecas, iniciativaModificadores, caTotal, iniciativaTotal, iniciativaBase,
   adicionarArmadura, removerArmadura, sincronizarCa,

@@ -31,7 +31,7 @@
 
     <div class="fc-box" v-for="nivel in 10" :key="nivel - 1">
       <div class="fc-box-title-row">
-        <div class="fc-box-title" style="margin: 0">{{ nivel === 1 ? 'Truques' : `Nível ${nivel - 1}` }}</div>
+        <div class="fc-box-title" style="margin: 0">{{ nivel === 1 ? 'Truques' : `Grau ${nivel - 1}` }}</div>
         <div v-if="nivel > 1" class="fc-slot-inputs">
           <label>Slots <input type="number" class="fc-mini-number" v-model.number="slotDe(nivel - 1).total" min="0" @input="agendarSalvar" /></label>
           <label>Restantes <input type="number" class="fc-mini-number" v-model.number="slotDe(nivel - 1).restantes" min="0" @input="agendarSalvar" /></label>

@@ -2,7 +2,7 @@
   <aside class="ficha-sidebar">
     <div class="fc-box fc-identity">
       <div class="fc-portrait">
-        <img v-if="ficha.imagemUrl" :src="ficha.imagemUrl" :alt="ficha.nome" />
+        <img v-if="ficha.imagemDados" :src="ficha.imagemDados" :alt="ficha.nome" />
         <span v-else>[ retrato ]</span>
       </div>
       <input type="text" class="fc-name-input" v-model="ficha.nome" placeholder="Nome do personagem" @input="agendarSalvar" />

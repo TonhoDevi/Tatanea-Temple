@@ -4,8 +4,8 @@
     <div class="fc-box fc-lore-top">
       <div class="fc-retrato-col">
         <div class="fc-box-title">Retrato</div>
-        <label class="fc-dropzone" :class="{ 'fc-dropzone-has-image': ficha.imagemUrl }">
-          <img v-if="ficha.imagemUrl" :src="ficha.imagemUrl" class="fc-dropzone-img" :alt="ficha.nome" />
+        <label class="fc-dropzone" :class="{ 'fc-dropzone-has-image': ficha.imagemDados }">
+          <img v-if="ficha.imagemDados" :src="ficha.imagemDados" class="fc-dropzone-img" :alt="ficha.nome" />
           <template v-else>
             <span class="fc-dropzone-icon">🖼</span>
             <span class="fc-dropzone-text">Clique para adicionar</span>
@@ -17,7 +17,7 @@
           📤 Escolher
         </button>
         <input ref="imagemInput" type="file" accept="image/*" style="display:none" @change="selecionarImagem" />
-        <button v-if="ficha.imagemUrl" type="button" class="fc-btn fc-btn-danger fc-btn-block" @click="removerImagem">
+        <button v-if="ficha.imagemDados" type="button" class="fc-btn fc-btn-danger fc-btn-block" @click="removerImagem">
           Remover imagem
         </button>
       </div>

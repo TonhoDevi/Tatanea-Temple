@@ -38,7 +38,7 @@
         <div v-else class="fichas-list">
           <article v-for="p in personagens" :key="p.id" class="ficha-card">
             <RouterLink :to="`/personagens/${p.id}`" class="ficha-card-art">
-              <img v-if="p.imagemUrl" :src="p.imagemUrl" :alt="p.nome" />
+              <img v-if="p.imagemDados" :src="p.imagemDados" :alt="p.nome" />
               <span v-else>[ retrato ]</span>
             </RouterLink>
             <RouterLink :to="`/personagens/${p.id}`" class="ficha-card-body">
@@ -125,7 +125,7 @@ async function criarNovo() {
       racaId: null,
       classeId: null,
       nivel: 1,
-      imagemUrl: null,
+      imagemDados: null,
       forca: 10,
       destreza: 10,
       constituicao: 10,
@@ -136,7 +136,7 @@ async function criarNovo() {
       pvMaximo: 0,
       pvTemporario: 0,
       ca: 10,
-      deslocamento: '9 m',
+      deslocamento: 9,
       iniciativaBonus: 0,
       atributoMagia: null,
       bonusMagiaExtra: 0,
