@@ -6,7 +6,7 @@ CREATE TABLE racas (
     categoria         VARCHAR(20)   NOT NULL
                           CHECK (categoria IN ('global', 'tribal', 'mistica', 'sobrenatural')),
 
-    deslocamento      INT      NOT NULL,                 -- base de caminhada, em metros
+    deslocamento      DOUBLE PRECISION NOT NULL,          -- base de caminhada, em metros (várias raças convertidas de pés dão valores como 4.5/7.5/10.5)
 
     tamanho           VARCHAR(20)   NOT NULL                  -- mecânico (regras), não numérico
                           CHECK (tamanho IN ('miudo', 'pequeno', 'medio', 'grande', 'enorme')),

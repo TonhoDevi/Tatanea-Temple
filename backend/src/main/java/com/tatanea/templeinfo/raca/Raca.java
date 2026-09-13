@@ -26,7 +26,7 @@ public class Raca {
     private CategoriaRaca categoria;
 
     @Column(nullable = false)
-    private int deslocamento; // metros, base de caminhada
+    private double deslocamento; // metros, base de caminhada (várias raças usam 4.5/7.5/10.5, convertidas de pés)
 
     @Column(nullable = false, length = 20)
     private TamanhoRaca tamanho;
@@ -79,7 +79,7 @@ public class Raca {
         // JPA
     }
 
-    public Raca(String slug, String nome, CategoriaRaca categoria, int deslocamento, TamanhoRaca tamanho) {
+    public Raca(String slug, String nome, CategoriaRaca categoria, double deslocamento, TamanhoRaca tamanho) {
         this.slug = slug;
         this.nome = nome;
         this.categoria = categoria;
@@ -125,7 +125,7 @@ public class Raca {
     public String getSlug() { return slug; }
     public String getNome() { return nome; }
     public CategoriaRaca getCategoria() { return categoria; }
-    public int getDeslocamento() { return deslocamento; }
+    public double getDeslocamento() { return deslocamento; }
     public TamanhoRaca getTamanho() { return tamanho; }
     public String getQuote() { return quote; }
     public String getIdiomas() { return idiomas; }
@@ -145,7 +145,7 @@ public class Raca {
     public void setSlug(String slug) { this.slug = slug; }
     public void setNome(String nome) { this.nome = nome; }
     public void setCategoria(CategoriaRaca categoria) { this.categoria = categoria; }
-    public void setDeslocamento(int deslocamento) { this.deslocamento = deslocamento; }
+    public void setDeslocamento(double deslocamento) { this.deslocamento = deslocamento; }
     public void setTamanho(TamanhoRaca tamanho) { this.tamanho = tamanho; }
     public void setQuote(String quote) { this.quote = quote; }
     public void setIdiomas(String idiomas) { this.idiomas = idiomas; }
