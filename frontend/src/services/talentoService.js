@@ -1,12 +1,10 @@
-import axios from 'axios';
-
-const api = axios.create({ baseURL: '/api/talentos' });
+import http from './http';
 
 export default {
     listar() {
-        return api.get('').then((res) => res.data);
+        return http.get('/talentos').then((res) => res.data);
     },
     buscarPorId(id) {
-        return api.get(`/${id}`).then((res) => res.data);
+        return http.get(`/talentos/${id}`).then((res) => res.data);
     },
 };
