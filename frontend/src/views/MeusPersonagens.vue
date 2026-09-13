@@ -221,16 +221,16 @@ onMounted(carregar);
 
 <style scoped>
 .fichas-page {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
 
   min-height: 70vh;
   font-family: 'Crimson Text', Georgia, serif;
@@ -242,8 +242,7 @@ onMounted(carregar);
   position: relative;
   padding: clamp(28px, 5vw, 56px) clamp(16px, 5vw, 48px);
   background-color: var(--jungle-void);
-  background-image: repeating-linear-gradient(112deg, rgba(46, 125, 79, 0.14) 0 3px, transparent 3px 13px),
-  radial-gradient(120% 90% at 50% 0%, var(--jungle-moss) 0, var(--jungle-void) 66%);
+  background-image: radial-gradient(120% 90% at 50% 0%, var(--jungle-moss) 0, var(--jungle-void) 66%);
   border-bottom: 1px solid var(--jungle-green);
 }
 
@@ -408,7 +407,7 @@ onMounted(carregar);
   margin: 0;
   padding: 12px 16px;
   border: 1px solid var(--tribal-red);
-  background: rgba(184, 54, 47, 0.14);
+  background: rgba(140, 59, 43, 0.14);
   font-size: 15px;
   color: var(--bone);
 }
@@ -432,7 +431,7 @@ onMounted(carregar);
 }
 
 .ficha-card:hover {
-  background: #123020;
+  background: var(--bg-card);
   border-color: var(--tribal-gold);
 }
 
@@ -440,8 +439,7 @@ onMounted(carregar);
   flex: none;
   width: 88px;
   height: 88px;
-  border: 1px solid rgba(168, 196, 162, 0.45);
-  background-image: repeating-linear-gradient(45deg, rgba(46, 125, 79, 0.35) 0 5px, transparent 5px 12px);
+  border: 1px solid rgba(154, 176, 161, 0.45);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -574,7 +572,7 @@ onMounted(carregar);
 .ficha-cheio-banner {
   padding: 18px;
   border: 1px solid var(--tribal-red);
-  background: rgba(184, 54, 47, 0.14);
+  background: rgba(140, 59, 43, 0.14);
   font-size: 16px;
   line-height: 1.5;
   color: var(--bone);
@@ -688,6 +686,6 @@ onMounted(carregar);
 }
 
 .confirm-btn-deletar:hover:not(:disabled) {
-  background: #942a24;
+  background: color-mix(in srgb, var(--tribal-red) 80%, black);
 }
 </style>

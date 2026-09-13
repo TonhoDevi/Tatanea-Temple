@@ -1,122 +1,209 @@
 <template>
   <div class="dado-overlay" @click.self="$emit('fechar')">
     <div class="dado-modal">
-      <button class="fechar" @click="$emit('fechar')">×</button>
-      <h2 class="titulo"><span class="titulo-deco">✦</span> Lançador de Dados <span class="titulo-deco">✦</span></h2>
+      <span class="dado-strip" aria-hidden="true"></span>
+      <span class="dado-corner dado-corner-tl" aria-hidden="true"></span>
+      <span class="dado-corner dado-corner-tr" aria-hidden="true"></span>
+      <span class="dado-corner dado-corner-bl" aria-hidden="true"></span>
+      <span class="dado-corner dado-corner-br" aria-hidden="true"></span>
+      <span class="dado-bracket dado-bracket-tl" aria-hidden="true"></span>
+      <span class="dado-bracket dado-bracket-tr" aria-hidden="true"></span>
+      <span class="dado-bracket dado-bracket-bl" aria-hidden="true"></span>
+      <span class="dado-bracket dado-bracket-br" aria-hidden="true"></span>
+
+      <button class="fechar" @click="$emit('fechar')" aria-label="Fechar">×</button>
+
+      <h2 class="titulo">Lançador de Dados</h2>
+      <div class="titulo-divisor" aria-hidden="true">
+        <span class="titulo-linha"></span>
+        <span class="titulo-gema"></span>
+        <span class="titulo-linha"></span>
+      </div>
 
       <div class="dado-body">
-        <div class="dado-left">
-          <div class="dado-label">Quantidade</div>
+        <div class="dado-coluna">
+          <div class="dado-rotulo">Quantidade</div>
           <div class="qtd-stepper">
-            <button class="qtd-btn" @click="quantidade = Math.max(1, quantidade - 1)">−</button>
+            <button class="qtd-btn" :disabled="rolando" @click="quantidade = Math.max(1, quantidade - 1)">−</button>
             <span class="qtd-valor">{{ quantidade }}</span>
-            <button class="qtd-btn" @click="quantidade = Math.min(20, quantidade + 1)">+</button>
+            <button class="qtd-btn" :disabled="rolando" @click="quantidade = Math.min(20, quantidade + 1)">+</button>
           </div>
 
-          <div class="dado-label">Tipo de dado</div>
-          <div class="honeycomb">
-            <button class="face-btn face-d6" style="grid-area: d6" @click="rolar(6)" title="d6">
-              <span class="face-shape shape-square">6</span>
-              <span class="face-name">D6</span>
-            </button>
-            <button class="face-btn face-d4" style="grid-area: d4" @click="rolar(4)" title="d4">
-              <span class="face-shape shape-triangle"><span>4</span></span>
-              <span class="face-name">D4</span>
-            </button>
-            <button class="face-btn face-d8" style="grid-area: d8" @click="rolar(8)" title="d8">
-              <span class="face-shape shape-diamond">8</span>
-              <span class="face-name">D8</span>
-            </button>
-            <button class="face-btn face-d20" style="grid-area: d20" @click="rolar(20)" title="d20">
-              <span class="face-shape shape-hex">20</span>
-              <span class="face-name">D20</span>
-            </button>
-            <button class="face-btn face-d10" style="grid-area: d10" @click="rolar(10)" title="d10">
-              <span class="face-shape shape-diamond shape-diamond-tall">10</span>
-              <span class="face-name">D10</span>
-            </button>
-            <button class="face-btn face-d12" style="grid-area: d12" @click="rolar(12)" title="d12">
-              <span class="face-shape shape-pentagon">12</span>
-              <span class="face-name">D12</span>
-            </button>
-            <button class="face-btn face-d100" style="grid-area: d100" @click="rolar(100)" title="d100">
-              <span class="face-shape shape-octagon">100</span>
-              <span class="face-name">D100</span>
-            </button>
+          <div class="dado-rotulo">Tipo de dado</div>
+          <div class="dado-calc" :class="{ 'is-rolando': rolando }">
+            <div class="calc-row">
+              <button
+                  v-for="f in [4, 6, 8]" :key="f"
+                  class="calc-key"
+                  :class="{ active: faceAtual === f }"
+                  :disabled="rolando"
+                  @click="rolar(f)"
+              >D{{ f }}</button>
+            </div>
+            <div class="calc-row">
+              <button
+                  v-for="f in [10, 12, 20]" :key="f"
+                  class="calc-key"
+                  :class="{ active: faceAtual === f }"
+                  :disabled="rolando"
+                  @click="rolar(f)"
+              >D{{ f }}</button>
+            </div>
+            <div class="calc-row calc-row-single">
+              <button
+                  class="calc-key calc-key-wide"
+                  :class="{ active: faceAtual === 100 }"
+                  :disabled="rolando"
+                  @click="rolar(100)"
+              >D100</button>
+            </div>
           </div>
         </div>
 
-        <div class="dado-right">
-          <div v-if="ultimaRolagem" class="resultado-hexes">
-            <div
-                v-for="(v, i) in ultimaRolagem.valores"
-                :key="i"
-                class="hex-result"
-                :class="{ max: v === maiorValor, min: v === 1 }"
-            >
-              <span class="hex-result-shape">{{ v }}</span>
+        <div class="dado-coluna dado-resultado">
+          <div class="dado-rotulo">Resultado</div>
+
+          <div class="resultado-palco">
+            <p v-if="!faceAtual" class="resultado-vazio">Escolha um dado pra rolar.</p>
+            <div v-else class="resultado-grade">
+              <div
+                  v-for="(v, i) in valoresPreview"
+                  :key="i"
+                  class="resultado-item"
+                  :class="{
+                    'is-assentado': i < revelados,
+                    'is-girando': i >= revelados,
+                    'is-max': i < revelados && v === faceAtual,
+                    'is-min': i < revelados && v === 1,
+                  }"
+              >{{ v }}</div>
             </div>
           </div>
-          <div v-else class="resultado-vazio">Escolha um dado para rolar</div>
 
           <div v-if="ultimaRolagem" class="dado-total">
-            <span class="total-label">Total</span>
+            <span class="total-rotulo">Total</span>
             <span class="total-valor">{{ ultimaRolagem.total }}</span>
-            <span class="total-formula">({{ ultimaRolagem.valores.join(' + ') }}{{ modificador ? (modificador >= 0 ? ' + ' + modificador : ' - ' + Math.abs(modificador)) : '' }})</span>
+            <span v-if="ultimaRolagem.valores.length > 1" class="total-formula">
+              ({{ ultimaRolagem.valores.join(' + ') }})
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="dado-actions">
-        <button class="btn-rolar" :disabled="!faceAtual" @click="rolarNovamente">🎲 Rolar</button>
-        <button class="btn-limpar" @click="limpar">Limpar</button>
+      <div class="dado-acoes">
+        <button class="btn-rolar" :disabled="!faceAtual || rolando" @click="rolarNovamente">Rolar de novo</button>
+        <button class="btn-limpar" :disabled="rolando" @click="limpar">Limpar</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onBeforeUnmount } from 'vue';
 
-const quantidade = ref(5);
+const quantidade = ref(1);
 const modificador = ref(0);
 const faceAtual = ref(null);
 const ultimaRolagem = ref(null);
 
-const maiorValor = computed(() => (ultimaRolagem.value ? Math.max(...ultimaRolagem.value.valores) : null));
+// Animação de rolagem: enquanto `rolando`, cada posição ainda não revelada
+// (índice >= revelados) fica sorteando valores aleatórios a cada tick do
+// intervalo; ao ser revelada, trava no valor final e para de ser sorteada —
+// mesma lógica de "girar tudo, assentar um por um" do rolador antigo
+// (js/shared/dice-roller.js: overlay com dados girando + resultados
+// aparecendo em sequência), só que aqui quem gira é o número, não uma peça.
+const rolando = ref(false);
+const valoresPreview = ref([]);
+const revelados = ref(0);
+
+let cycleId = null;
+const timeoutIds = [];
+
+function limparTimers() {
+  if (cycleId) {
+    clearInterval(cycleId);
+    cycleId = null;
+  }
+  timeoutIds.splice(0).forEach(clearTimeout);
+}
 
 function rolar(faces) {
+  limparTimers();
   faceAtual.value = faces;
-  const valores = [];
-  for (let i = 0; i < quantidade.value; i++) {
-    valores.push(1 + Math.floor(Math.random() * faces));
-  }
-  const soma = valores.reduce((a, b) => a + b, 0);
-  const total = soma + (modificador.value || 0);
-  const descricao = `${quantidade.value}d${faces}`;
+  ultimaRolagem.value = null;
+  rolando.value = true;
 
-  ultimaRolagem.value = { descricao, valores, total };
+  const qtd = quantidade.value;
+  const sorteio = () => 1 + Math.floor(Math.random() * faces);
+  const valoresFinais = Array.from({ length: qtd }, sorteio);
+
+  const giroBase = 480 + Math.random() * 220;
+  const atrasoPorDado = 90;
+
+  valoresPreview.value = valoresFinais.map(sorteio);
+  revelados.value = 0;
+
+  cycleId = setInterval(() => {
+    valoresPreview.value = valoresPreview.value.map((v, i) => (i < revelados.value ? v : sorteio()));
+  }, 65);
+
+  valoresFinais.forEach((valor, i) => {
+    const id = setTimeout(() => {
+      revelados.value = i + 1;
+      valoresPreview.value = valoresPreview.value.map((v, idx) => (idx === i ? valor : v));
+
+      if (i === valoresFinais.length - 1) {
+        clearInterval(cycleId);
+        cycleId = null;
+
+        const soma = valoresFinais.reduce((a, b) => a + b, 0);
+        const total = soma + (modificador.value || 0);
+        const idFinal = setTimeout(() => {
+          ultimaRolagem.value = { descricao: `${qtd}d${faces}`, valores: valoresFinais, total };
+          rolando.value = false;
+        }, 200);
+        timeoutIds.push(idFinal);
+      }
+    }, giroBase + i * atrasoPorDado);
+    timeoutIds.push(id);
+  });
 }
 
 function rolarNovamente() {
-  if (faceAtual.value) rolar(faceAtual.value);
+  if (faceAtual.value && !rolando.value) rolar(faceAtual.value);
 }
 
 function limpar() {
+  limparTimers();
+  rolando.value = false;
   ultimaRolagem.value = null;
   faceAtual.value = null;
+  valoresPreview.value = [];
+  revelados.value = 0;
 }
+
+onBeforeUnmount(limparTimers);
 
 defineEmits(['fechar']);
 </script>
 
 <style scoped>
 .dado-overlay {
-  --dado-purple: var(--magic-color);
-  --dado-purple-light: color-mix(in srgb, var(--magic-color) 55%, white);
-  --dado-teal: #2fa89a;
-  --dado-blue: #2f7fd4;
-  --dado-orange: #d9822b;
+  /* Bloco próprio de tokens — este componente é aberto via Teleport a partir
+     da Navbar (fora do escopo de qualquer página), então não pode depender
+     de herdar os tokens jungle/tribal/bone de um ancestral. */
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
+
+  --wave-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10'%3E%3Cpath d='M0 5 Q10 0 20 5 T40 5' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
 
   position: fixed;
   inset: 0;
@@ -126,30 +213,73 @@ defineEmits(['fechar']);
   justify-content: center;
   z-index: 300;
   padding: 1rem;
+  font-family: 'Crimson Text', Georgia, serif;
 }
 
 .dado-modal {
-  background: linear-gradient(160deg, var(--jungle-darkest), var(--jungle-void));
-  border: 1px solid var(--tribal-gold);
-  border-radius: 14px;
-  padding: 1.5rem;
-  width: 100%;
-  max-width: 480px;
   position: relative;
+  background: linear-gradient(160deg, var(--jungle-darkest), var(--jungle-void));
+  border: 2px solid var(--tribal-gold);
+  padding: 2rem 1.6rem 1.6rem;
+  width: 100%;
+  max-width: 520px;
   color: var(--bone);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
 }
+
+.dado-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 7px;
+  background-color: var(--tribal-gold);
+  -webkit-mask-image: var(--wave-mask);
+  mask-image: var(--wave-mask);
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 30px 7px;
+  mask-size: 30px 7px;
+  opacity: 0.85;
+}
+
+/* Cantos ornamentais — mesmo desenho do hero da Home: losango dourado por
+   fora + moldura verde em L por dentro. */
+.dado-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--tribal-gold);
+  transform: rotate(45deg);
+}
+
+.dado-corner-tl { top: -7px; left: -7px; }
+.dado-corner-tr { top: -7px; right: -7px; }
+.dado-corner-bl { bottom: -7px; left: -7px; }
+.dado-corner-br { bottom: -7px; right: -7px; }
+
+.dado-bracket {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.dado-bracket-tl { top: 6px; left: 6px; border-top: 2px solid var(--jungle-green); border-left: 2px solid var(--jungle-green); }
+.dado-bracket-tr { top: 6px; right: 6px; border-top: 2px solid var(--jungle-green); border-right: 2px solid var(--jungle-green); }
+.dado-bracket-bl { bottom: 6px; left: 6px; border-bottom: 2px solid var(--jungle-green); border-left: 2px solid var(--jungle-green); }
+.dado-bracket-br { bottom: 6px; right: 6px; border-bottom: 2px solid var(--jungle-green); border-right: 2px solid var(--jungle-green); }
 
 .fechar {
   position: absolute;
-  top: 0.7rem;
-  right: 0.9rem;
+  top: 0.6rem;
+  right: 0.8rem;
   background: none;
   border: none;
   color: var(--pale-green);
   font-size: 1.4rem;
   cursor: pointer;
   line-height: 1;
+  z-index: 2;
 }
 
 .fechar:hover {
@@ -157,303 +287,306 @@ defineEmits(['fechar']);
 }
 
 .titulo {
-  font-family: 'Cinzel', serif;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
   text-align: center;
-  margin: 0 0 1.4rem;
-  color: var(--tribal-gold);
+  margin: 0;
+  color: var(--tribal-yellow);
+}
+
+.titulo-divisor {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 10px;
+  margin: 12px 0 20px;
 }
 
-.titulo-deco {
-  color: var(--tribal-yellow);
-  font-size: 0.9rem;
+.titulo-linha {
+  height: 1px;
+  width: 64px;
+  background: var(--jungle-green);
+}
+
+.titulo-gema {
+  width: 8px;
+  height: 8px;
+  background: var(--tribal-red);
+  transform: rotate(45deg);
 }
 
 .dado-body {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1.05fr 1fr;
   gap: 1.4rem;
   align-items: start;
 }
 
-.dado-label {
+.dado-coluna {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dado-rotulo {
   font-family: 'Cinzel', serif;
   font-size: 0.68rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--pale-green);
   margin-bottom: 0.5rem;
 }
 
-.dado-label + .honeycomb {
-  margin-top: 0;
+.dado-rotulo:not(:first-child) {
+  margin-top: 1.2rem;
 }
 
+/* ---------- Contador de quantidade ---------- */
 .qtd-stepper {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.3rem;
+  gap: 0.4rem;
 }
 
 .qtd-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
+  width: 32px;
+  height: 32px;
   border: 1px solid var(--jungle-green);
-  background: rgba(201, 111, 0, 0.18);
+  background: var(--jungle-moss);
   color: var(--pale-green);
   font-size: 1.1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
-.qtd-btn:hover {
-  background: rgba(201, 111, 0, 0.35);
+.qtd-btn:hover:not(:disabled) {
+  background: rgba(212, 163, 89, 0.16);
   border-color: var(--tribal-gold);
   color: var(--tribal-gold);
 }
 
+.qtd-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .qtd-valor {
-  flex: 1;
+  min-width: 40px;
   text-align: center;
-  background: var(--jungle-dark);
+  background: var(--jungle-void);
   border: 1px solid var(--jungle-moss);
-  border-radius: 6px;
   padding: 0.35rem 0;
   font-family: 'Cinzel', serif;
   font-weight: 700;
   color: var(--tribal-yellow);
 }
 
-.honeycomb {
+/* ---------- Grade de dados, estilo calculadora ---------- */
+.dado-calc {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calc-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-areas:
-    ".    d6   ."
-    "d4   .    d8"
-    ".    d20  ."
-    "d10  .    d12"
-    ".    d100 .";
-  row-gap: 0.35rem;
-  column-gap: 0.35rem;
+  gap: 8px;
+}
+
+.calc-row-single {
+  grid-template-columns: 1fr;
   justify-items: center;
-  max-width: 220px;
 }
 
-.face-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-  padding: 0.2rem;
-}
-
-.face-name {
+.calc-key {
   font-family: 'Cinzel', serif;
-  font-size: 0.6rem;
-  letter-spacing: 0.06em;
-  color: var(--pale-green);
-}
-
-.face-shape {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  padding: 0.7rem 0;
+  width: 100%;
+  background: var(--jungle-moss);
+  border: 1px solid var(--jungle-green);
   color: var(--bone);
-  font-family: 'Cinzel', serif;
-  font-weight: 700;
-  font-size: 0.7rem;
-  transition: transform 0.15s ease, filter 0.15s ease;
+  cursor: pointer;
+  clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
 }
 
-.face-btn:hover .face-shape {
-  transform: translateY(-2px) scale(1.06);
-  filter: brightness(1.15);
+.calc-key-wide {
+  padding: 0.7rem 2.2rem;
 }
 
-.shape-square {
-  border-radius: 6px;
-  background: var(--tribal-gold);
+.calc-key:hover:not(:disabled) {
+  border-color: var(--tribal-gold);
+  color: var(--tribal-yellow);
+  transform: translateY(-1px);
 }
 
-.shape-diamond {
-  background: var(--dado-teal);
-  transform: rotate(45deg);
+.calc-key:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
-.shape-diamond span {
-  transform: rotate(-45deg);
+.calc-key.active {
+  background: color-mix(in srgb, var(--tribal-gold) 22%, var(--jungle-moss));
+  border-color: var(--tribal-gold);
+  color: var(--tribal-yellow);
 }
 
-.shape-diamond-tall {
-  background: var(--dado-blue);
+.dado-calc.is-rolando .calc-key.active {
+  animation: rd-pulso 0.5s ease-in-out infinite;
 }
 
-.shape-triangle {
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 36px solid var(--jungle-green);
-  background: none !important;
-  position: relative;
+@keyframes rd-pulso {
+  0%, 100% { box-shadow: 0 0 0 rgba(212, 163, 89, 0.5); }
+  50% { box-shadow: 0 0 14px rgba(212, 163, 89, 0.8); }
 }
 
-.shape-triangle span {
-  position: absolute;
-  top: 16px;
-  left: -8px;
-  font-size: 0.65rem;
+/* ---------- Resultado ---------- */
+.dado-resultado {
+  min-height: 210px;
 }
 
-.shape-pentagon {
-  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-  background: var(--tribal-red);
-}
-
-.shape-octagon {
-  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-  background: var(--dado-orange);
-  font-size: 0.6rem;
-}
-
-.shape-hex {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: var(--dado-purple);
-  width: 58px;
-  height: 58px;
-  font-size: 0.95rem;
-  box-shadow: 0 0 18px rgba(107, 79, 160, 0.6);
-}
-
-.face-d20 .face-name {
-  color: var(--dado-purple-light);
-  font-weight: 700;
-}
-
-.dado-right {
+.resultado-palco {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.22);
+  border-left: 3px solid var(--tribal-gold);
+  padding: 14px;
+  min-height: 120px;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  min-height: 220px;
+  align-items: center;
 }
 
 .resultado-vazio {
+  margin: 0;
+  font-size: 0.85rem;
   color: var(--pale-green);
-  font-size: 0.8rem;
-  opacity: 0.7;
-  padding: 1rem 0;
+  opacity: 0.75;
 }
 
-.resultado-hexes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
+.resultado-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 8px;
+  width: 100%;
 }
 
-.hex-result {
+.resultado-item {
+  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: var(--dado-purple);
-}
-
-.hex-result-shape {
-  font-family: 'Cinzel', serif;
+  background: var(--jungle-moss);
+  border: 1px solid var(--jungle-green);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
   font-weight: 700;
+  font-size: 0.95rem;
   color: var(--bone);
-  font-size: 0.85rem;
 }
 
-.hex-result.max {
-  background: linear-gradient(145deg, var(--tribal-yellow), var(--tribal-gold));
-  box-shadow: 0 0 16px rgba(201, 111, 0, 0.75);
+.resultado-item.is-girando {
+  animation: rd-girando 0.13s ease-in-out infinite;
+  color: var(--pale-green);
+  border-color: var(--jungle-moss);
 }
 
-.hex-result.max .hex-result-shape {
-  color: var(--jungle-void);
+@keyframes rd-girando {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.5; transform: translateY(-2px); }
 }
 
-.hex-result.min {
-  background: #4a4560;
-  opacity: 0.85;
+.resultado-item.is-assentado {
+  animation: rd-assenta 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes rd-assenta {
+  0% { transform: scale(1.4) rotate(-8deg); }
+  60% { transform: scale(0.94) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.resultado-item.is-max {
+  border-color: var(--tribal-yellow);
+  color: var(--tribal-yellow);
+  box-shadow: 0 0 12px rgba(212, 163, 89, 0.65);
+}
+
+.resultado-item.is-min {
+  border-color: var(--tribal-red);
+  color: var(--pale-green);
+  opacity: 0.7;
 }
 
 .dado-total {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  padding-top: 0.6rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 10px;
   border-top: 1px solid var(--jungle-moss);
 }
 
-.total-label {
+.total-rotulo {
   font-family: 'Cinzel', serif;
   font-size: 0.68rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--pale-green);
 }
 
 .total-valor {
-  font-family: 'Cinzel', serif;
-  font-size: 2.4rem;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 2rem;
   font-weight: 700;
-  color: var(--tribal-gold);
-  line-height: 1.1;
+  color: var(--tribal-yellow);
+  line-height: 1;
 }
 
 .total-formula {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--pale-green);
   opacity: 0.85;
 }
 
-.dado-actions {
+/* ---------- Ações ---------- */
+.dado-acoes {
   display: flex;
   gap: 0.8rem;
-  margin-top: 1.4rem;
+  margin-top: 1.6rem;
 }
 
 .btn-rolar,
 .btn-limpar {
   flex: 1;
-  padding: 0.65rem 0;
-  border-radius: 8px;
+  padding: 0.7rem 0;
   font-family: 'Cinzel', serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .btn-rolar {
   background: var(--jungle-green);
-  border: 1px solid var(--jungle-green);
+  border: 1px solid var(--tribal-yellow);
   color: var(--bone);
+  transition: background 0.15s, color 0.15s;
 }
 
 .btn-rolar:hover:not(:disabled) {
-  background: var(--tribal-gold);
-  border-color: var(--tribal-gold);
-  color: var(--jungle-void);
+  background: var(--tribal-red);
 }
 
 .btn-rolar:disabled {
@@ -462,17 +595,23 @@ defineEmits(['fechar']);
 }
 
 .btn-limpar {
-  background: none;
-  border: 1px solid var(--jungle-moss);
-  color: var(--pale-green);
+  background: transparent;
+  border: 1px solid var(--pale-green);
+  color: var(--bone);
+  transition: border-color 0.15s, color 0.15s;
 }
 
-.btn-limpar:hover {
+.btn-limpar:hover:not(:disabled) {
   border-color: var(--tribal-red);
   color: var(--tribal-red);
 }
 
-@media (max-width: 520px) {
+.btn-limpar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 560px) {
   .dado-body {
     grid-template-columns: 1fr;
   }

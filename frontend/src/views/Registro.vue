@@ -125,24 +125,23 @@ async function registrar() {
 
 <style scoped>
 .acesso-page {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
 
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   font-family: 'Crimson Text', Georgia, serif;
   background-color: var(--jungle-void);
-  background-image: repeating-linear-gradient(112deg, rgba(46, 125, 79, 0.16) 0 3px, transparent 3px 13px),
-  repeating-linear-gradient(0deg, rgba(10, 28, 17, 0.5) 0 22px, transparent 22px 44px),
+  background-image: repeating-linear-gradient(0deg, rgba(10, 28, 17, 0.5) 0 22px, transparent 22px 44px),
   radial-gradient(120% 90% at 50% 6%, var(--jungle-moss) 0, var(--jungle-void) 62%, var(--jungle-darkest) 100%);
   color: var(--bone);
 }
@@ -205,8 +204,7 @@ async function registrar() {
   top: 0;
   bottom: 0;
   width: clamp(20px, 6vw, 80px);
-  background-image: repeating-linear-gradient(0deg, rgba(46, 125, 79, 0.5) 0 2px, transparent 2px 16px),
-  repeating-linear-gradient(45deg, rgba(201, 162, 39, 0.16) 0 6px, transparent 6px 18px);
+  background-image: repeating-linear-gradient(0deg, rgba(35, 110, 71, 0.5) 0 2px, transparent 2px 16px);
   pointer-events: none;
 }
 
@@ -216,8 +214,7 @@ async function registrar() {
 
 .acesso-strip-right {
   right: 0;
-  background-image: repeating-linear-gradient(0deg, rgba(46, 125, 79, 0.5) 0 2px, transparent 2px 16px),
-  repeating-linear-gradient(-45deg, rgba(201, 162, 39, 0.16) 0 6px, transparent 6px 18px);
+  background-image: repeating-linear-gradient(0deg, rgba(35, 110, 71, 0.5) 0 2px, transparent 2px 16px);
 }
 
 .acesso-frame {
@@ -234,7 +231,7 @@ async function registrar() {
 .acesso-frame-inner {
   position: absolute;
   inset: 7px;
-  border: 1px solid rgba(184, 54, 47, 0.7);
+  border: 1px solid rgba(140, 59, 43, 0.7);
   pointer-events: none;
 }
 
@@ -354,7 +351,7 @@ async function registrar() {
   width: 100%;
   box-sizing: border-box;
   padding: 12px;
-  background: #123020;
+  background: var(--bg-card);
   border: 1px solid var(--jungle-green);
   color: var(--bone);
   font-family: 'Crimson Text', Georgia, serif;
@@ -387,7 +384,7 @@ async function registrar() {
 .acesso-erro {
   margin: 0;
   font-size: 14px;
-  color: #e8837a;
+  color: color-mix(in srgb, var(--tribal-red) 60%, white);
 }
 
 .acesso-cta {
@@ -459,7 +456,6 @@ async function registrar() {
   height: 76px;
   box-sizing: border-box;
   border: 1px solid var(--jungle-green);
-  background-image: repeating-linear-gradient(45deg, rgba(46, 125, 79, 0.35) 0 6px, transparent 6px 14px);
   display: flex;
   align-items: flex-end;
   padding: 9px;
@@ -483,7 +479,7 @@ async function registrar() {
       var(--tribal-red) 11px 16px,
       transparent 16px 30px
   ),
-  repeating-linear-gradient(0deg, rgba(46, 125, 79, 0.4) 0 2px, transparent 2px 8px);
+  repeating-linear-gradient(0deg, rgba(35, 110, 71, 0.4) 0 2px, transparent 2px 8px);
 }
 
 .acesso-footer-inner {

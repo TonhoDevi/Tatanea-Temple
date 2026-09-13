@@ -47,13 +47,34 @@ function sair() {
       <div class="navbar-right">
         <div class="navbar-icons">
           <RouterLink to="/" class="navbar-icon-btn" title="Início">
-            <span aria-hidden="true">🏠</span>
+            <svg class="navbar-icon-svg" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="5.5" r="1.6" />
+              <path d="M16 8 L23 16 H9 Z" />
+              <path d="M9 16 H23 V20 H9 Z" />
+              <path d="M6 20 H26 V24 H6 Z" />
+              <path d="M2 24 H30 V28 H2 Z" />
+              <path d="M14 28 V25 A2 2 0 0 1 18 25 V28" />
+            </svg>
           </RouterLink>
           <button class="navbar-icon-btn" title="Rolador de dados" @click="rolagemAberta = true">
-            <span aria-hidden="true">🎲</span>
+            <svg class="navbar-icon-svg" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M16 4 L26.4 10 L26.4 22 L16 28 L5.6 22 L5.6 10 Z" />
+              <path
+                  class="navbar-icon-svg-fina"
+                  d="M16 16 L16 4 M16 16 L26.4 10 M16 16 L26.4 22 M16 16 L16 28 M16 16 L5.6 22 M16 16 L5.6 10"
+              />
+              <circle cx="16" cy="9.5" r="1" fill="currentColor" stroke="none" />
+              <circle cx="21.5" cy="16.5" r="1" fill="currentColor" stroke="none" />
+              <circle cx="23.5" cy="19.8" r="1" fill="currentColor" stroke="none" />
+            </svg>
           </button>
           <RouterLink v-if="auth.estaLogado" to="/personagens" class="navbar-icon-btn" title="Meus personagens">
-            <span aria-hidden="true">📜</span>
+            <svg class="navbar-icon-svg" viewBox="0 0 32 32" aria-hidden="true">
+              <ellipse cx="16" cy="7" rx="9" ry="3" />
+              <ellipse cx="16" cy="25" rx="9" ry="3" />
+              <path d="M7 7 V25 M25 7 V25" />
+              <path class="navbar-icon-svg-fina" d="M11 13 H21 M11 17 H21 M11 21 H18" />
+            </svg>
           </RouterLink>
 
           <div v-if="auth.estaLogado" class="navbar-conta" ref="contaMenuEl">
@@ -63,7 +84,19 @@ function sair() {
                 :aria-expanded="contaAberta"
                 @click="alternarConta"
             >
-              <span aria-hidden="true">⚙️</span>
+              <svg class="navbar-icon-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <rect x="14.5" y="3" width="3" height="5" rx="0.8" />
+                <rect x="14.5" y="3" width="3" height="5" rx="0.8" transform="rotate(45 16 16)" />
+                <rect x="14.5" y="3" width="3" height="5" rx="0.8" transform="rotate(90 16 16)" />
+                <rect x="14.5" y="3" width="3" height="5" rx="0.8" transform="rotate(135 16 16)" />
+                <rect x="14.5" y="3" width="3" height="5" rx="0.8" transform="rotate(180 16 16)" />
+                <rect x="14.5" y="3" width="3" height="5" rx="0.8" transform="rotate(225 16 16)" />
+                <rect x="14.5" y="3" width="3" height="5" rx="0.8" transform="rotate(270 16 16)" />
+                <rect x="14.5" y="3" width="3" height="5" rx="0.8" transform="rotate(315 16 16)" />
+                <circle cx="16" cy="16" r="8.5" />
+                <circle class="navbar-icon-svg-fina" cx="16" cy="16" r="6" />
+                <circle cx="16" cy="16" r="3" />
+              </svg>
             </button>
             <div class="navbar-conta-menu" v-if="contaAberta">
               <div class="navbar-conta-menu-title">Conta</div>
@@ -92,16 +125,16 @@ function sair() {
 
 <style scoped>
 .navbar {
-  --jungle-void: #0b2013;
-  --jungle-darkest: #071a0f;
-  --jungle-dark: #0e2818;
-  --jungle-moss: #1a3d26;
-  --jungle-green: #2e7d4f;
-  --tribal-red: #b8362f;
-  --tribal-gold: #c9a227;
-  --tribal-yellow: #e8c14a;
-  --bone: #f2ede1;
-  --pale-green: #a8c4a2;
+  --jungle-void: var(--bg-deep);
+  --jungle-darkest: color-mix(in srgb, var(--bg-deep) 75%, black);
+  --jungle-dark: var(--bg-card);
+  --jungle-moss: var(--bg-subcard);
+  --jungle-green: var(--accent-green);
+  --tribal-red: var(--accent-terracotta);
+  --tribal-gold: var(--accent-gold);
+  --tribal-yellow: var(--accent-gold);
+  --bone: var(--text-pale);
+  --pale-green: var(--text-muted);
 
   background: linear-gradient(
       135deg,
@@ -113,7 +146,7 @@ function sair() {
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.75), 0 1px 0 rgba(201, 162, 39, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.75), 0 1px 0 rgba(212, 163, 89, 0.1);
   backdrop-filter: blur(10px);
 }
 
@@ -173,7 +206,7 @@ function sair() {
   font-family: 'Pirata One', cursive;
   font-size: 1.6rem;
   color: var(--tribal-yellow);
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.85), 0 0 20px rgba(46, 125, 79, 0.4);
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.85), 0 0 20px rgba(35, 110, 71, 0.4);
   letter-spacing: 1px;
   white-space: nowrap;
   overflow: hidden;
@@ -183,7 +216,7 @@ function sair() {
 
 .navbar-logo:hover .navbar-logo-text {
   color: var(--bone);
-  text-shadow: 0 0 15px rgba(232, 193, 74, 0.6), 0 0 35px rgba(46, 125, 79, 0.5);
+  text-shadow: 0 0 15px rgba(212, 163, 89, 0.6), 0 0 35px rgba(35, 110, 71, 0.5);
 }
 
 /* ===== Ícones (direita) ===== */
@@ -200,7 +233,7 @@ function sair() {
   justify-content: center;
   width: 42px;
   height: 42px;
-  background: rgba(46, 125, 79, 0.14);
+  background: rgba(35, 110, 71, 0.14);
   border: 1.5px solid var(--jungle-green);
   border-radius: 8px;
   font-size: 1.25rem;
@@ -210,15 +243,34 @@ function sair() {
   transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
 }
 
+.navbar-icon-svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.25s ease;
+}
+
+.navbar-icon-svg-fina {
+  stroke-width: 0.9;
+}
+
+.navbar-icon-btn:hover .navbar-icon-svg {
+  stroke: var(--tribal-yellow);
+}
+
 .navbar-icon-btn:hover {
-  background: rgba(46, 125, 79, 0.32);
+  background: rgba(35, 110, 71, 0.32);
   border-color: var(--tribal-gold);
   transform: translateY(-1px);
 }
 
 .navbar-icon-btn.router-link-active {
   border-color: var(--tribal-gold);
-  background: rgba(201, 162, 39, 0.22);
+  background: rgba(212, 163, 89, 0.22);
 }
 
 /* ===== Menu da engrenagem ===== */
@@ -265,7 +317,7 @@ function sair() {
 }
 
 .navbar-conta-menu-item:hover {
-  background: rgba(46, 125, 79, 0.2);
+  background: rgba(35, 110, 71, 0.2);
 }
 
 /* ===== Sessão (apelido / sair / entrar) ===== */
@@ -339,6 +391,11 @@ function sair() {
     width: 38px;
     height: 38px;
     font-size: 1.1rem;
+  }
+
+  .navbar-icon-svg {
+    width: 18px;
+    height: 18px;
   }
 }
 </style>

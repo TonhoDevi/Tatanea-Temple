@@ -1,0 +1,31 @@
+/* ========================================
+   PALETA GLOBAL — "Templo Ancestral & Musgo Ritual"
+
+   Tokens únicos em :root, importados uma vez em main.js antes de qualquer
+   outro CSS. Toda página/componente do site (ficha, home, login, compêndio
+   etc.) deve consumir estas variáveis em vez de valores hexadecimais soltos
+   — é o que garante que o site inteiro pertença ao mesmo Design System
+   (Regra de Ouro nº4: variáveis CSS únicas globais).
+======================================== */
+:root {
+    /* 60% da tela — fundos */
+    --bg-deep: #0a140e;      /* Sombra da Floresta Úmida — fundo profundo/viewport */
+    --bg-card: #122419;      /* Pedra do Templo / Musgo Escuro — cards e containers */
+    --bg-subcard: #1a3324;   /* Entalhe Ritualístico — subcards, realces */
+
+    /* 30% da tela — texto e detalhes */
+    --accent-gold: #d4a359;  /* Ouro Cerimonial — títulos, bordas finas, acentos */
+    --text-pale: #f1e8d0;    /* Pergaminho Palha — texto principal */
+    --text-muted: #9ab0a1;   /* Musgo Acinzentado — subtítulos/labels */
+    --border-amber: rgba(212, 163, 89, 0.35);
+
+    /* 10% da tela — interatividade semântica (nunca inverter o significado) */
+    --accent-green: #236e47;       /* Jade Feérico — cura, ações ativas, botões druídicos */
+    --accent-terracotta: #8c3b2b;  /* Terracota Maya — dano, alertas, detalhes étnicos */
+    --accent-glow: #38e07b;        /* Vigor/Brilho Feérico — SÓ para focos de ação pontuais */
+
+    /* Azul — cor de último recurso para foco positivo, usada quando o verde
+       de ação (--accent-glow) já está ocupado por perto (ex.: nível
+       "especialista" nas perícias da ficha, que já usa este mesmo tom). */
+    --accent-focus-alt: #4fc9e0;
+}
