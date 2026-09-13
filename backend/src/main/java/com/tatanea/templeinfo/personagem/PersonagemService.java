@@ -100,7 +100,7 @@ public class PersonagemService {
     }
 
     private Personagem buscarEValidarDono(String id, String usuarioId) {
-        Personagem p = repository.findById(id)
+        Personagem p = repository.findByIdComTalentos(id)
                 .orElseThrow(() -> new PersonagemNaoEncontradoException(id));
         if (!p.getUsuarioId().equals(usuarioId)) {
             throw new AcessoNegadoException();
