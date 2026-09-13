@@ -100,9 +100,11 @@ const router = useRouter();
 
 const ficha = ref(null);
 const mostrarSalvo = ref(false);
+// true assim que qualquer campo muda; só volta a false depois de um
+// salvarAgora() bem-sucedido. Não salva mais sozinho (ver agendarSalvar).
+const houveAlteracao = ref(false);
 const novaTag = ref('');
 const ajustePv = ref(null);
-let timerSalvar = null;
 
 // Tesouro em blocos — persistido em ficha.tesouro.
 const tesouro = computed(() => ficha.value?.tesouro || []);
@@ -706,9 +708,12 @@ const idx = ficha.value.magias.indexOf(magia);
 if (idx >= 0) removerItem(ficha.value.magias, idx);
 }
 
+// Chamado por todo mutator/input da ficha. Não salva mais no backend sozinho
+// (era debounce de 1.2s) — só marca a ficha como "com alterações pendentes".
+// O envio ao backend só acontece em salvarAgora(), disparado pelo botão
+// "Salvar progresso" (ou por importarJSON, que salva o que acabou de importar).
 function agendarSalvar() {
-clearTimeout(timerSalvar);
-timerSalvar = setTimeout(salvarAgora, 1200);
+houveAlteracao.value = true;
 }
 
 function normalizarDeslocamento() {
@@ -721,6 +726,7 @@ async function salvarAgora() {
 normalizarDeslocamento();
 const atualizado = await personagemService.atualizar(route.params.id, ficha.value);
 ficha.value = atualizado;
+houveAlteracao.value = false;
 mostrarSalvo.value = true;
 setTimeout(() => (mostrarSalvo.value = false), 1500);
 }
@@ -728,6 +734,9 @@ setTimeout(() => (mostrarSalvo.value = false), 1500);
 async function excluir() {
 if (!confirm('Excluir esse personagem? Essa ação não pode ser desfeita.')) return;
 await personagemService.remover(route.params.id);
+// A ficha deixou de existir — não faz sentido perguntar de novo se há
+// alterações não salvas ao sair da rota.
+houveAlteracao.value = false;
 router.push('/personagens');
 }
 
@@ -804,7 +813,7 @@ ficha.value.iniciativaBonus = iniciativaTotal.value;
 
 const contexto = {
 // estado
-ficha, mostrarSalvo, novaTag, ajustePv, bonusProficiencia,
+ficha, mostrarSalvo, houveAlteracao, novaTag, ajustePv, bonusProficiencia,
 tesouro, habilidadesRaca, limiteSincronizados,
 racasDisponiveis, classesDisponiveis, talentosDisponiveis, talentoSelecionado, erroTalento,
 racaDetalhe, editandoEscolha,
