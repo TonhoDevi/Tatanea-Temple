@@ -6,20 +6,31 @@ import com.tatanea.templeinfo.raca.RacaDtos.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
 public class RacaService {
 
     private final RacaRepository racaRepository;
+    private final RacaImagemRepository racaImagemRepository;
 
-    public RacaService(RacaRepository racaRepository) {
+    public RacaService(RacaRepository racaRepository, RacaImagemRepository racaImagemRepository) {
         this.racaRepository = racaRepository;
+        this.racaImagemRepository = racaImagemRepository;
     }
 
     public List<RacaResumoDto> listarTodas() {
-        return racaRepository.findAll().stream().map(RacaResumoDto::de).toList();
+        List<Raca> racas = racaRepository.findAll();
+
+        // Consulta separada só com os ids de raça que têm imagem, em vez de
+        // carregar o byte[] de cada imagem (raca.getImagem()) durante a listagem.
+        List<Long> ids = racas.stream().map(Raca::getId).toList();
+        Set<Long> idsComImagem = new HashSet<>(racaImagemRepository.encontrarIdsComImagem(ids));
+
+        return racas.stream().map(r -> RacaResumoDto.de(r, idsComImagem.contains(r.getId()))).toList();
     }
 
     public RacaDetalheDto buscarPorId(Long id) {

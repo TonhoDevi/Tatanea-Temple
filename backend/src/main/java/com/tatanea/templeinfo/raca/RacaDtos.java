@@ -55,12 +55,12 @@ public class RacaDtos {
             int quantidadeHabilidadesEspeciais,
             String imagemUrl
     ) {
-        static RacaResumoDto de(Raca raca) {
+        static RacaResumoDto de(Raca raca, boolean temImagem) {
             return new RacaResumoDto(
                     raca.getId(), raca.getSlug(), raca.getNome(),
                     raca.getCategoria().getCodigo(), raca.getTamanho().getCodigo(),
                     raca.getHabilidadesEspeciais().size(),
-                    raca.getImagem() == null ? null : "/api/racas/" + raca.getId() + "/imagem"
+                    temImagem ? "/api/racas/" + raca.getId() + "/imagem" : null
             );
         }
     }
