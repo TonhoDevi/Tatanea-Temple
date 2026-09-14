@@ -443,6 +443,18 @@ textarea {
         flex-direction: column;
     }
 
+    /* .ficha-sidebar vira display:contents no mobile (ver FichaSidebar.vue),
+       então seus dois blocos (identidade e ações/JSON) passam a competir
+       por ordem com .ficha-workspace como se fossem irmãos soltos dentro de
+       .ficha-layout. A identidade (order 1, definido lá) continua acima das
+       abas; .ficha-workspace fica no meio (order 2); o bloco de
+       Ações/Exportar-Importar JSON/Excluir vai pro final (order 3, também
+       definido lá) — assim ele aparece depois do conteúdo da aba ativa em
+       vez de antes. */
+    .ficha-workspace {
+        order: 2;
+    }
+
     /* Cada aba fica como uma coluna centralizada em vez de esticar borda a
        borda — em telas intermediárias (tablet/phone deitado) isso evita
        linhas de texto absurdamente longas; em telas estreitas de verdade

@@ -162,12 +162,14 @@ const classeNomeAtual = computed(
 }
 
 @media (max-width: 900px) {
+  /* display:contents faz o <aside> sumir como caixa — seus dois filhos
+     (.fc-identity e o box de ações/JSON logo abaixo) passam a ser tratados
+     como itens soltos do flex de .ficha-layout, junto com .ficha-workspace.
+     É isso que permite reordenar cada um independentemente com `order`
+     (não dava pra "pular" o box de ações pra depois das abas de outro
+     jeito, já que ele mora dentro do <aside>, não ao lado dele). */
   .ficha-sidebar {
-    flex: none;
-    width: 100%;
-    max-width: 640px;
-    margin: 0 auto;
-    position: static;
+    display: contents;
   }
 
   /* O retrato em aspect-ratio 3/4 esticado a 100% de largura ficava enorme
@@ -176,8 +178,12 @@ const classeNomeAtual = computed(
      de identidade (Raça/Classe/Nível/Bônus/Jogador/Antecedente/Tendência)
      viram um grid de 2 colunas pra ocupar bem menos altura — só o retrato,
      nome e resumo de nível/classe (3 primeiros filhos) continuam ocupando a
-     largura toda. */
+     largura toda. Fica em primeiro (order 1), antes das abas. */
   .fc-identity {
+    order: 1;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px 12px;
@@ -190,6 +196,17 @@ const classeNomeAtual = computed(
   .fc-portrait {
     width: auto;
     max-width: 160px;
+    margin: 0 auto;
+  }
+
+  /* Box de "← Meus personagens" / Salvar progresso / Exportar-Importar
+     JSON / Excluir personagem — vai pro final (depois de .ficha-workspace,
+     que tem order:2 em ficha-shared.css), em vez de aparecer antes das
+     abas como o resto da identidade. */
+  .ficha-sidebar > .fc-box:not(.fc-identity) {
+    order: 3;
+    width: 100%;
+    max-width: 640px;
     margin: 0 auto;
   }
 }
