@@ -812,10 +812,59 @@ onMounted(() => {
     padding: 14px 16px;
   }
 
-  .cr-cat-label,
-  .cr-cat-grid,
   .cr-subfilter {
     display: none;
+  }
+
+  /* Categoria volta a aparecer no celular (diferente de Ordenar por/Tamanho,
+     que continuam só na tela grande), mas em miniatura — o card padrão
+     (min-height 96px, badge de 54px, cantos/brackets ornamentais) é
+     dimensionado pra desktop e não cabe várias colunas numa tela de ~375px. */
+  .cr-cat-label {
+    padding-top: 0;
+    gap: 4px;
+  }
+
+  .cr-cat-bullet {
+    width: 8px;
+    height: 8px;
+  }
+
+  .cr-cat-label span:last-child {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+  }
+
+  .cr-cat-grid {
+    grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+    gap: 14px;
+    padding-top: 10px;
+  }
+
+  .cr-cat-btn {
+    min-height: 48px;
+    padding: 10px 6px 6px;
+    border-width: 2px;
+  }
+
+  /* Cantos/brackets decorativos ficam apertados demais num card de ~64px —
+     somem só nessa miniatura, o card continua reconhecível sem eles. */
+  .cr-corner,
+  .cr-bracket {
+    display: none;
+  }
+
+  .cr-cat-badge {
+    top: -13px;
+    width: 26px;
+    height: 26px;
+    border-width: 2px;
+    font-size: 11px;
+  }
+
+  .cr-cat-label-text {
+    font-size: 9px;
+    letter-spacing: 0.04em;
   }
 }
 </style>

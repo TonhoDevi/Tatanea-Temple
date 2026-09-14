@@ -212,14 +212,16 @@ defineEmits(['fechar']);
      Navbar.vue) -- com 300 o topo do modal (onde fica o botão de fechar)
      ficava coberto por ela. */
   z-index: 1100;
-  /* Overlay não centraliza mais via flex: numa tela baixa (celular deitado,
-     ou muitos resultados de dado abertos de uma vez), align-items:center
-     cortava o topo do modal sem nenhum jeito de rolar até lá. Em vez disso o
-     overlay inteiro rola (overflow-y:auto) e o modal se centra sozinho via
-     margin:0 auto — mesmo padrão já usado no modal de detalhe de poção
-     (CompendioAlquimia.vue .modal-conteudo). */
+  /* `align-items: safe center` centraliza verticalmente no caso comum (modal
+     menor que a tela), mas cai pro alinhamento "start" sozinho quando o
+     conteúdo não cabe — sem isso (`center` puro), o topo do modal cortava
+     sem nenhum jeito de rolar até lá numa tela baixa. overflow-y:auto no
+     overlay garante que dá pra rolar até o fim nesse segundo caso. */
+  display: flex;
+  align-items: safe center;
+  justify-content: center;
   overflow-y: auto;
-  padding: clamp(1rem, 4vh, 3rem) 1rem;
+  padding: 1rem;
   font-family: 'Crimson Text', Georgia, serif;
 }
 

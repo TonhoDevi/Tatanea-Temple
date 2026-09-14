@@ -150,7 +150,7 @@ function goToRoomsPage(page) {
         </p>
 
         <div class="hero-buttons">
-          <a href="#salas" class="btn btn-solid">Entrar no templo</a>
+          <RouterLink to="/personagens" class="btn btn-solid">Entrar no templo</RouterLink>
           <a href="#salas" class="btn btn-outline">Compêndio</a>
         </div>
       </div>
