@@ -74,7 +74,7 @@
             </div>
           </div>
 
-          <div class="dr-section">
+          <div class="dr-section" v-if="reguas.length">
             <div class="dr-section-title-row">
               <h2 class="dr-section-title">Altura, peso e idade</h2>
               <span class="dr-title-line"></span>
@@ -202,14 +202,18 @@ function alternarHabilidade(indice) {
 const categoriaLabel = computed(() => (raca.value ? CAT_SING[raca.value.categoria] || raca.value.categoria : ''));
 const tamanhoLabel = computed(() => (raca.value ? TAM[raca.value.tamanho] || raca.value.tamanho : ''));
 
+// altura/peso/idade podem vir null do backend (raças sem conceito de
+// envelhecimento, como Vazios/Warforged, não têm linha de idade -- ver
+// convenção do compêndio de raças) -- acessar .valorMedio/.expectativaVida
+// direto quebrava o render inteiro da página pra essas raças.
 const reguas = computed(() => {
   if (!raca.value) return [];
   const { altura, peso, idade } = raca.value;
-  return [
-    { titulo: 'Altura', valor: fmtM(altura.valorMedio) },
-    { titulo: 'Peso', valor: fmtKg(peso.valorMedio) },
-    { titulo: 'Idade', valor: `${idade.expectativaVida} anos` },
-  ];
+  const linhas = [];
+  if (altura) linhas.push({ titulo: 'Altura', valor: fmtM(altura.valorMedio) });
+  if (peso) linhas.push({ titulo: 'Peso', valor: fmtKg(peso.valorMedio) });
+  if (idade) linhas.push({ titulo: 'Idade', valor: `${idade.expectativaVida} anos` });
+  return linhas;
 });
 
 const textos = computed(() => {
