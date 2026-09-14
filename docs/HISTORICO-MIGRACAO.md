@@ -292,8 +292,115 @@ direto do que replicar esse estado num store.
 
 ---
 
-## Parte 3 — Estado atual e coisas a detalhar depois
+## Parte 3 — Pós-deploy: ajustando a ficha e o mobile com uso real
 
+Com o sistema no ar (Parte 2), a fase seguinte foi usar a aplicação de verdade —
+pelo celular, com internet real, contra o banco de produção — e corrigir o que só
+aparece nesse uso real: a demora de salvar batendo de frente com a UX da ficha, e
+o layout inteiro do compêndio e da ficha quebrando em tela pequena.
+
+### 3.1. Ficha: de autosave pra salvamento manual em segundo plano
+
+A ficha salvava sozinha 1.2s depois de qualquer alteração (debounce). Em
+produção isso é um problema de verdade: o `PUT /api/personagens/{id}` chega a
+levar **~17 segundos** pra ir e voltar (Render em Ohio, Supabase em São Paulo,
+mais o cold start do free tier — ver seção 2.1), e um autosave nesse tempo
+significa a ficha ficar "travada" salvando toda vez que o jogador edita algo, ou
+pior, perder a mudança se a aba fechar antes do debounce dar tempo de disparar.
+
+Resolvido em dois commits:
+
+- `c2e6cd4` tira o autosave: `agendarSalvar()` deixa de disparar o `PUT` e passa
+  só a marcar `houveAlteracao = true`. O envio real só acontece em
+  `salvarAgora()`, agora atrás de um botão explícito **"Salvar progresso"** na
+  sidebar, ao lado de Exportar/Importar JSON — desabilitado quando não há nada
+  pendente. Um indicador no topo mostra "● Alterações não salvas" enquanto
+  pendente e "✓ Salvo" por 1.5s depois de salvar.
+- `fc10508` troca o `confirm()` nativo do navegador (que travava a navegação até
+  a resposta do `PUT` terminar) por um popup próprio
+  (`AvisoAlteracoesPendentes.vue`) com três ações — **Salvar e sair**, **Sair sem
+  salvar**, **Continuar editando**. "Salvar e sair" dispara `salvarAgora()`
+  **sem aguardar a resposta** e libera a navegação na hora; o envio continua
+  rodando em segundo plano graças ao `<keep-alive>` da ficha (a instância
+  continua viva, então quando a resposta chega — mesmo que o jogador já tenha
+  saído da tela — o indicador "✓ Salvo" ainda atualiza normalmente). Pra fechar
+  a aba/atualizar a página (`beforeunload`), onde nenhum navegador permite popup
+  customizado, o fallback é um `fetch(..., { keepalive: true })` com o token do
+  `localStorage`, que tem uma chance real de completar o envio mesmo com a
+  página descarregando — diferente de um `axios`/`fetch` comum, que seria
+  cancelado na hora. Limitação conhecida e aceita: o `keepalive` tem um teto de
+  payload (~64KB por contexto), então uma ficha com imagem embutida em base64
+  grande pode passar disso e não ser enviada por esse caminho específico — o
+  aviso nativo do navegador continua como rede de segurança nesse caso.
+
+### 3.2. Responsividade mobile: compêndio e ficha
+
+Testado num celular de verdade, o compêndio e a ficha — desenhados e ajustados
+só em desktop até aqui — tinham vários problemas de proporção. Principal causa
+raiz identificada: a barra de filtro dos compêndios (`position: sticky`) com
+toda a grade de categoria + subfiltros abertos ocupava boa parte da tela e
+continuava "seguindo" o scroll — não era a hero em si, como pareceu à primeira
+vista, e sim essa barra sticky.
+
+`1a25b65` e `e5fe1ba` (ambos em v1.0.9) resolveram, sempre abaixo de 700px de
+largura (o breakpoint "colapsar grade/filtro" já usado no resto do projeto,
+como documentado nas convenções de página de classe):
+
+- Hero dos 5 compêndios (Raças/Classes/Talentos/Talentos Raciais/Alquimia) com
+  padding e fonte bem menores, elementos puramente decorativos (linha
+  tracejada, tag "Sala N") escondidos.
+- Barra de filtro dos 4 compêndios que têm filtro deixa de ser `sticky` e some
+  tudo exceto a busca por nome + "Limpar filtros" (que virou um bloco vermelho
+  com um X preto, em vez de texto) — categoria, ordenar-por, tamanho,
+  pré-requisito, raça e raridade ficam reservados pra tela grande.
+- Rolador de dados (`RoladorDados.vue`): trocado o `flex + align-items:center`
+  do overlay (que cortava o topo do modal sem nenhum jeito de rolar até lá)
+  pelo mesmo padrão já usado no modal de detalhe de poção da Alquimia
+  (`overflow-y:auto` no overlay + `margin:0 auto` no modal).
+- Ficha de personagem: retrato limitado a 160px e centralizado (antes esticava
+  a 100% da largura, até ~375×500px num celular comum), campos de identidade
+  (Raça/Classe/Nível/Bônus/Jogador/Antecedente/Tendência) em grid de 2 colunas,
+  conteúdo de cada aba com teto de largura centralizado (640px), grade de
+  moedas da Mochila (5 colunas fixas, sem nenhum breakpoint antes) virou
+  fluida.
+- `fbf0469` (v1.1.0) resolveu o último desalinho: o box de "Meus
+  personagens"/Salvar progresso/Exportar-Importar JSON/Excluir personagem
+  aparecia colado logo após a identidade, empurrando as abas (Ações,
+  Características...) pra baixo da dobra. Como esse box mora dentro do mesmo
+  `<aside>` que a identidade, não dava pra reordená-lo em relação a
+  `.ficha-workspace` (elemento irmão, de outro componente) sem separar os
+  dois — resolvido com `.ficha-sidebar { display: contents; }` no mobile: o
+  `<aside>` some como caixa e seus dois filhos passam a competir por `order`
+  como itens soltos do mesmo flex, permitindo colocar identidade → abas → ações
+  nessa ordem.
+
+### 3.3. Dois bugs de polimento encontrados testando no celular
+
+- `9bd17fe`: o rolador de dados e o popup de "alterações não salvas" usavam
+  `z-index: 300`/`400`, menor que o da Navbar (`position: sticky`,
+  `z-index: 1000`) — o topo do modal, com o botão de fechar, ficava escondido
+  atrás dela. Ambos subiram pra `z-index: 1100`.
+- `c5bb569`: abrir a página de detalhe de uma raça sem altura, peso ou idade
+  cadastrados quebrava a página inteira (tela preta, sem nenhuma mensagem de
+  erro). Causa: o computed `reguas` de `DetalheRaca.vue` desestruturava
+  `altura`/`peso`/`idade` de `raca.value` e acessava `.valorMedio`/
+  `.expectativaVida` direto, sem checar `null` — e o backend retorna `null`
+  pra qualquer um dos três quando a raça não tem aquele dado (ver convenção da
+  seção 1.2). Testado contra a API local rodando, descobriu-se que não é caso
+  raro: **peso vem `null` numa fatia grande do compêndio** (Elfo Altivo/Floral/
+  Drow, os 5 Ferais, os 4 Genasi, Illithid, Lumimyr, Transmorfos, Tritão), e
+  Kor/Vazios não têm nem altura nem peso — então esse crash na prática afetava
+  boa parte das raças do jogo, não só as sem idade (Vazios/Warforged, que já
+  eram um caso conhecido). Corrigido checando cada campo individualmente antes
+  de montar a lista, com a seção inteira ("Altura, peso e idade") escondida
+  quando não sobra nada pra mostrar.
+
+---
+
+## Parte 4 — Estado atual e coisas a detalhar depois
+
+- **Versão em produção**: `v1.1.0` — changelog completo de cada release em
+  [github.com/TonhoDevi/Tatanea-Temple/releases](https://github.com/TonhoDevi/Tatanea-Temple/releases).
 - **Arquitetura de produção hoje**: frontend na Vercel, backend em Docker no
   Render (free tier), banco PostgreSQL no Supabase via pooler. Guia completo em
   [`DEPLOY.md`](../DEPLOY.md).
@@ -302,6 +409,17 @@ direto do que replicar esse estado num store.
   lista, compêndio carregando com `VITE_API_BASE_URL` correto, cadastro/login
   funcionando (confirma `JWT_SECRET` + CORS/`FRONTEND_URL`), serviço aparecendo
   como `Live` no dashboard do Render.
+- **A ficha salva sob demanda, não mais sozinha** (seção 3.1) — o jogador
+  precisa lembrar de clicar em "Salvar progresso" (ou aceitar o "Salvar e sair"
+  do popup de saída). Ainda não existe nenhum lembrete periódico além desse
+  popup; se isso incomodar no uso real, uma opção seria voltar a um autosave
+  bem mais espaçado (ex. a cada poucos minutos) em vez de reintroduzir o
+  debounce curto original.
+- **Compêndio e ficha já têm uma passada de responsividade mobile completa**
+  (seção 3.2), mas ela foi feita e revisada sem conseguir tirar screenshot num
+  dispositivo real durante a sessão — vale um teste visual num celular de
+  verdade (não só a régua de dispositivo do DevTools) da próxima vez que algo
+  nessa área for mexido.
 - **Nem toda classe tem página dedicada ainda** — as que não têm caem no
   fallback genérico de `DetalheClasse.vue`, que lê os dados crus do backend e
   ainda mantém a seção "Tabelas originais" (texto bruto da fonte) só pra esse
@@ -316,3 +434,7 @@ direto do que replicar esse estado num store.
 - **O free tier do Render dorme após ~15 min de inatividade** — primeira
   requisição depois disso leva 30-50s. Ainda não avaliado se vale a pena migrar
   pra um plano pago ou manter algum "ping" externo pra manter o serviço acordado.
+- **Dados de altura/peso/idade incompletos em boa parte das raças** (seção
+  3.3) — a página já lida bem com a ausência (não quebra mais, some a seção
+  quando não há nada), mas os valores em si continuam faltando no compêndio
+  pra quem quiser completá-los depois com a fonte original.
