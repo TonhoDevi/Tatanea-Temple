@@ -20,6 +20,7 @@
 
 ### ⚔️ Ficha de Personagem
 - Fichas completas por conta de usuário, com abas de Características, Habilidades, Ações, Magias, Mochila e Lore.
+- **Salvamento sob demanda**: a ficha não salva sozinha a cada alteração — o jogador confirma com o botão "Salvar progresso" (ou aceita salvar ao tentar sair com alterações pendentes, num popup próprio que libera a navegação na hora e manda a mudança em segundo plano).
 - **Rolador de ataques**: escolha normal/vantagem/desvantagem, com animação de rolagem em duas fases (acerto, depois dano) e destaque automático de acerto/erro crítico.
 - **Lançador de dados** geral (d4 a d100) acessível pela navbar em qualquer página, com a mesma lógica de animação.
 
@@ -76,6 +77,7 @@ Tatanea-Temple/
 │       ├── services/                 # Chamadas à API (Axios)
 │       ├── stores/                   # Estado global (Pinia)
 │       └── router/                   # Rotas da aplicação
+├── docs/                              # Histórico da migração pra produção
 ├── scratch/                          # Scripts avulsos de apoio
 ├── LICENSE
 └── README.md
@@ -106,14 +108,17 @@ Sobe em `http://localhost:5173` e já aponta para a API local em `http://localho
 
 ---
 
-## ☁️ Implantação (em andamento)
+## ☁️ Implantação
 
-Arquitetura de produção, com custo zero e sem cartão de crédito:
+Em produção, com custo zero e sem cartão de crédito:
 - **Frontend** hospedado na [Vercel](https://vercel.com/).
-- **Backend** rodando em Docker no [Render](https://render.com/) (free tier).
+- **Backend** rodando em Docker no [Render](https://render.com/) (free tier — o serviço "dorme" depois de ~15 min sem tráfego; a primeira requisição seguinte leva uns 30-50s pra acordar).
 - **Banco de dados** PostgreSQL hospedado no [Supabase](https://supabase.com/).
 
-Passo a passo completo em [`DEPLOY.md`](./DEPLOY.md). Nenhum ambiente de produção está no ar ainda — o projeto roda hoje apenas localmente.
+Passo a passo completo em [`DEPLOY.md`](./DEPLOY.md). A história completa dessa
+migração — as decisões de modelagem do compêndio, a troca de provedor de
+backend e a sequência de bugs só visíveis em produção (e como cada um foi
+corrigido) — está registrada em [`docs/HISTORICO-MIGRACAO.md`](./docs/HISTORICO-MIGRACAO.md).
 
 ---
 
