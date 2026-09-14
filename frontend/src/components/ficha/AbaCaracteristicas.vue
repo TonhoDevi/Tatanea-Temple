@@ -812,6 +812,32 @@ const iniciativaAberta = ref(false);
   border-color: var(--btn-heal-bg);
 }
 
+/* No celular, o input de texto + os 2 botões numa linha só ficavam
+   espremidos (flex-wrap sozinho não garante uma ordem previsível de quebra).
+   Força o input pra sua própria linha e os dois botões pra linha de baixo,
+   lado a lado — as tags (.fc-tag-list) já vêm depois de .fc-tag-add no
+   layout, então não precisam de ajuste. */
+@media (max-width: 700px) {
+  .fc-tag-input {
+    order: 1;
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  .fc-btn-vulnerabilidade {
+    order: 2;
+  }
+
+  .fc-btn-resistencia {
+    order: 3;
+  }
+
+  .fc-btn-vulnerabilidade,
+  .fc-btn-resistencia {
+    flex: 1;
+  }
+}
+
 .fc-tag-vulnerabilidade {
   border-color: var(--btn-damage-bg);
 }
