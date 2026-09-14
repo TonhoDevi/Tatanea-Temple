@@ -872,6 +872,27 @@ function onDeslocInput(chave, evento) {
   transform: rotate(45deg);
 }
 
+/* .fc-ataque-linha soma nome + 2 stats (84px cada, flex:none) + 2 botões —
+   passa fácil da largura de um celular sem nenhum jeito de encolher, e o
+   card inteiro "pulava" pra fora da tela. Abaixo de 700px, o nome vira uma
+   linha própria (flex-basis:100% força o resto a quebrar) e os stats
+   deixam de ter largura fixa, dividindo o espaço que sobrar com os botões. */
+@media (max-width: 700px) {
+  .fc-ataque-linha {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .fc-ataque-nome-view {
+    flex-basis: 100%;
+  }
+
+  .fc-ataque-stat {
+    flex: 1;
+    width: auto;
+  }
+}
+
 .fc-ataque-form {
   display: flex;
   flex-direction: column;

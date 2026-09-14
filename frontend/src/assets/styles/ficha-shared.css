@@ -473,6 +473,34 @@ textarea {
     }
 }
 
+/* Com 6 abas e min-width:90px cada, a barra só quebra linha (flex-wrap)
+   abaixo de ~540px de largura útil — dentro da faixa 700-900px o teto de
+   640px do .fc-tabs acima já evita isso. Abaixo de 700px, porém, cada linha
+   do flex-wrap estica os itens pra preencher a largura da própria linha
+   *daquela linha*, então linhas com números diferentes de abas ficam com
+   larguras diferentes — a barra "torta" reportada. Vira grid de largura
+   fixa (2 colunas, 3 linhas) pra todo botão ter o mesmo tamanho. */
+@media (max-width: 700px) {
+    .fc-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+        background: var(--border-gold);
+    }
+
+    .fc-tab {
+        border-right: none;
+        background: var(--panel-bg);
+    }
+
+    /* Precisa vir depois de ".fc-tab { background: ... }" acima (mesma
+       especificidade — quem vier por último no CSS vence), senão a aba ativa
+       perde o destaque verde nessa faixa de largura. */
+    .fc-tab-active {
+        background: var(--jungle-green);
+    }
+}
+
 /* Em telas de desktop, a ficha nasce no mesmo tamanho de quando o usuário dá
    zoom manual de 133% no navegador — o `zoom` (diferente de transform:scale)
    recalcula o layout de verdade, então sidebar sticky e o botão flutuante de

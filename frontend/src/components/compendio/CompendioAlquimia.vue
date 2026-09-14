@@ -790,5 +790,23 @@ onMounted(() => {
   .ca-subfilter {
     display: none;
   }
+
+  /* "Raridade" (2º .ca-subfilter — "Ordenar por" continua escondido) volta
+     no celular, só que em miniatura, mesmo espírito da categoria de Raças. */
+  .ca-subfilter:nth-of-type(2) {
+    display: flex;
+    gap: 6px;
+  }
+
+  .ca-subfilter:nth-of-type(2) .ca-subfilter-label {
+    font-size: 9px;
+  }
+
+  .ca-subfilter:nth-of-type(2) .ca-pill-btn {
+    padding: 6px 10px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  }
 }
 </style>
