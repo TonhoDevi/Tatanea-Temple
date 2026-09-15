@@ -16,5 +16,5 @@ jobs:
       - name: Pingar o backend
         run: |
           curl -sS --fail --max-time 30 --retry 3 --retry-delay 10 \
-            "https://tatanea-temple.onrender.com/api/racas" \
+            "https://tatanea-temple.onrender.com/api/talentos" \
             -o /dev/null -w "status=%{http_code} tempo=%{time_total}s\n"
